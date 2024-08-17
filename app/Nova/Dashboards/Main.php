@@ -29,6 +29,14 @@ use Laravel\Nova\Dashboards\Main as Dashboard;
 class Main extends Dashboard
 {
     /**
+     * Get the displayable name of the dashboard.
+     */
+    public function name(): string
+    {
+        return 'Home';
+    }
+
+    /**
      * Get the cards for the dashboard.
      *
      * @return array<\Laravel\Nova\Card>
@@ -89,9 +97,11 @@ class Main extends Dashboard
                     continue;
                 }
 
-                $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
-                    static fn (Request $request): bool => $request->user()->can('read-payments')
-                );
+                if ($travel->fee_amount > 0) {
+                    $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
+                        static fn (Request $request): bool => $request->user()->can('read-payments')
+                    );
+                }
 
                 if ($travel->needs_docusign === true) {
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);

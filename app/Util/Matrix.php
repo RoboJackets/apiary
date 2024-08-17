@@ -76,7 +76,6 @@ class Matrix
                             });
 
                         if ($carry === null || $earliest_leg->isBefore($carry)) {
-                            // @phan-suppress-next-line PhanTypeMismatchReturn
                             return $earliest_leg;
                         }
 
@@ -84,7 +83,6 @@ class Matrix
                     });
 
                 if ($carry === null || $earliest_segment->isBefore($carry)) {
-                    // @phan-suppress-next-line PhanTypeMismatchReturn
                     return $earliest_segment;
                 }
 

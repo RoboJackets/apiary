@@ -1,3 +1,4 @@
+rm --force /var/opt/nomad/run/${NOMAD_JOB_NAME}-${NOMAD_ALLOC_ID}.sock
 if [ ${APP_ENV} = "sandbox" ]
 then
     php artisan passport:keys --no-interaction --verbose
@@ -11,4 +12,4 @@ php artisan config:cache --no-interaction --verbose
 php artisan view:cache --no-interaction --verbose
 php artisan event:cache --no-interaction --verbose
 php artisan route:cache --no-interaction --verbose
-exec php-fpm8.2 --force-stderr --nodaemonize --fpm-config /etc/php/8.2/fpm/php-fpm.conf
+exec php-fpm8.3 --force-stderr --nodaemonize --fpm-config /etc/php/8.3/fpm/php-fpm.conf

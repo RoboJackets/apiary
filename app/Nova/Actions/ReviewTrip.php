@@ -160,33 +160,47 @@ class ReviewTrip extends Action
                 ->readonly()
                 ->help('This is the amount that will be collected from each traveler.'),
 
-            Currency::make('Square Processing Fee')
-                ->default(static fn (): float => Payment::calculateProcessingFee($trip->fee_amount * 100) / 100)
-                ->readonly()
-                ->help(view('nova.help.travel.review.processingfee', ['fee_amount' => $trip->fee_amount])->render()),
+            ...($trip->fee_amount > 0 ? [
+                Currency::make('Square Processing Fee')
+                    ->default(static fn (): float => Payment::calculateProcessingFee($trip->fee_amount * 100) / 100)
+                    ->readonly()
+                    ->help(
+                        view('nova.help.travel.review.processingfee', ['fee_amount' => $trip->fee_amount])->render()
+                    ),
+            ] : []),
 
-            Currency::make('Total Cost per Traveler')
-                ->default(static fn (): float => $totalCost)
-                ->readonly(),
+            ...($trip->needs_docusign ? [
+                Currency::make('Total Cost per Traveler')
+                    ->default(static fn (): float => $totalCost)
+                    ->readonly(),
+            ] : []),
 
-            Text::make('Fee-to-Cost Ratio')
-                ->default(
-                    static fn (): string => $totalCost === 0 ?
-                        'Not Applicable' :
-                        intval(ceil(($trip->fee_amount / $totalCost) * 100)).'%'
-                )
-                ->readonly()
-                ->help('This is the percentage of costs that are paid by travelers via the trip fee.'),
+            ...($trip->fee_amount > 0 ? [
+                Text::make('Fee-to-Cost Ratio')
+                    ->default(
+                        static fn (): string => $totalCost === 0 ?
+                            'Not Applicable' :
+                            intval(ceil(($trip->fee_amount / $totalCost) * 100)).'%'
+                    )
+                    ->readonly()
+                    ->help('This is the percentage of costs that are paid by travelers via the trip fee.'),
+            ] : []),
 
-            Text::make('Workday Account Number')
-                ->default(static fn (): ?string => $trip->tar_project_number)
-                ->readonly(),
+            ...($trip->needs_docusign ? [
+                Text::make('Workday Account Number')
+                    ->default(static fn (): ?string => $trip->tar_project_number)
+                    ->readonly(),
+            ] : []),
 
             BooleanGroup::make('Review Criteria')
                 ->options([
                     'fee_reasonable' => 'Trip fee is reasonable',
-                    'ratio_reasonable' => 'Ratio of trip fee to cost is reasonable',
-                    'account_number_correct' => 'Workday account number is correct',
+                    ...($trip->fee_amount > 0 ? [
+                        'ratio_reasonable' => 'Ratio of trip fee to cost is reasonable',
+                    ] : []),
+                    ...($trip->needs_docusign ? [
+                        'account_number_correct' => 'Workday account number is correct',
+                    ] : []),
                 ])
                 ->rules('required', 'json', new AllCriteriaMustBeSelected())
                 ->required(),
@@ -200,7 +214,9 @@ class ReviewTrip extends Action
             BooleanGroup::make('Review Criteria')
                 ->options([
                     'travelers_finalized' => 'List of travelers is final',
-                    'airfare_reasonable' => 'Flight selections and prices are reasonable',
+                    ...($trip->needs_airfare_form ? [
+                        'airfare_reasonable' => 'Flight selections and prices are reasonable',
+                    ] : []),
                 ])
                 ->rules('required', 'json', new AllCriteriaMustBeSelected())
                 ->required(),

@@ -35,7 +35,7 @@ Search for flights
 #. Select :guilabel:`Matrix Airfare Search`.
 #. A popup will appear with options to configure your search.
 #. After filling out the popup, click the :guilabel:`Search` button at the bottom.
-   This will open Matrix in a new tab with several search criteria pre-populated.
+   This will open Matrix in a new tab with search criteria pre-populated.
    You can made adjustments on this page if desired, but the results might not meet the airfare policy for your trip.
 #. To submit your search, click the blue :guilabel:`Search` button in the bottom right in Matrix.
    This will show all flights that meet your criteria.
@@ -44,6 +44,8 @@ Search for flights
 
 Copy itineraries to trip assignments
 ------------------------------------
+
+.. vale write-good.E-Prime = NO
 
 1. On the :guilabel:`Itinerary Details` page in Matrix, click the :guilabel:`Copy itinerary as JSON` option in the right sidebar.
 2. You can then paste the JSON into the :guilabel:`Matrix Itinierary` field on a trip assignment in Apiary.

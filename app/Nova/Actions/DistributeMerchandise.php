@@ -93,6 +93,7 @@ class DistributeMerchandise extends Action
 
         $dtm->provided_at = Carbon::now();
         $dtm->provided_by = $provided_by->id;
+        $dtm->provided_via = 'Nova';
         $dtm->save();
 
         return Action::message('Marked as picked up!');
@@ -136,6 +137,7 @@ class DistributeMerchandise extends Action
                         ->toArray()
                 )
                 ->required()
+                ->searchable()
                 ->rules('required'),
         ];
     }

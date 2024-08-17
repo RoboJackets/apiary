@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DistributeMerchandiseRequest;
 use App\Http\Resources\DuesTransactionMerchandise as DuesTransactionMerchandiseResource;
 use App\Http\Resources\Merchandise as MerchandiseResource;
 use App\Http\Resources\User as UserResource;
@@ -20,11 +21,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MerchandiseController extends Controller
 {
-    private const NOT_DISTRIBUTABLE = 'This item cannot be distributed.';
+    private const NOT_DISTRIBUTABLE = 'This item cannot be distributed';
 
-    private const NO_DTM = 'This person doesn\'t have a paid transaction for this item.';
+    private const NO_DTM = 'This person doesn\'t have a paid transaction for this item';
 
-    private const ALREADY_DISTRIBUTED = 'This item was already distributed to this person.';
+    private const ALREADY_DISTRIBUTED = 'This item was already distributed to this person';
 
     public function __construct()
     {
@@ -69,7 +70,7 @@ class MerchandiseController extends Controller
                     'status' => 'error',
                     'message' => self::NO_DTM,
                 ],
-                status: 400
+                status: 404
             );
         }
 
@@ -84,8 +85,11 @@ class MerchandiseController extends Controller
         );
     }
 
-    public function distribute(Request $request, Merchandise $merchandise, User $user): JsonResponse
-    {
+    public function distribute(
+        DistributeMerchandiseRequest $request,
+        Merchandise $merchandise,
+        User $user
+    ): JsonResponse {
         if (! $merchandise->distributable) {
             return response()->json(
                 data: [
@@ -104,7 +108,7 @@ class MerchandiseController extends Controller
                     'status' => 'error',
                     'message' => self::NO_DTM,
                 ],
-                status: 400
+                status: 404
             );
         }
 
@@ -114,12 +118,13 @@ class MerchandiseController extends Controller
                     'status' => 'error',
                     'message' => self::ALREADY_DISTRIBUTED,
                 ],
-                status: 400
+                status: 409
             );
         }
 
         $dtm->provided_at = Carbon::now();
         $dtm->provided_by = $request->user()->id;
+        $dtm->provided_via = $request->provided_via;
         $dtm->save();
 
         return response()->json(
@@ -141,7 +146,9 @@ class MerchandiseController extends Controller
             'dues_transaction_merchandise.id',
             'dues_transaction_merchandise.provided_at',
             'dues_transaction_merchandise.provided_by',
-            'dues_transaction_merchandise.merchandise_id'
+            'dues_transaction_merchandise.provided_via',
+            'dues_transaction_merchandise.merchandise_id',
+            'dues_transaction_merchandise.dues_transaction_id'
         )
             ->whereHas('transaction', static function (Builder $query) use ($user) {
                 $query->where('user_id', $user->id)
@@ -149,5 +156,34 @@ class MerchandiseController extends Controller
             })
             ->where('merchandise_id', $merchandise->id)
             ->sole();
+    }
+
+    public static function handleMissingModel(Request $request, ModelNotFoundException $exception): JsonResponse
+    {
+        if ($exception->getModel() === \App\Models\User::class) {
+            return response()->json(
+                data: [
+                    'status' => 'error',
+                    'message' => 'That isn\'t a valid GTID',
+                ],
+                status: 404
+            );
+        } elseif ($exception->getModel() === \App\Models\Merchandise::class) {
+            return response()->json(
+                data: [
+                    'status' => 'error',
+                    'message' => 'That isn\'t a valid merchandise ID',
+                ],
+                status: 404
+            );
+        } else {
+            return response()->json(
+                data: [
+                    'status' => 'error',
+                    'message' => 'Unexpected missing model',
+                ],
+                status: 500
+            );
+        }
     }
 }

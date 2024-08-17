@@ -38,7 +38,10 @@ class SendReminders implements ShouldBeUnique, ShouldQueue
     public function handle(): void
     {
         // check if travel assignment reminder should be sent
-        if ($this->user->assignments()->needDocuSign()->exists()) {
+        if (
+            $this->user->assignments()->needDocuSign()->exists() &&
+            $this->user->assignments()->needDocuSign()->first()->travel->status !== 'draft'
+        ) {
             SendTravelAssignmentReminder::dispatch(
                 $this->user->assignments()->needDocuSign()->first(),
                 24
@@ -47,7 +50,10 @@ class SendReminders implements ShouldBeUnique, ShouldQueue
             return;
         }
 
-        if ($this->user->assignments()->unpaid()->exists()) {
+        if (
+            $this->user->assignments()->unpaid()->exists() &&
+            $this->user->assignments()->unpaid()->first()->travel->status !== 'draft'
+        ) {
             SendTravelAssignmentReminder::dispatch(
                 $this->user->assignments()->unpaid()->first(),
                 24

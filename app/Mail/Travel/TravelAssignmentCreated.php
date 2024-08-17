@@ -52,6 +52,9 @@ class TravelAssignmentCreated extends Mailable implements ShouldQueue
         if (
             $this->assignment->needs_docusign &&
             $this->assignment->user->has_emergency_contact_information &&
+            (! $this->assignment->travel->needs_airfare_form || (
+                $this->assignment->user->legal_gender !== null && $this->assignment->user->date_of_birth !== null
+            )) &&
             $this->assignment->travel->fee_amount === 0
         ) {
             if ($this->assignment->travel->needs_airfare_form) {
@@ -67,7 +70,15 @@ class TravelAssignmentCreated extends Mailable implements ShouldQueue
                     return 'Form';
                 }
             }
-        } elseif ($this->assignment->needs_docusign || ! $this->assignment->user->has_emergency_contact_information) {
+        } elseif ($this->assignment->needs_docusign || (
+            ! $this->assignment->user->has_emergency_contact_information ||
+            (
+                $this->assignment->travel->needs_airfare_form && (
+                    $this->assignment->user->legal_gender === null || $this->assignment->user->date_of_birth === null
+                )
+            )
+        )
+        ) {
             return 'Action';
         } else {
             return 'Payment';

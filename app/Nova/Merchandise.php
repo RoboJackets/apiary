@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\DuesTransactionMerchandise;
 use App\Models\Merchandise as AppModelsMerchandise;
 use App\Nova\Metrics\MerchandisePickupRate;
 use App\Nova\Metrics\ShirtSizeBreakdown;
@@ -87,8 +88,6 @@ class Merchandise extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(NovaRequest $request): array
     {
@@ -124,7 +123,7 @@ class Merchandise extends Resource
     {
         $resourceId = $request->resourceId ?? $request->resources;
 
-        if ($resourceId === null) {
+        if ($resourceId === null || is_array($resourceId)) {
             return [];
         }
 
@@ -177,7 +176,12 @@ class Merchandise extends Resource
 
         $merch_item = AppModelsMerchandise::where('id', $request->resourceId)->sole();
 
-        if (! $merch_item->distributable) {
+        if (
+            ! $merch_item->distributable &&
+            DuesTransactionMerchandise::where('merchandise_id', '=', $merch_item->id)
+                ->whereNull('provided_at')
+                ->doesntExist()
+        ) {
             return [];
         }
 

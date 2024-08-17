@@ -18,7 +18,7 @@ Self-service
 ------------
 
 .. seealso::
-   There is a :doc:`separate member-facing page for self-service overrides</members/access-overrides>`.
+   There is a :doc:`separate member-facing page for self-service overrides </members/access-overrides>`.
 
 To prevent misuse, a user must meet several criteria before they become eligible for a self-service override.
 A user's eligibility for a self-service override is visible on their details page in Nova, in the System Access panel.

@@ -39,8 +39,8 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         // Users
         // The search endpoint MUST be registered before the apiResource, otherwise it will not take precedence
         Route::get('users/search', [UserController::class, 'search']);
-        Route::get('users/managers', [UserController::class, 'indexManagers']);
-        Route::apiResource('users', UserController::class);
+        Route::get('users/managers', [UserController::class, 'indexManagers'])->middleware('cache:86400');
+        Route::apiResource('users', UserController::class)->middleware('cache:86400');
         Route::post('users/{id}/resume', [ResumeController::class, 'store']);
         Route::get('user', [UserController::class, 'showSelf']);
         Route::post('user/override/self', [UserController::class, 'applySelfOverride']);
@@ -74,8 +74,18 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
 
         // Merchandise
         Route::get('merchandise', [MerchandiseController::class, 'index']);
-        Route::get('merchandise/{merchandise}/distribute/{gtid}', [MerchandiseController::class, 'getDistribution']);
-        Route::post('merchandise/{merchandise}/distribute/{gtid}', [MerchandiseController::class, 'distribute']);
+        Route::get(
+            'merchandise/{merchandise}/distribute/{user:gtid}',
+            [MerchandiseController::class, 'getDistribution']
+        )
+            ->withoutScopedBindings()
+            ->missing([MerchandiseController::class, 'handleMissingModel']);
+        Route::post(
+            'merchandise/{merchandise}/distribute/{user:gtid}',
+            [MerchandiseController::class, 'distribute']
+        )
+            ->withoutScopedBindings()
+            ->missing([MerchandiseController::class, 'handleMissingModel']);
     }
 );
 

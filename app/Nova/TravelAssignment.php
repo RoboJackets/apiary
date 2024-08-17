@@ -193,7 +193,8 @@ class TravelAssignment extends Resource
 
                 return $this->travel->fee_amount;
             })
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->showOnDetail(fn (): bool => $this->travel->fee_amount > 0),
 
             Boolean::make('Paid', 'is_paid')
                 ->onlyOnIndex(),
@@ -210,7 +211,8 @@ class TravelAssignment extends Resource
                 ->showOnDetail(fn (): bool => $this->showDocuSignEnvelopesOnDetail()),
 
             MorphMany::make('Payments', 'payment', Payment::class)
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->showOnDetail(fn (): bool => $this->travel->fee_amount > 0),
 
             self::metadataPanel(),
         ];

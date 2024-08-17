@@ -9,10 +9,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Register problem matchers
+        run: echo "::add-matcher::.github/matchers.json"
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           extensions: bcmath, ctype, curl, fileinfo, gd, intl, json, ldap, mbstring, mysqli, openssl, pdo, redis, sqlite3, tokenizer, uuid, xml, zip
           coverage: none
         env:
@@ -68,7 +71,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           extensions: bcmath, ctype, curl, fileinfo, gd, intl, json, ldap, mbstring, mysqli, openssl, pdo, redis, sqlite3, tokenizer, uuid, xml, zip
           coverage: none
         env:
@@ -127,7 +130,7 @@ jobs:
 
       - name: Build and push
         id: build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           tags: registry.bcdc.robojackets.net/apiary:latest
           network: host

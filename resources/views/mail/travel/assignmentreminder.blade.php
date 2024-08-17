@@ -10,8 +10,8 @@ You{{ (!$assignment->tar_received && $assignment->travel->needs_docusign) ? ' al
 If you would prefer to pay by cash or check, make arrangements with {!! $assignment->travel->primaryContact->full_name !!}. Write checks to Georgia Tech, with RoboJackets on the memo line. Don't forget to sign it!
 
 @endif
-@if(!$assignment->user->has_emergency_contact_information)
-You {{ (! $assignment->is_paid || (!$assignment->tar_received && $assignment->travel->needs_docusign)) ? "also" : "still" }} need to add emergency contact information to your {{ config('app.name') }} profile at {{ route ('profile') }}.
+@if(((!$assignment->user->has_emergency_contact_information) || ($assignment->travel->needs_airfare_form && ($assignment->user->legal_gender === null || $assignment->user->date_of_birth === null))))
+You {{ (! $assignment->is_paid || (!$assignment->tar_received && $assignment->travel->needs_docusign)) ? "also" : "still" }} need to add required information to your {{ config('app.name') }} profile at {{ route ('profile') }}.
 
 @endif
 For more information, visit {{ route('travel.index') }}. If you have any questions, contact {{ $assignment->travel->primaryContact->full_name }}.

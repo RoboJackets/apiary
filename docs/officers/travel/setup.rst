@@ -109,6 +109,17 @@ Each traveler must have emergency contact information on their Apiary profile.
 
 Review the downloaded CSV for accuracy and completeness before forwarding it to Georgia Tech.
 
+Download Passenger Name List
+----------------------------
+
+After a trip is approved, the primary contact can download a :abbr:`CSV (comma-separated values)` export with all travelers' names, legal genders, dates of birth, and Delta SkyMiles numbers.
+Each traveler must have this information entered on their Apiary profile.
+
+#. On the :guilabel:`Trip Details` page, click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Trip Details` header.
+#. Select :guilabel:`Download Passenger Name List`.
+
+Review the downloaded CSV for accuracy and completeness before forwarding it to Georgia Tech.
+
 Download forms
 --------------
 

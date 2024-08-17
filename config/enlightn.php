@@ -133,6 +133,7 @@ return [
         ] : []),
         \Enlightn\Enlightn\Analyzers\Security\StableDependencyAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Security\VulnerableDependencyAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Performance\UnusedGlobalMiddlewareAnalyzer::class,
     ],
 
     /*
@@ -204,7 +205,6 @@ return [
         'apimatic/core',
         'apimatic/core-interfaces',
         'enlightn/enlightnpro',
-        'oitnetworkservices/buzzapiclient',
         'phpmyadmin/sql-parser',
         'mwgg/airports',
     ],

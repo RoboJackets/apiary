@@ -1,7 +1,11 @@
 Hi {!! $travel->primaryContact->preferred_first_name !!},
 {{-- all assignments paid and documented --}}
 @if(! $travel->assignments_need_payment && ! $travel->assignments_need_forms)
+@if($travel->fee_amount > 0)
 All travelers have paid the trip fee{{ $travel->needs_docusign ? ' and submitted forms' : '' }} for {{ $travel->name }}.{{ $travel->departure_date > \Carbon\Carbon::now() ? ' Contact the treasurer to book travel arrangements.' : '' }}
+@else
+All travelers have submitted forms for {{ $travel->name }}.{{ $travel->departure_date > \Carbon\Carbon::now() ? ' Contact the treasurer to book travel arrangements.' : '' }}
+@endif
 @if($travel->needs_docusign)
 
 You can download all submitted forms from {{ config('app.name') }} at {{ route('nova.pages.detail', ['resource' => \App\Nova\Travel::uriKey(), 'resourceId' => $travel->id]) }}, under the action menu (three dots in top right).

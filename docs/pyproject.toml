@@ -4,16 +4,15 @@ version = "0"
 description = "Documentation for Apiary"
 authors = ["Kristaps Berzinch <kristapsberzinch@gmail.com>"]
 license = "MIT"
-readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
-sphinx = "7.2.6"
-furo = "2023.9.10"
-sphinx-autobuild = "2021.3.14"
+sphinx = "8.0.2"
+sphinx-autobuild = "2024.4.16"
 sphinxext-opengraph = "0.9.1"
 sphinxcontrib-httpdomain = "1.8.1"
-proselint = "0.13.0"
+furo = {url = "https://github.com/pradyunsg/furo/archive/refs/heads/main.zip"}
 
 [build-system]
 requires = ["poetry-core"]

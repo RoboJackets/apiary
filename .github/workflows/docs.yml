@@ -1,11 +1,15 @@
 name: Docs
 on:
   push:
+    branches:
+    - main
     paths:
-    - 'docs/'
+    - 'docs/**'
   pull_request:
+    branches:
+    - main
     paths:
-    - 'docs/'
+    - 'docs/**'
 
 jobs:
   docs:
@@ -18,13 +22,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Register problem matchers
+        run: echo "::add-matcher::.github/matchers.json"
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Setup Poetry
-        uses: abatilo/actions-poetry@v2
+        uses: abatilo/actions-poetry@v3
 
       - name: Cache the virtualenv
         uses: actions/cache@v4
@@ -38,8 +45,8 @@ jobs:
       - name: Build Sphinx docs
         run: poetry run sphinx-build -M dirhtml . _build
 
-      - name: Install and run Vale
-        run: |
-          poetry add vale
-          poetry run vale sync
-          poetry run vale .
+      - name: Run Vale
+        uses: docker://jdkato/vale
+        with:
+          entrypoint: /bin/sh
+          args: -euxc "cd docs && vale sync && vale ."

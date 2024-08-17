@@ -98,6 +98,12 @@ class User extends JsonResource
             ),
             'travel' => TravelAssignment::collection($this->whenLoaded('assignments')),
             'merchandise' => DuesTransactionMerchandise::collection($this->whenLoaded('merchandise')),
+            $this->mergeWhen($this->requestingSelf($request), [
+                'legal_middle_name' => $this->legal_middle_name,
+                'legal_gender' => $this->legal_gender,
+                'date_of_birth' => $this->date_of_birth?->format('Y-m-d'),
+                'delta_skymiles_number' => $this->delta_skymiles_number,
+            ]),
         ];
     }
 

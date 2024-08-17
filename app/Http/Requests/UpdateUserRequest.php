@@ -27,6 +27,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'preferred_first_name' => [
                 'max:127',
+                'regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
             ],
             'phone' => [
                 'digits_between:10,15',
@@ -84,6 +85,23 @@ class UpdateUserRequest extends FormRequest
             ],
             'clickup_invite_pending' => [
                 'boolean',
+            ],
+            'legal_gender' => [
+                'in:M,F,X,U',
+                'nullable',
+            ],
+            'date_of_birth' => [
+                'date_format:Y-m-d',
+                'nullable',
+            ],
+            'delta_skymiles_number' => [
+                'integer',
+                'digits:10',
+                'nullable',
+            ],
+            'legal_middle_name' => [
+                'string',
+                'nullable',
             ],
         ];
     }

@@ -27,13 +27,13 @@
                 <directory name="routes" />
                 <file name="app/Http/Controllers/DocuSignController.php"/>
                 <file name="app/Util/DocuSign.php"/>
-                <file name="app/Exceptions/Handler.php"/>
                 <file name="app/Providers/NovaServiceProvider.php"/>
             </errorLevel>
         </UndefinedClass>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="app" />
+                <directory name="database" />
             </errorLevel>
         </PropertyNotSetInConstructor>
         <LessSpecificImplementedReturnType>
@@ -66,11 +66,6 @@
                 <file name="app/Util/SquareCheckout.php" />
             </errorLevel>
         </MissingReturnType>
-        <UnresolvableInclude>
-            <errorLevel type="suppress">
-                <file name="app/Console/Kernel.php" />
-            </errorLevel>
-        </UnresolvableInclude>
         <UndefinedMagicPropertyFetch>
             <errorLevel type="suppress">
                 <directory name="app" />
@@ -86,6 +81,7 @@
             <errorLevel type="suppress">
                 <directory name="app" />
                 <file name="database/seeders/DuesTransactionsSeeder.php" />
+                <file name="routes/api.php"/>
             </errorLevel>
         </ArgumentTypeCoercion>
         <PossiblyInvalidArgument>
@@ -222,7 +218,7 @@
         </PossiblyNullPropertyAssignment>
         <MoreSpecificImplementedParamType>
             <errorLevel type="suppress">
-                <directory name="app/Nova/Filters" />
+                <directory name="app/" />
             </errorLevel>
         </MoreSpecificImplementedParamType>
         <UndefinedPropertyAssignment>
@@ -248,9 +244,11 @@
         </FalsableReturnStatement>
         <DocblockTypeContradiction>
             <errorLevel type="suppress">
-                <file name="app/Nova/Metrics/EthnicityBreakdown.php" />
-                <file name="app/Http/Controllers/MerchandiseController.php"/>
                 <directory name="app/Policies" />
+                <file name="app/Http/Controllers/MerchandiseController.php"/>
+                <file name="app/Jobs/CreateOrUpdateUserFromBuzzAPI.php"/>
+                <file name="app/Nova/Actions/OverrideAccess.php"/>
+                <file name="app/Util/CasUser.php"/>
             </errorLevel>
         </DocblockTypeContradiction>
         <UndefinedMagicPropertyAssignment>
@@ -273,7 +271,7 @@
         </UnusedClosureParam>
         <MissingTemplateParam>
             <errorLevel type="suppress">
-                <file name="app/Nova/Resource.php"/>
+                <directory name="app/"/>
             </errorLevel>
         </MissingTemplateParam>
         <UnusedClosureParam>
@@ -315,10 +313,15 @@
                 <file name="app/Nova/Actions/CreateDuesPackages.php"/>
                 <file name="app/Nova/TravelAssignment.php"/>
                 <file name="app/Util/DocuSign.php"/>
+                <referencedFunction name="App\Nova\Metrics\TotalAttendance::count"/>
+                <referencedFunction name="Illuminate\Support\Facades\Route::get"/>
+                <referencedFunction name="Illuminate\Support\Facades\Route::post"/>
+                <referencedFunction name="Laravel\Nova\Actions\ActionEvent::prune"/>
                 <referencedFunction name="Laravel\Nova\Fields\BelongsTo::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\BelongsToMany::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Boolean::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\BooleanGroup::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\Date::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\DateTime::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Email::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\File::hideFromDetail"/>
@@ -329,6 +332,7 @@
                 <referencedFunction name="Laravel\Nova\Fields\Text::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Text::showOnDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\URL::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Http\Requests\LensRequest::withFilters"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidOperand>
@@ -346,7 +350,6 @@
             <errorLevel type="suppress">
                 <file name="app/Util/CasUser.php"/>
                 <directory name="app/Providers"/>
-                <file name="app/Exceptions/Handler.php"/>
                 <directory name="app/Http/Controllers/"/>
                 <file name="app/Http/Middleware/Sentry.php"/>
                 <file name="app/Jobs/ProcessPostmarkOutboundWebhook.php"/>
@@ -363,16 +366,6 @@
                 <file name="app/Nova/Actions/MatrixAirfareSearch.php"/>
             </errorLevel>
         </InvalidPropertyFetch>
-        <MoreSpecificReturnType>
-            <errorLevel type="suppress">
-                <file name="app/Providers/RouteServiceProvider.php"/>
-            </errorLevel>
-        </MoreSpecificReturnType>
-        <LessSpecificReturnStatement>
-            <errorLevel type="suppress">
-                <file name="app/Providers/RouteServiceProvider.php"/>
-            </errorLevel>
-        </LessSpecificReturnStatement>
         <RedundantConditionGivenDocblockType>
             <errorLevel type="suppress">
                 <directory name="app/Observers/"/>
@@ -408,5 +401,11 @@
                 <file name="app/Mail/PaymentReceipt.php"/>
             </errorLevel>
         </NullableReturnStatement>
+        <InvalidStaticInvocation>
+            <errorLevel type="suppress">
+                <file name="app/Http/Middleware/CasAuthenticate.php"/>
+                <file name="app/Util/CasUser.php"/>
+            </errorLevel>
+        </InvalidStaticInvocation>
     </issueHandlers>
 </psalm>

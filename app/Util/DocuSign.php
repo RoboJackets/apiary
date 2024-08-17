@@ -22,7 +22,6 @@ use DocuSign\eSign\Client\Auth\UserInfo;
 use DocuSign\eSign\Configuration;
 use DocuSign\eSign\Model\Checkbox;
 use DocuSign\eSign\Model\ConnectEventData;
-use DocuSign\eSign\Model\Date;
 use DocuSign\eSign\Model\Document;
 use DocuSign\eSign\Model\EmailAddress;
 use DocuSign\eSign\Model\EmailSettings;
@@ -493,19 +492,6 @@ class DocuSign
                 ->setXPosition(382)
                 ->setYPosition(self::DBA_Y_ALIGN_CONTACT);
 
-            $dateTabs[] = (new Date())
-                ->setTabType('date')
-                ->setDocumentId(2)
-                ->setPageNumber(1)
-                ->setFont('CourierNew')
-                ->setFontSize('Size8')
-                ->setHeight(20)
-                ->setWidth(60)
-                ->setXPosition(226)
-                ->setYPosition(self::DBA_Y_ALIGN_NOTES_FOR_AGENT)
-                ->setRequired(true)
-                ->setTooltip('The Transportation Security Administration requires date of birth for all travelers.');
-
             $textTabs[] = (new Text())
                 ->setTabType('text')
                 ->setDocumentId(2)
@@ -514,13 +500,13 @@ class DocuSign
                 ->setFontColor('Black')
                 ->setFontSize('Size8')
                 ->setHeight(20)
-                ->setWidth(325)
-                ->setXPosition(295)
+                ->setWidth(488)
+                ->setXPosition(self::DBA_X_ALIGN_TRAVELER_INFO)
                 ->setYPosition(self::DBA_Y_ALIGN_NOTES_FOR_AGENT)
                 ->setRequired(false)
                 ->setTooltip(
                     'If you have a Known Traveler '.
-                    'Number, PASS ID, Redress Control Number, SkyMiles number, or other identifier '.
+                    'Number, PASS ID, Redress Control Number, or other identifier '.
                     'relevant to air travel, enter it here. Specify what kind of number it is!'
                 );
         }
@@ -983,6 +969,18 @@ class DocuSign
                 ->setFontSize('Size12')
                 ->setHeight(20)
                 ->setWidth(100)
+                ->setXPosition(492)
+                ->setYPosition(self::DBA_Y_ALIGN_NAME)
+                ->setValue($assignment->user->legal_middle_name),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
                 ->setXPosition(148)
                 ->setYPosition(self::DBA_Y_ALIGN_CONTACT)
                 ->setValue($assignment->user->phone),
@@ -1022,18 +1020,6 @@ class DocuSign
                 ->setXPosition(self::DBA_X_ALIGN_TRAVELER_INFO)
                 ->setYPosition(326)
                 ->setValue($departure_date->format('Y-m-d').' - '.$return_date->format('Y-m-d')),
-            (new Text())
-                ->setTabType('text')
-                ->setDocumentId(2)
-                ->setPageNumber(1)
-                ->setFont('CourierNew')
-                ->setFontColor('Black')
-                ->setFontSize('Size8')
-                ->setHeight(20)
-                ->setWidth(100)
-                ->setXPosition(self::DBA_X_ALIGN_TRAVELER_INFO)
-                ->setYPosition(self::DBA_Y_ALIGN_NOTES_FOR_AGENT)
-                ->setValue('Date of Birth:'),
             (new Text())
                 ->setTabType('text')
                 ->setDocumentId(2)

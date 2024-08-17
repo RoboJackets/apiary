@@ -34,8 +34,6 @@ class CreateDuesPackages extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\FiscalYear>  $models
-     *
-     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $models)
     {
@@ -76,9 +74,9 @@ class CreateDuesPackages extends Action
         $nonStudentFullYear = 'Full Year ('.$startingYear.'-'.$endingYear.') - Non-Student';
         $nonStudentFullYearCost = 200;
 
-        $fallEffectiveStart = Carbon::create($startingYear, 8, 1, 12, 0, 0, config('app.timezone'));
+        $fallEffectiveStart = Carbon::create($startingYear, 7, 1, 12, 0, 0, config('app.timezone'));
         $fallEffectiveEnd = Carbon::create($endingYear, 1, 1, 12, 0, 0, config('app.timezone'));
-        $fallAccessStart = Carbon::create($startingYear, 8, 1, 12, 0, 0, config('app.timezone'));
+        $fallAccessStart = Carbon::create($startingYear, 7, 1, 12, 0, 0, config('app.timezone'));
         $fallAccessEnd = Carbon::create($endingYear, 1, 31, 12, 0, 0, config('app.timezone'));
         $springEffectiveStart = Carbon::create($endingYear, 1, 1, 12, 0, 0, config('app.timezone'));
         $springEffectiveEnd = Carbon::create($endingYear, 8, 1, 12, 0, 0, config('app.timezone'));

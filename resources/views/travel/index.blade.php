@@ -37,7 +37,7 @@ Travel | {{ config('app.name') }}
                 </tr>
                 <tr>
                   <th scope="row">Fee</th>
-                  <td>${{ $travel->fee_amount }}</td>
+                  <td>{{ $travel->fee_amount === 0 ? "Free" : "$" . $travel->fee_amount }}</td>
                 </tr>
                 <tr>
                   <th scope="row">Costs Included</th>
@@ -73,13 +73,13 @@ Travel | {{ config('app.name') }}
         @endif
             <p>Pay the trip fee. You can <a href="{{ route('pay.travel') }}">click here</a> to pay with a credit or debit card online, or make arrangements with {{ $travel->primaryContact->full_name }} to pay with cash or check in person. Write checks to Georgia Tech, and put RoboJackets on the memo line.</p>
         @endif
-        @if(!$has_emergency_contact)
+        @if($needs_profile_information)
         @if(($travel->needs_docusign && !$tar_received) || !$paid || $needs_dues || $needs_agreement)
             <hr>
         @endif
-            <p>Add emergency contact information to your <a href="{{ route ('profile') }}">{{ config('app.name') }} profile</a>.</p>
+            <p>Add required information to your <a href="{{ route ('profile') }}">{{ config('app.name') }} profile</a>.</p>
         @endif
-        @if($paid && (!$travel->needs_docusign || $tar_received) && $has_emergency_contact && ! $needs_agreement && !$needs_dues)
+        @if($paid && (!$travel->needs_docusign || $tar_received) && ! $needs_profile_information && ! $needs_agreement && !$needs_dues)
         <p>You're all set! Contact {{ $travel->primaryContact->full_name }} if you have any questions.</p>
         @endif
         </div>

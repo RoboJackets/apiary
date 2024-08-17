@@ -102,19 +102,22 @@ class DuesPackage extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'effective_start' => 'datetime',
-        'effective_end' => 'datetime',
-        'access_start' => 'datetime',
-        'access_end' => 'datetime',
-        'cost' => 'float',
-        'available_for_purchase' => 'boolean',
-        'restricted_to_students' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'effective_start' => 'datetime',
+            'effective_end' => 'datetime',
+            'access_start' => 'datetime',
+            'access_end' => 'datetime',
+            'cost' => 'float',
+            'available_for_purchase' => 'boolean',
+            'restricted_to_students' => 'boolean',
+        ];
+    }
 
     public const RELATIONSHIP_PERMISSIONS = [
         'transactions' => 'read-dues-transactions',

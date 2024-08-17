@@ -276,6 +276,10 @@ class User extends Authenticatable
         'clickup_id',
         'exists_in_sums',
         'github_invite_pending',
+        'legal_gender',
+        'date_of_birth',
+        'delta_skymiles_number',
+        'legal_middle_name',
     ];
 
     /**
@@ -287,24 +291,6 @@ class User extends Authenticatable
         'gender',
         'ethnicity',
         'dues',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'access_override_until' => 'datetime',
-        'resume_date' => 'datetime',
-        'github_invite_pending' => 'boolean',
-        'clickup_invite_pending' => 'boolean',
-        'exists_in_sums' => 'boolean',
-        'has_ever_logged_in' => 'boolean',
-        'is_service_account' => 'boolean',
-        'buzzcard_access_opt_out' => 'boolean',
-        'docusign_access_token_expires_at' => 'datetime',
-        'docusign_refresh_token_expires_at' => 'datetime',
     ];
 
     /**
@@ -350,6 +336,28 @@ class User extends Authenticatable
 
     protected string $guard_name = 'web';
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'access_override_until' => 'datetime',
+            'resume_date' => 'datetime',
+            'github_invite_pending' => 'boolean',
+            'clickup_invite_pending' => 'boolean',
+            'exists_in_sums' => 'boolean',
+            'has_ever_logged_in' => 'boolean',
+            'is_service_account' => 'boolean',
+            'buzzcard_access_opt_out' => 'boolean',
+            'docusign_access_token_expires_at' => 'datetime',
+            'docusign_refresh_token_expires_at' => 'datetime',
+            'date_of_birth' => 'date',
+        ];
+    }
+
     public const RELATIONSHIP_PERMISSIONS = [
         'teams' => 'read-teams-membership',
         'dues' => 'read-dues-transactions',
@@ -370,6 +378,16 @@ class User extends Authenticatable
     public function attendance(): HasMany
     {
         return $this->hasMany(Attendance::class, 'gtid', 'gtid');
+    }
+
+    /**
+     * Get the access cards associated with this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AccessCard>
+     */
+    public function accessCards(): HasMany
+    {
+        return $this->hasMany(AccessCard::class);
     }
 
     /**

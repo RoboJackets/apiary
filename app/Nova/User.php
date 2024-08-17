@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Adldap\Laravel\Facades\Adldap;
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Models\User as AppModelsUser;
 use App\Nova\Actions\CreatePersonalAccessToken;
@@ -24,12 +23,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BooleanGroup;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\File;
@@ -43,8 +42,6 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Sentry\SentrySdk;
-use Sentry\Tracing\SpanContext;
 use Spatie\Permission\Models\Role;
 
 /**
@@ -109,6 +106,8 @@ class User extends Resource
 
     /**
      * Get the fields displayed by the resource.
+     *
+     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(NovaRequest $request): array
     {
@@ -126,13 +125,19 @@ class User extends Resource
 
             Text::make('Preferred First Name')
                 ->hideWhenCreating()
-                ->rules('nullable', 'max:127'),
+                ->rules('nullable', 'max:127')
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             Text::make('Legal First Name', 'first_name')
                 ->sortable()
                 ->rules('required', 'max:127'),
 
-            Text::make('Last Name')
+            Text::make('Legal Middle Name', 'legal_middle_name')
+                ->sortable()
+                ->rules('nullable', 'max:127')
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+
+            Text::make('Legal Last Name', 'last_name')
                 ->sortable()
                 ->rules('required', 'max:127'),
 
@@ -142,7 +147,8 @@ class User extends Resource
                     static fn (?string $a): ?string => $a === null || $a === 'member' ? null : ucfirst($a)
                 )
                 ->rules('required')
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             Email::make('Georgia Tech Email', 'gt_email')
                 ->rules('required', 'email:rfc,strict,dns,spoof')
@@ -153,7 +159,8 @@ class User extends Resource
             Text::make('Email Suppression Reason')
                 ->hideWhenCreating()
                 ->hideFromIndex()
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             Number::make('GTID')
                 ->hideFromIndex()
@@ -194,6 +201,33 @@ class User extends Resource
             Text::make('Graduation Semester', 'human_readable_graduation_semester')
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+
+            new Panel(
+                'Air Travel',
+                [
+                    Select::make('Legal Gender')
+                        ->options([
+                            'M' => 'Male (M)',
+                            'F' => 'Female (F)',
+                            'X' => 'Unspecified (X)',
+                            'U' => 'Undisclosed (U)',
+                        ])
+                        ->displayUsingLabels()
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
+                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
+                    Date::make('Date of Birth')
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
+                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
+                    Text::make('Delta SkyMiles Number', 'delta_skymiles_number')
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
+                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ]
+            ),
 
             HasMany::make('Signatures')
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
@@ -362,7 +396,7 @@ class User extends Resource
                 })
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            HasMany::make('Travel Assignments', 'assignments', TravelAssignment::class)
+            HasMany::make('Trip Assignments', 'assignments', TravelAssignment::class)
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class)
@@ -377,6 +411,9 @@ class User extends Resource
                     return $request->user()->can('read-teams-membership');
                 })
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+
+            HasMany::make('Access Cards')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
@@ -424,46 +461,6 @@ class User extends Resource
                     ->onlyOnDetail()
                     ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                     ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
-
-                ...(config('features.whitepages') === true ? [
-                    Text::make('Home Department (Whitepages)', static function (AppModelsUser $user): ?string {
-                        $uid = $user->uid;
-
-                        return Cache::remember(
-                            'home_department_'.$uid,
-                            now()->addDay(),
-                            static function () use ($uid): ?string {
-                                $parentSpan = SentrySdk::getCurrentHub()->getSpan();
-
-                                if ($parentSpan !== null) {
-                                    $context = new SpanContext();
-                                    $context->setOp('ldap.get_home_department');
-                                    $span = $parentSpan->startChild($context);
-                                    SentrySdk::getCurrentHub()->setSpan($span);
-                                }
-
-                                $result = Adldap::search()
-                                    ->where('uid', '=', $uid)
-                                    ->where('employeeType', '=', 'employee')
-                                    ->select('ou')
-                                    ->get()
-                                    ->pluck('ou')
-                                    ->toArray();
-
-                                if ($parentSpan !== null) {
-                                    // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
-                                    $span->finish();
-                                    SentrySdk::getCurrentHub()->setSpan($parentSpan);
-                                }
-
-                                return $result === [] ? null : $result[0][0];
-                            }
-                        );
-                    })
-                        ->onlyOnDetail()
-                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
-                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
-                ] : []),
             ]),
 
             new Panel('Metadata', $this->metaFields()),
@@ -535,7 +532,8 @@ class User extends Resource
 
             Boolean::make('Has Ever Logged In')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             Boolean::make('Is Service Account')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
@@ -546,13 +544,15 @@ class User extends Resource
                 ->hideWhenUpdating()
                 ->hideFromIndex()
                 ->required()
-                ->rules('required'),
+                ->rules('required')
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             Text::make('gtDirGUID', 'gtDirGUID')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->hideWhenCreating()
                 ->hideFromIndex()
-                ->copyable(),
+                ->copyable()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),

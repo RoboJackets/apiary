@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Models\AccessCard;
 use App\Models\User;
-use Laravel\Nova\Notifications\Notification;
 
-class NovaNotificationPolicy
+class AccessCardPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -20,7 +20,7 @@ class NovaNotificationPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Notification $notification): bool
+    public function view(User $user, AccessCard $accessCard): bool
     {
         return $user->hasRole('admin');
     }
@@ -36,7 +36,7 @@ class NovaNotificationPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Notification $notification): false
+    public function update(User $user, AccessCard $accessCard): false
     {
         return false;
     }
@@ -44,7 +44,7 @@ class NovaNotificationPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Notification $notification): false
+    public function delete(User $user, AccessCard $accessCard): false
     {
         return false;
     }
@@ -52,7 +52,7 @@ class NovaNotificationPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Notification $notification): false
+    public function restore(User $user, AccessCard $accessCard): false
     {
         return false;
     }
@@ -60,7 +60,7 @@ class NovaNotificationPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Notification $notification): false
+    public function forceDelete(User $user, AccessCard $accessCard): false
     {
         return false;
     }

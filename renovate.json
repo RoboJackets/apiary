@@ -10,7 +10,8 @@
     ],
     "reviewers": [],
     "ignoreDeps": [
-        "mwgg/airports"
+        "mwgg/airports",
+        "ubuntu"
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
@@ -29,18 +30,17 @@
             "enabled": true,
             "schedule": [
                 "before 4pm every weekday except before 9am every weekday"
-            ],
-            "prPriority": -7
+            ]
         },
         "packageRules": [
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "php"
                 ],
                 "rangeStrategy": "replace"
             },
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "square/square"
                 ],
                 "major": {
@@ -49,7 +49,7 @@
                 "versioning": "loose"
             },
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "oitnetworkservices/buzzapiclient"
                 ],
                 "registryUrls": [
@@ -57,7 +57,7 @@
                 ]
             },
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "laravel/nova"
                 ],
                 "registryUrls": [
@@ -83,7 +83,7 @@
                 "prPriority": 1
             },
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "laravel/framework"
                 ],
                 "prPriority": 2
@@ -96,8 +96,7 @@
             "enabled": true,
             "schedule": [
                 "before 4pm every weekday except before 9am every weekday"
-            ],
-            "prPriority": -6
+            ]
         },
         "packageRules": [
             {
@@ -115,7 +114,7 @@
         "prPriority": -8,
         "packageRules": [
             {
-                "matchPackageNames": ["python"],
+                "matchDepNames": ["python"],
                 "rangeStrategy": "replace"
             }
         ],
@@ -123,14 +122,26 @@
             "enabled": true,
             "schedule": [
                 "before 4pm every weekday except before 9am every weekday"
-            ],
-            "prPriority": -9
+            ]
+        },
+        "major": {
+            "enabled": true
+        }
+    },
+    "poetry": {
+        "major": {
+            "enabled": true
         }
     },
     "docker-compose": {
         "enabled": false
     },
     "docker": {
+        "major": {
+            "enabled": true
+        }
+    },
+    "github-actions": {
         "major": {
             "enabled": true
         }

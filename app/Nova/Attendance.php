@@ -61,7 +61,7 @@ class Attendance extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The logical group associated with the resource.
@@ -98,8 +98,12 @@ class Attendance extends Resource
                 ->hideFromIndex()
                 ->rules('required', 'max:255')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
-                ->resolveUsing(fn (string $gtid): ?string => $this->attendee !== null ? null : $gtid)
+                ->resolveUsing(fn (?string $gtid): ?string => $this->attendee !== null ? null : $gtid)
                 ->copyable(),
+
+            BelongsTo::make('Access Card')
+                ->hideFromIndex()
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             BelongsTo::make('User', 'attendee')
                 ->searchable(),

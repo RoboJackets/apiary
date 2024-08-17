@@ -18,10 +18,10 @@ REDIS_PORT="-1"
 REDIS_HOST="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
 REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
-{{- range service "meilisearch-v1-5" }}
+{{- range service "meilisearch-v1-9" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
-MEILISEARCH_KEY="{{- key "meilisearch/v1-5-admin-key" | trimSpace -}}"
+MEILISEARCH_KEY="{{- key "meilisearch/admin-key-v1.9" | trimSpace -}}"
 SESSION_SECURE_COOKIE="true"
 SESSION_COOKIE="__Host-apiary_session"
 {{ range $key, $value := (key (printf "apiary/%s" (slice (env "NOMAD_JOB_NAME") 7)) | parseJSON) -}}
@@ -33,3 +33,6 @@ CAS_CLIENT_SERVICE="https://{{- with (key "nginx/hostnames" | parseJSON) -}}{{- 
 CAS_VALIDATION="ca"
 CAS_CERT="/etc/ssl/certs/USERTrust_RSA_Certification_Authority.pem"
 HOME="/secrets/"
+RESPONSE_CACHE_HEADER_NAME="x-cache-time"
+RESPONSE_CACHE_AGE_HEADER_NAME="x-cache-age"
+RESPONSE_CACHE_AGE_HEADER=true

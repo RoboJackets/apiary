@@ -13,6 +13,11 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Illuminate\Console\Command;
 
+/**
+ * Imports all models into Scout.
+ *
+ * @phan-suppress PhanUnreferencedClass
+ */
 class ImportAllModels extends Command
 {
     /**

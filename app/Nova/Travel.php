@@ -12,13 +12,16 @@ use App\Models\Travel as AppModelsTravel;
 use App\Notifications\Nova\LinkDocuSignAccount;
 use App\Nova\Actions\DownloadDocuSignForms;
 use App\Nova\Actions\DownloadInstituteApprovedAbsenceRequest;
+use App\Nova\Actions\DownloadPassengerNameList;
 use App\Nova\Actions\MatrixAirfareSearch;
 use App\Nova\Actions\ReviewTrip;
 use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
+use App\Rules\DisallowNumericValues;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
+use App\Rules\TripFeeMinimumNonZeroValue;
 use App\Util\DepartmentNumbers;
 use App\Util\DocuSign;
 use Carbon\Carbon;
@@ -236,7 +239,8 @@ class Travel extends Resource
                         'required',
                         'integer',
                         'min:0',
-                        'max:'.config('travelpolicy.maximum_trip_fee')
+                        'max:'.config('travelpolicy.maximum_trip_fee'),
+                        new TripFeeMinimumNonZeroValue()
                     )
                     ->min(0)
                     ->max(config('travelpolicy.maximum_trip_fee')),
@@ -245,19 +249,21 @@ class Travel extends Resource
                     'Square Processing Fee',
                     static fn (
                         \App\Models\Travel $trip
-                    ): float => Payment::calculateProcessingFee($trip->fee_amount * 100) / 100
+                    ): ?float => $trip->fee_amount === 0 ?
+                        null :
+                        Payment::calculateProcessingFee($trip->fee_amount * 100) / 100
                 )
                     ->onlyOnDetail(),
 
                 Text::make('Costs Paid by RoboJackets', 'included_with_fee')
                     ->required()
-                    ->rules('required')
+                    ->rules('required', new DisallowNumericValues())
                     ->help(view('nova.help.travel.includedwithfee')->render())
                     ->hideFromIndex(),
 
                 Text::make('Costs Paid by Travelers', 'not_included_with_fee')
                     ->required()
-                    ->rules('required')
+                    ->rules('required', new DisallowNumericValues())
                     ->help(view('nova.help.travel.notincludedwithfee')->render())
                     ->hideFromIndex(),
             ]),
@@ -584,8 +590,6 @@ class Travel extends Resource
      * Get the actions available for the resource.
      *
      * @return array<\Laravel\Nova\Actions\Action>
-     *
-     * @phan-suppress PhanPluginNonBoolBranch
      */
     public function actions(Request $request): array
     {
@@ -619,7 +623,7 @@ class Travel extends Resource
                             // ensure every envelope has a summary PDF on disk
                             static fn (bool $carry, \App\Models\DocuSignEnvelope $envelope): bool => $carry &&
                                 $envelope->summary_filename !== null &&
-                                Storage::disk('local')->exists($envelope->itinerary_request_filename),
+                                Storage::disk('local')->exists($envelope->summary_filename),
                             true
                         ),
                     true
@@ -687,6 +691,43 @@ class Travel extends Resource
             }
         }
 
+        if (
+            $trip->status !== 'draft' &&
+            $trip->assignments->count() > 0 &&
+            $trip->needs_airfare_form &&
+            (
+                $request->user()->hasRole('admin') ||
+                $request->user()->id === $trip->primary_contact_user_id
+            )
+        ) {
+            if (
+                $trip->assignments->reduce(
+                    // ensure every assignment's user has legal gender and date of birth
+                    static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
+                        $assignment->user->legal_gender !== null && $assignment->user->date_of_birth !== null,
+                    true
+                )
+            ) {
+                $actions[] = DownloadPassengerNameList::make()
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin') ||
+                        \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
+                    ->canRun(
+                        static fn (NovaRequest $request, AppModelsTravel $trip): bool => $request->user()->hasRole(
+                            'admin'
+                        ) ||
+                            $trip->primary_contact_user_id === $request->user()->id
+                    );
+            } else {
+                $actions[] = Action::danger(
+                    DownloadPassengerNameList::make()->name(),
+                    'Some travelers are missing legal gender or date of birth!'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            }
+        }
+
         if ($trip->status === 'draft' && $trip->needs_airfare_form) {
             $actions[] = MatrixAirfareSearch::make();
         }
@@ -731,17 +772,19 @@ class Travel extends Resource
      */
     public function cards(Request $request): array
     {
-        $cards = [
-            (new PaymentReceivedForTravel())->onlyOnDetail(),
-        ];
-
         if ($request->resourceId === null) {
             return [];
         }
 
-        $requires_tar = AppModelsTravel::where('id', $request->resourceId)->sole()->needs_docusign;
+        $cards = [];
 
-        if ($requires_tar) {
+        $trip = AppModelsTravel::where('id', $request->resourceId)->sole();
+
+        if ($trip->fee_amount > 0) {
+            $cards[] = (new PaymentReceivedForTravel())->onlyOnDetail();
+        }
+
+        if ($trip->needs_docusign) {
             $cards[] = (new TravelAuthorityRequestReceivedForTravel())->onlyOnDetail();
         }
 
@@ -843,6 +886,12 @@ class Travel extends Resource
                     'The selected department and Workday account numbers do not match.'
                 );
             }
+        }
+
+        // require at least one of trip fee or form collection to be enabled
+        if (intval($request->fee_amount) === 0 && ! in_array(true, json_decode($request->forms, true), true)) {
+            $validator->errors()->add('fee_amount', 'Either trip fee or form collection must be enabled.');
+            $validator->errors()->add('forms', 'Either trip fee or form collection must be enabled.');
         }
     }
 

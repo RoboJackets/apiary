@@ -137,23 +137,26 @@ class Travel extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'departure_date' => 'date',
-        'return_date' => 'date',
-        'payment_completion_email_sent' => 'boolean',
-        'form_completion_email_sent' => 'boolean',
-        'is_international' => 'boolean',
-        'export_controlled_technology' => 'boolean',
-        'embargoed_destination' => 'boolean',
-        'biological_materials' => 'boolean',
-        'equipment' => 'boolean',
-        'airfare_policy' => 'array',
-        'forms' => 'array',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'departure_date' => 'date',
+            'return_date' => 'date',
+            'payment_completion_email_sent' => 'boolean',
+            'form_completion_email_sent' => 'boolean',
+            'is_international' => 'boolean',
+            'export_controlled_technology' => 'boolean',
+            'embargoed_destination' => 'boolean',
+            'biological_materials' => 'boolean',
+            'equipment' => 'boolean',
+            'airfare_policy' => 'array',
+            'forms' => 'array',
+        ];
+    }
 
     /**
      * The attributes that Nova might think can be used for filtering, but actually can't.

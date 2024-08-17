@@ -26,20 +26,20 @@
         "vue-loader": "15.11.1"
     },
     "dependencies": {
-        "@sentry/vue": "7.109.0",
-        "axios": "1.6.8",
-        "caniuse-lite": "1.0.30001606",
+        "@sentry/vue": "7.119.0",
+        "axios": "1.7.4",
+        "caniuse-lite": "1.0.30001651",
         "chartist": "0.11.4",
         "chartist-plugin-legend": "0.6.2",
         "chartist-plugin-pointlabels": "0.0.6",
         "jquery": "3.7.1",
         "moment": "2.30.1",
         "popper.js": "1.16.1",
-        "sweetalert2": "11.10.7",
+        "sweetalert2": "11.12.4",
         "vue": "2.7.16",
         "vue-flatpickr-component": "8.1.8",
         "vue-moment": "4.1.0",
-        "vue-select": "3.20.2",
+        "vue-select": "3.20.3",
         "vue-template-compiler": "2.7.16",
         "vuelidate": "0.7.7"
     }

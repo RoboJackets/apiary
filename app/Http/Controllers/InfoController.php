@@ -17,6 +17,14 @@ class InfoController extends Controller
                 'appEnv' => config('app.env'),
                 'allocId' => config('app.alloc_id'),
                 'release' => config('sentry.release'),
+                'oAuthClients' => [
+                    'android' => [
+                        'clientId' => config('oauth.android.client_id'),
+                    ],
+                    'ios' => [
+                        'clientId' => config('oauth.ios.client_id'),
+                    ],
+                ],
             ],
         ]);
     }

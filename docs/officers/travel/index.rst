@@ -2,7 +2,7 @@
 :og:description: Apiary supports collecting payments and commonly used forms for trips.
 
 Travel
-====
+======
 
 Apiary supports collecting payments and commonly used forms for trips.
 

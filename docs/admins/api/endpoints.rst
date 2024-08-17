@@ -79,3 +79,13 @@ All endpoints require an ``Authorization`` header with an OAuth access token, an
    :status 200: an array of team information is returned
    :status 401: the token was either not provided or invalid
    :status 403: the authenticated user does not have permission for this operation (``read-teams``)
+
+.. http:get:: /api/v1/teams/(int:id)/members
+   :synopsis: Return information about members for a given team
+
+   :requestheader Authorization: an OAuth access token (see :ref:`Authentication`)
+   :requestheader Accept: ``application/json``
+
+   :status 200: an array of members for the team is returned
+   :status 401: the token was either not provided or invalid
+   :status 403: the authenticated user does not have permission for this operation (``read-teams``)

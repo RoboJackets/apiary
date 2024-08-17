@@ -120,7 +120,6 @@ class DuesPackage extends Resource
             BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class)
                 ->sortable(),
 
-            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
             Number::make('Paid Transactions', fn (): int => DB::table('dues_transactions')
                 ->selectRaw('count(distinct dues_transactions.id) as count')
                 ->leftJoin('payments', static function (JoinClause $join): void {

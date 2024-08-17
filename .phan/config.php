@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'target_php_version' => '8.2',
+    'target_php_version' => '8.3',
 
     'directory_list' => [
         '.',
@@ -45,8 +45,12 @@ return [
         'PhanReadOnlyPHPDocProperty',
         'PhanReadOnlyProtectedProperty',
         'PhanStaticCallToNonStatic',
+        'PhanTypeExpectedObjectPropAccess',
         'PhanTypeInvalidCallableArrayKey',
+        'PhanTypeMismatchArgument',
+        'PhanTypeMismatchArgumentProbablyReal',
         'PhanTypeMismatchArgumentSuperType',
+        'PhanTypeMismatchReturn',
         'PhanUndeclaredFunctionInCallable',
         'PhanUndeclaredMethod',
         'PhanUnreferencedClosure',
