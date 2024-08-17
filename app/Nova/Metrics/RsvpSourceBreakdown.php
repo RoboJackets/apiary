@@ -19,11 +19,10 @@ class RsvpSourceBreakdown extends Partition
     public function name(): string
     {
         return $this->resourceId === null ? 'RSVP Sources' : 'RSVP Sources for '.Event::where(
-                'id',
-                $this->resourceId
-            )->sole()->name;
+            'id',
+            $this->resourceId
+        )->sole()->name;
     }
-
 
     public function __construct(public ?int $resourceId = null)
     {

@@ -36,24 +36,24 @@ class Main extends Dashboard
     public function cards(): array
     {
         $cards = [
-            (new PaymentsPerDay())->canSee(
+            (new PaymentsPerDay)->canSee(
                 static fn (Request $request): bool => $request->user()->can('read-payments')
             ),
-            (new MembersByFiscalYear())->canSee(
+            (new MembersByFiscalYear)->canSee(
                 static fn (Request $request): bool => $request->user()->can('read-dues-transactions')
             ),
-            (new DuesRevenueByFiscalYear())->canSee(
+            (new DuesRevenueByFiscalYear)->canSee(
                 static fn (Request $request): bool => $request->user()->can('read-dues-transactions')
             ),
-            (new AttendancePerWeek())->canSee(
+            (new AttendancePerWeek)->canSee(
                 static fn (Request $request): bool => $request->user()->can('read-attendance')
             ),
-            (new ActiveAttendanceBreakdown())->canSee(
+            (new ActiveAttendanceBreakdown)->canSee(
                 static fn (Request $request): bool => $request->user()->can('read-users') && $request->user()->can(
                     'read-attendance'
                 )
             ),
-            (new TransactionsByDuesPackage())
+            (new TransactionsByDuesPackage)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
         ];
 
@@ -113,7 +113,7 @@ class Main extends Dashboard
                     if ($event->start_time === null || $event->start_time < Carbon::now()) {
                         $should_include = false;
                     }
-                } else if ($event->end_time < Carbon::now()) {
+                } elseif ($event->end_time < Carbon::now()) {
                     $should_include = false;
                 }
                 if (! $should_include) {

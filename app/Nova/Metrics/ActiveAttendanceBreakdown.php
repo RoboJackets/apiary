@@ -26,16 +26,12 @@ class ActiveAttendanceBreakdown extends Partition
         return $ret;
     }
 
-
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      */
     public function __construct(public bool $showAllTime = false, public ?int $resourceId = null, public ?string $attendableType = null)
     {
         parent::__construct();
-        // $this->resourceId = $resourceId;
-        // $this->showAllTime = $showAllTime;
-        // $this->attendableType = $attendableType;
     }
 
     /**
@@ -43,12 +39,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        $resourceId = $this->resourceId ?? $request->resourceId;//= $request->resourceId ?? $this->resourceId;
-        // if ($this->resourceId !== null) {
-        //     $resourceId = $this->resourceId;
-        // } else if (isset($request->resourceId)) {
-        //     $resourceId = $request->resourceId;
-        // }
+        $resourceId = $this->resourceId ?? $request->resourceId;
         // If a user is found, this will give "Active" in the active column, otherwise the column will be null
         $query = Attendance::selectRaw('count(distinct gtid) as aggregate')
             ->selectSub(
@@ -62,9 +53,7 @@ class ActiveAttendanceBreakdown extends Partition
             $query = $query
                 ->where('attendable_id', $resourceId)
                 ->where('attendable_type',
-                $this->attendableType ?? $request?->model()?->getMorphClass());
-                    // $this->attendableType != "" ? $this->attendableType
-                    // : $request->model()->getMorphClass());
+                    $this->attendableType ?? $request?->model()?->getMorphClass());
         }
 
         if (! $this->showAllTime) {
