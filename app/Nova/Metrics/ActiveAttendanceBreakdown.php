@@ -19,7 +19,7 @@ class ActiveAttendanceBreakdown extends Partition
     public function name(): string
     {
         $ret = $this->showAllTime ? 'Active Attendees' : 'Attendees Last 4 Weeks';
-        if ($this->resourceId !== -1) {
+        if ($this->resourceId !== null) {
             $ret .= ' for '.Event::where('id', $this->resourceId)->sole()->name;
         }
 
@@ -30,7 +30,7 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      */
-    public function __construct(public bool $showAllTime = false, public int $resourceId = -1, public ?string $attendableType = null)
+    public function __construct(public bool $showAllTime = false, public ?int $resourceId = null, public ?string $attendableType = null)
     {
         parent::__construct();
         // $this->resourceId = $resourceId;
@@ -43,12 +43,12 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        $resourceId ;//= $request->resourceId ?? $this->resourceId;
-        if ($this->resourceId != -1) {
-            $resourceId = $this->resourceId;
-        } else if (isset($request->resourceId)) {
-            $resourceId = $request->resourceId;
-        }
+        $resourceId = $this->resourceId ?? $request->resourceId;//= $request->resourceId ?? $this->resourceId;
+        // if ($this->resourceId !== null) {
+        //     $resourceId = $this->resourceId;
+        // } else if (isset($request->resourceId)) {
+        //     $resourceId = $request->resourceId;
+        // }
         // If a user is found, this will give "Active" in the active column, otherwise the column will be null
         $query = Attendance::selectRaw('count(distinct gtid) as aggregate')
             ->selectSub(
@@ -58,7 +58,7 @@ class ActiveAttendanceBreakdown extends Partition
                 'active'
             );
 
-        if (isset($resourceId)) {
+        if ($resourceId !== null) {
             $query = $query
                 ->where('attendable_id', $resourceId)
                 ->where('attendable_type',
@@ -92,8 +92,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function uriKey(): string
     {
-        return $this->resourceId === -1 ? 'active-attendance-breakdown'
-            : 'active-attendance-breakdown-'.$this->attendableType.'-'.$this->resourceId;
-            //'../'.$this->attendableType.'/'.$this->resourceId.'/metrics/active-attendance-breakdown';
+        return $this->resourceId === null ? 'active-attendance-breakdown' :
+            '../'.$this->attendableType.'s/'.$this->resourceId.'/metrics/active-attendance-breakdown';
     }
 }
