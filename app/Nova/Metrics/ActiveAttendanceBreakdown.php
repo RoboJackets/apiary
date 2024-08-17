@@ -29,7 +29,11 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      */
-    public function __construct(public bool $showAllTime = false, public ?int $resourceId = null, public ?string $attendableType = null)
+    public function __construct(
+        public bool $showAllTime = false,
+        public ?int $resourceId = null,
+        public ?string $attendableType = null
+    )
     {
         parent::__construct();
     }
@@ -52,8 +56,10 @@ class ActiveAttendanceBreakdown extends Partition
         if ($resourceId !== null) {
             $query = $query
                 ->where('attendable_id', $resourceId)
-                ->where('attendable_type',
-                    $this->attendableType ?? $request?->model()?->getMorphClass());
+                ->where(
+                    'attendable_type',
+                    $this->attendableType ?? $request?->model()?->getMorphClass()
+                );
         }
 
         if (! $this->showAllTime) {
