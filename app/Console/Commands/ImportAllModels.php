@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Airport;
 use App\Models\Attendance;
 use App\Models\DuesTransaction;
 use App\Models\Event;
@@ -39,6 +40,10 @@ class ImportAllModels extends Command
      */
     public function handle(): int
     {
+        $this->call('scout:import', [
+            'model' => Airport::class,
+        ]);
+
         $this->call('scout:import', [
             'model' => Attendance::class,
         ]);
