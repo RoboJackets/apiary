@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e4f13d6e8b60e25235d06c8195b7cd7",
+    "content-hash": "a15914bffe6fa5c70c84819993094eb3",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3711,16 +3711,16 @@
         },
         {
             "name": "laravel/slack-notification-channel",
-            "version": "v3.3.0",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/slack-notification-channel.git",
-                "reference": "8cd988fad1a08ed88dfd852f140477376c60217f"
+                "reference": "fc8f931b9ae868945cf0c39aeda71f1cbe180484"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/slack-notification-channel/zipball/8cd988fad1a08ed88dfd852f140477376c60217f",
-                "reference": "8cd988fad1a08ed88dfd852f140477376c60217f",
+                "url": "https://api.github.com/repos/laravel/slack-notification-channel/zipball/fc8f931b9ae868945cf0c39aeda71f1cbe180484",
+                "reference": "fc8f931b9ae868945cf0c39aeda71f1cbe180484",
                 "shasum": ""
             },
             "require": {
@@ -3770,9 +3770,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/slack-notification-channel/issues",
-                "source": "https://github.com/laravel/slack-notification-channel/tree/v3.3.0"
+                "source": "https://github.com/laravel/slack-notification-channel/tree/v3.3.1"
             },
-            "time": "2024-07-10T19:39:44+00:00"
+            "time": "2024-08-17T20:57:03+00:00"
         },
         {
             "name": "laravel/socialite",
