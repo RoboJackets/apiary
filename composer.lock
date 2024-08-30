@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b2c6201aca1a35228f31f4b65a5ba60",
+    "content-hash": "4523526d0801202ec8c9e02290ba9233",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -9029,16 +9029,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v7.1.3",
+            "version": "v7.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "b79858aa7a051ea791b0d50269a234a0b50cb231"
+                "reference": "a8f8d60b30b331cf4b743b3632e5acdba3f8285c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/b79858aa7a051ea791b0d50269a234a0b50cb231",
-                "reference": "b79858aa7a051ea791b0d50269a234a0b50cb231",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/a8f8d60b30b331cf4b743b3632e5acdba3f8285c",
+                "reference": "a8f8d60b30b331cf4b743b3632e5acdba3f8285c",
                 "shasum": ""
             },
             "require": {
@@ -9103,7 +9103,7 @@
                 "http"
             ],
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v7.1.3"
+                "source": "https://github.com/symfony/http-client/tree/v7.1.4"
             },
             "funding": [
                 {
@@ -9119,7 +9119,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-17T06:10:24+00:00"
+            "time": "2024-08-26T06:32:37+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
