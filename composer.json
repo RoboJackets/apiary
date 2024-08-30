@@ -63,7 +63,7 @@
         "spatie/laravel-webhook-client": "3.4.2",
         "square/square": "38.0.0.20240821",
         "subfission/cas": "5.0.0",
-        "symfony/http-client": "7.1.3",
+        "symfony/http-client": "7.1.4",
         "symfony/postmark-mailer": "7.1.1",
         "xammie/mailbook": "1.8.1"
     },
