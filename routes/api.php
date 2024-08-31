@@ -74,6 +74,8 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
 
         // Merchandise
         Route::get('merchandise', [MerchandiseController::class, 'index']);
+        Route::get('merchandise/{merchandise}', [MerchandiseController::class, 'show'])
+            ->missing([MerchandiseController::class, 'handleMissingModel']);
         Route::get(
             'merchandise/{merchandise}/distribute/{user:gtid}',
             [MerchandiseController::class, 'getDistribution']

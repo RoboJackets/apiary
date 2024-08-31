@@ -50,6 +50,16 @@ class MerchandiseController extends Controller
         );
     }
 
+    public function show(Merchandise $merchandise): JsonResponse
+    {
+        return response()->json(
+            [
+                'status' => 'success',
+                'merchandise' => MerchandiseResource::make($merchandise),
+            ]
+        );
+    }
+
     public function getDistribution(Merchandise $merchandise, User $user): JsonResponse
     {
         if (! $merchandise->distributable) {
