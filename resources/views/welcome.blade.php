@@ -157,12 +157,11 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                            Clickup Invitation Pending
+                            ClickUp Invitation Pending
                         </h4>
                         <p class="card-text">
-                            You have been invited to the RoboJackets Clickup page. Please go to Clickup using the link below and accept your invitation.
+                            You have been invited to the RoboJackets ClickUp workspace. Please check your email at <span style="font-weight: bold;">{!! $clickupEmail !!}</span> to accept your invitation.
                         </p>
-                        <a href="https://app.clickup.com">Accept Your Invitation</a>
                     </div>
                 </div>
             </div>

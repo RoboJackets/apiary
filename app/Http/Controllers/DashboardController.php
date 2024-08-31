@@ -128,6 +128,7 @@ class DashboardController extends Controller
                 'overrideDate' => $overrideDate,
                 'needsResume' => $needsResume,
                 'githubInvitePending' => $user->github_invite_pending,
+                'clickupEmail' => $user->clickup_email,
                 'clickupInvitePending' => $user->clickup_invite_pending,
                 'sumsAccessPending' => $sumsAccessPending,
                 'signedLatestAgreement' => $signedLatestAgreement,
