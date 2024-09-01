@@ -152,6 +152,20 @@
                 </div>
             </div>
         @endif
+        @if($clickupInvitePending)
+        <div class="col-sm-6 com-md-3 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            ClickUp Invitation Pending
+                        </h4>
+                        <p class="card-text">
+                            You have been invited to the RoboJackets ClickUp workspace. Please check your email at <span style="font-weight: bold;">{!! $clickupEmail !!}</span> to accept your invitation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
         @if($sumsAccessPending)
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">
