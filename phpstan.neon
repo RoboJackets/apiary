@@ -246,7 +246,6 @@ parameters:
     - '#Parameter \#2 \$timestamp of function date expects int\|null, int\|false given\.#'
     - '#Parameter \#2 \$values of method Spatie\\Csp\\Policies\\Policy::addDirective\(\) expects array\|bool\|string, mixed given\.#'
     - '#Parameter \#3 \$fail of method App\\Rules\\MatrixItineraryBusinessPolicy::validate\(\) expects Closure\(string\): Illuminate\\Translation\\PotentiallyTranslatedString, Closure\(string\): void given\.#'
-    - '#Parameter \#3 \$resolveCallback of static method Laravel\\Nova\\Fields\\Field::make\(\) expects \(callable\(\): mixed\)\|null, ''App\\\\Nova\\\\Airport'' given\.#'
     - '#Parameter \#3 \$subject of function str_replace expects array\|string, mixed given\.#'
     - '#Parameter \#3 \$user of static method App\\Util\\SquareCheckout::redirectToSquare\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
