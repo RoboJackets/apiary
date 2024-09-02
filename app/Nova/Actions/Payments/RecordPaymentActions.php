@@ -37,8 +37,19 @@ trait RecordPaymentActions
         $resourceId = $request->resourceId ?? $request->resources;
         $user = $request->user();
 
-        if ($resourceType === null || $resourceId === null || $user === null || is_array($resourceId)) {
+        if (
+            $resourceType === null ||
+            $resourceId === null ||
+            $user === null ||
+            (
+                is_array($resourceId) && count($resourceId) > 1
+            )
+        ) {
             return [];
+        }
+
+        if (is_array($resourceId) && count($resourceId) === 1) {
+            $resourceId = $resourceId[0];
         }
 
         if ($resourceType === \App\Nova\TravelAssignment::uriKey()) {
