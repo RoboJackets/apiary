@@ -30,7 +30,7 @@ abstract class Resource extends NovaResource
      *
      * @param  \Laravel\Scout\Builder  $query
      *
-     * @phan-suppress PhanUndeclaredConstantOfClass
+     * @phan-suppress PhanTypeExpectedObjectOrClassName
      */
     public static function scoutQuery(NovaRequest $request, $query): Builder
     {
