@@ -849,7 +849,8 @@ class User extends Resource
     /**
      * Build a Scout search query for the given resource.
      *
-     * @param  \Laravel\Scout\Builder  $query
+     * @param  \Laravel\Scout\Builder<\App\Models\User>  $query
+     * @return \Laravel\Scout\Builder<\App\Models\User>
      */
     public static function scoutQuery(NovaRequest $request, $query): \Laravel\Scout\Builder
     {
