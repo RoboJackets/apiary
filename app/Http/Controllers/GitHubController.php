@@ -12,16 +12,7 @@ class GitHubController extends Controller
     public function redirectToProvider(Request $request)
     {
         if ($request->user()->github_username !== null) {
-            return response(
-                view(
-                    'errors.generic',
-                    [
-                        'error_code' => 400,
-                        'error_message' => 'You already have a GitHub account linked.',
-                    ]
-                ),
-                400
-            );
+            return redirect(config('jedi.host').'/self-service/github');
         }
 
         return Socialite::driver('github')->redirect();
@@ -32,16 +23,7 @@ class GitHubController extends Controller
         $localUser = $request->user();
 
         if ($localUser->github_username !== null) {
-            return response(
-                view(
-                    'errors.generic',
-                    [
-                        'error_code' => 400,
-                        'error_message' => 'You already have a GitHub account linked.',
-                    ]
-                ),
-                400
-            );
+            return redirect(config('jedi.host').'/self-service/github');
         }
 
         if ($request->error === 'access_denied') {
