@@ -76,12 +76,13 @@ class RemoteAttendanceLink extends Model
      * https://meet.google.com/<alpha and dashes>
      * https://teams.microsoft.com/l/meetup-join/<alphanumeric, -, %, .>/<digits>
      * https://gatech.zoom.us/j/<digits>
+     * https://forms.gle/<alphanumeric>
      * but nothing else, to avoid users redirecting to surprising things.
      *
      * @phan-suppress PhanReadOnlyPublicProperty
      */
     public static string $redirectRegex = '/^(https?:\/\/)?(meet\.google\.com\/[-a-z]+|teams\.microsoft\.com\/l\/'
-        .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+|gatech\.zoom\.us\/j\/[0-9]+)(\?[^@]*)?$/';
+        .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+|gatech\.zoom\.us\/j\/[0-9]+|forms\.gle\/[a-zA-Z0-9])(\?[^@]*)?$/';
 
     /**
      * Get the attributes that should be cast.
@@ -100,8 +101,6 @@ class RemoteAttendanceLink extends Model
      */
     public static function normalizeRedirectUrl(string $url): string
     {
-        $url = Str::lower($url);
-
         if (Str::startsWith($url, 'https://')) {
             return $url;
         }

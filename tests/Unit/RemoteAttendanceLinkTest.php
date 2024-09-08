@@ -63,6 +63,16 @@ final class RemoteAttendanceLinkTest extends TestCase
         $this->redirectRegexTestCase('gatech.zoom.us/j/12345?query@query', false);
     }
 
+    /**
+     * Test Google Form links.
+     */
+    public function testRedirectRegexGoogleForm(): void
+    {
+        $this->redirectRegexTestCase('forms.gle/4PfXD3rUh8', true);
+
+        $this->redirectRegexTestCase('forms.gle/4PfXD3rU&h8-', false);
+    }
+
     private function redirectRegexTestCase(string $url, bool $expected): void
     {
         if ($expected) {
