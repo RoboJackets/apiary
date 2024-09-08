@@ -114,7 +114,7 @@ class User extends Resource
         return [
             Hidden::make('Has Ever Logged In')
                 ->showOnCreating()
-                ->default(static fn (Request $r): bool => false),
+                ->default(static fn (Request $r): int => 0),
 
             Text::make('Username', 'uid')
                 ->sortable()
