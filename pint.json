@@ -5,6 +5,7 @@
         "new_with_parentheses": {
             "anonymous_class": false,
             "named_class": true
-        }
+        },
+        "declare_strict_types": true
     }
 }
