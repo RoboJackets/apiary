@@ -25,7 +25,7 @@
         "ext-uuid": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "ans-group/laravel-health-check": "2.0.0",
+        "ans-group/laravel-health-check": "2.0.1",
         "apereo/phpcas": "1.6.1",
         "ashallendesign/laravel-config-validator": "2.6.1",
         "barryvdh/laravel-dompdf": "3.0.0",

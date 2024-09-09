@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a43bf917c95b5e227343f2cefca841a",
+    "content-hash": "7c79fc0e30c74306caa57335fcac168a",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ans-group/laravel-health-check.git",
-                "reference": "04c571916a57d633094b654f6497baf255e12c36"
+                "reference": "a1998312ef32e8319c0eb87d7a103a4663598335"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ans-group/laravel-health-check/zipball/04c571916a57d633094b654f6497baf255e12c36",
-                "reference": "04c571916a57d633094b654f6497baf255e12c36",
+                "url": "https://api.github.com/repos/ans-group/laravel-health-check/zipball/a1998312ef32e8319c0eb87d7a103a4663598335",
+                "reference": "a1998312ef32e8319c0eb87d7a103a4663598335",
                 "shasum": ""
             },
             "require": {
@@ -96,7 +96,7 @@
                 "issues": "https://github.com/ukfast/laravel-health-check/issues",
                 "source": "https://github.com/ukfast/laravel-health-check/tree/master"
             },
-            "time": "2024-08-08T14:26:36+00:00"
+            "time": "2024-09-09T15:52:02+00:00"
         },
         {
             "name": "apereo/phpcas",
