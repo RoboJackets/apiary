@@ -985,16 +985,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "4.1.0",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "2377cd41609aa51bee822c8d207317a3f363a558"
+                "reference": "7a8252418689feb860ea8dfeab66d64a56a64df8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/2377cd41609aa51bee822c8d207317a3f363a558",
-                "reference": "2377cd41609aa51bee822c8d207317a3f363a558",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/7a8252418689feb860ea8dfeab66d64a56a64df8",
+                "reference": "7a8252418689feb860ea8dfeab66d64a56a64df8",
                 "shasum": ""
             },
             "require": {
@@ -1007,16 +1007,16 @@
                 "doctrine/coding-standard": "12.0.0",
                 "fig/log-test": "^1",
                 "jetbrains/phpstorm-stubs": "2023.2",
-                "phpstan/phpstan": "1.11.7",
+                "phpstan/phpstan": "1.12.0",
                 "phpstan/phpstan-phpunit": "1.4.0",
                 "phpstan/phpstan-strict-rules": "^1.6",
-                "phpunit/phpunit": "10.5.28",
+                "phpunit/phpunit": "10.5.30",
                 "psalm/plugin-phpunit": "0.19.0",
                 "slevomat/coding-standard": "8.13.1",
                 "squizlabs/php_codesniffer": "3.10.2",
                 "symfony/cache": "^6.3.8|^7.0",
                 "symfony/console": "^5.4|^6.3|^7.0",
-                "vimeo/psalm": "5.24.0"
+                "vimeo/psalm": "5.25.0"
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
@@ -1073,7 +1073,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/4.1.0"
+                "source": "https://github.com/doctrine/dbal/tree/4.1.1"
             },
             "funding": [
                 {
@@ -1089,7 +1089,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-15T07:37:07+00:00"
+            "time": "2024-09-03T08:58:39+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -5719,16 +5719,16 @@
         },
         {
             "name": "nunomaduro/termwind",
-            "version": "v2.0.1",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/termwind.git",
-                "reference": "58c4c58cf23df7f498daeb97092e34f5259feb6a"
+                "reference": "e5f21eade88689536c0cdad4c3cd75f3ed26e01a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/58c4c58cf23df7f498daeb97092e34f5259feb6a",
-                "reference": "58c4c58cf23df7f498daeb97092e34f5259feb6a",
+                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/e5f21eade88689536c0cdad4c3cd75f3ed26e01a",
+                "reference": "e5f21eade88689536c0cdad4c3cd75f3ed26e01a",
                 "shasum": ""
             },
             "require": {
@@ -5738,11 +5738,11 @@
             },
             "require-dev": {
                 "ergebnis/phpstan-rules": "^2.2.0",
-                "illuminate/console": "^11.0.0",
-                "laravel/pint": "^1.14.0",
-                "mockery/mockery": "^1.6.7",
-                "pestphp/pest": "^2.34.1",
-                "phpstan/phpstan": "^1.10.59",
+                "illuminate/console": "^11.1.1",
+                "laravel/pint": "^1.15.0",
+                "mockery/mockery": "^1.6.11",
+                "pestphp/pest": "^2.34.6",
+                "phpstan/phpstan": "^1.10.66",
                 "phpstan/phpstan-strict-rules": "^1.5.2",
                 "symfony/var-dumper": "^7.0.4",
                 "thecodingmachine/phpstan-strict-rules": "^1.0.0"
@@ -5787,7 +5787,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/termwind/issues",
-                "source": "https://github.com/nunomaduro/termwind/tree/v2.0.1"
+                "source": "https://github.com/nunomaduro/termwind/tree/v2.1.0"
             },
             "funding": [
                 {
@@ -5803,20 +5803,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-06T16:17:14+00:00"
+            "time": "2024-09-05T15:25:50+00:00"
         },
         {
             "name": "nyholm/psr7",
-            "version": "1.8.1",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Nyholm/psr7.git",
-                "reference": "aa5fc277a4f5508013d571341ade0c3886d4d00e"
+                "reference": "a71f2b11690f4b24d099d6b16690a90ae14fc6f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Nyholm/psr7/zipball/aa5fc277a4f5508013d571341ade0c3886d4d00e",
-                "reference": "aa5fc277a4f5508013d571341ade0c3886d4d00e",
+                "url": "https://api.github.com/repos/Nyholm/psr7/zipball/a71f2b11690f4b24d099d6b16690a90ae14fc6f3",
+                "reference": "a71f2b11690f4b24d099d6b16690a90ae14fc6f3",
                 "shasum": ""
             },
             "require": {
@@ -5869,7 +5869,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Nyholm/psr7/issues",
-                "source": "https://github.com/Nyholm/psr7/tree/1.8.1"
+                "source": "https://github.com/Nyholm/psr7/tree/1.8.2"
             },
             "funding": [
                 {
@@ -5881,7 +5881,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-13T09:31:12+00:00"
+            "time": "2024-09-09T07:06:30+00:00"
         },
         {
             "name": "openspout/openspout",
@@ -9623,20 +9623,20 @@
         },
         {
             "name": "symfony/polyfill-intl-icu",
-            "version": "v1.30.0",
+            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-icu.git",
-                "reference": "e76343c631b453088e2260ac41dfebe21954de81"
+                "reference": "d80a05e9904d2c2b9b95929f3e4b5d3a8f418d78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-icu/zipball/e76343c631b453088e2260ac41dfebe21954de81",
-                "reference": "e76343c631b453088e2260ac41dfebe21954de81",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-icu/zipball/d80a05e9904d2c2b9b95929f3e4b5d3a8f418d78",
+                "reference": "d80a05e9904d2c2b9b95929f3e4b5d3a8f418d78",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=7.2"
             },
             "suggest": {
                 "ext-intl": "For best performance and support of other locales than \"en\""
@@ -9687,7 +9687,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-icu/tree/v1.30.0"
+                "source": "https://github.com/symfony/polyfill-intl-icu/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -9703,7 +9703,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-31T15:07:36+00:00"
+            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "symfony/postmark-mailer",
@@ -12366,16 +12366,16 @@
         },
         {
             "name": "netresearch/jsonmapper",
-            "version": "v4.4.1",
+            "version": "v4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cweiske/jsonmapper.git",
-                "reference": "132c75c7dd83e45353ebb9c6c9f591952995bbf0"
+                "reference": "8e76efb98ee8b6afc54687045e1b8dba55ac76e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/132c75c7dd83e45353ebb9c6c9f591952995bbf0",
-                "reference": "132c75c7dd83e45353ebb9c6c9f591952995bbf0",
+                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/8e76efb98ee8b6afc54687045e1b8dba55ac76e5",
+                "reference": "8e76efb98ee8b6afc54687045e1b8dba55ac76e5",
                 "shasum": ""
             },
             "require": {
@@ -12411,9 +12411,9 @@
             "support": {
                 "email": "cweiske@cweiske.de",
                 "issues": "https://github.com/cweiske/jsonmapper/issues",
-                "source": "https://github.com/cweiske/jsonmapper/tree/v4.4.1"
+                "source": "https://github.com/cweiske/jsonmapper/tree/v4.5.0"
             },
-            "time": "2024-01-31T06:18:54+00:00"
+            "time": "2024-09-08T10:13:13+00:00"
         },
         {
             "name": "nunomaduro/collision",
@@ -13025,16 +13025,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.30.0",
+            "version": "1.30.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "5ceb0e384997db59f38774bf79c2a6134252c08f"
+                "reference": "51b95ec8670af41009e2b2b56873bad96682413e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/5ceb0e384997db59f38774bf79c2a6134252c08f",
-                "reference": "5ceb0e384997db59f38774bf79c2a6134252c08f",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/51b95ec8670af41009e2b2b56873bad96682413e",
+                "reference": "51b95ec8670af41009e2b2b56873bad96682413e",
                 "shasum": ""
             },
             "require": {
@@ -13066,9 +13066,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.30.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.30.1"
             },
-            "time": "2024-08-29T09:54:52+00:00"
+            "time": "2024-09-07T20:13:05+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
