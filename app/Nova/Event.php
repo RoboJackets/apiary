@@ -93,10 +93,12 @@ class Event extends Resource
                 ->withoutTrashed(),
 
             DateTime::make('Start Time')
+                ->sortable()
                 ->required()
                 ->rules('required', 'date', 'before:end_time'),
 
             DateTime::make('End Time')
+                ->sortable()
                 ->required()
                 ->rules('required', 'date', 'after:start_time'),
 
