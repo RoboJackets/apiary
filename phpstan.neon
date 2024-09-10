@@ -73,6 +73,8 @@ parameters:
     - '#Class App\\Models\\[a-zA-Z]+ uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types: TFactory#'
     - '#Class App\\Nova\\Resource extends generic class Laravel\\Nova\\Resource but does not specify its types: TModel#'
     - '#Dynamic call to static method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\)\.#'
+    - '#Dynamic call to static method Illuminate\\Contracts\\Auth\\Guard::check\(\)\.#'
+    - '#Dynamic call to static method Illuminate\\Contracts\\Auth\\Guard::user\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Payment>::orWhereNotNull\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\TravelAssignment>::needDocuSign\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>::whereId\(\)\.#'
