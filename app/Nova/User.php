@@ -114,7 +114,7 @@ class User extends Resource
         return [
             Hidden::make('Has Ever Logged In')
                 ->showOnCreating()
-                ->default(static fn (Request $r): bool => false),
+                ->default(static fn (Request $r): int => 0),
 
             Text::make('Username', 'uid')
                 ->sortable()
@@ -413,7 +413,8 @@ class User extends Resource
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             HasMany::make('Access Cards')
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {

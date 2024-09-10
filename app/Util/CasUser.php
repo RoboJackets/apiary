@@ -39,6 +39,12 @@ class CasUser
             Cas::setAttributes($masq_attrs);
         }
 
+        $existing_user = User::where('uid', Cas::user())->first();
+
+        if ($existing_user !== null && $existing_user->hasRole('shared-device')) {
+            return $existing_user;
+        }
+
         if (config('features.sandbox-mode') !== true) {
             foreach ($attrs as $attr) {
                 if (
