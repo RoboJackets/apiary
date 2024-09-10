@@ -113,12 +113,14 @@ class Main extends Dashboard
             foreach (Event::all() as $event) {
                 $should_include = false;
 
-                if ($event->rsvps()->count() > 0) {
+                if ($event->rsvps()->exists()) {
                     $should_include = true;
                 }
-                if ($event->attendance()->count() > 0) {
+
+                if ($event->attendance()->exists()) {
                     $should_include = true;
                 }
+
                 if ($event->end_time === null) {
                     if ($event->start_time === null || $event->start_time < Carbon::now()) {
                         $should_include = false;
