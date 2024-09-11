@@ -189,6 +189,10 @@ class Payment extends Resource
             return [];
         }
 
+        if (is_array($resourceId) && count($resourceId) === 1) {
+            $resourceId = $resourceId[0];
+        }
+
         $payment = AppModelsPayment::find($resourceId);
 
         if ($payment === null || floatval($payment->amount) === 0.0) {
