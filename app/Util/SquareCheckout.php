@@ -19,6 +19,7 @@ use Square\Models\CreatePaymentLinkRequest;
 use Square\Models\Money;
 use Square\Models\Order;
 use Square\Models\OrderLineItem;
+use Square\Models\OrderPricingOptions;
 use Square\Models\PrePopulatedData;
 use Square\SquareClient;
 
@@ -40,9 +41,14 @@ class SquareCheckout
         $orderLineItem->setVariationName($variation_name);
         $orderLineItem->setBasePriceMoney($basePrice);
 
+        $pricingOptions = new OrderPricingOptions();
+        $pricingOptions->setAutoApplyDiscounts(false);
+        $pricingOptions->setAutoApplyTaxes(false);
+
         $order = new Order(config('square.location_id'));
         $order->setReferenceId((string) $payment->id);
         $order->setLineItems([$orderLineItem]);
+        $order->setPricingOptions($pricingOptions);
 
         $acceptedPaymentMethods = new AcceptedPaymentMethods();
         $acceptedPaymentMethods->setApplePay(true);
