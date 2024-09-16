@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26ee6a07262e4a497d0b2dfc0e46f2c3",
+    "content-hash": "11aea697b427d581de114caab0d262f4",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8368,16 +8368,16 @@
         },
         {
             "name": "subfission/cas",
-            "version": "v5.0.0",
+            "version": "v5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/subfission/cas.git",
-                "reference": "727704fcb474b3f4309d19e6d6d0ca598f40f550"
+                "reference": "6180e042c9772af49ce62abb162cd798760c7fa8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/subfission/cas/zipball/727704fcb474b3f4309d19e6d6d0ca598f40f550",
-                "reference": "727704fcb474b3f4309d19e6d6d0ca598f40f550",
+                "url": "https://api.github.com/repos/subfission/cas/zipball/6180e042c9772af49ce62abb162cd798760c7fa8",
+                "reference": "6180e042c9772af49ce62abb162cd798760c7fa8",
                 "shasum": ""
             },
             "require": {
@@ -8433,9 +8433,9 @@
             ],
             "support": {
                 "issues": "https://github.com/subfission/cas/issues",
-                "source": "https://github.com/subfission/cas/tree/v5.0.0"
+                "source": "https://github.com/subfission/cas/tree/v5.1.0"
             },
-            "time": "2024-04-05T06:46:40+00:00"
+            "time": "2024-09-13T06:00:10+00:00"
         },
         {
             "name": "symfony/clock",
