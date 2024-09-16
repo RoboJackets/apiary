@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3981434daa440f34b2051f4594376204",
+    "content-hash": "3e55601a8c2cd28207a142dc9c99fea7",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -4884,16 +4884,16 @@
         },
         {
             "name": "madewithlove/laravel-nova-uuid-support",
-            "version": "dev-l11-compatibility",
+            "version": "v1.6",
             "source": {
                 "type": "git",
-                "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git",
-                "reference": "7a0cefbd6faf15202deb8fe657591674a320feee"
+                "url": "https://github.com/madewithlove/laravel-nova-uuid-support.git",
+                "reference": "53e3c5c2f16b30265e9d248615c746fe8723bcc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-shift/laravel-nova-uuid-support/zipball/7a0cefbd6faf15202deb8fe657591674a320feee",
-                "reference": "7a0cefbd6faf15202deb8fe657591674a320feee",
+                "url": "https://api.github.com/repos/madewithlove/laravel-nova-uuid-support/zipball/53e3c5c2f16b30265e9d248615c746fe8723bcc5",
+                "reference": "53e3c5c2f16b30265e9d248615c746fe8723bcc5",
                 "shasum": ""
             },
             "require": {
@@ -4913,6 +4913,7 @@
                     "Madewithlove\\NovaUuidSupport\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4926,9 +4927,10 @@
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/laravel-shift/laravel-nova-uuid-support/tree/l11-compatibility"
+                "issues": "https://github.com/madewithlove/laravel-nova-uuid-support/issues",
+                "source": "https://github.com/madewithlove/laravel-nova-uuid-support/tree/v1.6"
             },
-            "time": "2024-03-02T04:00:37+00:00"
+            "time": "2024-09-16T10:27:45+00:00"
         },
         {
             "name": "marcusschwarz/lesserphp",
@@ -15681,7 +15683,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "htmlmin/htmlmin": 20,
-        "madewithlove/laravel-nova-uuid-support": 20,
         "robojackets/client-id-and-secret-modal": 20,
         "robojackets/personal-access-token-modal": 20
     },

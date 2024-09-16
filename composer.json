@@ -48,7 +48,7 @@
         "laravel/slack-notification-channel": "3.3.2",
         "laravel/socialite": "5.16.0",
         "laravel/tinker": "2.9.0",
-        "madewithlove/laravel-nova-uuid-support": "dev-l11-compatibility",
+        "madewithlove/laravel-nova-uuid-support": "1.6",
         "meilisearch/meilisearch-php": "1.10.0",
         "mrclay/jsmin-php": "2.4.3",
         "mwgg/airports": "1.0",
@@ -210,10 +210,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/Laravel-HTMLMin.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git"
         }
     ]
 }
