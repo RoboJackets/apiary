@@ -87,10 +87,13 @@
             <p>This application contains links and redirects to other websites. This privacy policy applies only to this website, as the other websites are governed by their own privacy policies.</p>
 
             <h2>Changes to this privacy policy</h2>
-            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on April 23rd, 2024.</p>
+            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on September 19th, 2024.</p>
 
             <h2>How to contact us</h2>
             <p>If you have a question regarding any RoboJackets computing systems, including this website, contact RoboJackets IT by emailing <a href="support@robojackets.org">support@robojackets.org</a>.</p>
+
+            <h2>Data deletion</h2>
+            <p>If you want RoboJackets to delete information about you, please email <a href="support@robojackets.org">support@robojackets.org</a>.</p>
 
             <h2>EU GDPR Compliance</h2>
             <p>RoboJackets members who are citizens of the European Union have additional rights granted to them under the European Union's General Data Protection Regulation (GDPR). These individuals may exercise their rights under this regulation by emailing <a href="mailto:gdpr@robojackets.org">gdpr@robojackets.org</a> with their request.</p>
