@@ -3693,7 +3693,7 @@ Mailbook::category('Dues Packages')->group(static function () use ($user): void 
 
             return new PackageExpirationReminder();
         })
-        ->variant('Two Packages', static function () use ($user): PackageExpirationReminder {
+        ->variant('Two Packages Same Day', static function () use ($user): PackageExpirationReminder {
             $user->givePermissionTo('update-dues-packages');
 
             DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::firstOrCreate([
@@ -3706,6 +3706,23 @@ Mailbook::category('Dues Packages')->group(static function () use ($user): void 
                 'name' => 'Full Year (2022-2023)',
                 'cost' => 100,
                 'access_end' => Carbon::now()->addDays(3),
+            ]));
+
+            return new PackageExpirationReminder();
+        })
+        ->variant('Two Packages Different Day', static function () use ($user): PackageExpirationReminder {
+            $user->givePermissionTo('update-dues-packages');
+
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::firstOrCreate([
+                'name' => 'Spring 2023',
+                'cost' => 55,
+                'access_end' => Carbon::now()->addDays(3),
+            ]));
+
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::firstOrCreate([
+                'name' => 'Full Year (2022-2023)',
+                'cost' => 100,
+                'access_end' => Carbon::now()->addDays(4),
             ]));
 
             return new PackageExpirationReminder();

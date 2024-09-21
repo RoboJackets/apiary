@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Mail\Dues;
 
 use App\Models\DuesPackage;
@@ -41,7 +43,19 @@ class PackageExpirationReminder extends Mailable implements ShouldQueue
 
             $subject = $package->name.' dues expire on '.$package->access_end->format('l, F j');
         } else {
-            $subject = 'Dues packages expiring within the next 7 days';
+            $packages = DuesPackage::whereDate('access_end', '>', Carbon::now())
+                ->whereDate('access_end', '<', Carbon::now()->addDays(7))
+                ->get();
+
+            $expirations = $packages
+                ->map(static fn (DuesPackage $package): string => $package->access_end->format('l, F j'))
+                ->unique();
+
+            if ($expirations->count() === 1) {
+                $subject = 'Dues packages expiring on '.$expirations->first();
+            } else {
+                $subject = 'Dues packages expiring within the next 7 days';
+            }
         }
 
         return new Envelope(
