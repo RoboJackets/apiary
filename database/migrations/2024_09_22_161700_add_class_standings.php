@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Migrations\Migration;
 use App\Models\ClassStanding;
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -50,8 +50,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('class_standings', function($table)
-        {
+        Schema::table('class_standings', function($table) {
             $table->truncate();
         });
     }
