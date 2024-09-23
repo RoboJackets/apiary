@@ -208,8 +208,6 @@ class DocuSignController extends Controller
         $request->session()->put('deepLinkResource', $resource);
         $request->session()->put('deepLinkResourceId', $resourceId);
 
-        ray($request->session()->all());
-
         return self::redirectToOAuthConsent(request: $request, next: 'getUserTokenDeepLink', impersonation: false);
     }
 
@@ -290,8 +288,6 @@ class DocuSignController extends Controller
                 // We need to store the credentials in their user model, then send them back to their trip detail page.
 
                 self::storeUserDocuSignCredentials($request, $userinfo, $tokens);
-
-                ray($request->session()->all());
 
                 return redirect(
                     route(
