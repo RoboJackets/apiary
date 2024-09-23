@@ -50,7 +50,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('class_standings', static function ($table) {
+        Schema::table('class_standings', static function ($table): void {
             $table->truncate();
         });
     }
