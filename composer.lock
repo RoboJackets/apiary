@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e4c7774d6fb22a460a30c5bce06ff1d",
+    "content-hash": "f6b46e4b8b4e8fdb3c59cff99a86b43d",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3315,17 +3315,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.35.1",
+            "version": "4.35.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "d774e78aa468dfbac70a062d6890bdd07883683f"
+                "reference": "866a4de921f0e2900f64f36379d00ce9427edf05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-d774e78aa468dfbac70a062d6890bdd07883683f-zip-0aadef.zip",
-                "reference": "d774e78aa468dfbac70a062d6890bdd07883683f",
-                "shasum": "f8f6d5dfbd87746574c9f9321076eef38a08f77b"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-866a4de921f0e2900f64f36379d00ce9427edf05-zip-9ff0cc.zip",
+                "reference": "866a4de921f0e2900f64f36379d00ce9427edf05",
+                "shasum": "51dc6a0cc04a7c15c9426b33e3625cbabd774b06"
             },
             "require": {
                 "brick/money": "^0.5|^0.6|^0.7|^0.8|^0.9",
@@ -3435,9 +3435,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.35.1"
+                "source": "https://github.com/laravel/nova/tree/v4.35.2"
             },
-            "time": "2024-09-02T14:45:09+00:00"
+            "time": "2024-09-25T15:50:08+00:00"
         },
         {
             "name": "laravel/passport",
@@ -5890,16 +5890,16 @@
         },
         {
             "name": "openspout/openspout",
-            "version": "v4.24.5",
+            "version": "v4.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/openspout/openspout.git",
-                "reference": "393299ae21153f042f48b185f2adeb4b157d1d93"
+                "reference": "a49b947c0c109f4fd112f9b5c6d6cb3e6baf8b50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/openspout/openspout/zipball/393299ae21153f042f48b185f2adeb4b157d1d93",
-                "reference": "393299ae21153f042f48b185f2adeb4b157d1d93",
+                "url": "https://api.github.com/repos/openspout/openspout/zipball/a49b947c0c109f4fd112f9b5c6d6cb3e6baf8b50",
+                "reference": "a49b947c0c109f4fd112f9b5c6d6cb3e6baf8b50",
                 "shasum": ""
             },
             "require": {
@@ -5909,17 +5909,17 @@
                 "ext-libxml": "*",
                 "ext-xmlreader": "*",
                 "ext-zip": "*",
-                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0"
             },
             "require-dev": {
                 "ext-zlib": "*",
-                "friendsofphp/php-cs-fixer": "^3.60.0",
+                "friendsofphp/php-cs-fixer": "^3.64.0",
                 "infection/infection": "^0.29.6",
                 "phpbench/phpbench": "^1.3.1",
-                "phpstan/phpstan": "^1.11.8",
+                "phpstan/phpstan": "^1.12.4",
                 "phpstan/phpstan-phpunit": "^1.4.0",
-                "phpstan/phpstan-strict-rules": "^1.6.0",
-                "phpunit/phpunit": "^10.5.20 || ^11.2.8"
+                "phpstan/phpstan-strict-rules": "^1.6.1",
+                "phpunit/phpunit": "^11.3.6"
             },
             "suggest": {
                 "ext-iconv": "To handle non UTF-8 CSV files (if \"php-mbstring\" is not already installed or is too limited)",
@@ -5967,7 +5967,7 @@
             ],
             "support": {
                 "issues": "https://github.com/openspout/openspout/issues",
-                "source": "https://github.com/openspout/openspout/tree/v4.24.5"
+                "source": "https://github.com/openspout/openspout/tree/v4.26.0"
             },
             "funding": [
                 {
@@ -5979,7 +5979,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-26T05:48:04+00:00"
+            "time": "2024-09-24T14:04:43+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
