@@ -244,8 +244,6 @@ parameters:
     - '#Strict comparison using !== between string and null will always evaluate to true\.#'
     - '#Strict comparison using === between Illuminate\\Support\\Carbon\|null and false will always evaluate to false\.#'
     - '#Type App\\Models\\Payable in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\Payable> in PHPDoc tag @return is not subtype of template type TChildModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.#'
-    - '#Unable to resolve the template type TGroupKey in call to method Illuminate\\Support\\Collection<\(int\|string\),App\\Models\\[a-zA-Z]+>::groupBy\(\)#'
-    - '#Unable to resolve the template type TGroupKey in call to method Illuminate\\Support\\Collection<int,App\\Models\\[a-zA-Z]+>::groupBy\(\)#'
     - '#Unable to resolve the template type TKey in call to function collect#'
     - '#Unable to resolve the template type TMapWithKeysValue in call to method Illuminate\\Database\\Eloquent\\Collection<int,App\\Models\\[a-zA-Z]+>::mapWithKeys\(\)#'
     - '#Unable to resolve the template type TMapWithKeysValue in call to method Illuminate\\Support\\Collection<\(int\|string\),mixed>::mapWithKeys\(\)#'
