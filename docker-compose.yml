@@ -1,9 +1,13 @@
-version: "3.8"
-
+---
 services:
   apiary:
-    image: robojackets/apiary
-    network_mode: host
+    build:
+      context: .
+      target: backend-uncompressed
+      secrets:
+        - composer_auth
+    ports:
+      - "8000:8000"
     environment:
       APP_NAME: Apiary Local
       APP_ENV: local
@@ -31,8 +35,6 @@ services:
       CAS_LOGOUT_URL: http://127.0.0.1:8000
       JEDI_HOST: null
       JEDI_TOKEN: null
-      PASSPORT_PERSONAL_ACCESS_CLIENT_ID: 95b2031a-5593-4d67-909a-ef32ae06a86a
-      PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET: cu95hXvaJTe5hsotCHMYDMyycHu83PJIBYffVGHL
       PASSPORT_PUBLIC_KEY: /app/storage/oauth-public.key
       PASSPORT_PRIVATE_KEY: /app/storage/oauth-private.key
       SCOUT_DRIVER: collection
@@ -46,8 +48,14 @@ services:
       SANDBOX_USERS: atesting3
     command: >-
       /bin/sh -euxc "export APP_KEY=$$(php artisan key:generate --show --verbose) &&
-      php artisan config:validate --no-interaction &&
       php artisan passport:keys --no-interaction --force &&
       touch /app/database/database.sqlite &&
       php artisan migrate --no-interaction &&
-      exec php artisan serve"
+      export PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=$$(php artisan tinker --no-interaction --verbose --execute \"echo ((new \\Laravel\\Passport\\ClientRepository())->createPersonalAccessClient(null, 'Personal Access Client', 'http://localhost'))->plainSecret\") &&
+      export PASSPORT_PERSONAL_ACCESS_CLIENT_ID=$$(php artisan tinker --no-interaction --verbose --execute \"echo \\Laravel\\Passport\\Passport::client()->sole()->getKey()\") &&
+      php artisan config:validate --no-interaction &&
+      exec php artisan serve --host=0.0.0.0"
+
+secrets:
+  composer_auth:
+    file: ~/.config/composer/auth.json
