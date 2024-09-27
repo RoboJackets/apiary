@@ -24,16 +24,15 @@ return [
             'required',
             'string',
             'alpha_dash',
-        ])
-        ->environments(['test', Rule::ENV_PRODUCTION]),
+            'exists:Laravel\Passport\Client,id',
+        ]),
 
     Rule::make('personal_access_client.secret')
         ->rules([
             'required',
             'string',
             'alpha_num',
-        ])
-        ->environments(['test', Rule::ENV_PRODUCTION]),
+        ]),
 
     Rule::make('cookie_name')
         ->rules([
