@@ -400,7 +400,7 @@
                             this.hasError = false;
                             let attendeeName = (response.data.attendance.attendee ? response.data.attendance.attendee.name : "Non-Member");
                             new Audio(this.sounds.in).play()
-                            Swal.fire({
+                            /*Swal.fire({
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
                                 timer: 1000,
@@ -415,11 +415,24 @@
                                     this.clearFields();
                                   });
                                 }
-                            });
+                            });*/
                             if (!self.stickToTeam) {
+                                Swal.fire({
+                                title: "You're in!",
+                                text: 'Nice to see you, ' + attendeeName + '.',
+                                timer: 1000,
+                                timerProgressBar: true,
+                                showConfirmButton: false,
+                                icon: 'success',
+                                });
                                 this.clearFields();
                             } else {
                                 this.clearGTID();
+                                Swal.fire(this.getTeamSwalConfig(undefined, true)).then(() => {
+                                    // Clear fields in case of any modal dismissal
+                                    // This *does not* fire in normal card processing flow
+                                    this.clearFields();
+                                });
                             }
                         })
                         .catch(error => {
