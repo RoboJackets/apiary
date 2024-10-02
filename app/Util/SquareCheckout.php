@@ -75,9 +75,12 @@ class SquareCheckout
             } elseif (Str::startsWith('1', $user->phone) && Str::length($user->phone) === 11) {
                 // has united states country code but no +, just add it
                 $prePopulatedData->setBuyerPhoneNumber('+'.$user->phone);
-            } else {
+            } elseif (Str::length($user->phone) === 10) {
                 // assume united states number
                 $prePopulatedData->setBuyerPhoneNumber('+1'.$user->phone);
+            } else {
+                // assume international number with country code
+                $prePopulatedData->setBuyerPhoneNumber('+'.$user->phone);
             }
         }
 
