@@ -88,7 +88,6 @@ parameters:
     - '#Method App\\Http\\Controllers\\CalendarController::__invoke\(\) has no return type specified\.#'
     - '#Method App\\Http\\Controllers\\MerchandiseController::handleMissingModel\(\) has parameter \$exception with generic class Illuminate\\Database\\Eloquent\\ModelNotFoundException but does not specify its types: TModel#'
     - '#Method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\MorphTo<App\\Models\\[a-zA-Z]+|App\\Models\\[a-zA-Z]+, App\\Models\\[a-zA-Z]+> but returns Illuminate\\Database\\Eloquent\\Relations\\MorphTo<Illuminate\\Database\\Eloquent\\Model, App\\Models\\[a-zA-Z]+>\.#'
-    - '#Method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\) should return string\|null but returns mixed\.#'
     - '#Method App\\Models\\[a-zA-Z]+::getMorphClassStatic\(\) should return string but returns int\|string\|false\.#'
     - '#Method App\\Models\\[a-zA-Z]+::removeFalsyAssocArrayValues\(\) has parameter \$arr with no value type specified in iterable type array\.#'
     - '#Method App\\Models\\[a-zA-Z]+::removeFalsyAssocArrayValues\(\) return type has no value type specified in iterable type array\.#'
