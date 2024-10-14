@@ -50,8 +50,8 @@ if (sentryDsn !== null) {
             trackComponents: true,
         },
         integrations: [
-            new Sentry.BrowserTracing(),
-            new Sentry.Feedback({
+            Sentry.browserTracingIntegration(),
+            Sentry.feedbackIntegration({
                 colorScheme: "light",
                 showName: false,
                 showEmail: false,

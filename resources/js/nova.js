@@ -30,8 +30,8 @@ Nova.booting((Vue, router) => {
                 trackComponents: true,
             },
             integrations: [
-                new Sentry.BrowserTracing(),
-                new Sentry.Feedback({
+                Sentry.browserTracingIntegration(),
+                Sentry.feedbackIntegration({
                     colorScheme: "system",
                     showName: false,
                     showEmail: false,
