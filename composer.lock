@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9562632a7e7634e739ad8a2f8fd5260",
+    "content-hash": "48142095c741a6770fec38d3b606930c",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -985,16 +985,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "4.1.1",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "7a8252418689feb860ea8dfeab66d64a56a64df8"
+                "reference": "dadd35300837a3a2184bd47d403333b15d0a9bd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/7a8252418689feb860ea8dfeab66d64a56a64df8",
-                "reference": "7a8252418689feb860ea8dfeab66d64a56a64df8",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/dadd35300837a3a2184bd47d403333b15d0a9bd0",
+                "reference": "dadd35300837a3a2184bd47d403333b15d0a9bd0",
                 "shasum": ""
             },
             "require": {
@@ -1007,7 +1007,7 @@
                 "doctrine/coding-standard": "12.0.0",
                 "fig/log-test": "^1",
                 "jetbrains/phpstorm-stubs": "2023.2",
-                "phpstan/phpstan": "1.12.0",
+                "phpstan/phpstan": "1.12.6",
                 "phpstan/phpstan-phpunit": "1.4.0",
                 "phpstan/phpstan-strict-rules": "^1.6",
                 "phpunit/phpunit": "10.5.30",
@@ -1073,7 +1073,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/4.1.1"
+                "source": "https://github.com/doctrine/dbal/tree/4.2.1"
             },
             "funding": [
                 {
@@ -1089,7 +1089,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-03T08:58:39+00:00"
+            "time": "2024-10-10T18:01:27+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -3319,17 +3319,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.35.2",
+            "version": "4.35.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "866a4de921f0e2900f64f36379d00ce9427edf05"
+                "reference": "0122d85b87a3deead74bc5124f5af3ae10e1bb4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-866a4de921f0e2900f64f36379d00ce9427edf05-zip-9ff0cc.zip",
-                "reference": "866a4de921f0e2900f64f36379d00ce9427edf05",
-                "shasum": "51dc6a0cc04a7c15c9426b33e3625cbabd774b06"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-0122d85b87a3deead74bc5124f5af3ae10e1bb4f-zip-a6c05b.zip",
+                "reference": "0122d85b87a3deead74bc5124f5af3ae10e1bb4f",
+                "shasum": "e5d547172ffc5f7034ab8ee08319297c6b0a3452"
             },
             "require": {
                 "brick/money": "^0.5|^0.6|^0.7|^0.8|^0.9",
@@ -3439,9 +3439,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.35.2"
+                "source": "https://github.com/laravel/nova/tree/v4.35.3"
             },
-            "time": "2024-09-25T15:50:08+00:00"
+            "time": "2024-10-09T14:22:17+00:00"
         },
         {
             "name": "laravel/passport",
