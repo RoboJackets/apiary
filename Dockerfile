@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.10
 
-FROM python:3.12-bookworm AS docs-source
+FROM python:3.13-bookworm AS docs-source
 
 COPY --link docs/ /docs/
 
@@ -60,7 +60,7 @@ RUN set -eux && \
     npm install --no-progress && \
     npm run production --no-progress
 
-FROM node:20.17.0 AS frontend
+FROM node:20.18.0 AS frontend
 
 COPY --link --from=frontend-source /app/ /app/
 
