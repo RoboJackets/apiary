@@ -76,7 +76,7 @@
         "mxl/laravel-job": "1.6.0",
         "nunomaduro/collision": "8.1.1",
         "larastan/larastan": "2.9.9",
-        "phan/phan": "5.4.3",
+        "phan/phan": "5.4.5",
         "phpstan/extension-installer": "1.4.3",
         "phpstan/phpstan": "1.12.7",
         "phpstan/phpstan-deprecation-rules": "1.2.1",
