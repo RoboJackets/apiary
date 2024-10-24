@@ -373,7 +373,7 @@ class User extends Authenticatable
     /**
      * Get the attendance records associated with this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Attendance>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Attendance, self>
      */
     public function attendance(): HasMany
     {
@@ -383,7 +383,7 @@ class User extends Authenticatable
     /**
      * Get the access cards associated with this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AccessCard>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AccessCard, self>
      */
     public function accessCards(): HasMany
     {
@@ -393,7 +393,7 @@ class User extends Authenticatable
     /**
      * Get the teams that this user manages.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Team>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Team, self>
      */
     public function manages(): HasMany
     {
@@ -403,7 +403,7 @@ class User extends Authenticatable
     /**
      * Get the Teams that this User is a member of.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Team>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Team, self>
      */
     public function teams(): BelongsToMany
     {
@@ -469,7 +469,7 @@ class User extends Authenticatable
     /**
      * Get the DuesTransactions belonging to the User.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction, self>
      */
     public function dues(): HasMany
     {
@@ -479,7 +479,7 @@ class User extends Authenticatable
     /**
      * Get the DocuSign envelopes signed by the User.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DocuSignEnvelope>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DocuSignEnvelope, self>
      */
     public function envelopes(): HasMany
     {
@@ -489,7 +489,7 @@ class User extends Authenticatable
     /**
      * Get the DuesTransactions belonging to the User.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction, self>
      */
     public function duesTransactions(): HasMany
     {
@@ -499,7 +499,7 @@ class User extends Authenticatable
     /**
      * Get the DuesTransactions belonging to the User.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction, self>
      */
     public function paidDues(): HasMany
     {
@@ -509,7 +509,7 @@ class User extends Authenticatable
     /**
      * Get the DuesPackages belonging to the User through DuesTransactions.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\DuesPackage>
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\DuesPackage, \App\Models\DuesTransaction, self>
      */
     public function duesPackages(): HasManyThrough
     {
@@ -526,7 +526,7 @@ class User extends Authenticatable
     /**
      * Get the events organized by the User.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Event>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Event, self>
      */
     public function events(): HasMany
     {
@@ -536,7 +536,7 @@ class User extends Authenticatable
     /**
      * Get the RSVPs belonging to the User.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Rsvp>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Rsvp, self>
      */
     public function rsvps(): HasMany
     {
@@ -546,7 +546,7 @@ class User extends Authenticatable
     /**
      * Get the majors for this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Major>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Major, self>
      */
     public function majors(): BelongsToMany
     {
@@ -556,7 +556,7 @@ class User extends Authenticatable
     /**
      * Get the class standings for this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\ClassStanding>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\ClassStanding, self>
      */
     public function classStanding(): BelongsToMany
     {
@@ -873,7 +873,7 @@ class User extends Authenticatable
     /**
      * Get the Signatures for this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Signature>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Signature, self>
      */
     public function signatures(): HasMany
     {
@@ -903,7 +903,7 @@ class User extends Authenticatable
     /**
      * Get the Nova notifications for this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\Laravel\Nova\Notifications\Notification>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\Laravel\Nova\Notifications\Notification, self>
      */
     public function novaNotifications(): MorphMany
     {
@@ -913,7 +913,7 @@ class User extends Authenticatable
     /**
      * Get the TravelAssignments for this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TravelAssignment>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TravelAssignment, self>
      */
     public function assignments(): HasMany
     {
@@ -1183,7 +1183,7 @@ class User extends Authenticatable
     /**
      * Get the DuesTransactionMerchandise objects for this user.
      *
-     * @return HasManyThrough<DuesTransactionMerchandise>
+     * @return HasManyThrough<DuesTransactionMerchandise, DuesTransaction, self>
      */
     public function merchandise(): HasManyThrough
     {

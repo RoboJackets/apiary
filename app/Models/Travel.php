@@ -188,7 +188,7 @@ class Travel extends Model
     /**
      * Get the assignments for this travel.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TravelAssignment>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TravelAssignment, self>
      */
     public function assignments(): HasMany
     {

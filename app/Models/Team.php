@@ -130,7 +130,7 @@ class Team extends Model
     /**
      * Get the Users that are members of this Team.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\User>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\User, self>
      */
     public function members(): BelongsToMany
     {
@@ -140,7 +140,7 @@ class Team extends Model
     /**
      * Get all of the team's attendance.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attendance>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attendance, self>
      */
     public function attendance(): MorphMany
     {
@@ -150,7 +150,7 @@ class Team extends Model
     /**
      * Get all of the event's remote attendance links.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\RemoteAttendanceLink>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\RemoteAttendanceLink, self>
      */
     public function remoteAttendanceLinks(): MorphMany
     {

@@ -48,7 +48,7 @@ class MembershipAgreementTemplate extends Model
     /**
      * Get Signatures for this template.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Signature>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Signature, self>
      */
     public function signatures(): HasMany
     {

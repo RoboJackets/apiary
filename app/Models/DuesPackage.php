@@ -127,7 +127,7 @@ class DuesPackage extends Model
     /**
      * Get the DuesTransactions associated with the DuesPackage model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction, self>
      */
     public function duesTransactions(): HasMany
     {
@@ -137,7 +137,7 @@ class DuesPackage extends Model
     /**
      * Get the DuesTransactions associated with the DuesPackage model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction, self>
      */
     public function transactions(): HasMany
     {
@@ -167,7 +167,7 @@ class DuesPackage extends Model
     /**
      * Get the conflicts for this dues package.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesPackage>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesPackage, self>
      */
     public function hasConflictWith(): HasMany
     {
@@ -177,7 +177,7 @@ class DuesPackage extends Model
     /**
      * Get the available merchandise for this dues package.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise, self>
      */
     public function merchandise(): BelongsToMany
     {

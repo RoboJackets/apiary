@@ -32,7 +32,7 @@ interface Payable
     /**
      * The Payment(s) associated with this Payable.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment, self>
      */
     public function payment(): MorphMany;
 
