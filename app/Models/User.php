@@ -509,7 +509,7 @@ class User extends Authenticatable
     /**
      * Get the DuesPackages belonging to the User through DuesTransactions.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\DuesPackage, self>
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\DuesPackage, \App\Models\DuesTransaction, self>
      */
     public function duesPackages(): HasManyThrough
     {
@@ -1183,7 +1183,7 @@ class User extends Authenticatable
     /**
      * Get the DuesTransactionMerchandise objects for this user.
      *
-     * @return HasManyThrough<DuesTransactionMerchandise>
+     * @return HasManyThrough<DuesTransactionMerchandise, DuesTransaction, self>
      */
     public function merchandise(): HasManyThrough
     {
