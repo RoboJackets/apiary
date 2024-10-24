@@ -108,7 +108,7 @@ class DuesTransaction extends Model implements Payable
     /**
      * Get the Payment associated with the DuesTransaction model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment, self>
      */
     public function payment(): MorphMany
     {
@@ -148,7 +148,7 @@ class DuesTransaction extends Model implements Payable
     /**
      * Get the merchandise for this transaction.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise, self>
      */
     public function merchandise(): BelongsToMany
     {
@@ -161,7 +161,7 @@ class DuesTransaction extends Model implements Payable
     /**
      * Get the merchandise for this transaction.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise, self>
      */
     public function jankForNova(): BelongsToMany
     {

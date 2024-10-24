@@ -130,7 +130,7 @@ class Signature extends Model
     /**
      * Get the DocuSign envelope for this signature.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\DocuSignEnvelope>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\DocuSignEnvelope, self>
      */
     public function envelope(): MorphMany
     {

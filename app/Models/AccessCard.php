@@ -37,7 +37,7 @@ class AccessCard extends Model
     /**
      * Get the attendance records associated with this access card.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Attendance>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Attendance, self>
      */
     public function attendance(): HasMany
     {

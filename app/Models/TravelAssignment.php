@@ -115,7 +115,7 @@ class TravelAssignment extends Model implements Payable
     /**
      * Get the Payment for this assignment.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment, self>
      */
     public function payment(): MorphMany
     {
@@ -125,7 +125,7 @@ class TravelAssignment extends Model implements Payable
     /**
      * Get the DocuSign envelope for this assignment.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\DocuSignEnvelope>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\DocuSignEnvelope, self>
      */
     public function envelope(): MorphMany
     {
