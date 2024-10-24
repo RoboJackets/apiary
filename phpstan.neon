@@ -251,7 +251,7 @@ parameters:
     - '#Property Spatie\\Permission\\Contracts\\Permission::\$name \(string\) does not accept mixed\.#'
     - '#Property Spatie\\Permission\\Contracts\\Role::\$name \(string\) does not accept mixed\.#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\[a-zA-Z]+>\) of method App\\Models\\[a-zA-Z]+::user\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\Payable>\) of method App\\Models\\Payable::user\(\)#'
-    - '#Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Payment, App\\Models\\[a-zA-Z]+>) of method App\\Models\\[a-zA-Z]+::payment\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Payment, App\\Models\\Payable>\) of method App\\Models\\Payable::payment\(\)#'
+    - '#Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Payment, App\\Models\\[a-zA-Z]+>\) of method App\\Models\\[a-zA-Z]+::payment\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Payment, App\\Models\\Payable>\) of method App\\Models\\Payable::payment\(\)#'
     - '#Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.#'
     - '#Strict comparison using !== between string and null will always evaluate to true\.#'
     - '#Strict comparison using === between Illuminate\\Support\\Carbon\|null and false will always evaluate to false\.#'
