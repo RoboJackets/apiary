@@ -96,7 +96,7 @@ class Main extends Dashboard
                     );
                 }
 
-                if ($travel->needs_docusign === true) {
+                if ($travel->needs_docusign === true && $travel->return_date > Carbon::now()) {
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
                 }
 
