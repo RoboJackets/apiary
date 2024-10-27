@@ -74,13 +74,6 @@ class Main extends Dashboard
                 }
 
                 if (
-                    $travel->needs_docusign === true &&
-                    $travel->assignments()->where('tar_received', false)->exists()
-                ) {
-                    $should_include = true;
-                }
-
-                if (
                     $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
                         $join->on('travel_assignments.id', '=', 'payable_id')
                             ->where('payments.amount', '>', 0)
@@ -107,7 +100,9 @@ class Main extends Dashboard
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
                 }
 
-                $cards[] = new EmergencyContactInformationForTravel($travel->id);
+                if ($travel->return_date > Carbon::now()) {
+                    $cards[] = new EmergencyContactInformationForTravel($travel->id);
+                }
             }
 
             foreach (Event::all() as $event) {
