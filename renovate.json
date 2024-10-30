@@ -50,14 +50,6 @@
             },
             {
                 "matchDepNames": [
-                    "oitnetworkservices/buzzapiclient"
-                ],
-                "registryUrls": [
-                    "https://composer.robojackets.org"
-                ]
-            },
-            {
-                "matchDepNames": [
                     "laravel/nova"
                 ],
                 "registryUrls": [
@@ -150,16 +142,6 @@
     "timezone": "America/New_York",
     "schedule": [
         "before 4pm every weekday except before 9am every weekday"
-    ],
-    "hostRules": [
-        {
-            "matchHost": "nova.laravel.com",
-            "hostType": "packagist",
-            "username": "developers@robojackets.org",
-            "encrypted": {
-                "password": "wcFMA/xDdHCJBTolAQ/9FXvrJNbWFWIEDiArIZdUELZ8NJz6fC5/wZ4fAhtyLMuBY412ClN+1UGcEt3uEqUrzhwW24DXaIvwPSQCW0wtbz+mjtgfL3v41Wcb6zK3mL+F1Bu6seoYEvEYMgmhTPEnUGpGNvIUj5A6oLhZFymMJYcB6O+CE+sPRBVWpm18T5Zvy1CQdvz/1swKjvcjbP1T4yVg6pHOgqCx/jyufBWPuXzlhn05UDPnIXshofQuPYPosLvLZgKKFBMkktGZq72yL69uBpvVRin7sBthF/XIwjg+Rz8AUW3zlXbKzkSAt1vr4VkFfIfLVrIrHHt7P/6Moi+WzV6cehMQQXQAKlbC2b48uEOelt8oc771GRdu0b5Us59Do7Ttj073aGA/1ufCOedBIxwuOD3QLQcpaHlY+lZlewAFVNPQsPL69l8b1mzh2SPFxuS6XLL2VZBiyhKZdJpvkkAp7h3Co/csxgzyXzxL20OZiwwAEUYB4nWamNii6N/O+z8dDSKDr4jyswlGFTYCsExLKLZhUlTEwJ3VGiQmVNQak1qxDQwaoLt1aLqlc2+JB58lN4pUG+fY/fEZhxSU5Kf5+UZEaOMjS+Zu74eMIa4LP5vxstMtudb4MAb6u9ftzxTD+odyeA9cWhZ+m2UNFp0jR9XlyZifUJHe2qmueE/dcvpPHemvgzkwxNLSigFy7TKqd7cYA5+mTDDARf5PDzARgC7X+iIYc5mfxiAoRERGsYKk/ph+NQG1ixmXnIGRmXB/AJkqfMH+pzw2WynwHGZYK4IrmJhb5jQsgjLya7cc0tuV0Uxg02vDR8dEbCf682hNDJGSRBur3OIIxJ9AM6fVdb1AnTMgNjNi0gZBXp86Eh/IgpJ7JA"
-            }
-        }
     ],
     "lockFileMaintenance": {
         "enabled": true,

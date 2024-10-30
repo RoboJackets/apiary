@@ -30,8 +30,8 @@ Nova.booting((Vue, router) => {
                 trackComponents: true,
             },
             integrations: [
-                new Sentry.BrowserTracing(),
-                new Sentry.Feedback({
+                Sentry.browserTracingIntegration(),
+                Sentry.feedbackIntegration({
                     colorScheme: "system",
                     showName: false,
                     showEmail: false,
@@ -42,6 +42,7 @@ Nova.booting((Vue, router) => {
                     },
                     buttonLabel: 'Feedback',
                     submitButtonLabel: 'Send Feedback',
+                    triggerLabel: 'Feedback',
                     formTitle: 'Feedback',
                     messagePlaceholder: 'Describe what you were trying to do, what you expected, and what actually happened.',
                     successMessageText: 'Thank you for your feedback!',

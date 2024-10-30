@@ -116,7 +116,7 @@ class Event extends Model
     /**
      * Get the Rsvps for this event.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Rsvp>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Rsvp, self>
      */
     public function rsvps(): HasMany
     {
@@ -126,7 +126,7 @@ class Event extends Model
     /**
      * Get all of the event's attendance.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attendance>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attendance, self>
      */
     public function attendance(): MorphMany
     {
@@ -136,7 +136,7 @@ class Event extends Model
     /**
      * Get all of the event's remote attendance links.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\RemoteAttendanceLink>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\RemoteAttendanceLink, self>
      */
     public function remoteAttendanceLinks(): MorphMany
     {

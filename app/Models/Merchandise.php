@@ -98,7 +98,7 @@ class Merchandise extends Model
     /**
      * Get the associated packages for this merchandise.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesPackage>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesPackage, self>
      */
     public function packages(): BelongsToMany
     {
@@ -108,7 +108,7 @@ class Merchandise extends Model
     /**
      * Get the associated transactions for this merchandise.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesTransaction>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesTransaction, self>
      */
     public function transactions(): BelongsToMany
     {
@@ -121,7 +121,7 @@ class Merchandise extends Model
     /**
      * Get the associated transactions for this merchandise.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesTransaction>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesTransaction, self>
      */
     public function jankForNova(): BelongsToMany
     {

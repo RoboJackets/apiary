@@ -50,8 +50,8 @@ if (sentryDsn !== null) {
             trackComponents: true,
         },
         integrations: [
-            new Sentry.BrowserTracing(),
-            new Sentry.Feedback({
+            Sentry.browserTracingIntegration(),
+            Sentry.feedbackIntegration({
                 colorScheme: "light",
                 showName: false,
                 showEmail: false,
@@ -62,6 +62,7 @@ if (sentryDsn !== null) {
                 },
                 buttonLabel: 'Feedback',
                 submitButtonLabel: 'Send Feedback',
+                triggerLabel: 'Feedback',
                 formTitle: 'Feedback',
                 messagePlaceholder: 'Describe what you were trying to do, what you expected, and what actually happened.',
                 successMessageText: 'Thank you for your feedback!',
