@@ -419,7 +419,7 @@
                             if (!self.stickToTeam) {
                                 Swal.fire({
                                 title: "You're in!",
-                                text: 'Nice to see you, ' + attendeeName + '.',
+                                text: 'Nice to see you, Lord ' + attendeeName + '.',
                                 timer: 1000,
                                 timerProgressBar: true,
                                 showConfirmButton: false,
