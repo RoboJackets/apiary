@@ -400,39 +400,22 @@
                             this.hasError = false;
                             let attendeeName = (response.data.attendance.attendee ? response.data.attendance.attendee.name : "Non-Member");
                             new Audio(this.sounds.in).play()
-                            /*Swal.fire({
+                            if (!self.stickToTeam) {
+                                Swal.fire({
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
                                 timer: 1000,
                                 timerProgressBar: true,
                                 showConfirmButton: false,
                                 icon: 'success',
-                            }).then(() => {
-                                if (self.stickToTeam) {
-                                  Swal.fire(this.getTeamSwalConfig(undefined, true)).then(() => {
-                                    // Clear fields in case of any modal dismissal
-                                    // This *does not* fire in normal card processing flow
-                                    this.clearFields();
-                                  });
-                                }
-                            });*/
-                            if (!self.stickToTeam) {
-                                Swal.fire({
-                                title: "You're in!",
-                                text: 'Nice to see you, Lord ' + attendeeName + '.',
-                                timer: 1000,
-                                timerProgressBar: true,
-                                showConfirmButton: false,
-                                icon: 'success',
                                 });
                                 this.clearFields();
-                            } else {
+                            } else { // Do not fire a swal event - When the badge-in swal closes, it clears the current team
                                 this.clearGTID();
-                                Swal.fire(this.getTeamSwalConfig(undefined, true)).then(() => {
-                                    // Clear fields in case of any modal dismissal
-                                    // This *does not* fire in normal card processing flow
-                                    this.clearFields();
-                                });
+                                const teamToStickTo = this.teams.filter(team => team.id.toString() === this.attendance.attendable_id);
+                                if (teamToStickTo.length >= 1) {
+                                    Swal.increaseTimer(600000 - Swal.getTimerLeft());
+                                }
                             }
                         })
                         .catch(error => {
