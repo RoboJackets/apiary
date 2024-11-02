@@ -410,12 +410,29 @@
                                 icon: 'success',
                                 });
                                 this.clearFields();
-                            } else { // Do not fire a swal event - When the badge-in swal closes, it clears the current team
-                                this.clearGTID();
-                                const teamToStickTo = this.teams.filter(team => team.id.toString() === this.attendance.attendable_id);
-                                if (teamToStickTo.length >= 1) {
-                                    Swal.increaseTimer(600000 - Swal.getTimerLeft());
-                                }
+                            } else {
+                                const teamId = this.attendance.attendable_id;
+                                Swal.fire({
+                                title: "You're in!",
+                                text: 'Nice to see you, ' + attendeeName + '.',
+                                timer: 1000,
+                                timerProgressBar: true,
+                                showConfirmButton: false,
+                                icon: 'success',
+                                }).then(() => {
+                                    this.clearGTID();
+                                    this.clearFields();
+                                    const attendables = this.teams.filter(team => team.id.toString() === teamId);
+                                    if (attendables.length >= 0) {
+                                        this.stickToTeam = true;
+                                        this.attendance.attendable_id = teamId;
+                                        Swal.fire(this.getTeamSwalConfig(attendables[0].name, true)).then(() => {
+                                            // Clear fields in case of any modal dismissal
+                                            // This *does not* fire in normal card processing flow
+                                            this.clearFields();
+                                        });
+                                    }
+                                });
                             }
                         })
                         .catch(error => {
