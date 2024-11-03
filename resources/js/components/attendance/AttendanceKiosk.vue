@@ -400,26 +400,39 @@
                             this.hasError = false;
                             let attendeeName = (response.data.attendance.attendee ? response.data.attendance.attendee.name : "Non-Member");
                             new Audio(this.sounds.in).play()
-                            Swal.fire({
+                            if (!self.stickToTeam) {
+                                Swal.fire({
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
                                 timer: 1000,
                                 timerProgressBar: true,
                                 showConfirmButton: false,
                                 icon: 'success',
-                            }).then(() => {
-                                if (self.stickToTeam) {
-                                  Swal.fire(this.getTeamSwalConfig(undefined, true)).then(() => {
-                                    // Clear fields in case of any modal dismissal
-                                    // This *does not* fire in normal card processing flow
-                                    this.clearFields();
-                                  });
-                                }
-                            });
-                            if (!self.stickToTeam) {
+                                });
                                 this.clearFields();
                             } else {
-                                this.clearGTID();
+                                const teamId = this.attendance.attendable_id;
+                                Swal.fire({
+                                title: "You're in!",
+                                text: 'Nice to see you, ' + attendeeName + '.',
+                                timer: 1000,
+                                timerProgressBar: true,
+                                showConfirmButton: false,
+                                icon: 'success',
+                                }).then(() => {
+                                    this.clearGTID();
+                                    this.clearFields();
+                                    const attendables = this.teams.filter(team => team.id.toString() === teamId);
+                                    if (attendables.length >= 0) {
+                                        this.stickToTeam = true;
+                                        this.attendance.attendable_id = teamId;
+                                        Swal.fire(this.getTeamSwalConfig(attendables[0].name, true)).then(() => {
+                                            // Clear fields in case of any modal dismissal
+                                            // This *does not* fire in normal card processing flow
+                                            this.clearFields();
+                                        });
+                                    }
+                                });
                             }
                         })
                         .catch(error => {
