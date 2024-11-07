@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "272a27474885c37ea1f8e6ed3e9f0586",
+    "content-hash": "fb787e14c6143945cb07bb426dd2af57",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -7683,16 +7683,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "4.9.0",
+            "version": "4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "788ec170f51ebb22f2809a1e3f78b19ccd39b70d"
+                "reference": "2af937d47d8aadb8dab0b1d7b9557e495dd12856"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/788ec170f51ebb22f2809a1e3f78b19ccd39b70d",
-                "reference": "788ec170f51ebb22f2809a1e3f78b19ccd39b70d",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/2af937d47d8aadb8dab0b1d7b9557e495dd12856",
+                "reference": "2af937d47d8aadb8dab0b1d7b9557e495dd12856",
                 "shasum": ""
             },
             "require": {
@@ -7710,12 +7710,12 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.4",
-                "guzzlehttp/promises": "^1.0|^2.0",
+                "guzzlehttp/promises": "^2.0.3",
                 "guzzlehttp/psr7": "^1.8.4|^2.1.1",
                 "monolog/monolog": "^1.6|^2.0|^3.0",
                 "phpbench/phpbench": "^1.0",
                 "phpstan/phpstan": "^1.3",
-                "phpunit/phpunit": "^8.5.14|^9.4",
+                "phpunit/phpunit": "^8.5|^9.6",
                 "symfony/phpunit-bridge": "^5.2|^6.0|^7.0",
                 "vimeo/psalm": "^4.17"
             },
@@ -7756,7 +7756,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/4.9.0"
+                "source": "https://github.com/getsentry/sentry-php/tree/4.10.0"
             },
             "funding": [
                 {
@@ -7768,27 +7768,27 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-08-08T14:40:50+00:00"
+            "time": "2024-11-06T07:44:19+00:00"
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "4.9.0",
+            "version": "4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "73078e1f26d57f7a10e3bee2a2f543a02f6493c3"
+                "reference": "cbdd224cc5a224528bf6b19507ad76187b3bccfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/73078e1f26d57f7a10e3bee2a2f543a02f6493c3",
-                "reference": "73078e1f26d57f7a10e3bee2a2f543a02f6493c3",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/cbdd224cc5a224528bf6b19507ad76187b3bccfa",
+                "reference": "cbdd224cc5a224528bf6b19507ad76187b3bccfa",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "^6.0 | ^7.0 | ^8.0 | ^9.0 | ^10.0 | ^11.0",
                 "nyholm/psr7": "^1.0",
                 "php": "^7.2 | ^8.0",
-                "sentry/sentry": "^4.9",
+                "sentry/sentry": "^4.10",
                 "symfony/psr-http-message-bridge": "^1.0 | ^2.0 | ^6.0 | ^7.0"
             },
             "require-dev": {
@@ -7845,7 +7845,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/4.9.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/4.10.0"
             },
             "funding": [
                 {
@@ -7857,7 +7857,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-09-19T12:58:53+00:00"
+            "time": "2024-11-07T08:05:24+00:00"
         },
         {
             "name": "spatie/laravel-csp",
@@ -15713,6 +15713,6 @@
         "ext-xml": "*",
         "ext-zip": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
