@@ -22,7 +22,7 @@
         <a class="navbar-brand" href="/">{{ config('app.name') }}</a>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav me-auto">
             <li class="nav-item {{ $request->is('/') ? 'active' : '' }}">
               <a class="nav-link" href="/">Dashboard</a>
             </li>
@@ -56,7 +56,7 @@
           </ul>
 
           @if (auth()->user())
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ms-auto">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {{auth()->user()->name}}
