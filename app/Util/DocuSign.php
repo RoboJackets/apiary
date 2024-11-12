@@ -971,7 +971,7 @@ class DocuSign
                 ->setWidth(100)
                 ->setXPosition(492)
                 ->setYPosition(self::DBA_Y_ALIGN_NAME)
-                ->setValue($assignment->user->legal_middle_name),
+                ->setValue($assignment->user->legal_middle_name ?? ''),
             (new Text())
                 ->setTabType('text')
                 ->setDocumentId(2)
