@@ -71,8 +71,6 @@ parameters:
     - '#Class App\\Nova\\Resource extends generic class Laravel\\Nova\\Resource but does not specify its types: TModel#'
     - '#Dynamic call to static method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>::[a-zA-Z]+\(\)\.#'
-    - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Payment>::orWhereNotNull\(\)\.#'
-    - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\TravelAssignment>::needDocuSign\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>::whereId\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Laravel\\Nova\\Notifications\\Notification>::[a-zA-Z]+\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Laravel\\Passport\\Token>::whereDate\(\)\.#'
