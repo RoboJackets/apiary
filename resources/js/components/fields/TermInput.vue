@@ -1,6 +1,6 @@
 <template>
-  <div class="form-inline" :class="{ 'is-invalid': isError }">
-    <select v-model="semester" class="custom-select" :class="{ 'is-invalid': isError && semester.length !== 2 }">
+  <div class="d-flex flex-row align-items-center flex-wrap" :class="{ 'is-invalid': isError }">
+    <select v-model="semester" class="custom-select form-select" :class="{ 'is-invalid': isError && semester.length !== 2 }">
       <option value="" style="display:none;">Semester</option>
       <option value="08">Fall</option>
       <option value="02">Spring</option>
