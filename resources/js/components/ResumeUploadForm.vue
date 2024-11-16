@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-12" v-if="loaded && user.is_active && user.is_student">
+    <div class="col-12" v-if="loaded /*&& user.is_active && user.is_student*/">
       <div class="alert alert-danger" role="alert" v-if="message" v-html="messageText"></div>
       <p v-if="hasResume && viewUrl">You last uploaded your resume on {{ resumeDate }}. You can view it <a
         :href="viewUrl">here</a>. If you would like to delete it, ask in #it-helpdesk in Slack.</p>
@@ -9,16 +9,9 @@
       <p>Your resume must be a one page PDF. The maximum file size is 1MB.</p>
 
       <div class="mb-3 row">
-        <label class="col-sm-2 col-form-label">Resume</label>
-        <div class="col-sm-10 col-lg-4">
-          <div class="input-group mb-3">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="resume" name="resume" accept="application/pdf"
+        <label for="resume" class="col-sm-2 col-form-label">Resume</label>
+          <input type="file" class="form-control" id="resume" name="resume" accept="application/pdf"
                      v-on:change="fileChange">
-              <label class="custom-file-label" for="resume">{{ fileLabel }}</label>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="mb-3">
