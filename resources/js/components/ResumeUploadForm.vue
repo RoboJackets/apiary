@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-12" v-if="loaded /*&& user.is_active && user.is_student*/">
+    <div class="col-12" v-if="loaded && user.is_active && user.is_student">
       <div class="alert alert-danger" role="alert" v-if="message" v-html="messageText"></div>
       <p v-if="hasResume && viewUrl">You last uploaded your resume on {{ resumeDate }}. You can view it <a
         :href="viewUrl">here</a>. If you would like to delete it, ask in #it-helpdesk in Slack.</p>
