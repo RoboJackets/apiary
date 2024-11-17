@@ -5,21 +5,21 @@
         <h4>GT Directory Info</h4>
         <p>Information obtained via GT Single Sign-On. Update at <a href="https://passport.gatech.edu">Passport</a>.</p>
 
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label for="user-name" class="col-sm-2 col-form-label">Full Name</label>
           <div class="col-sm-10 col-lg-4">
             <input v-model="localUser.full_name" type="text" readonly class="form-control" id="user-name">
           </div>
         </div>
 
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label for="user-uid" class="col-sm-2 col-form-label">GT Username</label>
           <div class="col-sm-10 col-lg-4">
             <input v-model="localUser.uid" type="text" readonly class="form-control" id="user-uid">
           </div>
         </div>
 
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label for="user-gtemail" class="col-sm-2 col-form-label">GT Email</label>
           <div class="col-sm-10 col-lg-4">
             <input v-model="localUser.gt_email" type="text" readonly class="form-control" id="user-gtemail">
@@ -28,7 +28,7 @@
 
         <h4>Membership Information</h4>
 
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label class="col-sm-2 col-form-label">Dues Term</label>
           <div class="col-sm-10 col-lg-4">
             <select v-model="duesPackageChoice" class="custom-select"
@@ -51,7 +51,7 @@
         <div v-if="graduationInfoRequired">
           <h4>Graduation Information</h4>
 
-          <div class="form-group row">
+          <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Graduation Date</label>
             <div class="col-sm-10 col-lg-4">
               <term-input
@@ -68,7 +68,7 @@
 
         <h4>Information for Merchandise</h4>
 
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label class="col-sm-2 col-form-label">T-Shirt Size</label>
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label class="col-sm-2 col-form-label">Polo Size</label>
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
@@ -102,7 +102,7 @@
         <p v-if="!selectedPackage || (merchGroupNames.length > 0)">One item of RoboJackets merch from each group below
           is included with your dues payment. {{ merchDependencyText }}</p>
         <p v-else>Only students are eligible for RoboJackets merch.</p>
-        <div v-for="(merchlist, group) in merchGroups" class="form-group row">
+        <div v-for="(merchlist, group) in merchGroups" class="mb-3 row">
           <label :for="'merch-'+group" class="col-sm-2 col-form-label">{{ group }}</label>
           <div class="col-sm-10 col-lg-4">
             <select :id="'merch-'+group" class="custom-select" v-model="merchlist.selection"
@@ -119,8 +119,8 @@
 
         <div class="row">
           <div class="col-lg-6 col-12">
-            <button v-if="submitInProgress" disabled class="btn btn-primary float-right">Please wait...</button>
-            <button v-else type="submit" class="btn btn-primary float-right">Continue</button>
+            <button v-if="submitInProgress" disabled class="btn btn-primary float-end">Please wait...</button>
+            <button v-else type="submit" class="btn btn-primary float-end">Continue</button>
           </div>
         </div>
 

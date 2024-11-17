@@ -162,7 +162,7 @@
           <div class="mb-3 row">
             <label for="legal-gender" class="col-sm-2 col-form-label">Legal Gender</label>
             <div class="col-sm-10 col-lg-4">
-              <select id="legal-gender" v-model="user.legal_gender" class="custom-select form-select">
+              <select id="legal-gender" v-model="user.legal_gender" class="form-select">
                 <option value="M">Male (M)</option>
                 <option value="F">Female (F)</option>
                 <option value="X">Unspecified (X)</option>
