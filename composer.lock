@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8adbeb30e3dec4421b8989c275ccde0c",
+    "content-hash": "d953e6cb0d6576567f8725b5fb9468c5",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8025,16 +8025,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.16.5",
+            "version": "1.16.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "c7413972cf22ffdff97b68499c22baa04eddb6a2"
+                "reference": "1f26942dc1e5c49eacfced34fdbc29ed234bd7b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/c7413972cf22ffdff97b68499c22baa04eddb6a2",
-                "reference": "c7413972cf22ffdff97b68499c22baa04eddb6a2",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/1f26942dc1e5c49eacfced34fdbc29ed234bd7b3",
+                "reference": "1f26942dc1e5c49eacfced34fdbc29ed234bd7b3",
                 "shasum": ""
             },
             "require": {
@@ -8073,7 +8073,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.5"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.6"
             },
             "funding": [
                 {
@@ -8081,7 +8081,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-27T18:56:10+00:00"
+            "time": "2024-11-18T15:02:02+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -8168,16 +8168,16 @@
         },
         {
             "name": "spatie/laravel-responsecache",
-            "version": "7.6.0",
+            "version": "7.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-responsecache.git",
-                "reference": "ccaf6fd941e86ea08197b787864bec4a01f658e0"
+                "reference": "008a12bb69478075f64e1cf4d9a09c7c1a28e959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/ccaf6fd941e86ea08197b787864bec4a01f658e0",
-                "reference": "ccaf6fd941e86ea08197b787864bec4a01f658e0",
+                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/008a12bb69478075f64e1cf4d9a09c7c1a28e959",
+                "reference": "008a12bb69478075f64e1cf4d9a09c7c1a28e959",
                 "shasum": ""
             },
             "require": {
@@ -8235,7 +8235,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-responsecache/tree/7.6.0"
+                "source": "https://github.com/spatie/laravel-responsecache/tree/7.6.1"
             },
             "funding": [
                 {
@@ -8247,7 +8247,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-05T09:57:46+00:00"
+            "time": "2024-11-18T11:37:25+00:00"
         },
         {
             "name": "spatie/laravel-webhook-client",
