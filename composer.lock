@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9db95c33b1f9fbcccd8b630fd3ffbfa",
+    "content-hash": "6701b044e56618d60d17f8847a12a702",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -599,30 +599,29 @@
         },
         {
             "name": "brick/money",
-            "version": "0.9.0",
+            "version": "0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/money.git",
-                "reference": "60f8b6ceab2e1c9527e625198a76498fa477804a"
+                "reference": "08b0198a05c6eeac416486da053cbdc02ddff56c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/money/zipball/60f8b6ceab2e1c9527e625198a76498fa477804a",
-                "reference": "60f8b6ceab2e1c9527e625198a76498fa477804a",
+                "url": "https://api.github.com/repos/brick/money/zipball/08b0198a05c6eeac416486da053cbdc02ddff56c",
+                "reference": "08b0198a05c6eeac416486da053cbdc02ddff56c",
                 "shasum": ""
             },
             "require": {
                 "brick/math": "~0.12.0",
-                "ext-json": "*",
                 "php": "^8.1"
             },
             "require-dev": {
-                "brick/varexporter": "~0.3.0",
+                "brick/varexporter": "~0.4.0",
                 "ext-dom": "*",
                 "ext-pdo": "*",
                 "php-coveralls/php-coveralls": "^2.2",
                 "phpunit/phpunit": "^10.1",
-                "vimeo/psalm": "5.16.0"
+                "vimeo/psalm": "5.26.1"
             },
             "suggest": {
                 "ext-intl": "Required to format Money objects"
@@ -645,7 +644,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/money/issues",
-                "source": "https://github.com/brick/money/tree/0.9.0"
+                "source": "https://github.com/brick/money/tree/0.10.0"
             },
             "funding": [
                 {
@@ -653,7 +652,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-26T16:51:39+00:00"
+            "time": "2024-10-12T21:33:29+00:00"
         },
         {
             "name": "calebporzio/sushi",
@@ -2682,27 +2681,27 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "36730d13b1dab9017069004fd458b3e67449a326"
+                "reference": "c4026af538c21355a11c4f90f2a9e0bad7abd88d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/36730d13b1dab9017069004fd458b3e67449a326",
-                "reference": "36730d13b1dab9017069004fd458b3e67449a326",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/c4026af538c21355a11c4f90f2a9e0bad7abd88d",
+                "reference": "c4026af538c21355a11c4f90f2a9e0bad7abd88d",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "laravel/framework": "^8.74|^9.0|^10.0|^11.0",
-                "php": "^7.3|~8.0.0|~8.1.0|~8.2.0|~8.3.0",
+                "php": "^7.3|~8.0.0|~8.1.0|~8.2.0|~8.3.0|~8.4.0",
                 "symfony/console": "^5.3|^6.0|^7.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.3.3",
-                "orchestra/testbench": "^6.4|^7.0|^8.0|^9.0",
+                "orchestra/testbench": "^6.45|^7.44|^8.25|^9.3",
                 "phpunit/phpunit": "^8.0|^9.5.8|^10.4",
                 "roave/security-advisories": "dev-master"
             },
@@ -2746,7 +2745,7 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v1.3.0"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v1.3.1"
             },
             "funding": [
                 {
@@ -2754,7 +2753,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-06-13T01:25:09+00:00"
+            "time": "2024-11-14T14:22:48+00:00"
         },
         {
             "name": "intervention/httpauth",
@@ -3323,20 +3322,20 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.35.4",
+            "version": "4.35.5",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "038b71d0955b0abbd0a878685e300ee3cfe3f3a6"
+                "reference": "3ff66e8325fb6e19624c26b77084f25c6c803a0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-038b71d0955b0abbd0a878685e300ee3cfe3f3a6-zip-39073a.zip",
-                "reference": "038b71d0955b0abbd0a878685e300ee3cfe3f3a6",
-                "shasum": "851e5312203e2e77c545767b1c1b7b5bf262a48c"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-3ff66e8325fb6e19624c26b77084f25c6c803a0b-zip-b8a291.zip",
+                "reference": "3ff66e8325fb6e19624c26b77084f25c6c803a0b",
+                "shasum": "b229f7175b1941d98ac2c106ceb2ec0adaa8a99f"
             },
             "require": {
-                "brick/money": "^0.5|^0.6|^0.7|^0.8|^0.9",
+                "brick/money": "^0.5|^0.6|^0.7|^0.8|^0.9|^0.10",
                 "doctrine/dbal": "^2.13.3|^3.1.2|^4.0",
                 "ext-json": "*",
                 "illuminate/support": "^8.83.4|^9.3.1|^10.0|^11.0",
@@ -3443,9 +3442,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.35.4"
+                "source": "https://github.com/laravel/nova/tree/v4.35.5"
             },
-            "time": "2024-10-23T16:02:00+00:00"
+            "time": "2024-11-21T14:25:52+00:00"
         },
         {
             "name": "laravel/passport",
