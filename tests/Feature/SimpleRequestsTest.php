@@ -12,7 +12,7 @@ final class SimpleRequestsTest extends TestCase
     /**
      * Test simple, non-CAS requests load without any authentication.
      */
-    public function testUnauthenticatedRequests(): void
+    public function test_unauthenticated_requests(): void
     {
         $this->withoutMix();
 
@@ -26,7 +26,7 @@ final class SimpleRequestsTest extends TestCase
     /**
      * Test that the home page loads successfully.
      */
-    public function testHome(): void
+    public function test_home(): void
     {
         $this->withoutMix();
 
@@ -40,7 +40,7 @@ final class SimpleRequestsTest extends TestCase
     /**
      * Test the info endpoint.
      */
-    public function testInfo(): void
+    public function test_info(): void
     {
         $response = $this->get('/api/v1/info');
         $response->assertStatus(200);

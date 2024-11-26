@@ -25,7 +25,7 @@ final class DuesPaymentReminderJobTest extends TestCase
         $this->jobCounter = 0;
     }
 
-    public function testCreatingTransactionDispatchesJob(): void
+    public function test_creating_transaction_dispatches_job(): void
     {
         Queue::fake();
 
@@ -41,7 +41,7 @@ final class DuesPaymentReminderJobTest extends TestCase
         Queue::assertPushed(SendDuesPaymentReminder::class, [$this, 'validateJob']);
     }
 
-    public function testCreatingTwoTransactionsDispatchesOneJob(): void
+    public function test_creating_two_transactions_dispatches_one_job(): void
     {
         Queue::fake();
 
@@ -62,7 +62,7 @@ final class DuesPaymentReminderJobTest extends TestCase
         Queue::assertPushed(SendDuesPaymentReminder::class, [$this, 'validateJob']);
     }
 
-    public function testCreatingPaymentWithZeroAmountDispatchesJob(): void
+    public function test_creating_payment_with_zero_amount_dispatches_job(): void
     {
         Queue::fake();
 
@@ -89,7 +89,7 @@ final class DuesPaymentReminderJobTest extends TestCase
         Queue::assertPushed(SendDuesPaymentReminder::class, [$this, 'validateJob']);
     }
 
-    public function testCreatingPaymentWithNonzeroAmountDoesNotDispatchJob(): void
+    public function test_creating_payment_with_nonzero_amount_does_not_dispatch_job(): void
     {
         Queue::fake();
 
