@@ -49,7 +49,7 @@ final class SelfServiceOverrideTest extends TestCase
     /**
      * Tests override eligibility when conditions are all true and only tasks need to be completed.
      */
-    public function testOverrideEligibilityTasks(): void
+    public function test_override_eligibility_tasks(): void
     {
         Notification::fake();
 
@@ -132,7 +132,7 @@ final class SelfServiceOverrideTest extends TestCase
     /**
      * Tests override eligibility when conditions are all true and only tasks need to be completed.
      */
-    public function testOverrideEligibilityTasksWithIneligibleTeam(): void
+    public function test_override_eligibility_tasks_with_ineligible_team(): void
     {
         Notification::fake();
 
@@ -218,7 +218,7 @@ final class SelfServiceOverrideTest extends TestCase
     /**
      * Testing instances where a user would not be eligible due to existing override.
      */
-    public function testUserWithOverrideNotEligibleForSelfServiceOverride(): void
+    public function test_user_with_override_not_eligible_for_self_service_override(): void
     {
         Notification::fake();
 
@@ -259,7 +259,7 @@ final class SelfServiceOverrideTest extends TestCase
     /**
      * Testing instances where a user would not be eligible due to previous dues.
      */
-    public function testUserWithActivePaidDuesNotEligible(): void
+    public function test_user_with_active_paid_dues_not_eligible(): void
     {
         $user = $this->getTestUser(['non-member']);
         $dues_package = TestCase::createDuesPackage(CarbonImmutable::now());
@@ -288,7 +288,7 @@ final class SelfServiceOverrideTest extends TestCase
     /**
      * Testing instances where a user would not be eligible due to no future dues package.
      */
-    public function testNoFutureDuesPackage(): void
+    public function test_no_future_dues_package(): void
     {
         $user = $this->getTestUser(['non-member']);
 

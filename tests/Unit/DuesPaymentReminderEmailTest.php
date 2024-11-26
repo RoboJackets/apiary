@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 final class DuesPaymentReminderEmailTest extends TestCase
 {
-    public function testGenerateEmailNoOtherPackageAvailable(): void
+    public function test_generate_email_no_other_package_available(): void
     {
         $user = User::factory()->create();
 
@@ -33,7 +33,7 @@ final class DuesPaymentReminderEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testGenerateEmailWithOtherPackageAvailable(): void
+    public function test_generate_email_with_other_package_available(): void
     {
         $user = User::factory()->create();
         $user->primary_affiliation = 'student';

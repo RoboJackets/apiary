@@ -14,7 +14,7 @@ use Tests\TestCase;
 
 final class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
 {
-    public function testPaid(): void
+    public function test_paid(): void
     {
         $user = User::factory()->create();
 
@@ -66,7 +66,7 @@ final class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testNotPaid(): void
+    public function test_not_paid(): void
     {
         $user = User::factory()->create();
 

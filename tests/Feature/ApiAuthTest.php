@@ -15,7 +15,7 @@ final class ApiAuthTest extends TestCase
     /**
      * Test API auth.
      */
-    public function testUsersApiAuth(): void
+    public function test_users_api_auth(): void
     {
         $testId = $this->getTestUser(['member'])->id;
         $this->seed(UsersSeeder::class);

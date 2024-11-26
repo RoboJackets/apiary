@@ -12,7 +12,7 @@ final class RemoteAttendanceLinkTest extends TestCase
     /**
      * Test random links.
      */
-    public function testRedirectRegexRandom(): void
+    public function test_redirect_regex_random(): void
     {
         $this->redirectRegexTestCase('google.com', false);
     }
@@ -20,7 +20,7 @@ final class RemoteAttendanceLinkTest extends TestCase
     /**
      * Test Microsoft Teams links.
      */
-    public function testRedirectRegexMicrosoftTeams(): void
+    public function test_redirect_regex_microsoft_teams(): void
     {
         $this->redirectRegexTestCase('teams.microsoft.com/l/meetup-join/abcd-%.0123/01234', true);
         $this->redirectRegexTestCase('teams.microsoft.com/l/meetup-join/abcd-%.0123/01234?querystring', true);
@@ -34,7 +34,7 @@ final class RemoteAttendanceLinkTest extends TestCase
     /**
      * Test Google Meet links.
      */
-    public function testRedirectRegexGoogleMeet(): void
+    public function test_redirect_regex_google_meet(): void
     {
         $this->redirectRegexTestCase('meet.google.com/aaa-aaaa-aaa', true);
         $this->redirectRegexTestCase('meet.google.com/aaa-aaaa-aaa?querystring', true);
@@ -49,7 +49,7 @@ final class RemoteAttendanceLinkTest extends TestCase
     /**
      * Test Zoom links.
      */
-    public function testRedirectRegexZoom(): void
+    public function test_redirect_regex_zoom(): void
     {
         $this->redirectRegexTestCase('gatech.zoom.us/j/12345678901?pwd=aBCdE1fghI2JKlMNOPQrSTuVWxYz3456', true);
         $this->redirectRegexTestCase('gatech.zoom.us/j/12345678901', true);
@@ -66,7 +66,7 @@ final class RemoteAttendanceLinkTest extends TestCase
     /**
      * Test Google Form links.
      */
-    public function testRedirectRegexGoogleForm(): void
+    public function test_redirect_regex_google_form(): void
     {
         $this->redirectRegexTestCase('forms.gle/4PfXD3rUh8', true);
 

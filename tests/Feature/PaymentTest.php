@@ -83,7 +83,7 @@ class PaymentTest extends TestCase
     /**
      * A new user should have no payment history.
      */
-    public function testNewUserHasNoPayments(): void
+    public function test_new_user_has_no_payments(): void
     {
         $user = $this->getTestUser(['non-member']);
 
@@ -100,7 +100,7 @@ class PaymentTest extends TestCase
     /**
      * A new user should have no payment history, even if they have an unpaid dues transaction.
      */
-    public function testNewUserHasNoPaymentsWithUnpaidDuesTransaction(): void
+    public function test_new_user_has_no_payments_with_unpaid_dues_transaction(): void
     {
         $user = $this->getTestUser(['non-member']);
 
@@ -118,7 +118,7 @@ class PaymentTest extends TestCase
     /**
      * A user who paid dues should be able to view the associated payment.
      */
-    public function testUserWith1DuesPayment(): void
+    public function test_user_with1_dues_payment(): void
     {
         $user = $this->getTestUser(['non-member']);
 
@@ -149,7 +149,7 @@ class PaymentTest extends TestCase
     /**
      * There should only be one payment for a user with 2 dues transactions where only 1 is paid.
      */
-    public function testUserWith1Paid1UnpaidDuesPayment(): void
+    public function test_user_with1_paid1_unpaid_dues_payment(): void
     {
         $user = $this->getTestUser(['non-member']);
 
@@ -186,7 +186,7 @@ class PaymentTest extends TestCase
     /**
      * A user who paid dues twice should be able to view the associated payments.
      */
-    public function testUserWith2PaidDuesTransactions(): void
+    public function test_user_with2_paid_dues_transactions(): void
     {
         $user = $this->getTestUser(['non-member']);
 
@@ -230,7 +230,7 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWith1UnpaidTravelAssignment(): void
+    public function test_user_with1_unpaid_travel_assignment(): void
     {
         // Note: A user must exist before creating a new Travel with TravelFactory
         $user = $this->getTestUser(['member']);
@@ -246,7 +246,7 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWith1PaidTravelAssignment(): void
+    public function test_user_with1_paid_travel_assignment(): void
     {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
@@ -281,7 +281,7 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWith1Unpaid1PaidTravelAssignment(): void
+    public function test_user_with1_unpaid1_paid_travel_assignment(): void
     {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
@@ -319,7 +319,7 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWith2PaidTravelAssignments(): void
+    public function test_user_with2_paid_travel_assignments(): void
     {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
@@ -367,7 +367,7 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWithMixedDuesTransactionsAndTravelAssignments(): void
+    public function test_user_with_mixed_dues_transactions_and_travel_assignments(): void
     {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
@@ -431,7 +431,7 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWith4PaidDuesTransactionsAndTravelAssignments(): void
+    public function test_user_with4_paid_dues_transactions_and_travel_assignments(): void
     {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
@@ -513,7 +513,7 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testSoftDeletedDuesPaymentHidden(): void
+    public function test_soft_deleted_dues_payment_hidden(): void
     {
         $user = $this->getTestUser(['non-member']);
 
@@ -529,7 +529,7 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testSoftDeletedTravelPaymentHidden(): void
+    public function test_soft_deleted_travel_payment_hidden(): void
     {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context

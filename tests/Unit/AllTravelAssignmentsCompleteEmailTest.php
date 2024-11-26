@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 final class AllTravelAssignmentsCompleteEmailTest extends TestCase
 {
-    public function testTarRequired(): void
+    public function test_tar_required(): void
     {
         $user = User::factory()->create();
 
@@ -35,7 +35,7 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testTarRequiredWithOneAssignmentNeedsPayment(): void
+    public function test_tar_required_with_one_assignment_needs_payment(): void
     {
         $user = User::factory()->create();
 
@@ -66,7 +66,7 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testTarRequiredWithTwoAssignmentsNeedPayment(): void
+    public function test_tar_required_with_two_assignments_need_payment(): void
     {
         $user = User::factory()->create();
 
@@ -107,7 +107,7 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testTarRequiredWithOneAssignmentNeedsForms(): void
+    public function test_tar_required_with_one_assignment_needs_forms(): void
     {
         $user = User::factory()->create();
 
@@ -144,7 +144,7 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testTarRequiredWithTwoAssignmentsNeedForms(): void
+    public function test_tar_required_with_two_assignments_need_forms(): void
     {
         $user = User::factory()->create();
 
@@ -200,7 +200,7 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testTarNotRequired(): void
+    public function test_tar_not_required(): void
     {
         $user = User::factory()->create();
 

@@ -24,7 +24,7 @@ final class ExpiringPersonalAccessTokenEmailTest extends TestCase
         Config::set('passport.personal_access_client.secret', $client->plain_secret);
     }
 
-    public function testGenerateEmailForAlreadyExpiredToken(): void
+    public function test_generate_email_for_already_expired_token(): void
     {
         $user = User::factory()->create();
 
@@ -41,7 +41,7 @@ final class ExpiringPersonalAccessTokenEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testGenerateEmailForTokenExpiringSoon(): void
+    public function test_generate_email_for_token_expiring_soon(): void
     {
         $user = User::factory()->create();
 
