@@ -205,5 +205,8 @@
                 "enabled": true
             }
         }
-    ]
+    ],
+    "constraints": {
+        "php": "~8.3"
+    }
 }
