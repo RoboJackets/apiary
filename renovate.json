@@ -206,7 +206,9 @@
             }
         }
     ],
-    "constraints": {
-        "php": "~8.3"
+    "force": {
+        "constraints": {
+            "php": "~8.3"
+        }
     }
 }
