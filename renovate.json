@@ -205,10 +205,5 @@
                 "enabled": true
             }
         }
-    ],
-    "force": {
-        "constraints": {
-            "php": "~8.3"
-        }
-    }
+    ]
 }
