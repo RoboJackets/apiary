@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "757993675425abc149eab33b42e32339",
+    "content-hash": "8178a7180281d2c8d07980766547c210",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -387,16 +387,16 @@
         },
         {
             "name": "ashallendesign/laravel-config-validator",
-            "version": "v2.6.1",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ash-jc-allen/laravel-config-validator.git",
-                "reference": "3da15efe04a4b95c16bad56596bd5295634d899e"
+                "reference": "8bd3eb2dc593da9cc08611f89da535445f1a2e86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/3da15efe04a4b95c16bad56596bd5295634d899e",
-                "reference": "3da15efe04a4b95c16bad56596bd5295634d899e",
+                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/8bd3eb2dc593da9cc08611f89da535445f1a2e86",
+                "reference": "8bd3eb2dc593da9cc08611f89da535445f1a2e86",
                 "shasum": ""
             },
             "require": {
@@ -417,12 +417,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "AshAllenDesign\\ConfigValidator\\Providers\\ConfigValidatorProvider"
-                    ],
                     "aliases": {
                         "ConfigValidator": "AshAllenDesign\\ConfigValidator\\Facades\\ConfigValidator"
-                    }
+                    },
+                    "providers": [
+                        "AshAllenDesign\\ConfigValidator\\Providers\\ConfigValidatorProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -450,7 +450,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ash-jc-allen/laravel-config-validator/issues",
-                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.6.1"
+                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.7.0"
             },
             "funding": [
                 {
@@ -458,7 +458,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-26T16:16:42+00:00"
+            "time": "2024-11-30T16:14:20+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
@@ -8531,16 +8531,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v7.1.8",
+            "version": "v7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "ff04e5b5ba043d2badfb308197b9e6b42883fcd5"
+                "reference": "23c8aae6d764e2bae02d2a99f7532a7f6ed619cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/ff04e5b5ba043d2badfb308197b9e6b42883fcd5",
-                "reference": "ff04e5b5ba043d2badfb308197b9e6b42883fcd5",
+                "url": "https://api.github.com/repos/symfony/console/zipball/23c8aae6d764e2bae02d2a99f7532a7f6ed619cf",
+                "reference": "23c8aae6d764e2bae02d2a99f7532a7f6ed619cf",
                 "shasum": ""
             },
             "require": {
@@ -8604,7 +8604,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v7.1.8"
+                "source": "https://github.com/symfony/console/tree/v7.2.0"
             },
             "funding": [
                 {
@@ -8620,7 +8620,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-06T14:23:19+00:00"
+            "time": "2024-11-06T14:24:19+00:00"
         },
         {
             "name": "symfony/css-selector",
