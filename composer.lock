@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8178a7180281d2c8d07980766547c210",
+    "content-hash": "87a60ab994d75e23c589d4906ca12974",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -10921,16 +10921,16 @@
         },
         {
             "name": "xammie/mailbook",
-            "version": "1.8.2",
+            "version": "1.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Xammie/mailbook.git",
-                "reference": "e7b3b664dd4b1eccee8bb164e25a58253127e264"
+                "reference": "a55757b7aa507aa0c62b8359fc04ff44535c1594"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/e7b3b664dd4b1eccee8bb164e25a58253127e264",
-                "reference": "e7b3b664dd4b1eccee8bb164e25a58253127e264",
+                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/a55757b7aa507aa0c62b8359fc04ff44535c1594",
+                "reference": "a55757b7aa507aa0c62b8359fc04ff44535c1594",
                 "shasum": ""
             },
             "require": {
@@ -10957,12 +10957,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Xammie\\Mailbook\\MailbookServiceProvider"
-                    ],
                     "aliases": {
                         "Mailbook": "Xammie\\Mailbook\\Facades\\Mailbook"
-                    }
+                    },
+                    "providers": [
+                        "Xammie\\Mailbook\\MailbookServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -10990,7 +10990,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Xammie/mailbook/issues",
-                "source": "https://github.com/Xammie/mailbook/tree/1.8.2"
+                "source": "https://github.com/Xammie/mailbook/tree/1.8.3"
             },
             "funding": [
                 {
@@ -10998,7 +10998,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-20T17:33:38+00:00"
+            "time": "2024-12-06T14:05:23+00:00"
         }
     ],
     "packages-dev": [
