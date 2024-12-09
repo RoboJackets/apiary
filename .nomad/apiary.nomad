@@ -288,6 +288,16 @@ EOF
         ]
       }
 
+      action "clear-response-cache" {
+        command = "/usr/bin/php"
+
+        args = [
+          "-f",
+          "/app/artisan",
+          "responsecache:clear",
+        ]
+      }
+
       shutdown_delay = var.web_shutdown_delay
     }
 

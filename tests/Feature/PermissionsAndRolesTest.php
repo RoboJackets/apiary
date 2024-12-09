@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 final class PermissionsAndRolesTest extends TestCase
 {
-    public function testPermissionsLoadedInDatabase(): void
+    public function test_permissions_loaded_in_database(): void
     {
         $allPermissions = Permission::all();
         $this->assertGreaterThan(
@@ -26,7 +26,7 @@ final class PermissionsAndRolesTest extends TestCase
     /**
      * Ensure that the admin role has all permissions.
      */
-    public function testAdminRoleHasAllPermissions(): void
+    public function test_admin_role_has_all_permissions(): void
     {
         $permissions = Role::where('name', 'admin')->first()->permissions;
         $allPermissions = Permission::where('name', '!=', 'refund-payments')
@@ -41,7 +41,7 @@ final class PermissionsAndRolesTest extends TestCase
     /**
      * Ensure the member and non-member roles have the same permissions.
      */
-    public function testMemberAndNonMemberAreSame(): void
+    public function test_member_and_non_member_are_same(): void
     {
         $nonmember = Role::where('name', 'non-member')->first()->permissions;
         $member = Role::where('name', 'member')->first()->permissions;

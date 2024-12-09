@@ -969,18 +969,6 @@ class DocuSign
                 ->setFontSize('Size12')
                 ->setHeight(20)
                 ->setWidth(100)
-                ->setXPosition(492)
-                ->setYPosition(self::DBA_Y_ALIGN_NAME)
-                ->setValue($assignment->user->legal_middle_name),
-            (new Text())
-                ->setTabType('text')
-                ->setDocumentId(2)
-                ->setPageNumber(1)
-                ->setFont('CourierNew')
-                ->setFontColor('Black')
-                ->setFontSize('Size12')
-                ->setHeight(20)
-                ->setWidth(100)
                 ->setXPosition(148)
                 ->setYPosition(self::DBA_Y_ALIGN_CONTACT)
                 ->setValue($assignment->user->phone),
@@ -1047,6 +1035,21 @@ class DocuSign
                 ->setXPosition(149)
                 ->setYPosition(465)
                 ->setValue($assignment->user->employee_id);
+        }
+
+        if ($assignment->user->legal_middle_name !== null) {
+            $textTabs[] = (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(492)
+                ->setYPosition(self::DBA_Y_ALIGN_NAME)
+                ->setValue($assignment->user->legal_middle_name);
         }
 
         return (new Document())
