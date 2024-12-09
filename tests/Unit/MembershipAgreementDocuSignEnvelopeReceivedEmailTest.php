@@ -20,7 +20,7 @@ final class MembershipAgreementDocuSignEnvelopeReceivedEmailTest extends TestCas
         MembershipAgreementTemplate::factory()->create();
     }
 
-    public function testGenerateEmailForElectronicSignature(): void
+    public function test_generate_email_for_electronic_signature(): void
     {
         $user = User::factory()->create();
 

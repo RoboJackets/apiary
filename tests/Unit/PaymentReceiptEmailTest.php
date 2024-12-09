@@ -15,7 +15,7 @@ use Tests\TestCase;
 
 final class PaymentReceiptEmailTest extends TestCase
 {
-    public function testGenerateEmailForOnlineDuesPayment(): void
+    public function test_generate_email_for_online_dues_payment(): void
     {
         $user = User::factory()->create();
 
@@ -46,7 +46,7 @@ final class PaymentReceiptEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testGenerateEmailForCashDuesPayment(): void
+    public function test_generate_email_for_cash_dues_payment(): void
     {
         $member = User::factory()->create();
 
@@ -79,7 +79,7 @@ final class PaymentReceiptEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testGenerateEmailForOnlineTravelPaymentWithTarRequiredButNotComplete(): void
+    public function test_generate_email_for_online_travel_payment_with_tar_required_but_not_complete(): void
     {
         $user = User::factory()->create();
 
@@ -123,7 +123,7 @@ final class PaymentReceiptEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testGenerateEmailForOnlineTravelPaymentWithTarRequiredAndComplete(): void
+    public function test_generate_email_for_online_travel_payment_with_tar_required_and_complete(): void
     {
         $user = User::factory()->create();
 
@@ -169,7 +169,7 @@ final class PaymentReceiptEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testGenerateEmailForOnlineTravelPaymentWithNoTarRequired(): void
+    public function test_generate_email_for_online_travel_payment_with_no_tar_required(): void
     {
         $user = User::factory()->create();
 
@@ -209,7 +209,7 @@ final class PaymentReceiptEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testGenerateEmailForCashTravelPayment(): void
+    public function test_generate_email_for_cash_travel_payment(): void
     {
         $member = User::factory()->create();
 

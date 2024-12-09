@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 final class TravelAssignmentCreatedEmailTest extends TestCase
 {
-    public function testTarRequired(): void
+    public function test_tar_required(): void
     {
         $user = User::factory()->create();
 
@@ -42,7 +42,7 @@ final class TravelAssignmentCreatedEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testTarNotRequired(): void
+    public function test_tar_not_required(): void
     {
         $user = User::factory()->create();
 

@@ -21,7 +21,7 @@ final class ResumeTest extends TestCase
     /**
      * Test the validation of resume book uploads.
      */
-    public function testResumeUpload(): void
+    public function test_resume_upload(): void
     {
         $user = $this->getTestUser(['member']);
 
@@ -220,7 +220,7 @@ final class ResumeTest extends TestCase
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.docx');
     }
 
-    public function testNonexistentResumeDownload(): void
+    public function test_nonexistent_resume_download(): void
     {
         $user = $this->getTestUser(['member']);
         $response = $this->actingAs($user, 'web')->get('/users/_nonexistentuser/resume');

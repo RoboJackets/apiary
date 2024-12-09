@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 final class TravelAssignmentReminderEmailTest extends TestCase
 {
-    public function testTarRequiredAndNotCompletedAndNotPaid(): void
+    public function test_tar_required_and_not_completed_and_not_paid(): void
     {
         $member = User::factory()->create();
         $contact = User::factory()->create();
@@ -47,7 +47,7 @@ final class TravelAssignmentReminderEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testTarRequiredAndCompletedAndNotPaid(): void
+    public function test_tar_required_and_completed_and_not_paid(): void
     {
         $member = User::factory()->create();
         $contact = User::factory()->create();
@@ -83,7 +83,7 @@ final class TravelAssignmentReminderEmailTest extends TestCase
         $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testTarNotRequiredAndNotPaid(): void
+    public function test_tar_not_required_and_not_paid(): void
     {
         $member = User::factory()->create();
         $contact = User::factory()->create();
