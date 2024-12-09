@@ -35,7 +35,7 @@
                   class="form-control"
                   id="user-preferredname"
                   :class="{ 'is-invalid': $v.user.preferred_first_name.$error }"
-                  @input="$v.user.preferred_first_name.$touch()">
+                  @input="$v.user.preferred_first_name.$touch(); onFormChange();">
             </div>
           </div>
 
@@ -49,7 +49,7 @@
                   id="user-phone"
                   placeholder="None on record"
                   :class="{ 'is-invalid': $v.user.phone.$error }"
-                  @input="$v.user.phone.$touch()">
+                  @input="$v.user.phone.$touch(); onFormChange();">
               <div class="invalid-feedback">
                 Must be a valid phone number with no punctuation
               </div>
@@ -63,7 +63,7 @@
                   v-model="user.shirt_size"
                   :options="shirtSizeOptions"
                   id="user-shirtsize"
-                  @input="$v.user.shirt_size.$touch()">
+                  @input="$v.user.shirt_size.$touch(); onFormChange();">
               </custom-radio-buttons>
             </div>
           </div>
@@ -75,7 +75,7 @@
                   v-model="user.polo_size"
                   :options="shirtSizeOptions"
                   id="user-polosize"
-                  @input="$v.user.polo_size.$touch()">
+                  @input="$v.user.polo_size.$touch(); onFormChange();">
               </custom-radio-buttons>
             </div>
           </div>
@@ -90,6 +90,7 @@
                   v-model="user.graduation_semester"
                   id="user-graduationsemester"
                   :is-error="$v.user.graduation_semester.$error"
+                  @input="onFormChange();"
                   @touch="$v.user.graduation_semester.$touch()">
                 </term-input>
                 <div class="invalid-feedback">
@@ -112,7 +113,7 @@
                   id="user-emergencyname"
                   placeholder="None on record"
                   :class="{ 'is-invalid': $v.user.emergency_contact_name.$error }"
-                  @input="$v.user.emergency_contact_name.$touch()"
+                  @input="$v.user.emergency_contact_name.$touch(); onFormChange();"
                   required>
             </div>
           </div>
@@ -127,7 +128,7 @@
                   id="user-emergencyphone"
                   placeholder="None on record"
                   :class="{ 'is-invalid': $v.user.emergency_contact_phone.$error }"
-                  @input="$v.user.emergency_contact_phone.$touch()"
+                  @input="$v.user.emergency_contact_phone.$touch(); onFormChange();"
                   required>
               <div class="invalid-feedback">
                 Must be a valid phone number with no punctuation
@@ -148,7 +149,7 @@
           <div class="form-group row">
             <label for="legal-middle-name" class="col-sm-2 col-form-label">Legal Middle Name</label>
             <div class="col-sm-10 col-lg-4">
-              <input id="legal-middle-name" type="text" v-model="user.legal_middle_name" class="form-control">
+              <input id="legal-middle-name" type="text" v-model="user.legal_middle_name" class="form-control" @input="onFormChange();">
             </div>
           </div>
 
@@ -162,7 +163,7 @@
           <div class="form-group row">
             <label for="legal-gender" class="col-sm-2 col-form-label">Legal Gender</label>
             <div class="col-sm-10 col-lg-4">
-              <select id="legal-gender" v-model="user.legal_gender" class="custom-select">
+              <select id="legal-gender" v-model="user.legal_gender" class="custom-select" @input="onFormChange();">
                 <option value="M">Male (M)</option>
                 <option value="F">Female (F)</option>
                 <option value="X">Unspecified (X)</option>
@@ -174,14 +175,14 @@
           <div class="form-group row">
             <label for="date-of-birth" class="col-sm-2 col-form-label">Date of Birth</label>
             <div id="date-of-birth" class="col-sm-10 col-lg-4">
-              <input id="date-of-birth" type="date" v-model="user.date_of_birth" class="form-control">
+              <input id="date-of-birth" type="date" v-model="user.date_of_birth" class="form-control" @input="onFormChange();">
             </div>
           </div>
 
           <div class="form-group row">
             <label for="delta-skymiles-number" class="col-sm-2 col-form-label">Delta SkyMiles Number</label>
             <div id="delta-skymiles-number" class="col-sm-10 col-lg-4">
-              <input id="delta-skymiles-number" type="text" v-model="user.delta_skymiles_number" class="form-control">
+              <input id="delta-skymiles-number" type="text" v-model="user.delta_skymiles_number" class="form-control" @input="onFormChange();">
             </div>
           </div>
 
@@ -239,7 +240,7 @@
                 </div>
               </template>
               <template v-if="!user.clickup_email || user.clickup_email !== clickUpEmailInDatabase">
-                <select class="form-control" id="user-clickup" v-model="user.clickup_email">
+                <select class="form-control" id="user-clickup" v-model="user.clickup_email" @input="onFormChange();">
                   <option v-for="option in clickUpEmailOptions" :value="option">{{ option }}</option>
                 </select>
                 <div class="input-group-append">
@@ -304,9 +305,17 @@ export default {
       ],
       clickUpEmailOptions: [],
       clickUpEmailInDatabase: null,
+      formChanged: false,
     };
   },
   mounted() {
+    console.log("in mounted");
+    // This event listener is vanilla JS and is meant to activate if you leave the page
+    // without saving your changes. If we update to Vue 3 and use Vue Router
+    // (which I believe is the plan), we will need to update this code to use 
+    // navigation guards instead. (Navigation guards should improve the repeatability
+    // of this code anyway.)
+    window.addEventListener('beforeunload', (event) => {this.onLeaveAttempt(event)});
     this.dataUrl = this.baseUrl + this.userUid;
     axios
       .get(this.dataUrl)
@@ -326,7 +335,18 @@ export default {
         );
       });
   },
+  beforeDestroy() {
+    window.removeEventListener('beforeunload', this.onLeaveAttempt);
+  },
   methods: {
+    onFormChange() {
+      this.formChanged = true;
+    },
+    onLeaveAttempt(event) {
+      if (this.formChanged) {
+        event.returnValue = "Are you sure you want to leave? Any unsaved changes will be lost.";
+      }
+    },
     submit() {
       if (this.$v.$invalid) {
         this.$v.$touch();
@@ -345,7 +365,7 @@ export default {
           } else {
             this.feedback = 'Saved!';
           }
-
+          this.formChanged = false;
           console.log('success');
         })
         .catch(error => {
