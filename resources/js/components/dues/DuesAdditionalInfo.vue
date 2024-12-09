@@ -5,7 +5,7 @@
         <h4>Additional Information</h4>
         <p>Providing RoboJackets with this optional information enables the RoboJackets leadership to better serve you.</p>
 
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label for="user-preferredname" class="col-sm-2 col-form-label">Preferred Name</label>
           <div class="col-sm-10 col-lg-4">
             <input
@@ -21,7 +21,7 @@
           </div>
         </div>
 
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label for="user-uid" class="col-sm-2 col-form-label">Phone Number</label>
           <div class="col-sm-10 col-lg-4">
             <input
@@ -41,7 +41,7 @@
         <h4>Emergency Contact Information</h4>
         <p>You may optionally provide information on who to contact in the event of an emergency. This information is required should you go on any RoboJackets trips.</p>
 
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label for="user-emergencycontactname" class="col-sm-2 col-form-label">Contact Name</label>
           <div class="col-sm-10 col-lg-4">
             <input
@@ -54,7 +54,7 @@
               required>
           </div>
         </div>
-        <div class="form-group row">
+        <div class="mb-3 row">
           <label for="user-emergencycontactphone" class="col-sm-2 col-form-label">Contact Phone Number</label>
           <div class="col-sm-10 col-lg-4">
             <input
@@ -74,11 +74,11 @@
 
         <div class="row">
           <div class="col-lg-3 col-6">
-            <button @click.prevent="$emit('back')" class="btn btn-secondary float-left">Back</button>
+            <button @click.prevent="$emit('back')" class="btn btn-secondary float-start">Back</button>
           </div>
           <div class="col-lg-3 col-6">
-            <button type="submit" class="btn btn-primary float-right">Continue</button>
-            <button @click.prevent="$emit('next')" class="btn btn-secondary float-right mx-2">Skip</button>
+            <button type="submit" class="btn btn-primary float-end">Continue</button>
+            <button @click.prevent="$emit('next')" class="btn btn-secondary float-end mx-2">Skip</button>
           </div>
         </div>
 

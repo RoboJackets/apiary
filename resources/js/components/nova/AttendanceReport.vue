@@ -2,7 +2,7 @@
   <div class="attendancereport">
     <div class="flex flex-wrap -mx-3 mb-3">
       <heading class="mb-6 mx-3">Attendance</heading>
-      <select @change="newSelection" class="ml-auto min-w-24 h-6 text-xs no-appearance bg-white mx-3">
+      <select @change="newSelection" class="ms-auto min-w-24 h-6 text-xs no-appearance bg-white mx-3">
         <option v-for="range in ranges" :key="range" :value="range" :selected="selectedRange == range">
           {{ range }} weeks
         </option>
