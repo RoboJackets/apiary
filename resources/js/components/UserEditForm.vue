@@ -344,7 +344,7 @@ export default {
     },
     onLeaveAttempt(event) {
       if (this.formChanged) {
-        event.returnValue = "Are you sure you want to leave? Any unsaved changes will be lost.";
+        event.returnValue = "Exit page? Any unsaved changes will be lost."; // Message included for legacy support. Browsers usually do not use it.
       }
     },
     submit() {
