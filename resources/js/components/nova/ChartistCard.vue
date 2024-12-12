@@ -2,8 +2,8 @@
   <div class="px-3 mb-6">
     <loading-card :loading="loading" class="pt-4">
       <div class="flex mb-4 mx-6" ref="legend">
-        <h3 class="mr-3 text-base text-80 font-bold">{{ title }}</h3>
-        <p v-if="total" class="ml-auto text-black text-xl font-bold">{{ total }}
+        <h3 class="me-3 text-base text-80 font-bold">{{ title }}</h3>
+        <p v-if="total" class="ms-auto text-black text-xl font-bold">{{ total }}
           <span v-if="totalSuffix" class="ml-.5 text-sm text-80">{{ totalSuffix }}</span>
         </p>
       </div>
