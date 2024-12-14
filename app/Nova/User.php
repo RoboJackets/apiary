@@ -807,8 +807,8 @@ class User extends Resource
         $lastPaidTransact = $paidTransactions->last();
 
         if ($firstPaidTransact !== null && $lastPaidTransact !== null) {
-            $firstYear = (new Carbon($firstPaidTransact->effective_start, 'America/New_York'))->year;
-            $lastYear = (new Carbon($lastPaidTransact->effective_end, 'America/New_York'))->year;
+            $firstYear = (new Carbon($firstPaidTransact->effective_start, 'America/New_York'))->addMonth()->year;
+            $lastYear = (new Carbon($lastPaidTransact->effective_end, 'America/New_York'))->subMonth()->year;
 
             return $firstYear === $lastYear ? 'Member '.$firstYear : 'Member '.$firstYear.'-'.$lastYear;
         }
