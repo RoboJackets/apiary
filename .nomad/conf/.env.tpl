@@ -11,13 +11,6 @@ CAS_ENABLE_SAML="false"
 {{- range service "mysql" }}
 DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
-REDIS_CLIENT="phpredis"
-REDIS_SCHEME="null"
-REDIS_PORT="-1"
-{{- range service "redis" }}
-REDIS_HOST="{{- index .ServiceMeta "socket" | trimSpace -}}"
-{{ end }}
-REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
 {{- range service "meilisearch-v1-10" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
@@ -36,3 +29,10 @@ HOME="/secrets/"
 RESPONSE_CACHE_HEADER_NAME="x-cache-time"
 RESPONSE_CACHE_AGE_HEADER_NAME="x-cache-age"
 RESPONSE_CACHE_AGE_HEADER=true
+REDIS_CLIENT="phpredis"
+REDIS_SCHEME="null"
+REDIS_PORT="-1"
+REDIS_HOST="/alloc/tmp/redis.sock"
+REDIS_PASSWORD="{{ env "NOMAD_ALLOC_ID" }}"
+REDIS_DB=0
+REDIS_CACHE_DB=1
