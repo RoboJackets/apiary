@@ -1,9 +1,9 @@
 <template>
   <loading-card :loading="loading" class="metric px-6 py-4 relative">
     <div class="flex mb-4">
-      <h3 class="mr-3 text-base text-80 font-bold">{{ card.name }}</h3>
+      <h3 class="me-3 text-base text-80 font-bold">{{ card.name }}</h3>
 
-      <select v-if="card.ranges.length > 0" @change="refresh" class="ml-auto min-w-24 h-6 text-xs no-appearance bg-40">
+      <select v-if="card.ranges.length > 0" @change="refresh" class="ms-auto min-w-24 h-6 text-xs no-appearance bg-40">
         <option v-for="range in card.ranges" :key="range.value" :value="range.value" :selected="range.value == selectedRange">{{ range.label }}</option>
       </select>
     </div>
