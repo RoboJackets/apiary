@@ -110,7 +110,8 @@ class TravelAssignment extends Resource
                 ->withoutTrashed()
                 ->searchable()
                 ->rules('required', 'unique:travel_assignments,user_id,NULL,id,travel_id,'.$request->travel)
-                ->readonly(static fn (NovaRequest $request): bool => $request->editMode === 'update'),
+                ->readonly(static fn (NovaRequest $request): bool => $request->editMode === 'update')
+                ->help(view('nova.help.travel.assignment.member')->render()),
 
             BelongsTo::make('Trip', 'travel', Travel::class)
                 ->withoutTrashed()

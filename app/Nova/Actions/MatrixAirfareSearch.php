@@ -23,6 +23,13 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class MatrixAirfareSearch extends Action
 {
     /**
+     * Disables action log events for this action.
+     *
+     * @var bool
+     */
+    public $withoutActionEvents = true;
+
+    /**
      * The text to be used for the action's confirm button.
      *
      * @var string
