@@ -1,0 +1,1 @@
+Only members that have recently paid dues are shown here by default. If you need to create an assignment for a member that hasn't paid dues, go to their user details page and click <strong>Create Trip Assignment</strong> there.
