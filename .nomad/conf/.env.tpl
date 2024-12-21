@@ -14,7 +14,7 @@ DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{- range service "meilisearch-v1-12-0-rc-6" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
-MEILISEARCH_KEY="{{- key "meilisearch/admin-key-v1.9.0-rc.3" | trimSpace -}}"
+MEILISEARCH_KEY="{{- key "meilisearch/admin-key-v1.12.0-rc.6" | trimSpace -}}"
 SESSION_SECURE_COOKIE="true"
 SESSION_COOKIE="__Host-apiary_session"
 {{ range $key, $value := (key (printf "apiary/%s" (slice (env "NOMAD_JOB_NAME") 7)) | parseJSON) -}}
