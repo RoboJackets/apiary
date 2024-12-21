@@ -4,7 +4,7 @@
             "owner": "sphinx-build",
             "pattern": [
                 {
-                    "regexp": "^\\/home\\/runner\\/work\\/apiary\\/apiary\\/([a-zA-Z-\\.\\/]+):(\\d+):\\s+([a-zA-Z]+):\\s+(.+)$",
+                    "regexp": "^\\/home\\/runner\\/work\\/apiary\\/apiary\\/([a-zA-Z0-9-\\.\\/]+):(\\d+):\\s+([a-zA-Z]+):\\s+(.+)$",
                     "file": 1,
                     "line": 2,
                     "severity": 3,
@@ -16,7 +16,7 @@
             "owner": "phan",
             "pattern": [
                 {
-                    "regexp": "^([a-zA-Z\\/\\.]+):(\\d+)\\s+([a-zA-Z]+)\\s+(.+)$",
+                    "regexp": "^([a-zA-Z0-9-\\.\\/]+):(\\d+)\\s+([a-zA-Z]+)\\s+(.+)$",
                     "file": 1,
                     "line": 2,
                     "code": 3,
