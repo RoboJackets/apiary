@@ -136,7 +136,7 @@ class Main extends Dashboard
             return $cards;
         }
 
-        if (request()->is('nova-api/metrics/*-received-*')) {
+        if (request()->is('nova-api/dashboards/cards/main/metrics/*-received-*')) {
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $type = $parts->first();
             $id = intval($parts->last());
@@ -153,7 +153,7 @@ class Main extends Dashboard
             }
         }
 
-        if (request()->is('nova-api/metrics/emergency-contact-*')) {
+        if (request()->is('nova-api/dashboards/cards/main/metrics/emergency-contact-*')) {
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $id = intval($parts->last());
 
@@ -162,7 +162,7 @@ class Main extends Dashboard
             ];
         }
 
-        if (request()->is('nova-api/metrics/active-attendance-breakdown-event-*')) {
+        if (request()->is('nova-api/dashboards/cards/main/metrics/active-attendance-breakdown-event-*')) {
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $id = intval($parts->last());
 
@@ -173,7 +173,7 @@ class Main extends Dashboard
             ];
         }
 
-        if (request()->is('nova-api/metrics/rsvp-source-breakdown-*')) {
+        if (request()->is('nova-api/dashboards/cards/main/metrics/rsvp-source-breakdown-*')) {
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $id = intval($parts->last());
 
