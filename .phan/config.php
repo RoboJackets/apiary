@@ -25,6 +25,7 @@ return [
         'stubs/Permission.php',
         'stubs/Role.php',
         'vendor/inertiajs/inertia-laravel/_ide_helpers.php',
+        'vendor/laravel/fortify/workbench/app/Models/User.php',
     ],
 
     'suppress_issue_types' => [
