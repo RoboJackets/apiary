@@ -107,7 +107,7 @@ class User extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @phan-suppress PhanTypeInvalidCallableArraySize
+     * @phan-suppress PhanTypeInvalidCallableMethodName
      */
     public function fields(NovaRequest $request): array
     {
