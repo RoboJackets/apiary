@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a4a5b8efdc45976655e52522d7bf362",
+    "content-hash": "95700cde601200869c8495edb738c2c3",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3340,17 +3340,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.0.4",
+            "version": "5.0.5",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "fb3de5987c32768f5e055e1b9767d64b8bcc0705"
+                "reference": "d3fcdc4baf417f7c91799b13c55436dd34920866"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-fb3de5987c32768f5e055e1b9767d64b8bcc0705-zip-3b75c2.zip",
-                "reference": "fb3de5987c32768f5e055e1b9767d64b8bcc0705",
-                "shasum": "4540184bb4d292c08d679790bb2babb54d2d4efe"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-d3fcdc4baf417f7c91799b13c55436dd34920866-zip-49c485.zip",
+                "reference": "d3fcdc4baf417f7c91799b13c55436dd34920866",
+                "shasum": "3675339402497e45cc74d30251f5898b3ba09273"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -3500,9 +3500,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.0.4"
+                "source": "https://github.com/laravel/nova/tree/v5.0.5"
             },
-            "time": "2024-12-19T14:56:23+00:00"
+            "time": "2024-12-22T23:47:53+00:00"
         },
         {
             "name": "laravel/passport",
@@ -15844,7 +15844,7 @@
         "ext-xml": "*",
         "ext-zip": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.6"
     },
