@@ -3710,32 +3710,32 @@
         },
         {
             "name": "laravel/serializable-closure",
-            "version": "v1.3.7",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/serializable-closure.git",
-                "reference": "4f48ade902b94323ca3be7646db16209ec76be3d"
+                "reference": "613b2d4998f85564d40497e05e89cb6d9bd1cbe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/4f48ade902b94323ca3be7646db16209ec76be3d",
-                "reference": "4f48ade902b94323ca3be7646db16209ec76be3d",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/613b2d4998f85564d40497e05e89cb6d9bd1cbe8",
+                "reference": "613b2d4998f85564d40497e05e89cb6d9bd1cbe8",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3|^8.0"
+                "php": "^8.1"
             },
             "require-dev": {
-                "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
-                "nesbot/carbon": "^2.61|^3.0",
-                "pestphp/pest": "^1.21.3",
-                "phpstan/phpstan": "^1.8.2",
-                "symfony/var-dumper": "^5.4.11|^6.2.0|^7.0.0"
+                "illuminate/support": "^10.0|^11.0",
+                "nesbot/carbon": "^2.67|^3.0",
+                "pestphp/pest": "^2.36",
+                "phpstan/phpstan": "^2.0",
+                "symfony/var-dumper": "^6.2.0|^7.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
@@ -3767,7 +3767,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
-            "time": "2024-11-14T18:34:49+00:00"
+            "time": "2024-12-16T15:26:28+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
@@ -12646,47 +12646,50 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v9.5.6",
+            "version": "v9.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "26860d007c9316a20b1e9986dadb38f3ffb35433"
+                "reference": "b605631fa3c779e51bc45d78013a979ddeb0d9fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/26860d007c9316a20b1e9986dadb38f3ffb35433",
-                "reference": "26860d007c9316a20b1e9986dadb38f3ffb35433",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/b605631fa3c779e51bc45d78013a979ddeb0d9fe",
+                "reference": "b605631fa3c779e51bc45d78013a979ddeb0d9fe",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.2",
                 "php": "^8.2",
-                "symfony/polyfill-php83": "^1.28"
+                "symfony/polyfill-php83": "^1.31",
+                "symfony/polyfill-php84": "^1.31"
             },
             "conflict": {
                 "brianium/paratest": "<7.3.0 || >=8.0.0",
-                "laravel/framework": "<11.11.0 || >=12.0.0",
-                "laravel/serializable-closure": "<1.3.0 || >=2.0.0",
+                "laravel/framework": "<11.35.0 || >=12.0.0",
+                "laravel/serializable-closure": "<1.3.0 || >=3.0.0",
                 "nunomaduro/collision": "<8.0.0 || >=9.0.0",
-                "phpunit/phpunit": "<10.5.0 || 11.0.0 || >=11.5.0"
+                "orchestra/testbench-dusk": "<9.10.0 || >=10.0.0",
+                "phpunit/phpunit": "<10.5.35 || >=11.0.0 <11.3.6 || >=11.6.0"
             },
             "require-dev": {
-                "fakerphp/faker": "^1.23",
-                "laravel/framework": "^11.11",
+                "fakerphp/faker": "^1.24",
+                "laravel/framework": "^11.35.0",
                 "laravel/pint": "^1.17",
-                "mockery/mockery": "^1.6",
-                "phpstan/phpstan": "^1.11",
-                "phpunit/phpunit": "^10.5 || ^11.0.1",
-                "spatie/laravel-ray": "^1.35",
-                "symfony/process": "^7.0",
-                "symfony/yaml": "^7.0",
-                "vlucas/phpdotenv": "^5.4.1"
+                "laravel/serializable-closure": "^1.3 || ^2.0",
+                "mockery/mockery": "^1.6.10",
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^10.5.35 || ^11.3.6",
+                "spatie/laravel-ray": "^1.39",
+                "symfony/process": "^7.0.3",
+                "symfony/yaml": "^7.0.3",
+                "vlucas/phpdotenv": "^5.6.1"
             },
             "suggest": {
-                "brianium/paratest": "Allow using parallel tresting (^7.3).",
+                "brianium/paratest": "Allow using parallel testing (^7.3).",
                 "ext-pcntl": "Required to use all features of the console signal trapping.",
                 "fakerphp/faker": "Allow using Faker for testing (^1.23).",
-                "laravel/framework": "Required for testing (^11.11).",
+                "laravel/framework": "Required for testing (^11.35.0).",
                 "mockery/mockery": "Allow using Mockery for testing (^1.6).",
                 "nunomaduro/collision": "Allow using Laravel style tests output and parallel testing (^8.0).",
                 "orchestra/testbench-dusk": "Allow using Laravel Dusk for testing (^9.0).",
@@ -12732,7 +12735,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2024-10-30T23:18:34+00:00"
+            "time": "2024-12-24T01:10:06+00:00"
         },
         {
             "name": "phan/phan",
