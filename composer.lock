@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6368a143500dece00b802282875e7fd5",
+    "content-hash": "a1380d786cbb9db70878de146f9fb35f",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -11228,37 +11228,37 @@
         },
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v3.0.0",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "bc1d67f01ce8c77e3f97d48ba51fa1d81874f622"
+                "reference": "b7675670f75914bf34afdea52a6c2fe3781f7c44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/bc1d67f01ce8c77e3f97d48ba51fa1d81874f622",
-                "reference": "bc1d67f01ce8c77e3f97d48ba51fa1d81874f622",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/b7675670f75914bf34afdea52a6c2fe3781f7c44",
+                "reference": "b7675670f75914bf34afdea52a6c2fe3781f7c44",
                 "shasum": ""
             },
             "require": {
-                "barryvdh/reflection-docblock": "^2.1.1",
+                "barryvdh/reflection-docblock": "^2.1.2",
                 "composer/class-map-generator": "^1.0",
                 "ext-json": "*",
-                "illuminate/console": "^10 || ^11",
-                "illuminate/database": "^10.38 || ^11",
-                "illuminate/filesystem": "^10 || ^11",
-                "illuminate/support": "^10 || ^11",
+                "illuminate/console": "^11.15",
+                "illuminate/database": "^11.15",
+                "illuminate/filesystem": "^11.15",
+                "illuminate/support": "^11.15",
                 "nikic/php-parser": "^4.18 || ^5",
-                "php": "^8.1",
+                "php": "^8.2",
                 "phpdocumentor/type-resolver": "^1.1.0"
             },
             "require-dev": {
                 "ext-pdo_sqlite": "*",
                 "friendsofphp/php-cs-fixer": "^3",
-                "illuminate/config": "^9 || ^10 || ^11",
-                "illuminate/view": "^9 || ^10 || ^11",
+                "illuminate/config": "^11.15",
+                "illuminate/view": "^11.15",
                 "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^8 || ^9",
+                "orchestra/testbench": "^9.2",
                 "phpunit/phpunit": "^10.5",
                 "spatie/phpunit-snapshot-assertions": "^4 || ^5",
                 "vimeo/psalm": "^5.4"
@@ -11274,7 +11274,7 @@
                     ]
                 },
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -11306,7 +11306,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-ide-helper/issues",
-                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v3.0.0"
+                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v3.3.0"
             },
             "funding": [
                 {
@@ -11318,7 +11318,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-01T12:53:18+00:00"
+            "time": "2024-12-18T08:24:19+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
