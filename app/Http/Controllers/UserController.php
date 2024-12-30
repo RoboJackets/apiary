@@ -134,7 +134,7 @@ class UserController extends Controller
         $user = User::findByIdentifier($id)->with(AuthorizeInclude::authorize(User::class, $include))->first();
         if ($user !== null) {
             $requestingUser = $request->user();
-            //Enforce users only viewing themselves (read-users-own)
+            // Enforce users only viewing themselves (read-users-own)
             if ($requestingUser->cant('read-users') && $requestingUser->id !== $user->id) {
                 return response()->json(['status' => 'error',
                     'message' => 'Forbidden - You do not have permission to view this User.',
@@ -178,14 +178,14 @@ class UserController extends Controller
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
 
-        //Enforce users only updating themselves (update-users-own)
+        // Enforce users only updating themselves (update-users-own)
         if ($requestingUser->cant('update-users') && $requestingUser->id !== $user->id) {
             return response()->json(['status' => 'error',
                 'message' => 'Forbidden - You do not have permission to update this User.',
             ], 403);
         }
 
-        //Update only included fields
+        // Update only included fields
         $validatedFields = $request->validated();
 
         if ($request->filled('clickup_email')) {

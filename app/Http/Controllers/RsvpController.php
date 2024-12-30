@@ -44,7 +44,7 @@ class RsvpController extends Controller
     {
         $requestingUser = $request->user();
         $requestedUser = User::findByIdentifier($request->input('user_id'))->first();
-        //Enforce users only creating RSVPs for themselves (create-rsvps-own)
+        // Enforce users only creating RSVPs for themselves (create-rsvps-own)
         if ($requestingUser->cant('create-rsvps') && $requestingUser->id !== $requestedUser->id) {
             return response()->json(['status' => 'error',
                 'message' => 'Forbidden - You may not create an RSVP for another user.',
@@ -108,7 +108,7 @@ class RsvpController extends Controller
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
-        //Enforce users only updating RSVPs for themselves (update-rsvps-own)
+        // Enforce users only updating RSVPs for themselves (update-rsvps-own)
         $requestedUser = $rsvp->user;
         if ($requestingUser->cant('update-rsvps') && $requestingUser->id !== $requestedUser->id) {
             return response()->json(['status' => 'error',
@@ -127,7 +127,7 @@ class RsvpController extends Controller
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
-        //Enforce users only deleting RSVPs for themselves (update-rsvps-own)
+        // Enforce users only deleting RSVPs for themselves (update-rsvps-own)
         $requestedUser = $rsvp->user;
         if ($requestingUser->cant('delete-rsvps') && $requestingUser->id !== $requestedUser->id) {
             return response()->json(['status' => 'error',
