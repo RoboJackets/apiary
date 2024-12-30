@@ -136,14 +136,14 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        //Enforce users only updating themselves (update-teams-membership-own)
+        // Enforce users only updating themselves (update-teams-membership-own)
         if ($requestingUser->cant('update-teams') && $requestingUser->id !== $request->input('user_id')) {
             return response()->json(['status' => 'error',
                 'message' => 'no_priv_for_target_user',
             ], 403);
         }
 
-        //Enforce updating membership via self-service only for eligible teams
+        // Enforce updating membership via self-service only for eligible teams
         if ($requestingUser->cant('update-teams') && $team->self_serviceable === false) {
             return response()->json(['status' => 'error',
                 'message' => 'self_service_disabled',

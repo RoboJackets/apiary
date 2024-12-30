@@ -57,8 +57,8 @@ class CasUser
             }
         }
 
-        //User is starting a new session, so let's update data from CAS
-        //Sadly we can't use updateOrCreate here because of $guarded in the User model
+        // User is starting a new session, so let's update data from CAS
+        // Sadly we can't use updateOrCreate here because of $guarded in the User model
         $user = User::where('uid', Cas::user())->first();
         if ($user === null) {
             $user = new User();
