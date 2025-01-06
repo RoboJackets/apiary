@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7a93a2a49bd653cdc0cdb57fdd7fb45",
+    "content-hash": "64cd807c00919a9c2d8b1e4d19659390",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2824,22 +2824,22 @@
         },
         {
             "name": "kiritokatklian/nova-permission",
-            "version": "5.0.0",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kiritokatklian/nova-permission.git",
-                "reference": "f1d5ba2485b10a5989c0e50259c6f0c88a4c56cc"
+                "reference": "df020c945d699c3fe38910c1167d66e4b6fd7e2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/f1d5ba2485b10a5989c0e50259c6f0c88a4c56cc",
-                "reference": "f1d5ba2485b10a5989c0e50259c6f0c88a4c56cc",
+                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/df020c945d699c3fe38910c1167d66e4b6fd7e2c",
+                "reference": "df020c945d699c3fe38910c1167d66e4b6fd7e2c",
                 "shasum": ""
             },
             "require": {
-                "laravel/nova": "^4.0|^5.0",
-                "php": "^7.4|^8.0|^8.1",
-                "spatie/laravel-permission": "^3.0|^4.0|^5.0|^6.0"
+                "laravel/nova": "^5.0",
+                "php": "^8.1",
+                "spatie/laravel-permission": "^5.0|^6.0"
             },
             "type": "library",
             "extra": {
@@ -2869,9 +2869,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kiritokatklian/nova-permission/issues",
-                "source": "https://github.com/kiritokatklian/nova-permission/tree/5.0.0"
+                "source": "https://github.com/kiritokatklian/nova-permission/tree/5.1.0"
             },
-            "time": "2024-12-19T12:43:20+00:00"
+            "time": "2025-01-04T23:18:31+00:00"
         },
         {
             "name": "larastan/larastan",
