@@ -140,10 +140,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
             "sed -i 's/getHtmlBody/getTextBody/' vendor/xammie/mailbook/src/Data/ResolvedMail.php",
-            "sed -i \"s/return \\$html;/return \\'<pre>\\'.\\$html.\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php",
-            "sed -i 's/@template/@nothing/' vendor/laravel/nova/src/PerformsValidation.php",
-            "sed -i 's/protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)/protected function fillAttributeFromRequest(NovaRequest $request, string $requestAttribute, object $model, string $attribute): void/' vendor/kiritokatklian/nova-permission/src/PermissionBooleanGroup.php",
-            "sed -i 's/protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)/protected function fillAttributeFromRequest(NovaRequest $request, string $requestAttribute, object $model, string $attribute): void/' vendor/kiritokatklian/nova-permission/src/RoleBooleanGroup.php"
+            "sed -i \"s/return \\$html;/return \\'<pre>\\'.\\$html.\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
