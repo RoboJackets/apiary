@@ -5,7 +5,7 @@ declare(strict_types=1);
 // phpcs:disable SlevomatCodingStandard.PHP.UselessParentheses.UselessParentheses
 
 namespace App\Models;
-
+use App\Events\PaymentDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -110,6 +110,10 @@ class Payment extends Model
      * @var array<string>
      */
     protected $appends = ['method_presentation'];
+
+    protected $dispatchesEvents = [
+        'deleting' => PaymentDeleted::class,
+    ];
 
     /**
      * The attributes that aren't mass assignable.
