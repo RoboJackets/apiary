@@ -20,7 +20,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        //User needs a transaction if they don't have one for an active dues package
+        // User needs a transaction if they don't have one for an active dues package
         $user = $request->user();
         $preferredName = $user->preferred_first_name;
         $status = $user->is_active;
@@ -29,7 +29,7 @@ class DashboardController extends Controller
         $signedLatestAgreement = $user->signed_latest_agreement;
         $signedAnyAgreement = $user->signatures()->where('complete', true)->exists();
 
-        //User is "new" if they don't have any transactions, or they have never paid dues
+        // User is "new" if they don't have any transactions, or they have never paid dues
         $paidTxnColl = DuesTransaction::paid()->where('user_id', $user->id)->get();
 
         $paidPackageIds = $paidTxnColl->map(
@@ -39,7 +39,7 @@ class DashboardController extends Controller
         $paidTxn = count($paidTxnColl);
         $isNew = ($user->dues->count() === 0 || ($user->dues->count() >= 1 && $paidTxn === 0));
 
-        //User needs a transaction if they don't have one for an active dues package
+        // User needs a transaction if they don't have one for an active dues package
         $needsTransaction = (DuesTransaction::current()
             ->where('user_id', $user->id)
             ->whereHas('package', static function (Builder $query) use ($user): void {
@@ -49,8 +49,8 @@ class DashboardController extends Controller
         );
         $needsTransaction = $needsTransaction && (DuesPackage::userCanPurchase($user)->count() > 0) && ! $status;
 
-        //User needs a payment if they don't have enough payments to cover their pending dues transaction
-        //Don't change this to use ->count(). It won't work - trust me.
+        // User needs a payment if they don't have enough payments to cover their pending dues transaction
+        // Don't change this to use ->count(). It won't work - trust me.
         $needsPayment = (count(
             DuesTransaction::pending()
                 ->current()

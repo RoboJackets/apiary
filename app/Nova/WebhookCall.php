@@ -53,6 +53,8 @@ class WebhookCall extends Resource
 
     /**
      * Get the fields displayed by the resource.
+     *
+     * @phan-suppress PhanTypeInvalidCallableMethodName
      */
     public function fields(NovaRequest $request): array
     {
