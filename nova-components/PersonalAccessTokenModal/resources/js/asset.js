@@ -1,5 +1,3 @@
-import PersonalAccessTokenModal from './components/PersonalAccessTokenModal'
-
-Nova.booting(app => {
-  app.component('personal-access-token-modal', PersonalAccessTokenModal)
+Nova.booting((Vue, store) => {
+  Vue.component('personal-access-token-modal', require('./components/PersonalAccessTokenModal').default);
 });

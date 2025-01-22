@@ -36,7 +36,7 @@ class CasCheck
             }
         }
 
-        //User is authenticated, no update needed or already updated
+        // User is authenticated, no update needed or already updated
         return $next($request);
     }
 }

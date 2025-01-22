@@ -80,7 +80,7 @@ class DuesTransactionController extends Controller
         $user = $request->user();
         $user_id = $request->input('user_id');
 
-        //Make sure that the user is actually allowed to create this transaction
+        // Make sure that the user is actually allowed to create this transaction
         if ($request->filled('user_id') && $user_id !== $user->id && (! $user->can('create-dues-transactions'))) {
             return response()->json(['status' => 'error',
                 'message' => 'You may not create a DuesTransaction for another user.',
@@ -203,7 +203,7 @@ class DuesTransactionController extends Controller
         }
 
         $requestedUser = $transact->user;
-        //Enforce users only viewing their own DuesTransactions (read-dues-transactions-own)
+        // Enforce users only viewing their own DuesTransactions (read-dues-transactions-own)
         if ($requestingUser->cant('read-dues-transactions') && $requestingUser->id !== $requestedUser->id) {
             return response()->json([
                 'status' => 'error',

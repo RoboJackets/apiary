@@ -130,7 +130,7 @@ class Travel extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @phan-suppress PhanTypeInvalidCallableArraySize
+     * @phan-suppress PhanInvalidFQSENInClasslike
      */
     public function fields(Request $request): array
     {
