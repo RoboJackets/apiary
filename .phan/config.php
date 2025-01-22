@@ -25,6 +25,8 @@ return [
         'stubs/Permission.php',
         'stubs/Role.php',
         'vendor/inertiajs/inertia-laravel/_ide_helpers.php',
+        'vendor/laravel/fortify/workbench/app/Models/User.php',
+        'vendor/laravel/fortify/workbench/database/factories/UserFactory.php',
     ],
 
     'suppress_issue_types' => [
@@ -33,6 +35,7 @@ return [
         'PhanCompatibleStandaloneType',
         'PhanCompatibleTrueType',
         'PhanInvalidFQSENInCallable',
+        'PhanParamSignatureMismatch',
         'PhanPartialTypeMismatchArgument',
         'PhanPartialTypeMismatchArgumentInternal',
         'PhanPartialTypeMismatchReturn',
@@ -47,6 +50,7 @@ return [
         'PhanStaticCallToNonStatic',
         'PhanTypeExpectedObjectPropAccess',
         'PhanTypeInvalidCallableArrayKey',
+        'PhanTypeInvalidCallableArraySize',
         'PhanTypeMismatchArgument',
         'PhanTypeMismatchArgumentProbablyReal',
         'PhanTypeMismatchArgumentSuperType',

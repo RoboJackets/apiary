@@ -26,16 +26,19 @@
         "vue-loader": "15.11.1"
     },
     "dependencies": {
+
         "@popperjs/core": "2.11.8",
-        "@sentry/vue": "8.42.0",
+
+        "@sentry/vue": "8.47.0",
+
         "axios": "1.7.9",
-        "caniuse-lite": "1.0.30001688",
+        "caniuse-lite": "1.0.30001692",
         "chartist": "0.11.4",
         "chartist-plugin-legend": "0.6.2",
         "chartist-plugin-pointlabels": "0.0.6",
         "moment": "2.30.1",
-        "sweetalert2": "11.14.5",
-        "vue": "^2.7.16",
+        "sweetalert2": "11.15.10",
+        "vue": "2.7.16",
         "vue-flatpickr-component": "8.1.8",
         "vue-moment": "4.1.0",
         "vue-select": "3.20.3",

@@ -149,7 +149,7 @@ class CreateOAuth2Client extends Action
                         ->mapWithKeys(static fn (User $user): array => [strval($user->id) => $user->name])
                         ->toArray()
                 )
-                ->default(static fn (NovaRequest $r): ?string => $r->viaResourceId ?? strval($r->user()->id))
+                ->default(static fn (NovaRequest $r): int => intval($r->viaResourceId ?? $r->user()->id))
                 ->searchable()
                 ->required()
                 ->rules('required'),

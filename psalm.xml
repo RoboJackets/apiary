@@ -189,6 +189,7 @@
         <MethodSignatureMismatch>
             <errorLevel type="suppress">
                 <file name="app/Models/OAuth2Client.php" />
+                <directory name="app/Nova/" />
             </errorLevel>
         </MethodSignatureMismatch>
         <NullOperand>

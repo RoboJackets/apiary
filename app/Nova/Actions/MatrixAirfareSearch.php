@@ -149,8 +149,6 @@ class MatrixAirfareSearch extends Action
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
-     *
-     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(NovaRequest $request): array
     {

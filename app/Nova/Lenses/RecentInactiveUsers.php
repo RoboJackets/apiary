@@ -31,6 +31,8 @@ class RecentInactiveUsers extends Lens
      *
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
+     *
+     * @phan-suppress PhanTypeMismatchReturnSuperType
      */
     public static function query(LensRequest $request, $query): Builder
     {

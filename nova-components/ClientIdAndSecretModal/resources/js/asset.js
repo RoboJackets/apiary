@@ -1,5 +1,3 @@
-import ClientIdAndSecretModal from './components/ClientIdAndSecretModal'
-
-Nova.booting(app => {
-  app.component('client-id-and-secret-modal', ClientIdAndSecretModal)
-})
+Nova.booting((Vue, store) => {
+  Vue.component('client-id-and-secret-modal', require('./components/ClientIdAndSecretModal').default);
+});

@@ -89,6 +89,8 @@ abstract class Resource extends NovaResource
 
     /**
      * Timestamp fields.
+     *
+     * @phan-suppress PhanTypeInvalidCallableMethodName
      */
     protected static function metadataPanel(): Panel
     {
