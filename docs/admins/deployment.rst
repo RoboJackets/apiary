@@ -22,7 +22,7 @@ In particular:
 
 - The server must be Internet-accessible for inbound webhooks from vendor services to work, including Square, DocuSign, and Postmark
 - The server must have a valid :abbr:`TLS (Transport Layer Security)` certificate
-- MySQL, Redis, and Meilisearch must be installed
+- MySQL and Meilisearch must be installed
 
 .. vale Google.Acronyms = YES
 .. vale Google.Parens = YES
@@ -91,28 +91,6 @@ For example, if the Nomad job name is ``apiary-production`` and you're using ``a
    }
 
 Among other uses, this mapping is used to serve 503 error pages in the event the app isn't available.
-
-Redis session database
-~~~~~~~~~~~~~~~~~~~~~~
-
-The ``redis/session_database`` key must be a JSON map with a key of the Nomad job name and a value of the Redis database number that should be used for storing sessions.
-
-.. vale write-good.TooWordy = NO
-
-.. note::
-   Redis database numbers should be used for a single purpose each - the system administrator must ensure there is no overlap.
-   For Apiary and other Laravel apps, you must allocate three separate databases for each environment.
-
-.. vale write-good.TooWordy = YES
-
-For example, if the Nomad job name is ``apiary-production`` and you're allocating Redis database ``0`` for sessions for this app, the key should look like this.
-
-.. code:: yaml
-
-   {
-     "apiary-production": 0,
-     # other key-value pairs not shown
-   }
 
 App configuration
 ~~~~~~~~~~~~~~~~~
