@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0493c5132d8b4e2d290f73e9a06d94ab",
+    "content-hash": "b5ed88b6f263f53e948bb7c0fff60967",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2968,16 +2968,16 @@
         },
         {
             "name": "laravel/fortify",
-            "version": "v1.25.1",
+            "version": "v1.25.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/fortify.git",
-                "reference": "5022e7c01385fd6edcef91c12b19071f8f20d6d8"
+                "reference": "ee35e5b8ea25cc51f8323e27a839283becd44160"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/fortify/zipball/5022e7c01385fd6edcef91c12b19071f8f20d6d8",
-                "reference": "5022e7c01385fd6edcef91c12b19071f8f20d6d8",
+                "url": "https://api.github.com/repos/laravel/fortify/zipball/ee35e5b8ea25cc51f8323e27a839283becd44160",
+                "reference": "ee35e5b8ea25cc51f8323e27a839283becd44160",
                 "shasum": ""
             },
             "require": {
@@ -3029,7 +3029,7 @@
                 "issues": "https://github.com/laravel/fortify/issues",
                 "source": "https://github.com/laravel/fortify"
             },
-            "time": "2024-11-27T14:51:15+00:00"
+            "time": "2025-01-17T15:17:57+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3328,24 +3328,25 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.1.3",
+            "version": "5.1.7",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "0561ac87e508e8a4205c4daf31bc71fbb06e6513"
+                "reference": "67c497f7d1b99c5349512ff0001d912c781ab81c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-0561ac87e508e8a4205c4daf31bc71fbb06e6513-zip-dec022.zip",
-                "reference": "0561ac87e508e8a4205c4daf31bc71fbb06e6513",
-                "shasum": "3568ea385447c8934f934d2afd0694a1c14c665b"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-67c497f7d1b99c5349512ff0001d912c781ab81c-zip-8c3a8e.zip",
+                "reference": "67c497f7d1b99c5349512ff0001d912c781ab81c",
+                "shasum": "a9222168898c9cd9f905076758b78dd07f267a18"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
                 "ext-json": "*",
+                "illuminate/filesystem": "^10.48.23|^11.35",
                 "illuminate/support": "^10.48.23|^11.35",
                 "inertiajs/inertia-laravel": "^1.3.2|^2.0",
-                "laravel/fortify": "^1.24.5",
+                "laravel/fortify": "^1.25.3",
                 "nesbot/carbon": "^2.62.1|^3.4",
                 "php": "^8.1",
                 "rap2hpoutre/fast-excel": "^5.4",
@@ -3492,9 +3493,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.1.3"
+                "source": "https://github.com/laravel/nova/tree/v5.1.7"
             },
-            "time": "2025-01-12T13:36:26+00:00"
+            "time": "2025-01-26T00:57:32+00:00"
         },
         {
             "name": "laravel/passport",
