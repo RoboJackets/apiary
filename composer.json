@@ -45,7 +45,7 @@
         "laravel/nova": "5.1.7",
         "laravel/passport": "12.3.1",
         "laravel/scout": "10.11.9",
-        "laravel/slack-notification-channel": "3.4.2",
+        "laravel/slack-notification-channel": "3.4.3",
         "laravel/socialite": "5.16.1",
         "laravel/tinker": "2.10.0",
         "madewithlove/laravel-nova-uuid-support": "1.6",
