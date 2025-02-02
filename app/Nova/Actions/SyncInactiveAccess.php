@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class SyncAllAccess extends Action implements ShouldQueue
+class SyncInactiveAccess extends Action implements ShouldQueue
 {
     use Batchable;
     use InteractsWithQueue;
@@ -48,7 +48,7 @@ class SyncAllAccess extends Action implements ShouldQueue
      */
     public function handle(ActionFields $fields, Collection $models): void
     {
-        foreach (User::where('is_service_account', '=', false)->get() as $user) {
+        foreach (User::where('is_service_account', '=', false)->accessInactive()->get() as $user) {
             PushToJedi::dispatch($user, self::class, request()->user()->id, 'manual_batch');
         }
     }

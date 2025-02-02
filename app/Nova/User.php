@@ -16,7 +16,7 @@ use App\Nova\Actions\OverrideAccess;
 use App\Nova\Actions\RefreshFromGTED;
 use App\Nova\Actions\RevokeOAuth2Tokens;
 use App\Nova\Actions\SyncAccess;
-use App\Nova\Actions\SyncAllAccess;
+use App\Nova\Actions\SyncInactiveAccess;
 use App\Nova\Metrics\CreateReasonBreakdown;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
@@ -715,7 +715,7 @@ class User extends Resource
         }
 
         return [
-            SyncAllAccess::make()
+            SyncInactiveAccess::make()
                 ->canSee(static fn (Request $r): bool => self::adminCanSee($r))
                 ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminCanRun($r)),
 

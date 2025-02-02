@@ -92,7 +92,7 @@ parameters:
     - '#Method App\\Nova\\[a-zA-Z0-9]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Nova\\Actions\\[a-zA-Z0-9]+::handle\(\) has no return type specified\.#'
     - '#Method App\\Nova\\Actions\\Payments\\[a-zA-Z0-9]+::handle\(\) has no return type specified\.#'
-    - '#Method App\\Nova\\Actions\\SyncAllAccess::handle\(\) has parameter \$models with generic class Illuminate\\Support\\Collection but does not specify its types: TKey, TValue#'
+    - '#Method App\\Nova\\Actions\\SyncInactiveAccess::handle\(\) has parameter \$models with generic class Illuminate\\Support\\Collection but does not specify its types: TKey, TValue#'
     - '#Method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types: TModel#'
     - '#Method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types: TModel#'
     - '#Method App\\Nova\\Filters\\[a-zA-Z]+::options\(\) should return array<string, string> but returns array\.#'
