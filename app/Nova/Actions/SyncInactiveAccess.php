@@ -6,22 +6,12 @@ namespace App\Nova\Actions;
 
 use App\Jobs\PushToJedi;
 use App\Models\User;
-use Illuminate\Bus\Batchable;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class SyncInactiveAccess extends Action implements ShouldQueue
+class SyncInactiveAccess extends Action
 {
-    use Batchable;
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
-
     /**
      * Determine where the action redirection should be without confirmation.
      *
@@ -46,10 +36,12 @@ class SyncInactiveAccess extends Action implements ShouldQueue
     /**
      * Perform the action on the given models.
      */
-    public function handle(ActionFields $fields, Collection $models): void
+    public function handle(ActionFields $fields, Collection $models)
     {
         foreach (User::where('is_service_account', '=', false)->accessInactive()->get() as $user) {
-            PushToJedi::dispatch($user, self::class, request()->user()->id, 'manual_batch');
+            PushToJedi::dispatchSync($user, self::class, request()->user()->id, 'manual_batch');
         }
+
+        return Action::message('Access was synced successfully!');
     }
 }
