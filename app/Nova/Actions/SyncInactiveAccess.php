@@ -39,7 +39,7 @@ class SyncInactiveAccess extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach (User::where('is_service_account', '=', false)->accessInactive()->get() as $user) {
-            PushToJedi::dispatchSync($user, self::class, request()->user()->id, 'manual_batch');
+            PushToJedi::dispatch($user, self::class, request()->user()->id, 'manual_batch');
         }
 
         return Action::message('Access was synced successfully!');
