@@ -53,12 +53,4 @@ class SyncAllAccess extends Action implements ShouldQueue
             PushToJedi::dispatch($user, self::class, request()->user()->id, 'manual_batch');
         }
     }
-
-    /**
-     * Get the fields available on the action.
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
-    }
 }
