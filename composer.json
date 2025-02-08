@@ -140,7 +140,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
             "sed -i 's/getHtmlBody/getTextBody/' vendor/xammie/mailbook/src/Data/ResolvedMail.php",
-            "sed -i \"s/return \\$html;/return \\'<pre>\\'.\\$html.\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php"
+            "sed -i \"s/\\$html = \\$this->message->getTextBody();/return \\'<pre>\\'.\\$this->message->getTextBody().\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
