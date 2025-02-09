@@ -101,6 +101,7 @@
         <h4>Merchandise Selection</h4>
         <p v-if="!selectedPackage || (merchGroupNames.length > 0)">One item of RoboJackets merch from each group below
           is included with your dues payment. {{ merchDependencyText }}</p>
+        <p v-else-if="user.primary_affiliation === 'student'">No merch is included in this dues package.</p>
         <p v-else>Only students are eligible for RoboJackets merch.</p>
         <div v-for="(merchlist, group) in merchGroups" class="form-group row">
           <label :for="'merch-'+group" class="col-sm-2 col-form-label">{{ group }}</label>
