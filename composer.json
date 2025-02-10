@@ -42,11 +42,11 @@
         "kiritokatklian/nova-permission": "5.1.0",
         "laravel/framework": "11.41.3",
         "laravel/horizon": "5.30.2",
-        "laravel/nova": "5.1.10",
+        "laravel/nova": "5.2.1",
         "laravel/passport": "12.4.1",
-        "laravel/scout": "10.11.9",
+        "laravel/scout": "10.12.2",
         "laravel/slack-notification-channel": "3.4.4",
-        "laravel/socialite": "5.16.1",
+        "laravel/socialite": "5.17.1",
         "laravel/tinker": "2.10.1",
         "madewithlove/laravel-nova-uuid-support": "1.6",
         "meilisearch/meilisearch-php": "1.12.0",
@@ -71,7 +71,7 @@
         "barryvdh/laravel-ide-helper": "3.3.0",
         "beyondcode/laravel-dump-server": "2.0.0",
         "filp/whoops": "2.15.4",
-        "laravel/pint": "1.19.0",
+        "laravel/pint": "1.20.0",
         "mockery/mockery": "1.6.12",
         "mxl/laravel-job": "1.6.0",
         "nunomaduro/collision": "8.1.1",
@@ -140,7 +140,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
             "sed -i 's/getHtmlBody/getTextBody/' vendor/xammie/mailbook/src/Data/ResolvedMail.php",
-            "sed -i \"s/return \\$html;/return \\'<pre>\\'.\\$html.\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php"
+            "sed -i \"s/\\$html = \\$this->message->getTextBody();/return \\'<pre>\\'.\\$this->message->getTextBody().\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",

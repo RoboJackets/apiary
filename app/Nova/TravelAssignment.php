@@ -61,18 +61,11 @@ class TravelAssignment extends Resource
     ];
 
     /**
-     * The number of results to display in the global search.
+     * Indicates if the resource should be globally searchable.
      *
-     * @var int
+     * @var bool
      */
-    public static $globalSearchResults = 2;
-
-    /**
-     * The number of results to display when searching the resource using Scout.
-     *
-     * @var int
-     */
-    public static $scoutSearchResults = 2;
+    public static $globallySearchable = false;
 
     /**
      * The relationships that should be eager loaded on index queries.
