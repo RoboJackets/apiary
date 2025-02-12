@@ -37,7 +37,6 @@ abstract class RecordPayment extends Action
      * @param  \Illuminate\Support\Collection<int,\App\Models\Payable>  $models
      *
      * @phan-suppress PhanUndeclaredConstantOfClass
-     * @phan-suppress PhanTypeSuspiciousStringExpression
      * @phan-suppress PhanTypeMismatchProperty
      */
     public function handle(ActionFields $fields, Collection $models)

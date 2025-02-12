@@ -64,7 +64,6 @@ class RefundOfflinePayment extends Action
      * @param  \Illuminate\Support\Collection<int,\App\Models\Payment>  $models
      *
      * @phan-suppress PhanTypeMismatchPropertyProbablyReal
-     * @phan-suppress PhanTypeSuspiciousStringExpression
      */
     public function handle(ActionFields $fields, Collection $models)
     {
