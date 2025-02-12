@@ -14,8 +14,6 @@ trait GetMorphClassStatic
     /**
      * Get the morph class string for this class.
      *
-     * @return string
-     *
      * @phan-suppress PhanPossiblyFalseTypeReturn
      */
     public static function getMorphClassStatic(): string
