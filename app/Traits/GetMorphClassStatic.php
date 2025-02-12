@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\Relations\Relation;
  */
 trait GetMorphClassStatic
 {
+    /**
+     * Get the morph class string for this class.
+     *
+     * @phan-suppress PhanPossiblyFalseTypeReturn
+     */
     public static function getMorphClassStatic(): string
     {
         return array_search(static::class, Relation::morphMap(), true);

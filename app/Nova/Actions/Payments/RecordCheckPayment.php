@@ -104,8 +104,6 @@ class RecordCheckPayment extends RecordPayment
 
     /**
      * The note to add to the payment.
-     *
-     * @phan-suppress PhanTypeSuspiciousStringExpression
      */
     protected static function note(ActionFields $fields): string
     {

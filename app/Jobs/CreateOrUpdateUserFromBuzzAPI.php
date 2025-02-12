@@ -65,7 +65,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @phan-suppress PhanTypeExpectedObjectPropAccessButGotNull,PhanTypeMismatchArgumentInternal
+     * @phan-suppress PhanTypeExpectedObjectPropAccessButGotNull
      */
     public function handle(): void
     {

@@ -65,7 +65,6 @@ class RefundSquarePayment extends Action
      * @param  \Illuminate\Support\Collection<int,\App\Models\Payment>  $models
      *
      * @phan-suppress PhanTypeMismatchPropertyProbablyReal
-     * @phan-suppress PhanTypeSuspiciousStringExpression
      * @phan-suppress PhanPossiblyFalseTypeArgument
      */
     public function handle(ActionFields $fields, Collection $models)
