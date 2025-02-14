@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb8abef75f7497f80fd086dfb71a8546",
+    "content-hash": "f1a6a4e869b82f58ccaaa1887c037c72",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3328,17 +3328,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.2.2",
+            "version": "5.2.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "84711d42cbb026f51eb6d309dabc4f3a203f3949"
+                "reference": "8ab1c586b3e4da6c5960f01219583bff7c70b369"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-84711d42cbb026f51eb6d309dabc4f3a203f3949-zip-39595e.zip",
-                "reference": "84711d42cbb026f51eb6d309dabc4f3a203f3949",
-                "shasum": "4211846c4107e20a5a03619f8c1d849f5de8007c"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-8ab1c586b3e4da6c5960f01219583bff7c70b369-zip-f686da.zip",
+                "reference": "8ab1c586b3e4da6c5960f01219583bff7c70b369",
+                "shasum": "212c4b55c88bf54e0b0d3d09cf5e573fa5e58c29"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -3362,7 +3362,7 @@
             "require-dev": {
                 "doctrine/dbal": "^3.5.1|^4.0",
                 "larastan/larastan": "^2.9.14",
-                "laravel/pint": "^1.17",
+                "laravel/pint": "^1.20",
                 "laravel/scout": "^10.11",
                 "orchestra/testbench-core": "^8.30|^9.7",
                 "orchestra/testbench-dusk": "^8.32|^9.10",
@@ -3493,9 +3493,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.2.2"
+                "source": "https://github.com/laravel/nova/tree/v5.2.3",
+                "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-02-08T07:12:21+00:00"
+            "time": "2025-02-12T05:25:19+00:00"
         },
         {
             "name": "laravel/passport",
