@@ -12,12 +12,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Square\Models\Fulfillment;
-use Square\Models\Order;
-use Square\Models\OrderFulfillmentState;
-use Square\Models\OrderState;
-use Square\Models\UpdateOrderRequest;
+use Square\Orders\Requests\GetOrdersRequest;
+use Square\Orders\Requests\UpdateOrderRequest;
 use Square\SquareClient;
+use Square\Types\Fulfillment;
+use Square\Types\FulfillmentState;
+use Square\Types\Order;
+use Square\Types\OrderState;
 
 class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
 {
@@ -46,41 +47,41 @@ class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
      */
     public function handle(): void
     {
-        $square = new SquareClient([
-            'accessToken' => config('square.access_token'),
-            'environment' => config('square.environment'),
-        ]);
+        $square = new SquareClient(
+            token: config('square.access_token'),
+            options: [
+                'baseUrl' => config('square.base_url'),
+            ]
+        );
 
-        $ordersApi = $square->getOrdersApi();
+        $getOrderResponse = $square->orders->get(new GetOrdersRequest(['orderId' => $this->order_id]));
 
-        $retrieveOrderResponse = $ordersApi->retrieveOrder($this->order_id);
-
-        if (! $retrieveOrderResponse->isSuccess()) {
+        if ($getOrderResponse->getOrder() === null) {
             throw new Exception(
-                'Error retrieving order: '.json_encode($retrieveOrderResponse->getErrors())
+                'Error retrieving order: '.json_encode($getOrderResponse->getErrors())
             );
         }
 
-        $retrievedOrder = $retrieveOrderResponse->getResult()->getOrder();
+        $retrievedOrder = $getOrderResponse->getOrder();
 
-        $updateFulfillment = new Fulfillment();
-        $updateFulfillment->setUid($retrievedOrder->getFulfillments()[0]->getUid());
-        $updateFulfillment->setState(OrderFulfillmentState::COMPLETED);
+        $updateOrderResponse = $square->orders->update(new UpdateOrderRequest([
+            'order' => new Order([
+                'locationId' => config('square.location_id'),
+                'state' => OrderState::Completed,
+                'fulfillments' => [
+                    new Fulfillment([
+                        'uid' => $retrievedOrder->getFulfillments()[0]->getUuid(),
+                        'state' => FulfillmentState::Completed,
+                    ]),
+                ],
+                'version' => $retrievedOrder->getVersion(),
+            ]),
+            'id' => Payment::generateUniqueId(),
+        ]));
 
-        $updateOrder = new Order(config('square.location_id'));
-        $updateOrder->setState(OrderState::COMPLETED);
-        $updateOrder->setFulfillments([$updateFulfillment]);
-        $updateOrder->setVersion($retrievedOrder->getVersion());
-
-        $updateOrderRequest = new UpdateOrderRequest();
-        $updateOrderRequest->setOrder($updateOrder);
-        $updateOrderRequest->setIdempotencyKey(Payment::generateUniqueId());
-
-        $updateOrderResponse = $ordersApi->updateOrder($this->order_id, $updateOrderRequest);
-
-        if (! $updateOrderResponse->isSuccess()) {
+        if ($updateOrderResponse->getOrder() === null) {
             throw new Exception(
-                'Error updating order: '.json_encode($retrieveOrderResponse->getErrors())
+                'Error updating order: '.json_encode($getOrderResponse->getErrors())
             );
         }
     }
