@@ -109,7 +109,7 @@ class RefundSquarePayment extends Action
             return self::danger('Error retrieving order information from Square.');
         }
 
-        if ($getOrderResponse->getOrder()->getState() !== OrderState::Completed) {
+        if (OrderState::from($getOrderResponse->getOrder()->getState()) !== OrderState::Completed) {
             $this->markAsFailed($payment, 'This order is not complete.');
 
             return self::danger('This order is not complete.');

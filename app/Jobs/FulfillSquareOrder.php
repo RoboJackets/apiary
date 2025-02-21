@@ -71,7 +71,7 @@ class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
                 'state' => OrderState::Completed,
                 'fulfillments' => [
                     new Fulfillment([
-                        'uid' => $retrievedOrder->getFulfillments()[0]->getUuid(),
+                        'uid' => $retrievedOrder->getFulfillments()[0]->getUid(),
                         'state' => FulfillmentState::Completed,
                     ]),
                 ],
