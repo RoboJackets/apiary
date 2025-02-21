@@ -14,6 +14,7 @@ parameters:
     - stubs/Role.php
   ignoreErrors:
     - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Collection|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereHas|whereDate|whereNotIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit|doesntExist|storeExcel|buzzCardAccessEligible|from|unpaid|whereRevoked|whereNotExists|orWhereDate|whereColumn)\(\)\.#'
+    - '#^Parameter \#1 \$values of class Square\\Types\\Fulfillment constructor expects array\{uid\?\: string\|null, type\?\: ''DELIVERY''\|''PICKUP''\|''SHIPMENT''\|null, state\?\: ''CANCELED''\|''COMPLETED''\|''FAILED''\|''PREPARED''\|''PROPOSED''\|''RESERVED''\|null, lineItemApplication\?\: ''ALL''\|''ENTRY_LIST''\|null, entries\?\: array\<Square\\Types\\FulfillmentFulfillmentEntry\>\|null, metadata\?\: array\<string, string\|null\>\|null, pickupDetails\?\: Square\\Types\\FulfillmentPickupDetails\|null, shipmentDetails\?\: Square\\Types\\FulfillmentShipmentDetails\|null, \.\.\.\}, array\{uid\: string\|null, state\: Square\\Types\\FulfillmentState\:\:Completed\} given\.$#'
     - '#Access to an undefined property App\\Http\\Resources\\[a-zA-Z]+::\$[a-zA-Z0-9_]+\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$(aggregate|day|rsvpsource|count|ending_year|member_count|active|revenue|is_paid|pivot)\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+\|App\\Models\\[a-zA-Z]+::\$[a-z_]+\.#'
@@ -107,6 +108,7 @@ parameters:
     - '#Offset ''[A-Za-z]+'' does not exist on array\|null\.#'
     - '#Offset ''revenue'' does not exist on App\\Models\\Payment\|null\.#'
     - '#Offset 0 does not exist on array<Square\\Types\\Fulfillment>\|null\.#'
+    - '#Offset 0 does not exist on array<Square\\Types\\Tender>\|null\.#'
     - '#Only booleans are allowed in &&, Illuminate\\Support\\Carbon\|null given on the (right|left) side\.#'
     - '#Only booleans are allowed in a negated boolean, bool\|string given\.#'
     - '#Only booleans are allowed in a negated boolean, Illuminate\\Support\\Carbon\|null given\.#'
@@ -197,7 +199,9 @@ parameters:
     - '#Parameter \#1 \$value of function strval expects bool\|float\|int\|resource\|string\|null, mixed given\.#'
     - '#Parameter \#1 \$value of method Carbon\\Carbon::subDays\(\) expects float\|int, mixed given\.#'
     - '#Parameter \#1 \$value of method Laravel\\Nova\\Metrics\\Partition::result\(\) expects array<string, float\|int>, array given\.#'
+    - '#Parameter \#1 \$value of static method Square\\Types\\OrderState::from\(\) expects int\|string, string\|null given\.#'
     - '#Parameter \#1 \$values of class Square\\Orders\\Requests\\GetOrdersRequest constructor expects array{orderId: string}, array{orderId: string\|null} given\.#'
+    - '#Parameter \#1 \$values of class Square\\Refunds\\Requests\\RefundPaymentRequest constructor expects array{idempotencyKey: string, amountMoney: Square\\Types\\Money, appFeeMoney\?: Square\\Types\\Money\|null, paymentId\?: string\|null, destinationId\?: string\|null, unlinked\?: bool\|null, locationId\?: string\|null, customerId\?: string\|null, ...}, array{paymentId: string\|null, reason: mixed, idempotencyKey: string\|null, amountMoney: Square\\Types\\Money} given\.#'
     - '#Parameter \#1 \$values of class Square\\Types\\Fulfillment constructor expects array{uid\?: string\|null, type?\: ''DELIVERY''\|''PICKUP''\|''SHIPMENT''\|null, state\?: ''CANCELED''\|''COMPLETED''\|''FAILED''\|''PREPARED''\|''PROPOSED''\|''RESERVED''\|null, lineItemApplication\?: ''ALL''\|''ENTRY_LIST''\|null, entries\?: array<Square\\Types\\FulfillmentFulfillmentEntry>\|null, metadata\?: array<string, string\|null>\|null, pickupDetails\?: Square\\Types\\FulfillmentPickupDetails\|null, shipmentDetails\?: Square\\Types\\FulfillmentShipmentDetails\|null, \.\.\.}, array{uid: mixed, state: Square\\Types\\FulfillmentState::Completed} given\.#'
     - '#Parameter \#1 \$values of class Square\\Types\\Order constructor expects array{locationId: string, id\?: string\|null, referenceId\?: string\|null, source\?: Square\\Types\\OrderSource\|null, customerId\?: string\|null, lineItems\?: array<Square\\Types\\OrderLineItem>\|null, taxes\?: array<Square\\Types\\OrderLineItemTax>\|null, discounts\?: array<Square\\Types\\OrderLineItemDiscount>\|null, ...}, array{locationId: mixed, state: Square\\Types\\OrderState::Completed, fulfillments: array{Square\\Types\\Fulfillment}, version: int\|null} given\.#'
     - '#Parameter \#1 \.\.\.\$addresses of method Symfony\\Component\\Mime\\Email::replyTo\(\) expects string\|Symfony\\Component\\Mime\\Address, mixed given\.#'
