@@ -21,19 +21,11 @@ return [
         ])
         ->environments(['test', Rule::ENV_PRODUCTION]),
 
-    Rule::make('environment')
+    Rule::make('base_url')
         ->rules([
             'required',
             'string',
-            'in:sandbox',
+            'url:https',
         ])
-        ->environments(['test']),
-
-    Rule::make('environment')
-        ->rules([
-            'required',
-            'string',
-            'in:production',
-        ])
-        ->environments([Rule::ENV_PRODUCTION]),
+        ->environments(['test', Rule::ENV_PRODUCTION]),
 ];
