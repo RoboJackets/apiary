@@ -68,7 +68,7 @@ class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
             'orderId' => $this->order_id,
             'order' => new Order([
                 'locationId' => config('square.location_id'),
-                'state' => OrderState::Completed,
+                'state' => OrderState::Completed->value,
                 'fulfillments' => [
                     new Fulfillment([
                         // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
