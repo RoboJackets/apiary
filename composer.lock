@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c89e68d4ea58b03b5245f28de36b6fcf",
+    "content-hash": "750fc7891b2be488a1f17d7537914965",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2630,21 +2630,21 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "0259e37f802bc39c814c42ba92c04ada17921f70"
+                "reference": "d855ad18bcaae883e307619370d8c3dcfb5adbaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/0259e37f802bc39c814c42ba92c04ada17921f70",
-                "reference": "0259e37f802bc39c814c42ba92c04ada17921f70",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/d855ad18bcaae883e307619370d8c3dcfb5adbaa",
+                "reference": "d855ad18bcaae883e307619370d8c3dcfb5adbaa",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laravel/framework": "^10.0|^11.0",
+                "laravel/framework": "^10.0|^11.0|^12.0",
                 "php": "^8.1.0",
                 "symfony/console": "^6.2|^7.0"
             },
@@ -2692,7 +2692,7 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v2.0.0"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v2.0.1"
             },
             "funding": [
                 {
@@ -2700,7 +2700,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-13T02:48:29+00:00"
+            "time": "2025-02-18T19:00:36+00:00"
         },
         {
             "name": "intervention/httpauth",
@@ -3328,25 +3328,25 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.2.4",
+            "version": "5.2.5",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "38213467d814bc1520632425939553167abadb0d"
+                "reference": "ce487ae38cf673edab9ffc0a682a26ffd86b53fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-38213467d814bc1520632425939553167abadb0d-zip-6a1697.zip",
-                "reference": "38213467d814bc1520632425939553167abadb0d",
-                "shasum": "ac308d2bf053508fbabb554fb733af41d8c527da"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-ce487ae38cf673edab9ffc0a682a26ffd86b53fb-zip-0e59b0.zip",
+                "reference": "ce487ae38cf673edab9ffc0a682a26ffd86b53fb",
+                "shasum": "0290c5c9118749b8ca706ca322d36d32219be797"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
                 "ext-json": "*",
-                "illuminate/filesystem": "^10.48.23|^11.35",
-                "illuminate/support": "^10.48.23|^11.35",
+                "illuminate/filesystem": "^10.48.23|^11.35|^12.0",
+                "illuminate/support": "^10.48.23|^11.35|^12.0",
                 "inertiajs/inertia-laravel": "^1.3.2|^2.0",
-                "laravel/fortify": "^1.25.3",
+                "laravel/fortify": "^1.25.4",
                 "nesbot/carbon": "^2.62.1|^3.4",
                 "php": "^8.1",
                 "rap2hpoutre/fast-excel": "^5.4",
@@ -3361,16 +3361,16 @@
             },
             "require-dev": {
                 "doctrine/dbal": "^3.5.1|^4.0",
-                "larastan/larastan": "^2.9.14",
+                "larastan/larastan": "^2.9.14|^3.1",
                 "laravel/pint": "^1.20",
-                "laravel/scout": "^10.11",
-                "orchestra/testbench-core": "^8.30|^9.7",
-                "orchestra/testbench-dusk": "^8.32|^9.10",
-                "orchestra/workbench": "^8.13|^9.9",
-                "phpstan/phpstan": "^1.12.17",
+                "laravel/scout": "^10.12.2",
+                "orchestra/testbench-core": "^8.30|^9.7|^10.0",
+                "orchestra/testbench-dusk": "^8.32|^9.10|^10.0",
+                "orchestra/workbench": "^8.13|^9.9|^10.0",
+                "phpstan/phpstan": "^1.12.17|^2.1",
                 "phpunit/phpunit": "^10.5.35|^11.3.5",
                 "predis/predis": "^2.3",
-                "spatie/laravel-ray": "^1.39"
+                "spatie/laravel-ray": "^1.39.1"
             },
             "suggest": {
                 "ext-intl": "Required to format Currency field"
@@ -3493,10 +3493,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.2.4",
+                "source": "https://github.com/laravel/nova/tree/v5.2.5",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-02-15T03:19:30+00:00"
+            "time": "2025-02-21T09:39:32+00:00"
         },
         {
             "name": "laravel/passport",
@@ -7385,25 +7385,25 @@
         },
         {
             "name": "rap2hpoutre/fast-excel",
-            "version": "v5.5.0",
+            "version": "v5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rap2hpoutre/fast-excel.git",
-                "reference": "83604f2a16fbb0374747299173abe691b24916da"
+                "reference": "a460ac5b78f01162eadcae49053017686c53e102"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rap2hpoutre/fast-excel/zipball/83604f2a16fbb0374747299173abe691b24916da",
-                "reference": "83604f2a16fbb0374747299173abe691b24916da",
+                "url": "https://api.github.com/repos/rap2hpoutre/fast-excel/zipball/a460ac5b78f01162eadcae49053017686c53e102",
+                "reference": "a460ac5b78f01162eadcae49053017686c53e102",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
                 "openspout/openspout": "^4.24",
                 "php": "^8.0"
             },
             "require-dev": {
-                "illuminate/database": "^6.20.12 || ^7.30.4 || ^8.24.0 || ^9.0 || ^10.0 || ^11.0",
+                "illuminate/database": "^6.20.12 || ^7.30.4 || ^8.24.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
                 "phpunit/phpunit": "^9.5 || ^10.1",
                 "squizlabs/php_codesniffer": "3.*"
             },
@@ -7443,7 +7443,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rap2hpoutre/fast-excel/issues",
-                "source": "https://github.com/rap2hpoutre/fast-excel/tree/v5.5.0"
+                "source": "https://github.com/rap2hpoutre/fast-excel/tree/v5.6.0"
             },
             "funding": [
                 {
@@ -7451,7 +7451,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-06-03T08:00:43+00:00"
+            "time": "2025-02-18T12:50:31+00:00"
         },
         {
             "name": "realrashid/sweet-alert",
