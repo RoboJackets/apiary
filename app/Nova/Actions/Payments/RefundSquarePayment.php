@@ -116,6 +116,7 @@ class RefundSquarePayment extends Action
         }
 
         $refundPaymentResponse = $square->refunds->refundPayment(new RefundPaymentRequest([
+            // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
             'paymentId' => $getOrderResponse->getOrder()->getTenders()[0]->getId(),
             'reason' => $fields->reason,
             'idempotencyKey' => $payment->unique_id,

@@ -223,6 +223,7 @@ class SquareCheckoutController extends Controller
         $order = $getOrderResponse->getOrder();
 
         if ($order->getTenders() !== null && count($order->getTenders()) > 0) {
+            // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
             $tender = $order->getTenders()[0];
             $payment->amount = $tender->getAmountMoney()->getAmount() / 100;
 

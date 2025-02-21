@@ -115,7 +115,7 @@ class SquareCheckout
             SentrySdk::getCurrentHub()->setSpan($parentSpan);
         }
 
-        if ($paymentLinkResponse === null) {
+        if ($paymentLinkResponse->getPaymentLink() === null) {
             Log::error(self::class.': Error creating payment link - '.json_encode($paymentLinkResponse->getErrors()));
             // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
             \Sentry\captureMessage(json_encode($paymentLinkResponse->getErrors()));
