@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
+use Square\Orders\Requests\GetOrdersRequest;
 use Square\SquareClient;
 
 /**
@@ -262,13 +263,12 @@ class Payment extends Model
             'square_payment_status_'.$this->order_id,
             10,
             fn (): string => (new SquareClient(
-                [
-                    'accessToken' => config('square.access_token'),
-                    'environment' => config('square.environment'),
+                token: config('square.access_token'),
+                options: [
+                    'baseUrl' => config('square.base_url'),
                 ]
-            ))->getOrdersApi()
-                ->retrieveOrder($this->order_id)
-                ->getResult()
+            ))->orders
+                ->get(new GetOrdersRequest(['orderId' => $this->order_id]))
                 ->getOrder()
                 ->getState()
         );

@@ -21,7 +21,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Square\Models\OrderState;
+use Square\Types\OrderState;
 
 /**
  * A Nova resource for payments.
@@ -225,7 +225,7 @@ class Payment extends Resource
             $payment->order_id !== null &&
             $payment->created_at !== null &&
             Carbon::now()->subYear()->lessThanOrEqualTo($payment->created_at) &&
-            $payment->getSquareOrderState() === OrderState::COMPLETED
+            OrderState::from($payment->getSquareOrderState()) === OrderState::Completed
         ) {
             if ($payment->payable->user->id === $user->id) {
                 return [
@@ -248,7 +248,7 @@ class Payment extends Resource
             $payment->order_id !== null &&
             $payment->created_at !== null &&
             Carbon::now()->subYear()->greaterThan($payment->created_at) &&
-            $payment->getSquareOrderState() === OrderState::COMPLETED
+            OrderState::from($payment->getSquareOrderState()) === OrderState::Completed
         ) {
             return [
                 self::squareTransactionTooOld(),
