@@ -97,9 +97,7 @@ class RefundSquarePayment extends Action
             ]
         );
 
-        $getOrderResponse = $square->orders->get(new GetOrdersRequest([
-            'orderId' => $payment->order_id,
-        ]));
+        $getOrderResponse = $square->orders->get(new GetOrdersRequest(['orderId' => $payment->order_id]));
 
         if ($getOrderResponse->getOrder() === null) {
             Log::error(self::class.' Error retrieving order - '.json_encode($getOrderResponse->getErrors()));
