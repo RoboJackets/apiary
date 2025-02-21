@@ -73,7 +73,7 @@ class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
                     new Fulfillment([
                         // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
                         'uid' => $retrievedOrder->getFulfillments()[0]->getUid(),
-                        'state' => FulfillmentState::Completed,
+                        'state' => FulfillmentState::Completed->value,
                     ]),
                 ],
                 'version' => $retrievedOrder->getVersion(),
