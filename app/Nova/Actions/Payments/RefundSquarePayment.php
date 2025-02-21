@@ -115,10 +115,8 @@ class RefundSquarePayment extends Action
             return self::danger('This order is not complete.');
         }
 
-        $paymentId = $getOrderResponse->getOrder()->getTenders()[0]->getId();
-
         $refundPaymentResponse = $square->refunds->refundPayment(new RefundPaymentRequest([
-            'paymentId' => $paymentId,
+            'paymentId' => $getOrderResponse->getOrder()->getTenders()[0]->getId(),
             'reason' => $fields->reason,
             'idempotencyKey' => $payment->unique_id,
             'amountMoney' => new Money([
