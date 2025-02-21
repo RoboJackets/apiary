@@ -65,6 +65,7 @@ class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
         $retrievedOrder = $getOrderResponse->getOrder();
 
         $updateOrderResponse = $square->orders->update(new UpdateOrderRequest([
+            'orderId' => $this->order_id,
             'order' => new Order([
                 'locationId' => config('square.location_id'),
                 'state' => OrderState::Completed,
@@ -76,7 +77,7 @@ class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
                 ],
                 'version' => $retrievedOrder->getVersion(),
             ]),
-            'id' => Payment::generateUniqueId(),
+            'idempotencyKey' => Payment::generateUniqueId(),
         ]));
 
         if ($updateOrderResponse->getOrder() === null) {
