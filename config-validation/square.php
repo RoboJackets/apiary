@@ -25,7 +25,6 @@ return [
         ->rules([
             'required',
             'string',
-            'url:https',
         ])
         ->environments(['test', Rule::ENV_PRODUCTION]),
 ];
