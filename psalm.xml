@@ -335,6 +335,9 @@
                 <referencedFunction name="Laravel\Nova\Fields\Text::showOnDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\URL::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Http\Requests\LensRequest::withFilters"/>
+                <referencedFunction name="Square\Types\Fulfillment::__construct"/>
+                <referencedFunction name="Square\Types\Order::__construct"/>
+                <referencedFunction name="Square\Types\OrderLineItem::__construct"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidOperand>
@@ -396,11 +399,13 @@
         <InvalidNullableReturnType>
             <errorLevel type="suppress">
                 <file name="app/Mail/PaymentReceipt.php"/>
+                <file name="app/Models/Payment.php"/>
             </errorLevel>
         </InvalidNullableReturnType>
         <NullableReturnStatement>
             <errorLevel type="suppress">
                 <file name="app/Mail/PaymentReceipt.php"/>
+                <file name="app/Models/Payment.php"/>
             </errorLevel>
         </NullableReturnStatement>
         <InvalidStaticInvocation>
