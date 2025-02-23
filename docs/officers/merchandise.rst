@@ -29,8 +29,8 @@ To confirm which merchandise a member selected when they paid dues, follow these
    This section lists the merchandise selections made when the member paid dues.
 #. To distribute an item, select it, then follow the steps in the next section.
 
-Recording merchandise distribution
-----------------------------------
+Recording merchandise distribution on web
+-----------------------------------------
 
 To record distribution of an item, follow these steps.
 
@@ -41,8 +41,8 @@ To record distribution of an item, follow these steps.
    If you don't see the user's name in the list, they may not be eligible to receive the item, or they may not have selected it when they paid dues.
    You can ask in :slack:`it-helpdesk` if you're not sure.
 
-Recording merchandise distribution using Android
-------------------------------------------------
+Recording merchandise distribution on Android
+---------------------------------------------
 
 .. vale Google.Parens = NO
 
