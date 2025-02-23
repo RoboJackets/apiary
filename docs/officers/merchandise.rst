@@ -40,3 +40,41 @@ To record distribution of an item, follow these steps.
 #. Search for the user you're distributing merchandise to, then click :guilabel:`Mark as Picked Up`.
    If you don't see the user's name in the list, they may not be eligible to receive the item, or they may not have selected it when they paid dues.
    You can ask in :slack:`it-helpdesk` if you're not sure.
+
+Recording merchandise distribution using Android
+------------------------------------------------
+
+.. vale Google.Parens = NO
+
+RoboJackets developed an Android app to ease distribution of merchandise.
+Your phone must support NFC and run Android 7 (Nougat) or newer.
+
+.. vale Google.Parens = YES
+
+To distribute merch using the app:
+
+.. vale Google.Passive = NO
+.. vale Google.Will = NO
+.. vale write-good.E-Prime = NO
+.. vale write-good.Passive = NO
+
+#. Download the app from the `Google Play Store <https://play.google.com/store/apps/details?id=org.robojackets.apiary>`_.
+#. Open the app and follow the prompts to sign in.
+#. After signing in, tap :guilabel:`Merchandise`.
+#. Select the specific merchandise type.
+#. A new screen will appear that says :guilabel:`Tap a BuzzCard`.
+   You can now hold a physical BuzzCard to the back of your phone until you feel your phone vibrate, and the screen in the app changes to :guilabel:`Processing`.
+#. You can manually enter a GTID using the :guilabel:`Enter GTID manually` button if someone forgot their BuzzCard.
+   If a valid BuzzCard consistently displays an error message, post in :slack:`apiary-mobile`.
+#. Read the instructions on-screen.
+
+The app uses the NFC radio in your phone to read data from BuzzCards. Below are some tips for consistent, successful reads:
+
+.. vale write-good.Weasel = NO
+
+- If you have a particularly thick case on your phone, try removing it.
+- Search the Internet to determine the location of the NFC antenna on your phone.
+  Generally, cards will read more reliably when centered on the antenna.
+- Remove the card for a few seconds, then try again.
+
+If you need help, post in :slack:`apiary-mobile`.
