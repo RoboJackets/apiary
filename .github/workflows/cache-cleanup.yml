@@ -22,7 +22,7 @@ jobs:
           echo "Deleting caches..."
           for cacheKey in $cacheKeysForPR
           do
-              gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
+              gh actions-cache delete $cacheKey -R ${{ github.repository }} -B refs/pull/${{ github.event.pull_request.number }}/merge --confirm
           done
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
