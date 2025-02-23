@@ -51,7 +51,7 @@ Your phone must support NFC and run Android 7 (Nougat) or newer.
 
 .. vale Google.Parens = YES
 
-To distribute merch using the app:
+To distribute merchandise using the app:
 
 .. vale Google.Passive = NO
 .. vale Google.Will = NO
