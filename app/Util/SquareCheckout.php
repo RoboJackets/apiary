@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Sentry\SentrySdk;
 use Sentry\Tracing\SpanContext;
-use Square\Models\AcceptedPaymentMethods;
-use Square\Models\CheckoutOptions;
-use Square\Models\CreatePaymentLinkRequest;
-use Square\Models\Money;
-use Square\Models\Order;
-use Square\Models\OrderLineItem;
-use Square\Models\OrderPricingOptions;
-use Square\Models\PrePopulatedData;
+use Square\Checkout\PaymentLinks\Requests\CreatePaymentLinkRequest;
 use Square\SquareClient;
+use Square\Types\AcceptedPaymentMethods;
+use Square\Types\CheckoutOptions;
+use Square\Types\Money;
+use Square\Types\Order;
+use Square\Types\OrderLineItem;
+use Square\Types\OrderPricingOptions;
+use Square\Types\PrePopulatedData;
 
 class SquareCheckout
 {
@@ -32,70 +32,71 @@ class SquareCheckout
         string $name,
         string $variation_name
     ) {
-        $basePrice = new Money();
-        $basePrice->setAmount($amount);
-        $basePrice->setCurrency('USD');
-
-        $orderLineItem = new OrderLineItem('1');
-        $orderLineItem->setName($name);
-        $orderLineItem->setVariationName($variation_name);
-        $orderLineItem->setBasePriceMoney($basePrice);
-
-        $pricingOptions = new OrderPricingOptions();
-        $pricingOptions->setAutoApplyDiscounts(false);
-        $pricingOptions->setAutoApplyTaxes(false);
-
-        $order = new Order(config('square.location_id'));
-        $order->setReferenceId((string) $payment->id);
-        $order->setLineItems([$orderLineItem]);
-        $order->setPricingOptions($pricingOptions);
-
-        $acceptedPaymentMethods = new AcceptedPaymentMethods();
-        $acceptedPaymentMethods->setApplePay(true);
-        $acceptedPaymentMethods->setGooglePay(true);
-        $acceptedPaymentMethods->setCashAppPay(true);
-        $acceptedPaymentMethods->setAfterpayClearpay(false);
-
-        $checkoutOptions = new CheckoutOptions();
-        $checkoutOptions->setAllowTipping(false);
-        $checkoutOptions->setRedirectUrl(route('pay.complete'));
-        $checkoutOptions->setMerchantSupportEmail(config('services.treasurer_email'));
-        $checkoutOptions->setAskForShippingAddress(false);
-        $checkoutOptions->setAcceptedPaymentMethods($acceptedPaymentMethods);
-        $checkoutOptions->setEnableCoupon(false);
-        $checkoutOptions->setEnableLoyalty(false);
-
-        $prePopulatedData = new PrePopulatedData();
-        $prePopulatedData->setBuyerEmail($user->gt_email);
+        $phoneNumber = null;
 
         if ($user->phone !== null) {
             if (Str::startsWith('+', $user->phone)) {
                 // already has country code prefix
-                $prePopulatedData->setBuyerPhoneNumber($user->phone);
+                $phoneNumber = $user->phone;
             } elseif (Str::startsWith('1', $user->phone) && Str::length($user->phone) === 11) {
                 // has united states country code but no +, just add it
-                $prePopulatedData->setBuyerPhoneNumber('+'.$user->phone);
+                $phoneNumber = '+'.$user->phone;
             } elseif (Str::length($user->phone) === 10) {
                 // assume united states number
-                $prePopulatedData->setBuyerPhoneNumber('+1'.$user->phone);
+                $phoneNumber = '+1'.$user->phone;
             } else {
                 // assume international number with country code
-                $prePopulatedData->setBuyerPhoneNumber('+'.$user->phone);
+                $phoneNumber = '+'.$user->phone;
             }
         }
 
-        $paymentLinkRequest = new CreatePaymentLinkRequest();
-        $paymentLinkRequest->setIdempotencyKey($payment->unique_id);
-        $paymentLinkRequest->setOrder($order);
-        $paymentLinkRequest->setCheckoutOptions($checkoutOptions);
-        $paymentLinkRequest->setPrePopulatedData($prePopulatedData);
-
-        $square = new SquareClient([
-            'accessToken' => config('square.access_token'),
-            'environment' => config('square.environment'),
+        $paymentLinkRequest = new CreatePaymentLinkRequest([
+            'idempotencyKey' => $payment->unique_id,
+            'order' => new Order([
+                'locationId' => config('square.location_id'),
+                'referenceId' => $payment->id,
+                'lineItems' => [
+                    new OrderLineItem([
+                        'quantity' => 1,
+                        'name' => $name,
+                        'variationName' => $variation_name,
+                        'basePriceMoney' => new Money([
+                            'amount' => $amount,
+                            'currency' => 'USD',
+                        ]),
+                    ]),
+                ],
+                'pricingOptions' => new OrderPricingOptions([
+                    'autoApplyDiscounts' => false,
+                    'autoApplyTaxes' => false,
+                ]),
+            ]),
+            'checkoutOptions' => new CheckoutOptions([
+                'allowTipping' => false,
+                'redirectUrl' => route('pay.complete'),
+                'merchantSupportEmail' => 'payments@robojackets.org',
+                'askForShippingAddress' => false,
+                'acceptedPaymentMethods' => new AcceptedPaymentMethods([
+                    'applePay' => true,
+                    'googlePay' => true,
+                    'cashAppPay' => true,
+                    'afterpayClearpay' => false,
+                ]),
+                'enableCoupon' => false,
+                'enableLoyalty' => false,
+            ]),
+            'prePopulatedData' => new PrePopulatedData([
+                'buyerEmail' => $user->gt_email,
+                'buyerPhoneNumber' => $phoneNumber,
+            ]),
         ]);
 
-        $checkoutApi = $square->getCheckoutApi();
+        $square = new SquareClient(
+            token: config('square.access_token'),
+            options: [
+                'baseUrl' => config('square.base_url'),
+            ]
+        );
 
         $parentSpan = SentrySdk::getCurrentHub()->getSpan();
 
@@ -106,7 +107,7 @@ class SquareCheckout
             SentrySdk::getCurrentHub()->setSpan($span);
         }
 
-        $paymentLinkResponse = $checkoutApi->createPaymentLink($paymentLinkRequest);
+        $paymentLinkResponse = $square->checkout->paymentLinks->create($paymentLinkRequest);
 
         if ($parentSpan !== null) {
             // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
@@ -114,7 +115,7 @@ class SquareCheckout
             SentrySdk::getCurrentHub()->setSpan($parentSpan);
         }
 
-        if (! $paymentLinkResponse->isSuccess()) {
+        if ($paymentLinkResponse->getPaymentLink() === null) {
             Log::error(self::class.': Error creating payment link - '.json_encode($paymentLinkResponse->getErrors()));
             // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
             \Sentry\captureMessage(json_encode($paymentLinkResponse->getErrors()));
@@ -128,9 +129,9 @@ class SquareCheckout
             );
         }
 
-        $paymentLink = $paymentLinkResponse->getResult()->getPaymentLink();
+        $paymentLink = $paymentLinkResponse->getPaymentLink();
 
-        $payment->order_id = $paymentLinkResponse->getResult()->getPaymentLink()->getOrderId();
+        $payment->order_id = $paymentLink->getOrderId();
         $payment->checkout_id = $paymentLink->getId();
         $payment->url = $paymentLink->getLongUrl();
         $payment->save();

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Sentry\SentrySdk;
 use Sentry\Tracing\SpanContext;
+use Square\Orders\Requests\GetOrdersRequest;
 use Square\SquareClient;
 
 class SquareCheckoutController extends Controller
@@ -182,12 +183,12 @@ class SquareCheckoutController extends Controller
     {
         $payment = Payment::where('order_id', $request->input('transactionId'))->firstOrFail();
 
-        $square = new SquareClient([
-            'accessToken' => config('square.access_token'),
-            'environment' => config('square.environment'),
-        ]);
-
-        $ordersApi = $square->getOrdersApi();
+        $square = new SquareClient(
+            token: config('square.access_token'),
+            options: [
+                'baseUrl' => config('square.base_url'),
+            ]
+        );
 
         $parentSpan = SentrySdk::getCurrentHub()->getSpan();
 
@@ -198,7 +199,7 @@ class SquareCheckoutController extends Controller
             SentrySdk::getCurrentHub()->setSpan($span);
         }
 
-        $retrieveOrderResponse = $ordersApi->retrieveOrder($payment->order_id);
+        $getOrderResponse = $square->orders->get(new GetOrdersRequest(['orderId' => $payment->order_id]));
 
         if ($parentSpan !== null) {
             // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
@@ -206,10 +207,10 @@ class SquareCheckoutController extends Controller
             SentrySdk::getCurrentHub()->setSpan($parentSpan);
         }
 
-        if (! $retrieveOrderResponse->isSuccess()) {
-            Log::error(self::class.' Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));
+        if ($getOrderResponse->getOrder() === null) {
+            Log::error(self::class.' Error retrieving order - '.json_encode($getOrderResponse->getErrors()));
             // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
-            \Sentry\captureMessage(json_encode($retrieveOrderResponse->getErrors()));
+            \Sentry\captureMessage(json_encode($getOrderResponse->getErrors()));
 
             return view(
                 'square.error',
@@ -219,9 +220,10 @@ class SquareCheckoutController extends Controller
             );
         }
 
-        $order = $retrieveOrderResponse->getResult()->getOrder();
+        $order = $getOrderResponse->getOrder();
 
         if ($order->getTenders() !== null && count($order->getTenders()) > 0) {
+            // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
             $tender = $order->getTenders()[0];
             $payment->amount = $tender->getAmountMoney()->getAmount() / 100;
 
