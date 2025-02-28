@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ab74daefcdf576ef35d7d01469800c7",
+    "content-hash": "84d1e197d37834b91017e5f94c0d30f4",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -593,16 +593,16 @@
         },
         {
             "name": "brick/math",
-            "version": "0.12.2",
+            "version": "0.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "901eddb1e45a8e0f689302e40af871c181ecbe40"
+                "reference": "866551da34e9a618e64a819ee1e01c20d8a588ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/901eddb1e45a8e0f689302e40af871c181ecbe40",
-                "reference": "901eddb1e45a8e0f689302e40af871c181ecbe40",
+                "url": "https://api.github.com/repos/brick/math/zipball/866551da34e9a618e64a819ee1e01c20d8a588ba",
+                "reference": "866551da34e9a618e64a819ee1e01c20d8a588ba",
                 "shasum": ""
             },
             "require": {
@@ -641,7 +641,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.12.2"
+                "source": "https://github.com/brick/math/tree/0.12.3"
             },
             "funding": [
                 {
@@ -649,7 +649,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-26T10:21:45+00:00"
+            "time": "2025-02-28T13:11:00+00:00"
         },
         {
             "name": "brick/money",
@@ -3328,17 +3328,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.2.5",
+            "version": "5.2.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "ce487ae38cf673edab9ffc0a682a26ffd86b53fb"
+                "reference": "36dc6b56a303a411e6be1b55f0fc44d66c252a67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-ce487ae38cf673edab9ffc0a682a26ffd86b53fb-zip-0e59b0.zip",
-                "reference": "ce487ae38cf673edab9ffc0a682a26ffd86b53fb",
-                "shasum": "0290c5c9118749b8ca706ca322d36d32219be797"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-36dc6b56a303a411e6be1b55f0fc44d66c252a67-zip-d7772f.zip",
+                "reference": "36dc6b56a303a411e6be1b55f0fc44d66c252a67",
+                "shasum": "730791f7cd2a37d590f9a63a5e5e4543dc773b9d"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -3493,10 +3493,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.2.5",
+                "source": "https://github.com/laravel/nova/tree/v5.2.6",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-02-21T09:39:32+00:00"
+            "time": "2025-02-26T07:50:38+00:00"
         },
         {
             "name": "laravel/passport",
