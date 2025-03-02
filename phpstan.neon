@@ -215,7 +215,6 @@ parameters:
     - '#Parameter \#1 \$resource of class App\\Http\\Resources\\User constructor expects App\\Models\\User\|Illuminate\\Http\\Resources\\MissingValue\|null, mixed given\.#'
     - '#Parameter \#1 \$resource of static method App\\Nova\\Metrics\\MembersForOneFiscalYear::query\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$resource of static method App\\Nova\\Metrics\\TotalCollections::query\(\) expects string, mixed given\.#'
-    - '#Parameter \#1 \$resourceId of class App\\Nova\\Actions\\[a-zA-Z]+ constructor expects string\|null, mixed given\.#'
     - '#Parameter \#1 \$scale_value of method DocuSign\\eSign\\Model\\InitialHere::setScaleValue\(\) expects string\|null, int given\.#'
     - '#Parameter \#1 \$selected of method DocuSign\\eSign\\Model\\Checkbox::setSelected\(\) expects string\|null, true given\.#'
     - '#Parameter \#1 \$selected of method DocuSign\\eSign\\Model\\Radio::setSelected\(\) expects string\|null, true given\.#'
