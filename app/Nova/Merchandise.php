@@ -123,8 +123,12 @@ class Merchandise extends Resource
     {
         $resourceId = $request->resourceId ?? $request->resources;
 
-        if ($resourceId === null || is_array($resourceId)) {
+        if ($resourceId === null) {
             return [];
+        }
+
+        if (is_array($resourceId) && count($resourceId) === 1) {
+            $resourceId = $resourceId[0];
         }
 
         $merch_item = AppModelsMerchandise::where('id', $resourceId)->sole();
