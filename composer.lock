@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92b9a55e67c838815260071d2f2feb03",
+    "content-hash": "696061f3ca02c9f2c7be9856fb90cbcf",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -653,29 +653,29 @@
         },
         {
             "name": "brick/money",
-            "version": "0.10.0",
+            "version": "0.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/money.git",
-                "reference": "08b0198a05c6eeac416486da053cbdc02ddff56c"
+                "reference": "779c1d3b708e4dd37fe8a32a189b9f241b52f194"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/money/zipball/08b0198a05c6eeac416486da053cbdc02ddff56c",
-                "reference": "08b0198a05c6eeac416486da053cbdc02ddff56c",
+                "url": "https://api.github.com/repos/brick/money/zipball/779c1d3b708e4dd37fe8a32a189b9f241b52f194",
+                "reference": "779c1d3b708e4dd37fe8a32a189b9f241b52f194",
                 "shasum": ""
             },
             "require": {
-                "brick/math": "~0.12.0",
+                "brick/math": "~0.12.0|~0.13.0",
                 "php": "^8.1"
             },
             "require-dev": {
-                "brick/varexporter": "~0.4.0",
+                "brick/varexporter": "~0.5.0",
                 "ext-dom": "*",
                 "ext-pdo": "*",
                 "php-coveralls/php-coveralls": "^2.2",
                 "phpunit/phpunit": "^10.1",
-                "vimeo/psalm": "5.26.1"
+                "vimeo/psalm": "6.3.0"
             },
             "suggest": {
                 "ext-intl": "Required to format Money objects"
@@ -698,7 +698,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/money/issues",
-                "source": "https://github.com/brick/money/tree/0.10.0"
+                "source": "https://github.com/brick/money/tree/0.10.1"
             },
             "funding": [
                 {
@@ -706,7 +706,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-12T21:33:29+00:00"
+            "time": "2025-03-05T13:00:01+00:00"
         },
         {
             "name": "calebporzio/sushi",
@@ -3328,17 +3328,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.2.7",
+            "version": "5.3.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "75b3eea58fc6b05aaebb928eca736dafe39006f5"
+                "reference": "1759484359feda2d7cc7dfb4f89072084b4a8e13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-75b3eea58fc6b05aaebb928eca736dafe39006f5-zip-5c63db.zip",
-                "reference": "75b3eea58fc6b05aaebb928eca736dafe39006f5",
-                "shasum": "1b393a74111efe6add6e9e04854b132352a84796"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-1759484359feda2d7cc7dfb4f89072084b4a8e13-zip-296502.zip",
+                "reference": "1759484359feda2d7cc7dfb4f89072084b4a8e13",
+                "shasum": "16d936a2a64c545fc62c2a053fedb1644322f6ab"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -3493,10 +3493,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.2.7",
+                "source": "https://github.com/laravel/nova/tree/v5.3.1",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-03-01T01:04:28+00:00"
+            "time": "2025-03-05T09:11:41+00:00"
         },
         {
             "name": "laravel/passport",
