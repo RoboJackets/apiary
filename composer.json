@@ -29,7 +29,7 @@
         "apereo/phpcas": "1.6.1",
         "ashallendesign/laravel-config-validator": "2.7.0",
         "barryvdh/laravel-dompdf": "3.0.1",
-        "calebporzio/sushi": "2.5.2",
+        "calebporzio/sushi": "2.5.3",
         "chelout/laravel-relationship-events": "3.0.0",
         "docusign/esign-client": "6.19.0",
         "eluceo/ical": "2.14.0",
