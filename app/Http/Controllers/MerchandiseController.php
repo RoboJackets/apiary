@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\DistributeMerchandiseRequest;
 use App\Http\Resources\DuesTransactionMerchandise as DuesTransactionMerchandiseResource;
 use App\Http\Resources\Merchandise as MerchandiseResource;
@@ -19,7 +21,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class MerchandiseController extends Controller
+class MerchandiseController extends Controller implements HasMiddleware
 {
     private const NOT_DISTRIBUTABLE = 'This item cannot be distributed';
 
@@ -27,10 +29,12 @@ class MerchandiseController extends Controller
 
     private const ALREADY_DISTRIBUTED = 'This item was already distributed to this person';
 
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-merchandise|distribute-swag', ['only' => ['index']]);
-        $this->middleware('permission:distribute-swag', ['only' => ['getDistribution', 'distribute']]);
+        return [
+            new Middleware('permission:read-merchandise|distribute-swag', only: ['index']),
+            new Middleware('permission:distribute-swag', only: ['getDistribution', 'distribute']),
+        ];
     }
 
     /**

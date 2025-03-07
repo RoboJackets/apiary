@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\SelfServiceAccessOverrideRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -20,15 +22,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class UserController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-users', ['only' => ['index', 'indexManagers', 'search']]);
-        $this->middleware('permission:create-users', ['only' => ['store']]);
-        $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
-        $this->middleware('permission:update-users|update-users-own', ['only' => ['update', 'applySelfOverride']]);
-        $this->middleware('permission:delete-users', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-users', only: ['index', 'indexManagers', 'search']),
+            new Middleware('permission:create-users', only: ['store']),
+            new Middleware('permission:read-users|read-users-own', only: ['show']),
+            new Middleware('permission:update-users|update-users-own', only: ['update', 'applySelfOverride']),
+            new Middleware('permission:delete-users', only: ['destroy']),
+        ];
     }
 
     /**

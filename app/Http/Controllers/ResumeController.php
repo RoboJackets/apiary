@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\StoreResumeRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,12 +13,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
-class ResumeController extends Controller
+class ResumeController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-users-resume|read-users-own', ['only' => ['show']]);
-        $this->middleware('permission:update-users-resume|update-users-own', ['only' => ['store']]);
+        return [
+            new Middleware('permission:read-users-resume|read-users-own', only: ['show']),
+            new Middleware('permission:update-users-resume|update-users-own', only: ['store']),
+        ];
     }
 
     /**

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\StoreDuesTransactionRequest;
 use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
@@ -17,21 +19,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class DuesTransactionController extends Controller
+class DuesTransactionController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware(
-            'permission:read-dues-transactions',
-            ['only' => ['index', 'indexPaid', 'indexPending']]
-        );
-        $this->middleware('permission:create-dues-transactions-own|create-dues-transactions', ['only' => ['store']]);
-        $this->middleware(
-            'permission:read-dues-transactions|read-dues-transactions-own',
-            ['only' => ['show']]
-        );
-        $this->middleware('permission:update-dues-transactions', ['only' => ['update']]);
-        $this->middleware('permission:delete-dues-transactions', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-dues-transactions', only: ['index', 'indexPaid', 'indexPending']),
+            new Middleware('permission:create-dues-transactions-own|create-dues-transactions', only: ['store']),
+            new Middleware('permission:read-dues-transactions|read-dues-transactions-own', only: ['show']),
+            new Middleware('permission:update-dues-transactions', only: ['update']),
+            new Middleware('permission:delete-dues-transactions', only: ['destroy']),
+        ];
     }
 
     /**

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Events\PaymentReceived;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
@@ -16,15 +18,17 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class PaymentController extends Controller
+class PaymentController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-payments', ['only' => ['index']]);
-        $this->middleware('permission:create-payments|create-payments-own', ['only' => ['store']]);
-        $this->middleware('permission:read-payments|read-payments-own', ['only' => ['show', 'indexForUser']]);
-        $this->middleware('permission:update-payments', ['only' => ['update']]);
-        $this->middleware('permission:delete-payments', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-payments', only: ['index']),
+            new Middleware('permission:create-payments|create-payments-own', only: ['store']),
+            new Middleware('permission:read-payments|read-payments-own', only: ['show', 'indexForUser']),
+            new Middleware('permission:update-payments', only: ['update']),
+            new Middleware('permission:delete-payments', only: ['destroy']),
+        ];
     }
 
     /**

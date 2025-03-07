@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\StoreDuesPackageRequest;
 use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
@@ -12,24 +14,21 @@ use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class DuesPackageController extends Controller
+class DuesPackageController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware(
-            'permission:read-dues-packages',
-            [
-                'only' => [
+        return [
+            new Middleware('permission:read-dues-packages', only: [
                     'index',
                     'indexActive',
                     'indexAvailable',
                     'show',
-                ],
-            ]
-        );
-        $this->middleware('permission:create-dues-packages', ['only' => ['store']]);
-        $this->middleware('permission:update-dues-packages', ['only' => ['update']]);
-        $this->middleware('permission:delete-dues-packages', ['only' => ['destroy']]);
+                ]),
+            new Middleware('permission:create-dues-packages', only: ['store']),
+            new Middleware('permission:update-dues-packages', only: ['update']),
+            new Middleware('permission:delete-dues-packages', only: ['destroy']),
+        ];
     }
 
     /**

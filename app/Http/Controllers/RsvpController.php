@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Rsvp as RsvpResource;
 use App\Models\Event;
@@ -15,15 +17,17 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class RsvpController extends Controller
+class RsvpController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-rsvps', ['only' => ['index']]);
-        $this->middleware('permission:create-rsvps|create-rsvps-own', ['only' => ['store']]);
-        $this->middleware('permission:read-rsvps|read-rsvps-own', ['only' => ['show']]);
-        $this->middleware('permission:update-rsvps|update-rsvps-own', ['only' => ['update']]);
-        $this->middleware('permission:delete-rsvps|delete-rsvps-own', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-rsvps', only: ['index']),
+            new Middleware('permission:create-rsvps|create-rsvps-own', only: ['store']),
+            new Middleware('permission:read-rsvps|read-rsvps-own', only: ['show']),
+            new Middleware('permission:update-rsvps|update-rsvps-own', only: ['update']),
+            new Middleware('permission:delete-rsvps|delete-rsvps-own', only: ['destroy']),
+        ];
     }
 
     /**

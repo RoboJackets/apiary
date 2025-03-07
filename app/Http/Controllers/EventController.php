@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\Event as EventResource;
@@ -12,15 +14,17 @@ use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class EventController extends Controller
+class EventController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-events', ['only' => ['index']]);
-        $this->middleware('permission:create-events', ['only' => ['store']]);
-        $this->middleware('permission:read-events', ['only' => ['show']]);
-        $this->middleware('permission:update-events|update-events-own', ['only' => ['update']]);
-        $this->middleware('permission:delete-events', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-events', only: ['index']),
+            new Middleware('permission:create-events', only: ['store']),
+            new Middleware('permission:read-events', only: ['show']),
+            new Middleware('permission:update-events|update-events-own', only: ['update']),
+            new Middleware('permission:delete-events', only: ['destroy']),
+        ];
     }
 
     /**
