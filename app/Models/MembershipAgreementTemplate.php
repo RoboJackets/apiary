@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\MembershipAgreementTemplateObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +42,7 @@ use Throwable;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
+#[ObservedBy([MembershipAgreementTemplateObserver::class])]
 class MembershipAgreementTemplate extends Model
 {
     use HasFactory;

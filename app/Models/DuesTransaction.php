@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\DuesTransactionObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Traits\GetMorphClassStatic;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
@@ -63,6 +65,7 @@ use Laravel\Scout\Searchable;
  *
  * @phan-suppress PhanUnreferencedPublicClassConstant
  */
+#[ObservedBy([DuesTransactionObserver::class])]
 class DuesTransaction extends Model implements Payable
 {
     use GetMorphClassStatic;

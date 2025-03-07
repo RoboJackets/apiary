@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\UserObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use BadMethodCallException;
 use Carbon\CarbonImmutable;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
@@ -203,6 +205,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @phan-suppress PhanUnreferencedPublicClassConstant
  */
+#[ObservedBy([UserObserver::class])]
 class User extends Authenticatable
 {
     use Actionable;

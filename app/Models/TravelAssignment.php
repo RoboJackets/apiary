@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\TravelAssignmentObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Traits\GetMorphClassStatic;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -60,6 +62,7 @@ use Laravel\Scout\Searchable;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
+#[ObservedBy([TravelAssignmentObserver::class])]
 class TravelAssignment extends Model implements Payable
 {
     use GetMorphClassStatic;

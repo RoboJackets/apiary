@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\DuesPackageObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Carbon\CarbonImmutable;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
@@ -78,6 +80,7 @@ use Laravel\Nova\Actions\Actionable;
  *
  * @phan-suppress PhanUnreferencedPublicClassConstant
  */
+#[ObservedBy([DuesPackageObserver::class])]
 class DuesPackage extends Model
 {
     use Actionable;
