@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Rsvp as RsvpResource;
 use App\Models\Event;
@@ -15,6 +13,8 @@ use App\Util\AuthorizeInclude;
 use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 
 class RsvpController extends Controller implements HasMiddleware

@@ -8,11 +8,11 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Observers\UserObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use BadMethodCallException;
 use Carbon\CarbonImmutable;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

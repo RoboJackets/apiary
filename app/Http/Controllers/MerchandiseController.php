@@ -6,8 +6,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\DistributeMerchandiseRequest;
 use App\Http\Resources\DuesTransactionMerchandise as DuesTransactionMerchandiseResource;
 use App\Http\Resources\Merchandise as MerchandiseResource;
@@ -19,6 +17,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MerchandiseController extends Controller implements HasMiddleware

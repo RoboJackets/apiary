@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\StoreDuesPackageRequest;
 use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
@@ -13,6 +11,8 @@ use App\Models\DuesPackage;
 use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class DuesPackageController extends Controller implements HasMiddleware
 {
@@ -20,11 +20,11 @@ class DuesPackageController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:read-dues-packages', only: [
-                    'index',
-                    'indexActive',
-                    'indexAvailable',
-                    'show',
-                ]),
+                'index',
+                'indexActive',
+                'indexAvailable',
+                'show',
+            ]),
             new Middleware('permission:create-dues-packages', only: ['store']),
             new Middleware('permission:update-dues-packages', only: ['update']),
             new Middleware('permission:delete-dues-packages', only: ['destroy']),

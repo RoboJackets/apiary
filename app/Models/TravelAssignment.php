@@ -8,9 +8,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Observers\TravelAssignmentObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Traits\GetMorphClassStatic;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

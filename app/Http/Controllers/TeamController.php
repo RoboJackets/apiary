@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateMembersTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
@@ -16,6 +14,8 @@ use App\Models\User;
 use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class TeamController extends Controller implements HasMiddleware
 {
