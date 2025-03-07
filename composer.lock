@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04597d991c1b141f27836347bebe2ece",
+    "content-hash": "a8d8c78f0633991ff7356de35a26d565",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -7847,28 +7847,28 @@
         },
         {
             "name": "spatie/laravel-csp",
-            "version": "2.10.2",
+            "version": "2.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-csp.git",
-                "reference": "efe4bf81ec832a29556209ae28153a7f6eba3d88"
+                "reference": "15e40c28d46076b3d5a4268b63040b3900cc05d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/efe4bf81ec832a29556209ae28153a7f6eba3d88",
-                "reference": "efe4bf81ec832a29556209ae28153a7f6eba3d88",
+                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/15e40c28d46076b3d5a4268b63040b3900cc05d3",
+                "reference": "15e40c28d46076b3d5a4268b63040b3900cc05d3",
                 "shasum": ""
             },
             "require": {
-                "illuminate/http": "^9.0|^10.0|^11.36.1",
-                "illuminate/support": "^9.0|^10.0|^11.36.1",
+                "illuminate/http": "^9.0|^10.0|^11.36.1|^12",
+                "illuminate/support": "^9.0|^10.0|^11.36.1|^12",
                 "php": "^8.1",
                 "spatie/laravel-package-tools": "^1.17"
             },
             "require-dev": {
                 "mockery/mockery": "^1.6.12",
-                "orchestra/testbench": "^7.0|^8.0|^9.9",
-                "pestphp/pest": "^1.23.0|^2.36.0",
+                "orchestra/testbench": "^7.0|^8.0|^9.9|^10",
+                "pestphp/pest": "^1.23.0|^2.36.0|^3",
                 "roave/security-advisories": "dev-master"
             },
             "type": "library",
@@ -7917,7 +7917,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-csp/tree/2.10.2"
+                "source": "https://github.com/spatie/laravel-csp/tree/2.10.3"
             },
             "funding": [
                 {
@@ -7925,7 +7925,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-12-30T09:05:20+00:00"
+            "time": "2025-02-14T13:23:32+00:00"
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
