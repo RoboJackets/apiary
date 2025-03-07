@@ -21,14 +21,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class MerchandiseController extends Controller implements HasMiddleware
+class MerchandiseController implements HasMiddleware
 {
-    private const NOT_DISTRIBUTABLE = 'This item cannot be distributed';
+    private const string NOT_DISTRIBUTABLE = 'This item cannot be distributed';
 
-    private const NO_DTM = 'This person doesn\'t have a paid transaction for this item';
+    private const string NO_DTM = 'This person doesn\'t have a paid transaction for this item';
 
-    private const ALREADY_DISTRIBUTED = 'This item was already distributed to this person';
+    private const string ALREADY_DISTRIBUTED = 'This item was already distributed to this person';
 
+    #[\Override]
     public static function middleware(): array
     {
         return [

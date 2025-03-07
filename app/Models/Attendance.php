@@ -86,7 +86,7 @@ class Attendance extends Model
      */
     protected $with = ['attendable'];
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'attendee' => 'read-users',
         'recorded' => 'read-users',
     ];

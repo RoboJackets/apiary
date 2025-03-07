@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class DashboardController
 {
     /**
      * Returns view with data for the user dashboard.

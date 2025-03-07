@@ -25,6 +25,7 @@ class UserActiveAttendance extends Filter
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
+    #[\Override]
     public function apply(NovaRequest $request, $query, $value): Builder
     {
         if ($value === 'yes') {
@@ -43,6 +44,7 @@ class UserActiveAttendance extends Filter
      *
      * @return array<string,string>
      */
+    #[\Override]
     public function options(Request $request): array
     {
         return [

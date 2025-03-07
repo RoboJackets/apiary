@@ -19,8 +19,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class DuesTransactionController extends Controller implements HasMiddleware
+class DuesTransactionController implements HasMiddleware
 {
+    #[\Override]
     public static function middleware(): array
     {
         return [

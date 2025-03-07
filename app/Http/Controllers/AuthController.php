@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Contracts\ImpersonatesUsers;
 
-class AuthController extends Controller
+class AuthController
 {
     /**
      * Assuming this method is behind the `auth.cas.force` middleware, this function will ensure that the user is

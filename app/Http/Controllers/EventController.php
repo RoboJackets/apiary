@@ -14,8 +14,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class EventController extends Controller implements HasMiddleware
+class EventController implements HasMiddleware
 {
+    #[\Override]
     public static function middleware(): array
     {
         return [

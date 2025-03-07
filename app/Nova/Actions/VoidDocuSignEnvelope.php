@@ -78,6 +78,7 @@ class VoidDocuSignEnvelope extends DestructiveAction
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [

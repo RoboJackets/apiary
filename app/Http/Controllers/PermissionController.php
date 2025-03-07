@@ -11,8 +11,9 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class PermissionController extends Controller implements HasMiddleware
+class PermissionController implements HasMiddleware
 {
+    #[\Override]
     public static function middleware(): array
     {
         return [

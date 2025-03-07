@@ -104,9 +104,9 @@ class Payment extends Model
     use HasFactory;
     use SoftDeletes;
 
-    private const PER_TRANSACTION_FEE = 30;  // cents
+    private const int PER_TRANSACTION_FEE = 30;  // cents
 
-    private const PERCENTAGE_FEE = 2.9;
+    private const float PERCENTAGE_FEE = 2.9;
 
     /**
      * The accessors to append to the model's array form.
@@ -145,6 +145,7 @@ class Payment extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -152,7 +153,7 @@ class Payment extends Model
         ];
     }
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'user' => 'read-users',
         'payable' => 'read-dues-transactions',
         'duesTransaction' => 'read-dues-transactions',

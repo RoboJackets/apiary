@@ -22,6 +22,7 @@ class PaymentFactory extends Factory
      *
      * @return array<string,int|float|string|null>
      */
+    #[\Override]
     public function definition(): array
     {
         return [

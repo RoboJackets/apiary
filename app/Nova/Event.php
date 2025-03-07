@@ -78,6 +78,7 @@ class Event extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [
@@ -135,6 +136,7 @@ class Event extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(Request $request): array
     {
         return [
@@ -152,6 +154,7 @@ class Event extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(Request $request): array
     {
         if ($this->end_time < Carbon::now()) {
@@ -171,6 +174,7 @@ class Event extends Resource
     /**
      * Get the search result subtitle for the resource.
      */
+    #[\Override]
     public function subtitle(): ?string
     {
         if ($this->start_time === null && $this->end_time !== null) {

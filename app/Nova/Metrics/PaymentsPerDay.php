@@ -32,6 +32,7 @@ class PaymentsPerDay extends Trend
      *
      * @return array<int|string,string>
      */
+    #[\Override]
     public function ranges(): array
     {
         return [
@@ -45,6 +46,7 @@ class PaymentsPerDay extends Trend
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'transactions-per-day';

@@ -22,8 +22,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller implements HasMiddleware
+class UserController implements HasMiddleware
 {
+    #[\Override]
     public static function middleware(): array
     {
         return [

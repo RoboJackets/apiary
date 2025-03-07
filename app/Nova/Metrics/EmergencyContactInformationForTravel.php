@@ -22,6 +22,7 @@ class EmergencyContactInformationForTravel extends Partition
     /**
      * Get the displayable name of the metric.
      */
+    #[\Override]
     public function name(): string
     {
         return $this->resourceId === -1 ?
@@ -60,6 +61,7 @@ class EmergencyContactInformationForTravel extends Partition
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return $this->resourceId === -1 ? 'emergency-contact' : 'emergency-contact-'.$this->resourceId;

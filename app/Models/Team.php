@@ -111,6 +111,7 @@ class Team extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -122,7 +123,7 @@ class Team extends Model
         ];
     }
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'members' => 'read-teams-membership',
         'attendance' => 'read-attendance',
     ];

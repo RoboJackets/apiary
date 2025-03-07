@@ -73,6 +73,7 @@ class Merchandise extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'Merchandise';
@@ -81,6 +82,7 @@ class Merchandise extends Resource
     /**
      * Get the displayable singular label of the resource.
      */
+    #[\Override]
     public static function singularLabel(): string
     {
         return 'Merchandise';
@@ -89,6 +91,7 @@ class Merchandise extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -119,6 +122,7 @@ class Merchandise extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(Request $request): array
     {
         $resourceId = $request->resourceId ?? $request->resources;
@@ -152,12 +156,14 @@ class Merchandise extends Resource
     /**
      * Get the URI key for the resource.
      */
+    #[\Override]
     public static function uriKey(): string
     {
         return 'merchandise';
     }
 
     // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
+    #[\Override]
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
         return $request->user()->can('update-merchandise') && $request->viaResource !== 'dues-transactions';
@@ -168,6 +174,7 @@ class Merchandise extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(NovaRequest $request): array
     {
         $defaults = [
@@ -206,6 +213,7 @@ class Merchandise extends Resource
         return $defaults;
     }
 
+    #[\Override]
     public static function searchable(): bool
     {
         return false;

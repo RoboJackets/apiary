@@ -51,7 +51,7 @@ class MatrixAirfareSearch extends Action
      */
     public $modalSize = '4xl';
 
-    private const DATE_FLEXIBILITY_LABELS = [
+    private const array DATE_FLEXIBILITY_LABELS = [
         '0' => 'This day only',
         '10' => 'Or day before',
         '1' => 'Or day after',
@@ -150,6 +150,7 @@ class MatrixAirfareSearch extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         $resourceId = $request->resourceId ?? $request->resources;

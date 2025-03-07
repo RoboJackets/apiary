@@ -20,7 +20,7 @@ use Sentry\Tracing\SpanContext;
 use Square\Orders\Requests\GetOrdersRequest;
 use Square\SquareClient;
 
-class SquareCheckoutController extends Controller
+class SquareCheckoutController
 {
     public function payDues(Request $request)
     {

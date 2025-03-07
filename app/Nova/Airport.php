@@ -59,6 +59,7 @@ class Airport extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -82,6 +83,7 @@ class Airport extends Resource
     /**
      * Determine if this resource is available for navigation.
      */
+    #[\Override]
     public static function availableForNavigation(Request $request): bool
     {
         return $request->user()->hasRole('admin');

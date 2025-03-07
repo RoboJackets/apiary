@@ -49,6 +49,7 @@ class DuesTransactionMerchandise extends Pivot
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

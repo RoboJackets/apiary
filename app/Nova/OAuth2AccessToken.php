@@ -70,6 +70,7 @@ class OAuth2AccessToken extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'Access Tokens';
@@ -78,6 +79,7 @@ class OAuth2AccessToken extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [
@@ -109,6 +111,7 @@ class OAuth2AccessToken extends Resource
         ];
     }
 
+    #[\Override]
     public static function searchable(): bool
     {
         return false;
@@ -117,6 +120,7 @@ class OAuth2AccessToken extends Resource
     /**
      * Get the URI key for the resource.
      */
+    #[\Override]
     public static function uriKey(): string
     {
         return 'oauth-tokens';

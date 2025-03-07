@@ -20,6 +20,7 @@ class TravelAssignmentFactory extends Factory
      *
      * @return array<string, int>
      */
+    #[\Override]
     public function definition(): array
     {
         return [

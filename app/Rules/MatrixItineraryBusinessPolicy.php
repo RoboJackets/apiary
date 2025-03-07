@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class MatrixItineraryBusinessPolicy implements ValidationRule
 {
-    public const POLICY_LABELS = [
+    public const array POLICY_LABELS = [
         'max_slices' => 'Itineraries must be one-way or round-trip',
         'nonstop' => 'Segments must be single direct non-stop flights',
         'origin_atlanta' => 'First flight must originate from Atlanta',
@@ -20,7 +20,7 @@ class MatrixItineraryBusinessPolicy implements ValidationRule
         'codeshare' => 'Flights must be operated by marketing carrier',
     ];
 
-    private const POLICY_RULES = [
+    private const array POLICY_RULES = [
         'max_slices' => [
             'itinerary.slices' => [
                 'required',
@@ -129,6 +129,7 @@ class MatrixItineraryBusinessPolicy implements ValidationRule
     /**
      * Run the validation rule.
      */
+    #[\Override]
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if ($value === null) {

@@ -31,6 +31,7 @@ class User extends JsonResource
      *
      * @return array<int|string,mixed>
      */
+    #[\Override]
     public function toArray(Request $request): array
     {
         return [

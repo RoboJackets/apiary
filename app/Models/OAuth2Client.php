@@ -49,6 +49,7 @@ class OAuth2Client extends Client
     /**
      * Determine if the client should skip the authorization prompt.
      */
+    #[\Override]
     public function skipsAuthorization(): bool
     {
         return true;

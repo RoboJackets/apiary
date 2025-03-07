@@ -110,6 +110,7 @@ class User extends Resource
      *
      * @phan-suppress PhanTypeInvalidCallableMethodName
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -569,6 +570,7 @@ class User extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(NovaRequest $request): array
     {
         return [
@@ -586,6 +588,7 @@ class User extends Resource
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
+    #[\Override]
     public function filters(NovaRequest $request): array
     {
         return [
@@ -601,6 +604,7 @@ class User extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(NovaRequest $request): array
     {
         $user = AppModelsUser::whereId($request->resourceId ?? $request->resources)->withTrashed()->first();
@@ -747,6 +751,7 @@ class User extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
+    #[\Override]
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if ($request->is('nova-api/'.DuesTransaction::uriKey().'/*')) {
@@ -763,6 +768,7 @@ class User extends Resource
     /**
      * Get the search result subtitle for the resource.
      */
+    #[\Override]
     public function subtitle(): ?string
     {
         $managed_team_names = $this->manages()->pluck('name');
@@ -858,6 +864,7 @@ class User extends Resource
      * @param  \Laravel\Scout\Builder<\App\Models\User>  $query
      * @return \Laravel\Scout\Builder<\App\Models\User>
      */
+    #[\Override]
     public static function scoutQuery(NovaRequest $request, $query): \Laravel\Scout\Builder
     {
         if (

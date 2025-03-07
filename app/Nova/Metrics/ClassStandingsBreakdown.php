@@ -43,6 +43,7 @@ class ClassStandingsBreakdown extends Partition
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'class-standings-breakdown';

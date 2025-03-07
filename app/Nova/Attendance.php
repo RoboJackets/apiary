@@ -35,6 +35,7 @@ class Attendance extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'Attendance';
@@ -43,6 +44,7 @@ class Attendance extends Resource
     /**
      * Get the displayable singular label of the resource.
      */
+    #[\Override]
     public static function singularLabel(): string
     {
         return 'Attendance Record';
@@ -51,6 +53,7 @@ class Attendance extends Resource
     /**
      * Get the URI key for the resource.
      */
+    #[\Override]
     public static function uriKey(): string
     {
         return 'attendance';
@@ -91,6 +94,7 @@ class Attendance extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [
@@ -138,6 +142,7 @@ class Attendance extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(Request $request): array
     {
         return [
@@ -150,6 +155,7 @@ class Attendance extends Resource
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
+    #[\Override]
     public function filters(Request $request): array
     {
         return [
@@ -165,6 +171,7 @@ class Attendance extends Resource
      *
      * @return array<\Laravel\Nova\Lenses\Lens>
      */
+    #[\Override]
     public function lenses(Request $request): array
     {
         return [
@@ -179,6 +186,7 @@ class Attendance extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(Request $request): array
     {
         return [];
@@ -189,6 +197,7 @@ class Attendance extends Resource
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
+    #[\Override]
     public function authorizeToView(Request $request): void
     {
         if ($request instanceof LensRequest) {
@@ -200,6 +209,7 @@ class Attendance extends Resource
     /**
      * Determine if the current user can view the given resource.
      */
+    #[\Override]
     public function authorizedToView(Request $request): bool
     {
         // This method, and those like it, is a gross way to remove the buttons from the row in the
@@ -212,6 +222,7 @@ class Attendance extends Resource
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
+    #[\Override]
     public function authorizeToDelete(Request $request): void
     {
         if ($request instanceof LensRequest) {
@@ -223,6 +234,7 @@ class Attendance extends Resource
     /**
      * Determine if the current user can delete the given resource.
      */
+    #[\Override]
     public function authorizedToDelete(Request $request): bool
     {
         return $request instanceof LensRequest ? false : parent::authorizedToDelete($request);

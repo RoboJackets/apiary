@@ -17,8 +17,9 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 
-class RsvpController extends Controller implements HasMiddleware
+class RsvpController implements HasMiddleware
 {
+    #[\Override]
     public static function middleware(): array
     {
         return [

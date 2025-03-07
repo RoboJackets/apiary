@@ -14,6 +14,7 @@ class Square implements SignatureValidator
     /**
      * Verifies a signature on a request from Square.
      */
+    #[\Override]
     public function isValid(Request $request, WebhookConfig $config): bool
     {
         return WebhooksHelper::verifySignature(

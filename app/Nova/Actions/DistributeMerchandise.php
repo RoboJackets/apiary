@@ -104,6 +104,7 @@ class DistributeMerchandise extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         $resource = $this->resource;

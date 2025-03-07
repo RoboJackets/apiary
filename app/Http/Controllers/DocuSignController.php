@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
-class DocuSignController extends Controller
+class DocuSignController
 {
     public function signTravel(Request $request)
     {

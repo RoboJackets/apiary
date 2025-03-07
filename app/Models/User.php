@@ -220,7 +220,7 @@ class User extends Authenticatable
     use Searchable;
     use SoftDeletes;
 
-    private const MAJOR_REGEX = '/(?P<college>[A-Z])\/(?P<school>[A-Z0-9]+)\/(?P<major>[A-Z]+)/';
+    private const string MAJOR_REGEX = '/(?P<college>[A-Z])\/(?P<school>[A-Z0-9]+)\/(?P<major>[A-Z]+)/';
 
     /**
      * The accessors to append to the model's array form.
@@ -299,7 +299,7 @@ class User extends Authenticatable
     /**
      * The attributes that Nova might think can be used for filtering, but actually can't.
      */
-    public const DO_NOT_FILTER_ON = [
+    public const array DO_NOT_FILTER_ON = [
         'dues_package_id',
         'trip_id',
         'merchandise_id',
@@ -344,6 +344,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -361,7 +362,7 @@ class User extends Authenticatable
         ];
     }
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'teams' => 'read-teams-membership',
         'dues' => 'read-dues-transactions',
         'events' => 'read-events',
@@ -573,31 +574,37 @@ class User extends Authenticatable
         return $this->gt_email;
     }
 
+    #[\Override]
     public function getAuthIdentifierName(): string
     {
         return 'id';
     }
 
+    #[\Override]
     public function getAuthIdentifier(): int
     {
         return $this->id;
     }
 
+    #[\Override]
     public function getAuthPassword(): string
     {
         throw new BadMethodCallException('Not implemented');
     }
 
+    #[\Override]
     public function getRememberToken(): string
     {
         throw new BadMethodCallException('Not implemented');
     }
 
+    #[\Override]
     public function setRememberToken($value): void
     {
         throw new BadMethodCallException('Not implemented');
     }
 
+    #[\Override]
     public function getRememberTokenName(): string
     {
         throw new BadMethodCallException('Not implemented');

@@ -20,6 +20,7 @@ class SignatureFactory extends Factory
      *
      * @return array<string, int|bool>
      */
+    #[\Override]
     public function definition(): array
     {
         return [

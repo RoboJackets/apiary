@@ -23,8 +23,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
-class AttendanceController extends Controller implements HasMiddleware
+class AttendanceController implements HasMiddleware
 {
+    #[\Override]
     public static function middleware(): array
     {
         return [

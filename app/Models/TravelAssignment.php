@@ -87,6 +87,7 @@ class TravelAssignment extends Model implements Payable
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -100,6 +101,7 @@ class TravelAssignment extends Model implements Payable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\TravelAssignment>
      */
+    #[\Override]
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -120,6 +122,7 @@ class TravelAssignment extends Model implements Payable
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment, self>
      */
+    #[\Override]
     public function payment(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
@@ -135,11 +138,13 @@ class TravelAssignment extends Model implements Payable
         return $this->morphMany(DocuSignEnvelope::class, 'signable');
     }
 
+    #[\Override]
     public function getIsPaidAttribute(): bool
     {
         return self::where('travel_assignments.id', $this->id)->paid()->count() !== 0;
     }
 
+    #[\Override]
     public function getPayableAmountAttribute(): int
     {
         /** @psalm-suppress NullableReturnStatement */

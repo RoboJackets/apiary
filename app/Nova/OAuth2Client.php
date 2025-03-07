@@ -70,6 +70,7 @@ class OAuth2Client extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'Clients';
@@ -78,6 +79,7 @@ class OAuth2Client extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [
@@ -115,6 +117,7 @@ class OAuth2Client extends Resource
         ];
     }
 
+    #[\Override]
     public static function searchable(): bool
     {
         return false;
@@ -125,6 +128,7 @@ class OAuth2Client extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(NovaRequest $request): array
     {
         return [
@@ -136,6 +140,7 @@ class OAuth2Client extends Resource
     /**
      * Get the URI key for the resource.
      */
+    #[\Override]
     public static function uriKey(): string
     {
         return 'oauth-clients';

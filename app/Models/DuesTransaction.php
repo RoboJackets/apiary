@@ -100,7 +100,7 @@ class DuesTransaction extends Model implements Payable
         'dues_package_id',
     ];
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'user' => 'read-users',
         'package' => 'read-dues-packages',
         'payment' => 'read-payments',
@@ -113,6 +113,7 @@ class DuesTransaction extends Model implements Payable
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment, self>
      */
+    #[\Override]
     public function payment(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
@@ -133,6 +134,7 @@ class DuesTransaction extends Model implements Payable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\DuesTransaction>
      */
+    #[\Override]
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -223,6 +225,7 @@ class DuesTransaction extends Model implements Payable
     /**
      * Get the is_paid flag for the DuesTransaction.
      */
+    #[\Override]
     public function getIsPaidAttribute(): bool
     {
         return self::where('dues_transactions.id', $this->id)->paid()->count() !== 0;
@@ -277,6 +280,7 @@ class DuesTransaction extends Model implements Payable
     /**
      * Get the Payable amount.
      */
+    #[\Override]
     public function getPayableAmountAttribute(): int
     {
         return intval($this->package->cost);

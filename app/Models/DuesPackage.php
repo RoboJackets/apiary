@@ -109,6 +109,7 @@ class DuesPackage extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -122,7 +123,7 @@ class DuesPackage extends Model
         ];
     }
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'transactions' => 'read-dues-transactions',
         'merchandise' => 'read-merchandise',
     ];

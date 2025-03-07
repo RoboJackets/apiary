@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TravelAssignmentController extends Controller
+class TravelAssignmentController
 {
     public function index(Request $request)
     {

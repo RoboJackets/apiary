@@ -59,6 +59,7 @@ class DuesRevenueByFiscalYear extends Trend
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'dues-revenue-by-fiscal-year';

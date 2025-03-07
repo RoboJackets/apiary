@@ -91,14 +91,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Notification::class, NotificationPolicy::class);
     }
 
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        // nothing to do here
-    }
-
     public function bootAuth(): void
     {
         Passport::useClientModel(OAuth2Client::class);

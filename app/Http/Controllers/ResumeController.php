@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
-class ResumeController extends Controller implements HasMiddleware
+class ResumeController implements HasMiddleware
 {
+    #[\Override]
     public static function middleware(): array
     {
         return [

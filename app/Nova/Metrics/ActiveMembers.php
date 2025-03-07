@@ -40,6 +40,7 @@ class ActiveMembers extends Value
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'active-members';

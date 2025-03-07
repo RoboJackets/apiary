@@ -56,6 +56,7 @@ class WebhookCall extends Resource
      *
      * @phan-suppress PhanTypeInvalidCallableMethodName
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -84,6 +85,7 @@ class WebhookCall extends Resource
         ];
     }
 
+    #[\Override]
     public static function searchable(): bool
     {
         return false;

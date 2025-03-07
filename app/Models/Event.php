@@ -88,6 +88,7 @@ class Event extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -97,7 +98,7 @@ class Event extends Model
         ];
     }
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'organizer' => 'read-users',
         'rsvps' => 'read-rsvps',
         'attendance' => 'read-attendance',

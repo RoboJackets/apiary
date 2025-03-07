@@ -62,6 +62,7 @@ class Major extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [
@@ -92,6 +93,7 @@ class Major extends Resource
      *
      * @return array<\Laravel\Nova\Metrics\Value>
      */
+    #[\Override]
     public function cards(Request $request): array
     {
         return [
@@ -105,6 +107,7 @@ class Major extends Resource
     /**
      * Determine if this resource is available for navigation.
      */
+    #[\Override]
     public static function availableForNavigation(Request $request): bool
     {
         return $request->user()->hasRole('admin');

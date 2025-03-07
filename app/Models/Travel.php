@@ -115,11 +115,11 @@ class Travel extends Model
     use Searchable;
     use SoftDeletes;
 
-    public const TRAVEL_INFORMATION_FORM_KEY = 'travel_information';
+    public const string TRAVEL_INFORMATION_FORM_KEY = 'travel_information';
 
-    public const AIRFARE_REQUEST_FORM_KEY = 'airfare_request';
+    public const string AIRFARE_REQUEST_FORM_KEY = 'airfare_request';
 
-    public const FORM_LABELS = [
+    public const array FORM_LABELS = [
         self::TRAVEL_INFORMATION_FORM_KEY => 'Travel Information Form',
         self::AIRFARE_REQUEST_FORM_KEY => 'Airfare Request Form',
     ];
@@ -141,6 +141,7 @@ class Travel extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -161,7 +162,7 @@ class Travel extends Model
     /**
      * The attributes that Nova might think can be used for filtering, but actually can't.
      */
-    public const DO_NOT_FILTER_ON = [
+    public const array DO_NOT_FILTER_ON = [
         'user_id',
     ];
 

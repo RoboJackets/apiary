@@ -109,6 +109,7 @@ class ReviewTrip extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         $trip = \App\Models\Travel::where('id', '=', $request->resourceId ?? $request->resources)->sole();

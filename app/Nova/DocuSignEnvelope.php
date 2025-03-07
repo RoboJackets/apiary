@@ -35,6 +35,7 @@ class DocuSignEnvelope extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'DocuSign Envelopes';
@@ -43,6 +44,7 @@ class DocuSignEnvelope extends Resource
     /**
      * Get the displayable singular label of the resource.
      */
+    #[\Override]
     public static function singularLabel(): string
     {
         return 'DocuSign Envelope';
@@ -51,6 +53,7 @@ class DocuSignEnvelope extends Resource
     /**
      * Get the URI key for the resource.
      */
+    #[\Override]
     public static function uriKey(): string
     {
         return 'docusign-envelopes';
@@ -92,6 +95,7 @@ class DocuSignEnvelope extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -194,6 +198,7 @@ class DocuSignEnvelope extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(NovaRequest $request): array
     {
         return [
@@ -220,6 +225,7 @@ class DocuSignEnvelope extends Resource
         ];
     }
 
+    #[\Override]
     public static function searchable(): bool
     {
         return false;
