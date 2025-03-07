@@ -6,10 +6,6 @@ parameters:
     - storage/*
     - tests/*
     - vendor/*
-    - stubs/*
-  stubFiles:
-    - stubs/Permission.php
-    - stubs/Role.php
   ignoreErrors:
     - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Collection|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereHas|whereDate|whereNotIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit|doesntExist|storeExcel|buzzCardAccessEligible|from|unpaid|whereRevoked|whereNotExists|orWhereDate|whereColumn)\(\)\.#'
     - '#@readonly property cannot have a default value\.#'
@@ -94,6 +90,7 @@ parameters:
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Laravel\\Nova\\Notifications\\Notification>::[a-zA-Z]+\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Laravel\\Passport\\Token>::whereDate\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Laravel\\Passport\\Token>::whereRevoked\(\)\.#'
+    - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Model::with\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Foundation\\Application::isProduction\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Http\\Request::hasValidSignatureWhileIgnoring\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Http\\Request::validate\(\)\.#'
@@ -342,7 +339,6 @@ parameters:
     - '#Parameter \$signatureHeader of static method Square\\Utils\\WebhooksHelper::verifySignature\(\) expects string, string\|null given\.#'
     - '#Parameter \$to of class Illuminate\\Mail\\Mailables\\Envelope constructor expects array<int, Illuminate\\Mail\\Mailables\\Address\|string>, array given\.#'
     - '#Parameter \$to of class Illuminate\\Mail\\Mailables\\Envelope constructor expects array<int, Illuminate\\Mail\\Mailables\\Address\|string>, array<mixed> given\.#'
-    - '#PHPDoc tag @method for method Spatie\\Permission\\Contracts\\[a-zA-Z]+::with\(\) return type contains unknown class Spatie\\Permission\\Models\\[a-zA-Z]+\.#'
     - '#PHPDoc tag @var with type DocuSign\\eSign\\Client\\Auth\\Organization is not subtype of type string\.#'
     - '#PHPDoc type array<string> of property App\\Models\\[a-zA-Z]+::\$appends is not covariant with PHPDoc type list<string> of overridden property Illuminate\\Database\\Eloquent\\Model::\$appends\.#'
     - '#PHPDoc type array<string> of property App\\Models\\[a-zA-Z]+::\$fillable is not covariant with PHPDoc type list<string> of overridden property Illuminate\\Database\\Eloquent\\Model::\$fillable\.#'
