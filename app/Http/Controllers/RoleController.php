@@ -63,7 +63,7 @@ class RoleController extends Controller
     {
         $role = Role::findByName($name);
 
-        $this->validate($request, [
+        $request->validate([
             'name' => Rule::unique('roles')->ignore($role->id),
         ]);
 
