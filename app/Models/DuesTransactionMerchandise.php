@@ -38,20 +38,23 @@ use Illuminate\Support\Str;
 class DuesTransactionMerchandise extends Pivot
 {
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'provided_at' => 'datetime',
-    ];
-
-    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
      */
     public $incrementing = true;
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'provided_at' => 'datetime',
+        ];
+    }
 
     /**
      * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
