@@ -25,15 +25,14 @@
         "ext-uuid": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "ans-group/laravel-health-check": "2.0.1",
+        "ans-group/laravel-health-check": "dev-l12-compatibility",
         "apereo/phpcas": "1.6.1",
         "ashallendesign/laravel-config-validator": "^2.8",
         "barryvdh/laravel-dompdf": "^3.1",
         "calebporzio/sushi": "2.5.3",
-        "chelout/laravel-relationship-events": "3.0.0",
+        "chelout/laravel-relationship-events": "dev-l12-compatibility",
         "docusign/esign-client": "6.19.0",
         "eluceo/ical": "2.14.0",
-        "enlightn/enlightn": "2.10.0",
         "enlightn/security-checker": "2.0.0",
         "fakerphp/faker": "1.24.1",
         "guzzlehttp/guzzle": "7.9.2",
@@ -48,7 +47,7 @@
         "laravel/slack-notification-channel": "3.5.0",
         "laravel/socialite": "5.18.0",
         "laravel/tinker": "2.10.1",
-        "madewithlove/laravel-nova-uuid-support": "1.6",
+        "madewithlove/laravel-nova-uuid-support": "dev-l12-compatibility",
         "meilisearch/meilisearch-php": "1.13.0",
         "mrclay/jsmin-php": "2.4.3",
         "mwgg/airports": "1.0",
@@ -57,12 +56,12 @@
         "robojackets/personal-access-token-modal": "@dev",
         "sentry/sentry-laravel": "^4.13",
         "spatie/laravel-csp": "2.10.3",
-        "spatie/laravel-failed-job-monitor": "4.3.2",
+        "spatie/laravel-failed-job-monitor": "4.3.3",
         "spatie/laravel-permission": "^6.12",
-        "spatie/laravel-responsecache": "7.6.3",
-        "spatie/laravel-webhook-client": "3.4.2",
+        "spatie/laravel-responsecache": "7.6.4",
+        "spatie/laravel-webhook-client": "3.4.3",
         "square/square": "41.0.0.20250220",
-        "subfission/cas": "5.1.0",
+        "subfission/cas": "dev-master",
         "symfony/http-client": "7.2.3",
         "symfony/postmark-mailer": "7.2.0",
         "xammie/mailbook": "^1.9"
@@ -70,25 +69,24 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.5",
         "beyondcode/laravel-dump-server": "^2.1",
-        "filp/whoops": "2.15.4",
+        "larastan/larastan": "^3.1",
+        "laravel/pail": "^1.2.2",
         "laravel/pint": "1.21.0",
         "mockery/mockery": "1.6.12",
         "mxl/laravel-job": "^1.7",
         "nunomaduro/collision": "^8.6",
-        "larastan/larastan": "^3.1",
         "phan/phan": "5.4.5",
         "phpstan/extension-installer": "1.4.3",
-        "phpstan/phpstan": "1.12.14",
-        "phpstan/phpstan-deprecation-rules": "1.2.1",
-        "phpstan/phpstan-strict-rules": "1.6.1",
-        "phpunit/phpunit": "10.5.40",
+        "phpstan/phpstan": "2.1.7",
+        "phpstan/phpstan-deprecation-rules": "2.0.1",
+        "phpstan/phpstan-strict-rules": "2.0.3",
+        "phpunit/phpunit": "11.5.12",
         "psalm/plugin-laravel": "^3.0",
         "slevomat/coding-standard": "8.15.0",
         "spatie/laravel-ignition": "^2.9",
         "spatie/ray": "1.41.4",
         "squizlabs/php_codesniffer": "3.10.1",
-        "vimeo/psalm": "5.24.0",
-        "laravel/pail": "^1.2.2"
+        "vimeo/psalm": "6.7.0"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
@@ -179,7 +177,7 @@
             "php-http/discovery": true
         },
         "platform": {
-            "php": "8.3.6"
+            "php": "8.3.16"
         }
     },
     "extra": {
@@ -217,6 +215,22 @@
         {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/Laravel-HTMLMin.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-relationship-events.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/RoboJackets/cas.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-health-check.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git"
         }
     ]
 }
