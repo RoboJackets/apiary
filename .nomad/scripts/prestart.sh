@@ -24,7 +24,6 @@ then
         export SKIP_HTTP_CHECKS=true
     fi
     php artisan config:cache --no-interaction --verbose
-    php artisan enlightn --details --show-exceptions --no-interaction --verbose
 fi
 
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
