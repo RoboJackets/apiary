@@ -11,8 +11,8 @@ namespace Spatie\Permission\Contracts;
  * @method void save()
  * @method void delete()
  * @method void givePermissionTo(string $permission)
- * @method \Illuminate\Support\Collection<\Spatie\Permission\Models\Role> with(string $relationship)
- * @method void syncPermissions(\Iterable<string> $permissions)
+ * @method \Illuminate\Support\Collection<int,\Spatie\Permission\Models\Role> with(string $relationship)
+ * @method void syncPermissions(iterable<string> $permissions)
  */
 interface Role
 {

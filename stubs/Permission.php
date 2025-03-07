@@ -10,7 +10,7 @@ namespace Spatie\Permission\Contracts;
  *
  * @method void save()
  * @method void delete()
- * @method \Illuminate\Support\Collection<\Spatie\Permission\Models\Permission> with(string $relationship)
+ * @method \Illuminate\Support\Collection<int,\Spatie\Permission\Models\Permission> with(string $relationship)
  */
 interface Permission
 {

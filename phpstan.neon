@@ -342,6 +342,7 @@ parameters:
     - '#Parameter \$signatureHeader of static method Square\\Utils\\WebhooksHelper::verifySignature\(\) expects string, string\|null given\.#'
     - '#Parameter \$to of class Illuminate\\Mail\\Mailables\\Envelope constructor expects array<int, Illuminate\\Mail\\Mailables\\Address\|string>, array given\.#'
     - '#Parameter \$to of class Illuminate\\Mail\\Mailables\\Envelope constructor expects array<int, Illuminate\\Mail\\Mailables\\Address\|string>, array<mixed> given\.#'
+    - '#PHPDoc tag @method for method Spatie\\Permission\\Contracts\\[a-zA-Z]+::with\(\) return type contains unknown class Spatie\\Permission\\Models\\[a-zA-Z]+\.#'
     - '#PHPDoc tag @var with type DocuSign\\eSign\\Client\\Auth\\Organization is not subtype of type string\.#'
     - '#PHPDoc type array<string> of property App\\Models\\[a-zA-Z]+::\$appends is not covariant with PHPDoc type list<string> of overridden property Illuminate\\Database\\Eloquent\\Model::\$appends\.#'
     - '#PHPDoc type array<string> of property App\\Models\\[a-zA-Z]+::\$fillable is not covariant with PHPDoc type list<string> of overridden property Illuminate\\Database\\Eloquent\\Model::\$fillable\.#'
