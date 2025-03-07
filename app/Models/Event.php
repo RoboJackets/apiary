@@ -25,13 +25,13 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property \Illuminate\Database\Eloquent\Collection<int,\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Attendance> $attendance
  * @property-read int|null $attendance_count
  * @property-read string $organizer_name
  * @property-read \App\Models\User $organizer
  * @property-read int|null $remote_attendance_links_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Rsvp> $rsvps
  * @property-read int|null $rsvps_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()

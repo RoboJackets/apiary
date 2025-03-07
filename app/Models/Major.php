@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereWhitepagesOu($value)
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\User> $members
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */

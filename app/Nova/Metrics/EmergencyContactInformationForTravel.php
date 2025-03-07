@@ -49,7 +49,7 @@ class EmergencyContactInformationForTravel extends Partition
             }
         });
 
-        return $this->result(array_filter($values))->colors(
+        return $this->result(array_filter($values, static fn (int $count): bool => $count > 0))->colors(
             [
                 'Not Submitted' => '#F5573B',
                 'Submitted' => '#8fc15d',

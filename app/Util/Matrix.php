@@ -187,10 +187,16 @@ class Matrix
 
         return 'Origin: '.implode(
             ', ',
-            array_filter([$origin_airport->city, $origin_airport->state, $origin_airport->country])
+            array_filter(
+                [$origin_airport->city, $origin_airport->state, $origin_airport->country],
+                static fn (?string $value): bool => $value !== null && $value !== ''
+            )
         ).'; Destination: '.implode(
             ', ',
-            array_filter([$destination_airport->city, $destination_airport->state, $destination_airport->country])
+            array_filter(
+                [$destination_airport->city, $destination_airport->state, $destination_airport->country],
+                static fn (?string $value): bool => $value !== null && $value !== ''
+            )
         );
     }
 

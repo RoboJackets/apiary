@@ -31,10 +31,10 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $tar_received
  * @property array|null $matrix_itinerary
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelope
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $envelope
  * @property-read int|null $envelope_count
  * @property-read bool $is_complete
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Payment> $payment
  * @property-read bool $is_paid
  * @property-read int $payable_amount
  * @property-read bool $needs_docusign

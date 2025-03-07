@@ -46,7 +46,7 @@ use Square\SquareClient;
  * @property string|null $receipt_number
  * @property string|null $receipt_url
  * @property string|null $square_cash_transaction_id
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Laravel\Nova\Actions\ActionEvent> $actions
  * @property bool $receipt_sent
  * @property string|null $url
  * @property-read int|null $actions_count

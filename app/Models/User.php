@@ -77,22 +77,22 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int|null $employee_id
  * @property string|null $employee_home_department
  * @property-read User|null $accessOverrideBy
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
  * @property-read int|null $attendance_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ClassStanding> $classStanding
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\ClassStanding> $classStanding
  * @property-read int|null $class_standing_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $dues
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesTransaction> $dues
  * @property-read int|null $dues_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $duesPackages
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesPackage> $duesPackages
  * @property-read int|null $dues_packages_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesTransaction> $duesTransactions
  * @property-read int|null $dues_transactions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Event> $events
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelopes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Event> $events
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $envelopes
  * @property-read int|null $envelopes_count
  * @property-read int|null $events_count
  * @property-read \App\Models\TravelAssignment|null $current_travel_assignment
@@ -103,31 +103,31 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read bool $is_active
  * @property-read bool $is_student
  * @property-read string $name
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Major> $majors
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Major> $majors
  * @property string|null $preferred_first_name
  * @property-read \App\Models\SelfServiceAccessOverrideEligibility $self_service_override_eligibility
  * @property-read bool $should_receive_email
  * @property-read bool $signed_latest_agreement
  * @property-read int|null $majors_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $manages
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Team> $manages
  * @property-read int|null $manages_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $paidDues
- * @property-read \Illuminate\Database\Eloquent\Collection|array<Notification> $novaNotifications
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesTransaction> $paidDues
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Laravel\Nova\Notifications\Notification> $novaNotifications
  * @property-read int|null $nova_notifications_count
  * @property-read int|null $paid_dues_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Rsvp> $rsvps
  * @property-read int|null $rsvps_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Signature> $signatures
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Signature> $signatures
  * @property-read int|null $signatures_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $teams
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Team> $teams
  * @property-read int|null $teams_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2Client> $clients
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\OAuth2Client> $clients
  * @property-read int|null $clients_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\User|null $manager
  * @property-read bool $has_emergency_contact_information
@@ -455,7 +455,7 @@ class User extends Authenticatable
      */
     public function getFullNameAttribute(): string
     {
-        return implode(' ', array_filter([$this->first_name, $this->last_name]));
+        return implode(' ', [$this->first_name, $this->last_name]);
     }
 
     /**

@@ -35,19 +35,19 @@ use Laravel\Nova\Actions\Actionable;
  * @property int|null $fiscal_year_id
  * @property int|null $conflicts_with_package_id
  * @property bool|null $restricted_to_students
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read DuesPackage|null $conflictsWith
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesTransaction> $duesTransactions
  * @property-read int|null $dues_transactions_count
  * @property-read \App\Models\FiscalYear|null $fiscalYear
  * @property-read bool $is_access_active
  * @property-read bool $is_active
- * @property-read \Illuminate\Database\Eloquent\Collection|array<DuesPackage> $hasConflictWith
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesPackage> $hasConflictWith
  * @property-read int|null $has_conflict_with_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $merchandise
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Merchandise> $merchandise
  * @property-read int|null $merchandise_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
  *
  * @method static Builder|DuesPackage accessActive()

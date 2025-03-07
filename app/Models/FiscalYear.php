@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $ending_year
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $merchandise
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Merchandise> $merchandise
  * @property-read int|null $merchandise_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $packages
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesPackage> $packages
  * @property-read int|null $packages_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newModelQuery()
