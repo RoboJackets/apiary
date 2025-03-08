@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed805489b356aac3b3a89fcfc8b59d5a",
+    "content-hash": "bd50a7e268115cbb8f825fdf3725e63c",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -16263,16 +16263,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.41.4",
+            "version": "1.41.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "c5dbda0548c1881b30549ccc0b6d485f7471aaa5"
+                "reference": "9d078f04ffa32ad543a20716844ec343fdd7d856"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/c5dbda0548c1881b30549ccc0b6d485f7471aaa5",
-                "reference": "c5dbda0548c1881b30549ccc0b6d485f7471aaa5",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/9d078f04ffa32ad543a20716844ec343fdd7d856",
+                "reference": "9d078f04ffa32ad543a20716844ec343fdd7d856",
                 "shasum": ""
             },
             "require": {
@@ -16280,18 +16280,18 @@
                 "ext-json": "*",
                 "php": "^7.4 || ^8.0",
                 "ramsey/uuid": "^3.0 || ^4.1",
-                "spatie/backtrace": "^1.1",
+                "spatie/backtrace": "^1.7.1",
                 "spatie/macroable": "^1.0 || ^2.0",
                 "symfony/stopwatch": "^4.2 || ^5.1 || ^6.0 || ^7.0",
                 "symfony/var-dumper": "^4.2 || ^5.1 || ^6.0 || ^7.0.3"
             },
             "require-dev": {
-                "illuminate/support": "^7.20 || ^8.18 || ^9.0 || ^10.0 || ^11.0",
-                "nesbot/carbon": "^2.63",
+                "illuminate/support": "^7.20 || ^8.18 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "nesbot/carbon": "^2.63 || ^3.8.4",
                 "pestphp/pest": "^1.22",
-                "phpstan/phpstan": "^1.10.57 || ^2.0.2",
+                "phpstan/phpstan": "^1.10.57 || ^2.0.3",
                 "phpunit/phpunit": "^9.5",
-                "rector/rector": "dev-main",
+                "rector/rector": "^0.19.2 || ^1.0.1 || ^2.0.0",
                 "spatie/phpunit-snapshot-assertions": "^4.2",
                 "spatie/test-time": "^1.2"
             },
@@ -16332,7 +16332,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.41.4"
+                "source": "https://github.com/spatie/ray/tree/1.41.5"
             },
             "funding": [
                 {
@@ -16344,7 +16344,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2024-12-09T11:32:15+00:00"
+            "time": "2025-02-14T12:51:43+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
