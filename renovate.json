@@ -113,6 +113,23 @@
                 ]
             },
             "matchDepNames": [
+                "docusign/esign-client"
+            ],
+            "major": {
+                "enabled": true
+            }
+        },
+        {
+            "matchCategories": [
+                "php"
+            ],
+            "lockFileMaintenance": {
+                "enabled": true,
+                "schedule": [
+                    "before 4pm every weekday except before 9am every weekday"
+                ]
+            },
+            "matchDepNames": [
                 "laravel/nova"
             ],
             "registryUrls": [
