@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a93a1c80f1c4ebfd110d25a2797924e1",
+    "content-hash": "a1eb5f7ab91156325a1b14e7d9e37b43",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -1303,16 +1303,16 @@
         },
         {
             "name": "docusign/esign-client",
-            "version": "v6.19.0",
+            "version": "v8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/docusign/docusign-esign-php-client.git",
-                "reference": "855615f859dfc3d4035fe7ff8b554dda3dbef1cb"
+                "reference": "6fc2e20ba9faf5386926007824a11a5a484966e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/855615f859dfc3d4035fe7ff8b554dda3dbef1cb",
-                "reference": "855615f859dfc3d4035fe7ff8b554dda3dbef1cb",
+                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/6fc2e20ba9faf5386926007824a11a5a484966e7",
+                "reference": "6fc2e20ba9faf5386926007824a11a5a484966e7",
                 "shasum": ""
             },
             "require": {
@@ -1344,7 +1344,7 @@
                     "homepage": "https://developers.docusign.com"
                 }
             ],
-            "description": "The DocuSign PHP library makes integrating DocuSign into your apps and websites a super fast and painless process. The library is open sourced on GitHub, look for the docusign-esign-php-client repository. Join the eSign revolution!",
+            "description": "The Docusign PHP library makes integrating Docusign into your apps and websites a super fast and painless process. The library is open sourced on GitHub, look for the docusign-esign-php-client repository. Join the eSign revolution!",
             "homepage": "https://developers.docusign.com",
             "keywords": [
                 "agreement",
@@ -1356,9 +1356,9 @@
             ],
             "support": {
                 "issues": "https://github.com/docusign/docusign-esign-php-client/issues",
-                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v6.19.0"
+                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v8.0.0"
             },
-            "time": "2024-04-30T10:27:14+00:00"
+            "time": "2024-07-26T05:32:17+00:00"
         },
         {
             "name": "dompdf/dompdf",
