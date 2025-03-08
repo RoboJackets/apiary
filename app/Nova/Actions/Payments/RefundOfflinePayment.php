@@ -16,7 +16,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class RefundOfflinePayment extends Action
 {
-    public const REFUNDABLE_OFFLINE_PAYMENT_METHODS = [
+    public const array REFUNDABLE_OFFLINE_PAYMENT_METHODS = [
         'cash',
         'check',
     ];
