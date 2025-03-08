@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class DashboardController
 {
     /**
      * Returns view with data for the user dashboard.
@@ -36,8 +36,7 @@ class DashboardController extends Controller
             static fn (DuesTransaction $transaction): int => $transaction->dues_package_id
         )->uniqueStrict()->toArray();
 
-        $paidTxn = count($paidTxnColl);
-        $isNew = ($user->dues->count() === 0 || ($user->dues->count() >= 1 && $paidTxn === 0));
+        $isNew = count($paidTxnColl) === 0;
 
         // User needs a transaction if they don't have one for an active dues package
         $needsTransaction = (DuesTransaction::current()

@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class RemoteAttendanceController extends Controller
+class RemoteAttendanceController
 {
     private static function handleRequest(Request $request, string $secret, bool $redirect)
     {

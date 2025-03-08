@@ -17,6 +17,7 @@ class DocuSign implements SignatureValidator
      *
      * Since we're just using the signed routes middleware, this is a no-op.
      */
+    #[\Override]
     public function isValid(Request $request, WebhookConfig $config): bool
     {
         return true;

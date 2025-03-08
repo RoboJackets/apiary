@@ -79,6 +79,7 @@ class RemoteAttendanceLink extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         $notes = collect(self::$recommendedNotes)
@@ -156,6 +157,7 @@ class RemoteAttendanceLink extends Resource
         ];
     }
 
+    #[\Override]
     public static function searchable(): bool
     {
         return false;

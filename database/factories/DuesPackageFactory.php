@@ -18,6 +18,7 @@ class DuesPackageFactory extends Factory
      *
      * @return array<string,string|float|\DateTime>
      */
+    #[\Override]
     public function definition(): array
     {
         return [

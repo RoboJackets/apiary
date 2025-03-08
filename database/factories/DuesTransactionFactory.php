@@ -20,6 +20,7 @@ class DuesTransactionFactory extends Factory
      *
      * @return array<string,\DateTime|int|null>
      */
+    #[\Override]
     public function definition(): array
     {
         return [

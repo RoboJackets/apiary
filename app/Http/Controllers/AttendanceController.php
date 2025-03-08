@@ -18,18 +18,23 @@ use App\Util\AuthorizeInclude;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
-class AttendanceController extends Controller
+class AttendanceController implements HasMiddleware
 {
-    public function __construct()
+    #[\Override]
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-attendance', ['only' => ['index', 'search', 'statistics']]);
-        $this->middleware('permission:create-attendance', ['only' => ['store']]);
-        $this->middleware('permission:read-attendance|read-attendance-own', ['only' => ['show']]);
-        $this->middleware('permission:update-attendance', ['only' => ['update']]);
-        $this->middleware('permission:delete-attendance', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-attendance', only: ['index', 'search', 'statistics']),
+            new Middleware('permission:create-attendance', only: ['store']),
+            new Middleware('permission:read-attendance|read-attendance-own', only: ['show']),
+            new Middleware('permission:update-attendance', only: ['update']),
+            new Middleware('permission:delete-attendance', only: ['destroy']),
+        ];
     }
 
     /**

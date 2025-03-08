@@ -14,6 +14,7 @@ class Manager extends JsonResource
      *
      * @return array<string, int|string>
      */
+    #[\Override]
     public function toArray(Request $request): array
     {
         return [

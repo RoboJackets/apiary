@@ -16,7 +16,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class RefundOfflinePayment extends Action
 {
-    public const REFUNDABLE_OFFLINE_PAYMENT_METHODS = [
+    public const array REFUNDABLE_OFFLINE_PAYMENT_METHODS = [
         'cash',
         'check',
     ];
@@ -99,6 +99,7 @@ class RefundOfflinePayment extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         $payment = Payment::whereId($request->resourceId ?? $request->resources)->sole();

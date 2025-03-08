@@ -17,20 +17,25 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class MerchandiseController extends Controller
+class MerchandiseController implements HasMiddleware
 {
-    private const NOT_DISTRIBUTABLE = 'This item cannot be distributed';
+    private const string NOT_DISTRIBUTABLE = 'This item cannot be distributed';
 
-    private const NO_DTM = 'This person doesn\'t have a paid transaction for this item';
+    private const string NO_DTM = 'This person doesn\'t have a paid transaction for this item';
 
-    private const ALREADY_DISTRIBUTED = 'This item was already distributed to this person';
+    private const string ALREADY_DISTRIBUTED = 'This item was already distributed to this person';
 
-    public function __construct()
+    #[\Override]
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-merchandise|distribute-swag', ['only' => ['index']]);
-        $this->middleware('permission:distribute-swag', ['only' => ['getDistribution', 'distribute']]);
+        return [
+            new Middleware('permission:read-merchandise|distribute-swag', only: ['index']),
+            new Middleware('permission:distribute-swag', only: ['getDistribution', 'distribute']),
+        ];
     }
 
     /**

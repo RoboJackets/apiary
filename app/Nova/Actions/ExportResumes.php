@@ -188,6 +188,7 @@ class ExportResumes extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         // This is only stored for 30 seconds because it only needs to stick for one page load

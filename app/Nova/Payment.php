@@ -75,6 +75,7 @@ class Payment extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -180,6 +181,7 @@ class Payment extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(NovaRequest $request): array
     {
         $resourceId = $request->resourceId ?? $request->resources;
@@ -273,6 +275,7 @@ class Payment extends Resource
     /**
      * Determine if this resource is available for navigation.
      */
+    #[\Override]
     public static function availableForNavigation(Request $request): bool
     {
         return $request->user()->hasRole('admin');

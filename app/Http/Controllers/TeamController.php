@@ -14,16 +14,21 @@ use App\Models\User;
 use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class TeamController extends Controller
+class TeamController implements HasMiddleware
 {
-    public function __construct()
+    #[\Override]
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-teams', ['only' => ['index', 'indexWeb', 'show', 'showMembers']]);
-        $this->middleware('permission:create-teams', ['only' => ['store']]);
-        $this->middleware('permission:update-teams', ['only' => ['update']]);
-        $this->middleware('permission:update-teams|update-teams-membership-own', ['only' => ['updateMembers']]);
-        $this->middleware('permission:delete-teams', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-teams', only: ['index', 'indexWeb', 'show', 'showMembers']),
+            new Middleware('permission:create-teams', only: ['store']),
+            new Middleware('permission:update-teams', only: ['update']),
+            new Middleware('permission:update-teams|update-teams-membership-own', only: ['updateMembers']),
+            new Middleware('permission:delete-teams', only: ['destroy']),
+        ];
     }
 
     /**

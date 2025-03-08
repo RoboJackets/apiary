@@ -32,6 +32,7 @@ abstract class Resource extends NovaResource
      *
      * @phan-suppress PhanTypeExpectedObjectOrClassName
      */
+    #[\Override]
     public static function scoutQuery(NovaRequest $request, $query): Builder
     {
         if ($request->viaResource !== null) {

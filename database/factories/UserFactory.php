@@ -18,6 +18,7 @@ class UserFactory extends Factory
      *
      * @return array<string,string|int|\DateTime|bool|null>
      */
+    #[\Override]
     public function definition(): array
     {
         $lastName = $this->faker->lastName();

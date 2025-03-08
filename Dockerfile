@@ -80,7 +80,6 @@ COPY --link config-validation/ /app/config-validation/
 COPY --link database/ /app/database/
 COPY --link resources/ /app/resources/
 COPY --link routes/ /app/routes/
-COPY --link lang/ /app/lang/
 COPY --link artisan composer.json composer.lock /app/
 COPY --link --from=frontend /app/public/ /app/public/
 COPY --link nova-components/ /app/nova-components/

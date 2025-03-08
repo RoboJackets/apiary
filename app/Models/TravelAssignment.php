@@ -7,8 +7,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\TravelAssignmentObserver;
 use App\Traits\GetMorphClassStatic;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,10 +31,10 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $tar_received
  * @property array|null $matrix_itinerary
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelope
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $envelope
  * @property-read int|null $envelope_count
  * @property-read bool $is_complete
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Payment> $payment
  * @property-read bool $is_paid
  * @property-read int $payable_amount
  * @property-read bool $needs_docusign
@@ -60,6 +62,7 @@ use Laravel\Scout\Searchable;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
+#[ObservedBy([TravelAssignmentObserver::class])]
 class TravelAssignment extends Model implements Payable
 {
     use GetMorphClassStatic;
@@ -84,6 +87,7 @@ class TravelAssignment extends Model implements Payable
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -97,6 +101,7 @@ class TravelAssignment extends Model implements Payable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\TravelAssignment>
      */
+    #[\Override]
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -117,6 +122,7 @@ class TravelAssignment extends Model implements Payable
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment, self>
      */
+    #[\Override]
     public function payment(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
@@ -132,11 +138,13 @@ class TravelAssignment extends Model implements Payable
         return $this->morphMany(DocuSignEnvelope::class, 'signable');
     }
 
+    #[\Override]
     public function getIsPaidAttribute(): bool
     {
         return self::where('travel_assignments.id', $this->id)->paid()->count() !== 0;
     }
 
+    #[\Override]
     public function getPayableAmountAttribute(): int
     {
         /** @psalm-suppress NullableReturnStatement */

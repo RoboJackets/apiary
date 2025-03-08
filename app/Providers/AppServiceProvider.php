@@ -11,29 +11,14 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Models\AccessCard;
-use App\Models\Attendance;
-use App\Models\DocuSignEnvelope;
-use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Event;
-use App\Models\MembershipAgreementTemplate;
 use App\Models\OAuth2AccessToken;
 use App\Models\OAuth2Client;
-use App\Models\Payment;
 use App\Models\Signature;
 use App\Models\Team;
 use App\Models\TravelAssignment;
 use App\Models\User;
-use App\Observers\AccessCardObserver;
-use App\Observers\AttendanceObserver;
-use App\Observers\DocuSignEnvelopeObserver;
-use App\Observers\DuesPackageObserver;
-use App\Observers\DuesTransactionObserver;
-use App\Observers\MembershipAgreementTemplateObserver;
-use App\Observers\PaymentObserver;
-use App\Observers\TravelAssignmentObserver;
-use App\Observers\UserObserver;
 use App\Policies\NotificationPolicy;
 use App\Policies\WebhookCallPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -91,16 +76,6 @@ class AppServiceProvider extends ServiceProvider
             });
         }
 
-        AccessCard::observe(AccessCardObserver::class);
-        Attendance::observe(AttendanceObserver::class);
-        DocuSignEnvelope::observe(DocuSignEnvelopeObserver::class);
-        DuesPackage::observe(DuesPackageObserver::class);
-        DuesTransaction::observe(DuesTransactionObserver::class);
-        MembershipAgreementTemplate::observe(MembershipAgreementTemplateObserver::class);
-        Payment::observe(PaymentObserver::class);
-        TravelAssignment::observe(TravelAssignmentObserver::class);
-        User::observe(UserObserver::class);
-
         Relation::morphMap([
             'dues-transaction' => DuesTransaction::class,
             'event' => Event::class,
@@ -114,14 +89,6 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::policy(WebhookCall::class, WebhookCallPolicy::class);
         Gate::policy(Notification::class, NotificationPolicy::class);
-    }
-
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        // nothing to do here
     }
 
     public function bootAuth(): void

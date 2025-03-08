@@ -33,6 +33,7 @@ class ResumesSubmitted extends Value
      *
      * @return array<int,string>
      */
+    #[\Override]
     public function ranges(): array
     {
         return [
@@ -47,6 +48,7 @@ class ResumesSubmitted extends Value
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'resumes-submitted';

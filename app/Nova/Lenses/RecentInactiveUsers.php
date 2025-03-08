@@ -34,6 +34,7 @@ class RecentInactiveUsers extends Lens
      *
      * @phan-suppress PhanTypeMismatchReturnSuperType
      */
+    #[\Override]
     public static function query(LensRequest $request, $query): Builder
     {
         return $request->withOrdering(
@@ -54,6 +55,7 @@ class RecentInactiveUsers extends Lens
      *
      * @return array<int,\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -76,6 +78,7 @@ class RecentInactiveUsers extends Lens
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(NovaRequest $request): array
     {
         return [
@@ -90,6 +93,7 @@ class RecentInactiveUsers extends Lens
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
+    #[\Override]
     public function filters(NovaRequest $request): array
     {
         return [
@@ -107,6 +111,7 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the URI key for the lens.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'recent-inactive-users';

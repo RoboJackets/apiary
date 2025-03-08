@@ -8,14 +8,18 @@ use App\Http\Requests\StoreRoleRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
-class RoleController extends Controller
+class RoleController implements HasMiddleware
 {
-    public function __construct()
+    #[\Override]
+    public static function middleware(): array
     {
-        $this->middleware('role:admin');
+        return [
+            'role:admin',
+        ];
     }
 
     /**
@@ -63,7 +67,7 @@ class RoleController extends Controller
     {
         $role = Role::findByName($name);
 
-        $this->validate($request, [
+        $request->validate([
             'name' => Rule::unique('roles')->ignore($role->id),
         ]);
 

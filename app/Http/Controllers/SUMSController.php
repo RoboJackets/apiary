@@ -8,7 +8,7 @@ use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class SUMSController extends Controller
+class SUMSController
 {
     /**
      * Returns view for SUMS status.

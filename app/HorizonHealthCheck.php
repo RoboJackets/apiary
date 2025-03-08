@@ -26,6 +26,7 @@ class HorizonHealthCheck extends HealthCheck
     {
     }
 
+    #[\Override]
     public function status(): Status
     {
         $masters = $this->supervisorRepository->all();

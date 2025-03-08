@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\PaymentObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,7 +46,7 @@ use Square\SquareClient;
  * @property string|null $receipt_number
  * @property string|null $receipt_url
  * @property string|null $square_cash_transaction_id
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Laravel\Nova\Actions\ActionEvent> $actions
  * @property bool $receipt_sent
  * @property string|null $url
  * @property-read int|null $actions_count
@@ -95,15 +97,16 @@ use Square\SquareClient;
  *
  * @phan-suppress PhanUnreferencedPublicClassConstant
  */
+#[ObservedBy([PaymentObserver::class])]
 class Payment extends Model
 {
     use Actionable;
     use HasFactory;
     use SoftDeletes;
 
-    private const PER_TRANSACTION_FEE = 30;  // cents
+    private const int PER_TRANSACTION_FEE = 30;  // cents
 
-    private const PERCENTAGE_FEE = 2.9;
+    private const float PERCENTAGE_FEE = 2.9;
 
     /**
      * The accessors to append to the model's array form.
@@ -142,6 +145,7 @@ class Payment extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -149,7 +153,7 @@ class Payment extends Model
         ];
     }
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'user' => 'read-users',
         'payable' => 'read-dues-transactions',
         'duesTransaction' => 'read-dues-transactions',

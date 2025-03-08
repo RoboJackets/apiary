@@ -43,6 +43,7 @@ class DuesPackage extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'Dues Packages';
@@ -51,6 +52,7 @@ class DuesPackage extends Resource
     /**
      * Get the displayable singular label of the resource.
      */
+    #[\Override]
     public static function singularLabel(): string
     {
         return 'Dues Package';
@@ -98,6 +100,7 @@ class DuesPackage extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [
@@ -218,6 +221,7 @@ class DuesPackage extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
+    #[\Override]
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if ($request->is('nova-api/dues-transactions/*')) {
@@ -232,6 +236,7 @@ class DuesPackage extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(Request $request): array
     {
         return [
@@ -252,6 +257,7 @@ class DuesPackage extends Resource
      *
      * @param  \Illuminate\Validation\Validator  $validator
      */
+    #[\Override]
     protected static function afterValidation(NovaRequest $request, $validator): void
     {
         if ($request->resourceId !== null && $request->resourceId === $request->conflictsWith) {

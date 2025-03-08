@@ -25,6 +25,7 @@ class UserActive extends Filter
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
+    #[\Override]
     public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $value === 'yes' ? $query->active() : $query->inactive();
@@ -35,6 +36,7 @@ class UserActive extends Filter
      *
      * @return array<string,string>
      */
+    #[\Override]
     public function options(Request $request): array
     {
         return [

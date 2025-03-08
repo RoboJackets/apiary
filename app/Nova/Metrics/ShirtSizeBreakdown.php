@@ -37,6 +37,7 @@ class ShirtSizeBreakdown extends Partition
     /**
      * Get the displayable name of the metric.
      */
+    #[\Override]
     public function name(): string
     {
         return Str::ucfirst($this->type).' Size Breakdown';
@@ -108,6 +109,7 @@ class ShirtSizeBreakdown extends Partition
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'shirt-size-breakdown';

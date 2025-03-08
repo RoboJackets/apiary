@@ -24,15 +24,15 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public const IDENTIFIER_GTID = 'gtid';
+    public const string IDENTIFIER_GTID = 'gtid';
 
-    public const IDENTIFIER_USERNAME = 'uid';
+    public const string IDENTIFIER_USERNAME = 'uid';
 
-    public const IDENTIFIER_USER = 'user';
+    public const string IDENTIFIER_USER = 'user';
 
-    public const IDENTIFIER_GTDIRGUID = 'gtPersonDirectoryID';
+    public const string IDENTIFIER_GTDIRGUID = 'gtPersonDirectoryID';
 
-    public const EXPECTED_ATTRIBUTES = [
+    public const array EXPECTED_ATTRIBUTES = [
         'uid',
         'gtGTID',
         'mail',

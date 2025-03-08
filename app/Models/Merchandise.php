@@ -21,12 +21,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property bool $distributable
  * @property-read \App\Models\FiscalYear $fiscalYear
  * @property-read \App\Models\DuesTransactionMerchandise $jank_for_nova
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $jankForNova
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesTransaction> $jankForNova
  * @property-read int|null $jank_for_nova_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $packages
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesPackage> $packages
  * @property-read int|null $packages_count
  * @property-read \App\Models\User $providedBy
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
@@ -73,6 +73,7 @@ class Merchandise extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -80,7 +81,7 @@ class Merchandise extends Model
         ];
     }
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'packages' => 'read-dues-packages',
         'transactions' => 'read-dues-transactions',
     ];

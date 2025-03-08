@@ -21,6 +21,7 @@ class ActionEvent extends BaseActionEvent
      * @param  \Illuminate\Support\Collection<int,array<string,int>>  $models
      * @param  int  $limit
      */
+    #[\Override]
     public static function prune($models, $limit = 25): void
     {
         $models = $models->map(static function (array $model): array {

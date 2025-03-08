@@ -12,6 +12,7 @@ class FareClassPolicyRequiresMarketingCarrierPolicy implements ValidationRule
     /**
      * Run the validation rule.
      */
+    #[\Override]
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $decoded = json_decode($value, true);

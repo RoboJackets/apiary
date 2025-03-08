@@ -155,7 +155,7 @@ class SelfServiceAccessOverrideEligibility
     {
         $falsy_vals = array_map(static fn ($k, $v) => ! $v ? $k : null, array_keys($arr), array_values($arr));
 
-        return array_filter($falsy_vals);
+        return array_filter($falsy_vals, static fn (bool $value): bool => $value);
     }
 
     /**

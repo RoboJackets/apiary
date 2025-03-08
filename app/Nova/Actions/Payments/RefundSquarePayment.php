@@ -154,6 +154,7 @@ class RefundSquarePayment extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         $payment = Payment::whereId($request->resourceId ?? $request->resources)->sole();

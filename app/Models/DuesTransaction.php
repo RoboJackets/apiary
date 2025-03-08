@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\DuesTransactionObserver;
 use App\Traits\GetMorphClassStatic;
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,13 +31,13 @@ use Laravel\Scout\Searchable;
  * @property-read bool $is_paid
  * @property-read int $payable_amount
  * @property-read string $status
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $merchandise
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Merchandise> $merchandise
  * @property-read int|null $merchandise_count
  * @property-read \App\Models\DuesPackage $package
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Payment> $payment
  * @property-read int|null $payment_count
  * @property-read \App\Models\DuesTransactionMerchandise $jank_for_nova
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $jankForNova
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Merchandise> $jankForNova
  * @property-read int|null $jank_for_nova_count
  * @property-read \App\Models\User|null $providedBy
  * @property-read \App\Models\User $user
@@ -63,6 +65,7 @@ use Laravel\Scout\Searchable;
  *
  * @phan-suppress PhanUnreferencedPublicClassConstant
  */
+#[ObservedBy([DuesTransactionObserver::class])]
 class DuesTransaction extends Model implements Payable
 {
     use GetMorphClassStatic;
@@ -97,7 +100,7 @@ class DuesTransaction extends Model implements Payable
         'dues_package_id',
     ];
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'user' => 'read-users',
         'package' => 'read-dues-packages',
         'payment' => 'read-payments',
@@ -110,6 +113,7 @@ class DuesTransaction extends Model implements Payable
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment, self>
      */
+    #[\Override]
     public function payment(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
@@ -130,6 +134,7 @@ class DuesTransaction extends Model implements Payable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\DuesTransaction>
      */
+    #[\Override]
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -220,6 +225,7 @@ class DuesTransaction extends Model implements Payable
     /**
      * Get the is_paid flag for the DuesTransaction.
      */
+    #[\Override]
     public function getIsPaidAttribute(): bool
     {
         return self::where('dues_transactions.id', $this->id)->paid()->count() !== 0;
@@ -274,6 +280,7 @@ class DuesTransaction extends Model implements Payable
     /**
      * Get the Payable amount.
      */
+    #[\Override]
     public function getPayableAmountAttribute(): int
     {
         return intval($this->package->cost);

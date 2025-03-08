@@ -107,6 +107,7 @@ class TotalCollections extends Value
      *
      * @return array<int,string>
      */
+    #[\Override]
     public function ranges(): array
     {
         return [
@@ -121,6 +122,7 @@ class TotalCollections extends Value
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'total-collections';

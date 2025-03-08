@@ -41,13 +41,13 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property int|null $project_manager_id user_id of the project manager
- * @property \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property \Illuminate\Database\Eloquent\Collection<int,\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Laravel\Nova\Actions\ActionEvent> $actions
  * @property bool $self_service_override_eligible
  * @property-read int|null $actions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Attendance> $attendance
  * @property-read int|null $attendance_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\User> $members
  * @property-read int|null $members_count
  * @property-read \App\Models\User|null $projectManager
  * @property-read int|null $remote_attendance_links_count
@@ -111,6 +111,7 @@ class Team extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -122,7 +123,7 @@ class Team extends Model
         ];
     }
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'members' => 'read-teams-membership',
         'attendance' => 'read-attendance',
     ];

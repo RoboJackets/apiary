@@ -62,6 +62,7 @@ class FiscalYear extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -81,6 +82,7 @@ class FiscalYear extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(NovaRequest $request): array
     {
         return [
@@ -99,6 +101,7 @@ class FiscalYear extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(NovaRequest $request): array
     {
         return [

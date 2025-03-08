@@ -29,13 +29,14 @@ class ApplyWaiver extends RecordPayment
      *
      * @phan-suppress PhanUnreferencedProtectedClassConstant
      */
-    public const METHOD = 'waiver';
+    public const string METHOD = 'waiver';
 
     /**
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -51,6 +52,7 @@ class ApplyWaiver extends RecordPayment
      *
      * @phan-suppress PhanUnusedProtectedMethodParameter
      */
+    #[\Override]
     protected static function note(ActionFields $fields): string
     {
         return 'Applied in Nova';

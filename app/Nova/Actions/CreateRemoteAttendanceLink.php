@@ -78,6 +78,7 @@ class CreateRemoteAttendanceLink extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         $notes = collect(NovaRemoteAttendanceLink::$recommendedNotes)

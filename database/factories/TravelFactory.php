@@ -19,6 +19,7 @@ class TravelFactory extends Factory
      *
      * @return array<string,string|int|\DateTime|bool>
      */
+    #[\Override]
     public function definition(): array
     {
         return [

@@ -13,7 +13,7 @@ use Laravel\Passport\Token;
  * @property int|null $user_id
  * @property string $client_id
  * @property string|null $name
- * @property array|null $scopes
+ * @property array<string>|null $scopes
  * @property bool $revoked
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
