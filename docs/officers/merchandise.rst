@@ -41,6 +41,9 @@ To record distribution of an item, follow these steps.
    If you don't see the user's name in the list, they may not be eligible to receive the item, or they may not have selected it when they paid dues.
    You can ask in :slack:`it-helpdesk` if you're not sure.
 
+.. hint::
+   Administrators can follow this process with the :guilabel:`Undo Merchandise Distribution` action to clear distribution, if needed.
+
 Recording merchandise distribution on Android
 ---------------------------------------------
 
