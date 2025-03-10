@@ -150,6 +150,15 @@ class Merchandise extends Resource
                     )
                 )
                 ->onlyOnDetail(),
+            (new Actions\UndoMerchandiseDistribution($resourceId))
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->canRun(
+                    static fn (
+                        NovaRequest $request,
+                        AppModelsMerchandise $merchandise
+                    ): bool => $request->user()->hasRole('admin')
+                )
+                ->onlyOnDetail(),
         ];
     }
 
