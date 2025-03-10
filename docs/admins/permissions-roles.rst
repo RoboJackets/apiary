@@ -40,7 +40,7 @@ This role grants access to almost all functions and should only be assigned to s
 - Create and update :doc:`events </officers/events>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Record cash, check, or waiver payments <Recording an Offline Payment>`
-- :ref:`Distribute merchandise <Recording Merchandise Distribution>`
+- :ref:`Distribute merchandise <Recording merchandise distribution on web>`
 - :ref:`Approve <Approve a trip>` and :doc:`manage trips </officers/travel/index>`
 
 .. _project-manager:
@@ -51,7 +51,7 @@ This role grants access to almost all functions and should only be assigned to s
 - View :doc:`users </officers/users>`, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Record cash or check payments <Recording an Offline Payment>`
-- :ref:`Distribute merchandise <Recording Merchandise Distribution>`
+- :ref:`Distribute merchandise <Recording merchandise distribution on web>`
 - :doc:`Manage trips </officers/travel/index>`
 
 .. _team-lead:
@@ -61,7 +61,7 @@ This role grants access to almost all functions and should only be assigned to s
 
 - View :doc:`users </officers/users>` and :ref:`dues transactions <Dues Transaction>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
-- :ref:`Distribute merchandise <Recording Merchandise Distribution>`
+- :ref:`Distribute merchandise <Recording merchandise distribution on web>`
 
 .. _trainer:
 
