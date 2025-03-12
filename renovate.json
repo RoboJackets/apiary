@@ -131,7 +131,8 @@
             ],
             "registryUrls": [
                 "https://nova.laravel.com"
-            ]
+            ],
+            "changelogUrl": "https://nova.laravel.com/releases"
         },
         {
             "matchCategories": [
