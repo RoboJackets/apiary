@@ -71,6 +71,25 @@
         },
         {
             "matchCategories": [
+                "uses-with"
+            ],
+            "prPriority": -8,
+            "lockFileMaintenance": {
+                "enabled": true,
+                "schedule": [
+                    "before 4pm every weekday except before 9am every weekday"
+                ]
+            },
+            "major": {
+                "enabled": true
+            },
+            "matchDepNames": [
+                "python"
+            ],
+            "rangeStrategy": "replace"
+        },
+        {
+            "matchCategories": [
                 "php"
             ],
             "lockFileMaintenance": {
