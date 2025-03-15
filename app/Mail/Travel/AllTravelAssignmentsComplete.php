@@ -10,6 +10,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
 class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
@@ -31,11 +32,16 @@ class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
             ->to($this->travel->primaryContact->gt_email, $this->travel->primaryContact->name)
-            ->cc(config('services.treasurer_email'))
+            ->cc(config('payment_contact.email_address'), config('payment_contact.display_name'))
             ->subject($this->renderSubjectLine())
             ->text('mail.travel.allassignmentscomplete')
             ->withSymfonyMessage(static function (Email $email): void {
-                $email->replyTo(config('services.treasurer_email'));
+                $email->replyTo(
+                    new Address(
+                        config('payment_contact.email_address'),
+                        config('payment_contact.display_name')
+                    )
+                );
             })
             ->tag('travel-assignments-complete')
             ->metadata('travel-id', strval($this->travel->id));

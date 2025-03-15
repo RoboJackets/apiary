@@ -11,6 +11,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
 class PaymentReceipt extends Mailable implements ShouldQueue
@@ -40,7 +41,12 @@ class PaymentReceipt extends Mailable implements ShouldQueue
                 ]
             )
             ->withSymfonyMessage(static function (Email $email): void {
-                $email->replyTo('RoboJackets <treasurer@robojackets.org>');
+                $email->replyTo(
+                    new Address(
+                        config('payment_contact.email_address'),
+                        config('payment_contact.display_name')
+                    )
+                );
             })
             ->tag('payment-receipt')
             ->metadata('payment-id', strval($this->payment->id));
