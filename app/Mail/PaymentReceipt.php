@@ -43,8 +43,8 @@ class PaymentReceipt extends Mailable implements ShouldQueue
             ->withSymfonyMessage(static function (Email $email): void {
                 $email->replyTo(
                     new Address(
-                        config('payment_contact.email_address'),
-                        config('payment_contact.display_name')
+                        config('services.payment_contact.email_address'),
+                        config('services.payment_contact.display_name')
                     )
                 );
             })
@@ -54,8 +54,8 @@ class PaymentReceipt extends Mailable implements ShouldQueue
         if (in_array($this->payment->method, ['cash', 'check'], true)) {
             $mail->bcc(
                 new Address(
-                    config('payment_contact.email_address'),
-                    config('payment_contact.display_name')
+                    config('services.payment_contact.email_address'),
+                    config('services.payment_contact.display_name')
                 )
             );
         }
