@@ -31,7 +31,6 @@ parameters:
     - '#Access to undefined constant Illuminate\\Database\\Eloquent\\Model::DO_NOT_FILTER_ON\.#'
     - '#Access to undefined constant static\(App\\Nova\\Actions\\Payments\\RecordPayment\)::METHOD\.#'
     - '#Anonymous function should return ''CANCELED''\|''COMPLETED''\|''DRAFT''\|''OPEN'' but returns ''CANCELED''\|''COMPLETED''\|''DRAFT''\|''OPEN''\|null\.#'
-    - '#Anonymous function should return bool but returns mixed\.#'
     - '#Anonymous function should return int but returns mixed\.#'
     - '#Anonymous function should return int<-1, max> but returns int<0, max>\|false\.#'
     - '#Anonymous function should return string but returns mixed\.#'
