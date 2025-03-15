@@ -103,11 +103,17 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     #[\Override]
     protected function gate(): void
     {
-        Gate::define('viewNova', static fn (User $user): bool => Cache::remember(
-            'can_access_nova_'.$user->uid,
-            now()->addDay(),
-            static fn (): bool => $user->can('access-nova')
-        ));
+        Gate::define('viewNova', static function (User $user): bool {
+            if (Cache::get('can_access_nova_'.$user->uid, false) === true) {
+                return true;
+            } elseif ($user->can('access-nova')) {
+                Cache::put('can_access_nova_'.$user->uid, true);
+
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 
     /**
