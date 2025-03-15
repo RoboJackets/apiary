@@ -31,7 +31,7 @@ class PaymentReceipt extends Mailable implements ShouldQueue
      */
     public function build(): self
     {
-        return $this->from('noreply@my.robojackets.org', 'RoboJackets')
+        $mail = $this->from('noreply@my.robojackets.org', 'RoboJackets')
             ->to($this->payment->payable->user->gt_email, $this->payment->payable->user->name)
             ->subject('Receipt for your '.$this->getPayableDisplayNameSubject().' payment')
             ->text(
@@ -50,6 +50,17 @@ class PaymentReceipt extends Mailable implements ShouldQueue
             })
             ->tag('payment-receipt')
             ->metadata('payment-id', strval($this->payment->id));
+
+        if (in_array($this->payment->method, ['cash', 'check'], true)) {
+            $mail->bcc(
+                new Address(
+                    config('payment_contact.email_address'),
+                    config('payment_contact.display_name')
+                )
+            );
+        }
+
+        return $mail;
     }
 
     /**
