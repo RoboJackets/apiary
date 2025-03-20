@@ -34,7 +34,8 @@ class TotalCollections extends Value
      *
      * @var string
      */
-    public $helpText = 'Total dues revenue collected for this fiscal year, including all payment methods, excluding waivers and processing fees';
+    public $helpText = 'Total dues revenue collected for this fiscal year, including all payment methods,'
+        .' excluding waivers and processing fees';
 
     /**
      * Calculate the value of the metric.
