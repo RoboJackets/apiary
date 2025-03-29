@@ -283,7 +283,9 @@ class User extends Resource
             new Panel(
                 'Organization Hierarchy',
                 [
-                    URL::make('Manager', static fn (AppModelsUser $user): ?string => $user->manager === null ? null : route(
+                    URL::make('Manager', static fn (
+                        AppModelsUser $user
+                    ): ?string => $user->manager === null ? null : route(
                         'nova.pages.detail',
                         [
                             'resource' => self::uriKey(),
@@ -294,7 +296,9 @@ class User extends Resource
                         ->onlyOnDetail()
                         ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-                    URL::make('Primary Team', static fn (AppModelsUser $user): ?string => $user->primaryTeam === null ? null : route(
+                    URL::make('Primary Team', static fn (
+                        AppModelsUser $user
+                    ): ?string => $user->primaryTeam === null ? null : route(
                         'nova.pages.detail',
                         [
                             'resource' => Team::uriKey(),
