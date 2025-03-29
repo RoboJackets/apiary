@@ -189,17 +189,6 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            URL::make('Manager', static fn (AppModelsUser $user): ?string => $user->manager === null ? null : route(
-                'nova.pages.detail',
-                [
-                    'resource' => self::uriKey(),
-                    'resourceId' => $user->manager->id,
-                ]
-            ))
-                ->displayUsing(fn (): ?string => $this->manager?->name)
-                ->onlyOnDetail()
-                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
-
             Text::make('Graduation Semester', 'human_readable_graduation_semester')
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
@@ -287,6 +276,37 @@ class User extends Resource
                     Boolean::make('BuzzCard Access Opt-Out', 'buzzcard_access_opt_out')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+                ]
+            ),
+
+            new Panel(
+                'Organization Hierarchy',
+                [
+                    URL::make('Manager', static fn (
+                        AppModelsUser $user
+                    ): ?string => $user->manager === null ? null : route(
+                        'nova.pages.detail',
+                        [
+                            'resource' => self::uriKey(),
+                            'resourceId' => $user->manager->id,
+                        ]
+                    ))
+                        ->displayUsing(fn (): ?string => $this->manager?->name)
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+
+                    URL::make('Primary Team', static fn (
+                        AppModelsUser $user
+                    ): ?string => $user->primaryTeam === null ? null : route(
+                        'nova.pages.detail',
+                        [
+                            'resource' => Team::uriKey(),
+                            'resourceId' => $user->primaryTeam->id,
+                        ]
+                    ))
+                        ->displayUsing(fn (): ?string => $this->primaryTeam?->name)
+                        ->onlyOnDetail()
                         ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
                 ]
             ),
