@@ -130,6 +130,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\User|null $manager
+ * @property-read \App\Models\Team|null $primaryTeam
  * @property-read bool $has_emergency_contact_information
  *
  * @method static Builder|User accessActive()
@@ -1163,7 +1164,7 @@ class User extends Authenticatable
     {
         $teams = Attendance::where('gtid', $this->gtid)
             ->where('attendable_type', Team::getMorphClassStatic())
-            ->leftJoin('teams', function (JoinClause $join): void {
+            ->leftJoin('teams', static function (JoinClause $join): void {
                 $join->on('teams.id', '=', 'attendance.attendable_id')
                     ->where('attendable', '=', true);
             })
