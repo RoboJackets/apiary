@@ -1159,6 +1159,28 @@ class User extends Authenticatable
             ->first();
     }
 
+    public function getPrimaryTeamAttribute(): ?Team
+    {
+        $teams = Attendance::where('gtid', $this->gtid)
+            ->where('attendable_type', Team::getMorphClassStatic())
+            ->leftJoin('teams', function (JoinClause $join): void {
+                $join->on('teams.id', '=', 'attendance.attendable_id')
+                    ->where('attendable', '=', true);
+            })
+            ->where('attendable', '=', true)
+            ->groupBy('attendable_id')
+            ->select(
+                'attendable_id',
+                DB::raw('count(*) as count'),
+                DB::raw('\''.Team::getMorphClassStatic().'\' as attendable_type')
+            )
+            ->orderByDesc('count')
+            ->get()
+            ->toArray();
+
+        return count($teams) === 0 ? null : Team::whereId($teams[0])->sole();
+    }
+
     public function getManagerAttribute(): ?User
     {
         $teams = Attendance::where('gtid', $this->gtid)
@@ -1170,7 +1192,11 @@ class User extends Authenticatable
             })
             ->whereNotNull('teams.project_manager_id')
             ->groupBy('attendable_id')
-            ->select('attendable_id', DB::raw('count(*) as count'), DB::raw('\'team\' as attendable_type'))
+            ->select(
+                'attendable_id',
+                DB::raw('count(*) as count'),
+                DB::raw('\''.Team::getMorphClassStatic().'\' as attendable_type')
+            )
             ->orderByDesc('count')
             ->get()
             ->toArray();
