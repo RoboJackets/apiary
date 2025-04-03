@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\CreateUserFromAttendance;
 use App\Nova\Filters\Attendable;
 use App\Nova\Filters\DateFrom;
 use App\Nova\Filters\DateTo;
@@ -189,7 +190,9 @@ class Attendance extends Resource
     #[\Override]
     public function actions(Request $request): array
     {
-        return [];
+        return [
+            new CreateUserFromAttendance,
+        ];
     }
 
     /**
