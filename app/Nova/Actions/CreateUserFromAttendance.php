@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -40,37 +41,19 @@ class CreateUserFromAttendance extends Action
     public function fields(NovaRequest $request): array
     {
         return [
-            // TODO: Check if max lengths are different in prod
-            Text::make('Username')
-                ->required()
-                ->maxlength(127)
-                ->enforceMaxLength(),
-            Text::make('Georgia Tech Email')
-                ->required()
-                ->maxlength(255)
-                ->enforceMaxLength(),
-            Text::make('First Name')
-                ->required()
-                ->maxlength(127)
-                ->enforceMaxLength(),
-            Text::make('Middle Name')
-                ->maxlength(127)
-                ->enforceMaxLength(),
-            Text::make('Last Name')
-                ->required()
-                ->maxlength(127)
-                ->enforceMaxLength(),
             Text::make('Reason for Creation')
-                ->required()
                 ->maxlength(255)
-                ->enforceMaxLength(),
+                ->enforceMaxLength()
+                ->default('Created From Attendance Record'),
         ];
     }
 
     /**
      * Perform the action on the given models.
      *
-     * @return mixed
+     * @param  \Illuminate\Support\Collection<int,\App\Models\Attendance>  $models
+     *
+     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $models)
     {
@@ -81,15 +64,7 @@ class CreateUserFromAttendance extends Action
             return Action::danger('User already exists for this attendance record.');
         }
         $gtid = $models->sole()->gtid;
-        $user = new User();
-        $user->uid = $fields->username;
-        $user->gtid = $gtid;
-        $user->gt_email = $fields->georgia_tech_email;
-        $user->first_name = $fields->first_name;
-        $user->legal_middle_name = $fields->middle_name;
-        $user->last_name = $fields->last_name;
-        $user->create_reason = $fields->reason_for_creation;
-        $user->has_ever_logged_in = 0;
+        CreateOrUpdateUserFromBuzzAPI::dispatch(IDENTIFIER_GTID, $gtid, $fields->reason_for_creation);
         $saved = $user->save();
         if (! $saved) {
             return Action::danger('Failed to save user.');
