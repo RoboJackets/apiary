@@ -64,12 +64,11 @@ class CreateUserFromAttendance extends Action
             return Action::danger('User already exists for this attendance record.');
         }
         $gtid = $models->sole()->gtid;
-        CreateOrUpdateUserFromBuzzAPI::dispatch(IDENTIFIER_GTID, $gtid, $fields->reason_for_creation);
-        $saved = $user->save();
-        if (! $saved) {
-            return Action::danger('Failed to save user.');
-        } else {
-            return Action::message('Successfully created user!');
+        try {
+            CreateOrUpdateUserFromBuzzAPI::dispatch(IDENTIFIER_GTID, $gtid, $fields->reason_for_creation);
+        } catch (Exception $ex) {
+            return Action::danger('Failed to save user: ', $ex->getMessage());
         }
+        return Action::message('Successfully requested to create user!');
     }
 }
