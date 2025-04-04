@@ -69,7 +69,7 @@ class CreateUserFromAttendance extends Action
         } catch (Exception $ex) {
             return Action::danger('Failed to save user: ', $ex->getMessage());
         }
-        
+
         return Action::message('Successfully requested to create user!');
     }
 }
