@@ -90,9 +90,10 @@ class CreateUserFromAttendance extends Action
         $user->full_name = $fields[2]." ".$fields[4];
         $user->create_reason = $fields[5];
         $saved = $user->save();
-        if (!saved) {
+        if (!$saved) {
             return Action::danger('Failed to save user.');
         } else {
+            $model->user = $user;
             return Action::message('Successfully created user!');
         }
     }
