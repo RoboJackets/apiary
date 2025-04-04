@@ -77,23 +77,25 @@ class CreateUserFromAttendance extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         if ($models->count() > 1) {
-            return Action::danger('Action can only run on one record.');
+            return Action::danger('Cannot create a user from more than one attendance record.');
         }
-        $gtid = $model->sole()->gtid;
+        if (User::where('gtid', $models->sole()->gtid)->exists()) {
+            return Action::danger('User already exists for this attendance record.');
+        }
+        $gtid = $models->sole()->gtid;
         $user = new User();
-        $user->uid = $fields[0];
+        $user->uid = $fields->username;
         $user->gtid = $gtid;
-        $user->gt_email = $fields[1];
-        $user->first_name = $fields[2];
-        $user->legal_middle_name = $fields[3];
-        $user->last_name = $fields[4];
-        $user->full_name = $fields[2]." ".$fields[4];
-        $user->create_reason = $fields[5];
+        $user->gt_email = $fields->georgia_tech_email;
+        $user->first_name = $fields->first_name;
+        $user->legal_middle_name = $fields->middle_name;
+        $user->last_name = $fields->last_name;
+        $user->create_reason = $fields->reason_for_creation;
+        $user->has_ever_logged_in = 0;
         $saved = $user->save();
         if (!$saved) {
             return Action::danger('Failed to save user.');
         } else {
-            $model->user = $user;
             return Action::message('Successfully created user!');
         }
     }

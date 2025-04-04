@@ -192,11 +192,7 @@ class Attendance extends Resource
     {
         return [
             (new CreateUserFromAttendance())->canRun(
-                static function (Request $request): bool {
-                    if ($this->resource->user() === null) {
-                        return $request->user()->can('create-users');
-                    }
-                }
+                static fn (Request $request): bool => $request->user()->can('create-users')
             ),
         ];
     }
