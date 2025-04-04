@@ -34,7 +34,7 @@ class CreateUserFromAttendance extends Action
 
     /**
      * Get the fields available on the action.
-     * 
+     *
      * @return array<int, \Laravel\Nova\Fields\Field>
      */
     public function fields(NovaRequest $request): array
@@ -64,8 +64,6 @@ class CreateUserFromAttendance extends Action
                 ->required()
                 ->maxlength(255)
                 ->enforceMaxLength(),
-            
-            
         ];
     }
 
@@ -93,7 +91,7 @@ class CreateUserFromAttendance extends Action
         $user->create_reason = $fields->reason_for_creation;
         $user->has_ever_logged_in = 0;
         $saved = $user->save();
-        if (!$saved) {
+        if (! $saved) {
             return Action::danger('Failed to save user.');
         } else {
             return Action::message('Successfully created user!');
