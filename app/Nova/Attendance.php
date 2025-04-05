@@ -196,8 +196,7 @@ class Attendance extends Resource
             (new CreateUserFromAttendance())->canRun(
                 static fn (Request $request): bool => $request->user()->can('create-users')
             )->canSee(
-                static function(Request $request): bool
-                {
+                static function(Request $request): bool {
                     $gtidRes = AppModelsAttendance::whereId($request->resourceId ?? $request->resources)
                         ->first()
                         ->gtid;
