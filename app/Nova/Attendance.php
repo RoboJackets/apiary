@@ -200,6 +200,7 @@ class Attendance extends Resource
                     $gtidRes = AppModelsAttendance::whereId($request->resourceId ?? $request->resources)
                         ->first()
                         ->gtid;
+
                     return AppModelsUser::where('gtid', $gtidRes)->doesntExist();
                 }
             ),
