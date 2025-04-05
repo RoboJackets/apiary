@@ -34,21 +34,6 @@ class CreateUserFromAttendance extends Action
     public $confirmButtonText = 'Create User';
 
     /**
-     * Get the fields available on the action.
-     *
-     * @return array<int, \Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [
-            Text::make('Reason for Creation')
-                ->maxlength(255)
-                ->enforceMaxLength()
-                ->default('Created From Attendance Record'),
-        ];
-    }
-
-    /**
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Attendance>  $models
@@ -65,11 +50,15 @@ class CreateUserFromAttendance extends Action
         }
         $gtid = $models->sole()->gtid;
         try {
-            CreateOrUpdateUserFromBuzzAPI::dispatch('gtid', $gtid, $fields->reason_for_creation);
+            CreateOrUpdateUserFromBuzzAPI::dispatchSync(
+                CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_GTID,
+                $gtid,
+                'attendance-record-action'
+            );
         } catch (Exception $ex) {
             return Action::danger('Failed to save user: ', $ex->getMessage());
         }
 
-        return Action::message('Successfully requested to create user!');
+        return Action::message('Successfully created user!');
     }
 }
