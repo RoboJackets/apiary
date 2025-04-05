@@ -65,7 +65,7 @@ class CreateUserFromAttendance extends Action
         }
         $gtid = $models->sole()->gtid;
         try {
-            CreateOrUpdateUserFromBuzzAPI::dispatch(IDENTIFIER_GTID, $gtid, $fields->reason_for_creation);
+            CreateOrUpdateUserFromBuzzAPI::dispatch('gtid', $gtid, $fields->reason_for_creation);
         } catch (Exception $ex) {
             return Action::danger('Failed to save user: ', $ex->getMessage());
         }
