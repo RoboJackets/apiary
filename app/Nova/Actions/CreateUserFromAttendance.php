@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
@@ -34,7 +33,7 @@ class CreateUserFromAttendance extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<int,\App\Models\Attendance>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\Attendance>  $models
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
