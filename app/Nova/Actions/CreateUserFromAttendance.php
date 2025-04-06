@@ -34,7 +34,7 @@ class CreateUserFromAttendance extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<int,\App\Models\Attendance>  $models
+     * @param \Illuminate\Support\Collection<int,\App\Models\Attendance>  $models
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
@@ -43,9 +43,6 @@ class CreateUserFromAttendance extends Action
         if ($models->count() > 1) {
             return Action::danger('Cannot create a user from more than one attendance record.');
         }
-        if (User::where('gtid', $models->sole()->gtid)->exists()) {
-            return Action::danger('User already exists for this attendance record.');
-        }
         $gtid = $models->sole()->gtid;
         try {
             CreateOrUpdateUserFromBuzzAPI::dispatchSync(
@@ -53,7 +50,7 @@ class CreateUserFromAttendance extends Action
                 $gtid,
                 'attendance-record-action'
             );
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return Action::danger('Failed to save user: ', $ex->getMessage());
         }
 
