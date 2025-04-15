@@ -25,7 +25,7 @@
         "ext-uuid": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "ans-group/laravel-health-check": "dev-l12-compatibility",
+        "ans-group/laravel-health-check": "2.1.1",
         "apereo/phpcas": "1.6.1",
         "ashallendesign/laravel-config-validator": "2.8.0",
         "barryvdh/laravel-dompdf": "3.1.1",
@@ -223,10 +223,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/cas.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/laravel-shift/laravel-health-check.git"
         },
         {
             "type": "vcs",

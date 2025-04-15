@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fe4a4a9eb7002da75100b4c833c0689",
+    "content-hash": "e1b2f21657917be3b1e41bda2e9f5caa",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
-            "version": "dev-l12-compatibility",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/laravel-shift/laravel-health-check.git",
-                "reference": "5a78ce934c6b02f4c68a4a573766ff07cc257a0d"
+                "url": "https://github.com/ans-group/laravel-health-check.git",
+                "reference": "77af1169e699d38dd9f327ed18f553030a620db0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-shift/laravel-health-check/zipball/5a78ce934c6b02f4c68a4a573766ff07cc257a0d",
-                "reference": "5a78ce934c6b02f4c68a4a573766ff07cc257a0d",
+                "url": "https://api.github.com/repos/ans-group/laravel-health-check/zipball/77af1169e699d38dd9f327ed18f553030a620db0",
+                "reference": "77af1169e699d38dd9f327ed18f553030a620db0",
                 "shasum": ""
             },
             "require": {
@@ -28,17 +28,20 @@
                 "php": "^8.1"
             },
             "require-dev": {
+                "enlightn/security-checker": "^2.0",
                 "guzzlehttp/guzzle": "^7.5",
                 "illuminate/database": "^10.0|^11.0|^12.0",
                 "illuminate/log": "^10.0|^11.0|^12.0",
                 "illuminate/redis": "^10.0|^11.0|^12.0",
-                "larastan/larastan": "^2.9",
+                "larastan/larastan": "^3.1",
+                "league/flysystem": "^3.29",
+                "league/flysystem-ftp": "^3.29",
                 "mockery/mockery": "^1.0",
                 "orchestra/testbench": "^8.0|^9.0|^10.0",
                 "phpmd/phpmd": "^2.15",
                 "phpstan/phpstan-mockery": "^1.1|^2.0",
                 "phpstan/phpstan-phpunit": "^1.4|^2.0",
-                "phpunit/phpunit": "^10.0|^11.0",
+                "phpunit/phpunit": "^10.0|^11.0|^12.0",
                 "rector/rector": "^1.2|^2.0",
                 "squizlabs/php_codesniffer": "^3.10"
             },
@@ -54,12 +57,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "UKFast\\HealthCheck\\HealthCheckServiceProvider"
-                    ],
                     "aliases": {
                         "HealthCheck": "UKFast\\HealthCheck\\Facade\\HealthCheck"
-                    }
+                    },
+                    "providers": [
+                        "UKFast\\HealthCheck\\HealthCheckServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -67,43 +70,7 @@
                     "UKFast\\HealthCheck\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "standards:check": [
-                    "@phpcs",
-                    "@phpmd",
-                    "@rector"
-                ],
-                "standards:fix": [
-                    "@phpcs:fix",
-                    "@rector:fix"
-                ],
-                "test": [
-                    "phpunit"
-                ],
-                "phpcs": [
-                    "./vendor/bin/phpcs --standard=PSR12 --ignore=vendor ."
-                ],
-                "phpcs:fix": [
-                    "./vendor/bin/phpcbf --standard=PSR12 --ignore=vendor ."
-                ],
-                "phpmd": [
-                    "./vendor/bin/phpmd . github .phpmd/ruleset.xml --color"
-                ],
-                "rector": [
-                    "./vendor/bin/rector process --dry-run"
-                ],
-                "rector:fix": [
-                    "./vendor/bin/rector process"
-                ],
-                "larastan": [
-                    "./vendor/bin/phpstan analyse --error-format=table --memory-limit=1G"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -132,7 +99,7 @@
                 "issues": "https://github.com/ukfast/laravel-health-check/issues",
                 "source": "https://github.com/ukfast/laravel-health-check/tree/master"
             },
-            "time": "2025-02-19T04:50:50+00:00"
+            "time": "2025-04-11T09:48:40+00:00"
         },
         {
             "name": "apereo/phpcas",
@@ -16849,7 +16816,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ans-group/laravel-health-check": 20,
         "chelout/laravel-relationship-events": 20,
         "htmlmin/htmlmin": 20,
         "madewithlove/laravel-nova-uuid-support": 20,
