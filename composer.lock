@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f0534e7aad17d753cacddeced9dfe41",
+    "content-hash": "539ab8e16a66d998bf9b4fa21739714f",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3162,17 +3162,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.5.2",
+            "version": "5.5.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "4d2c6c4141d39481b680164ff6f3e47720b7b23b"
+                "reference": "d9004062b3282eff150926b692cf19da89d5edf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-4d2c6c4141d39481b680164ff6f3e47720b7b23b-zip-0c9cd7.zip",
-                "reference": "4d2c6c4141d39481b680164ff6f3e47720b7b23b",
-                "shasum": "3f6368367813f5da73c47ab5e5c0a157d1f3c7e3"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-d9004062b3282eff150926b692cf19da89d5edf3-zip-dccfc1.zip",
+                "reference": "d9004062b3282eff150926b692cf19da89d5edf3",
+                "shasum": "6dc3f20e65b29703741d0bb7b1ff4c84d3b6b83f"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -3334,10 +3334,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.5.2",
+                "source": "https://github.com/laravel/nova/tree/v5.5.3",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-04-10T15:59:10+00:00"
+            "time": "2025-04-15T00:06:19+00:00"
         },
         {
             "name": "laravel/passport",
