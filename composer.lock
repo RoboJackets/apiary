@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "539ab8e16a66d998bf9b4fa21739714f",
+    "content-hash": "058f3bc7e2a9412c7d028c5db160c502",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -7796,16 +7796,16 @@
         },
         {
             "name": "spatie/laravel-responsecache",
-            "version": "7.6.4",
+            "version": "7.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-responsecache.git",
-                "reference": "fbac90e8df40bc6c877302934e3e971c2da409db"
+                "reference": "c7a155d96579194e4e7c092d080d45896e638cc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/fbac90e8df40bc6c877302934e3e971c2da409db",
-                "reference": "fbac90e8df40bc6c877302934e3e971c2da409db",
+                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/c7a155d96579194e4e7c092d080d45896e638cc2",
+                "reference": "c7a155d96579194e4e7c092d080d45896e638cc2",
                 "shasum": ""
             },
             "require": {
@@ -7863,7 +7863,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-responsecache/tree/7.6.4"
+                "source": "https://github.com/spatie/laravel-responsecache/tree/7.6.5"
             },
             "funding": [
                 {
@@ -7875,7 +7875,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-25T15:05:05+00:00"
+            "time": "2025-04-10T16:20:10+00:00"
         },
         {
             "name": "spatie/laravel-webhook-client",
