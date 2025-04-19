@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed.DisallowedPartiallyKeyed
+
 namespace App\Http\Resources;
 
 use App\Http\Resources\Attendance as AttendanceResource;
@@ -26,7 +28,9 @@ class Team extends JsonResource
             $this->mergeWhen(
                 $this->resource->relationLoaded('projectManager'),
                 [
-                    'project_manager' => $this->resource->relationLoaded('projectManager') ? ($this->projectManager === null ? null : new Manager($this->projectManager)) : null,
+                    'project_manager' => $this->resource->relationLoaded('projectManager') ? (
+                        $this->projectManager === null ? null : new Manager($this->projectManager)
+                    ) : null,
                 ]
             ),
             'self_serviceable' => $this->self_serviceable,
