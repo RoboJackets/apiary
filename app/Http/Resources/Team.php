@@ -23,6 +23,12 @@ class Team extends JsonResource
             // Attributes
             'id' => $this->id,
             'name' => $this->name,
+            $this->mergeWhen(
+                $this->resource->relationLoaded('projectManager'),
+                [
+                    'project_manager' => $this->resource->relationLoaded('projectManager') ? ($this->projectManager === null ? null : new Manager($this->projectManager)) : null,
+                ]
+            ),
             'self_serviceable' => $this->self_serviceable,
             'visible' => $this->visible,
             'visible_on_kiosk' => $this->visible_on_kiosk,

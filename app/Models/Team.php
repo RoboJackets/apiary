@@ -126,6 +126,7 @@ class Team extends Model
     public const array RELATIONSHIP_PERMISSIONS = [
         'members' => 'read-teams-membership',
         'attendance' => 'read-attendance',
+        'projectManager' => 'read-users',
     ];
 
     /**
