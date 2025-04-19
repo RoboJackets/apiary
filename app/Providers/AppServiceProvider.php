@@ -106,7 +106,9 @@ class AppServiceProvider extends ServiceProvider
     {
         RateLimiter::for(
             'api',
-            static fn (Request $request): Limit => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip())
+            static fn (Request $request): Limit => $request->user()?->is_service_account === true ?
+                    Limit::perMinute(120)->by($request->user()?->id ?: $request->ip()) :
+                    (Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()))
         );
     }
 }
