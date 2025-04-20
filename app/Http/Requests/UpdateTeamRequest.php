@@ -32,6 +32,11 @@ class UpdateTeamRequest extends FormRequest
                 'max:4096',
                 'nullable',
             ],
+            'project_manager_id' => [
+                'integer',
+                'nullable',
+                'exists:users,id',
+            ],
             'attendable' => [
                 'boolean',
             ],
