@@ -49,7 +49,7 @@ class CreateUserFromAttendance extends Action
                 $gtid,
                 'attendance-record-action'
             );
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             return Action::danger('Failed to save user: ', $ex->getMessage());
         }
 
