@@ -207,7 +207,6 @@ parameters:
     - '#Property App\\Models\\Payment::\$(?:amount|processing_fee) \(string(?:\|null)?\) does not accept (?:float|int|float\|int)\.#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\[a-zA-Z]+>\) of method App\\Models\\[a-zA-Z]+::user\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\Payable>\) of method App\\Models\\Payable::user\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Payment, App\\Models\\[a-zA-Z]+>\) of method App\\Models\\[a-zA-Z]+::payment\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Payment, App\\Models\\Payable>\) of method App\\Models\\Payable::payment\(\)#'
-    - '#Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.#'
     - '#Strict comparison using !== between string and null will always evaluate to true\.#'
     - '#Strict comparison using === between Illuminate\\Support\\Carbon\|null and false will always evaluate to false\.#'
     - '#Type App\\Models\\Payable in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\Payable> in PHPDoc tag @return is not subtype of template type TDeclaringModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.#'

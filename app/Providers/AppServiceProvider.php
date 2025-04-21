@@ -21,13 +21,10 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use App\Policies\NotificationPolicy;
 use App\Policies\WebhookCallPolicy;
-use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
@@ -85,7 +82,6 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         $this->bootAuth();
-        $this->bootRoute();
 
         Gate::policy(WebhookCall::class, WebhookCallPolicy::class);
         Gate::policy(Notification::class, NotificationPolicy::class);
@@ -100,15 +96,5 @@ class AppServiceProvider extends ServiceProvider
         Passport::refreshTokensExpireIn(now()->addMonth());
         Passport::personalAccessTokensExpireIn(now()->addYear());
         Passport::cookie(config('passport.cookie_name'));
-    }
-
-    public function bootRoute(): void
-    {
-        RateLimiter::for(
-            'api',
-            static fn (Request $request): Limit => $request->user()?->is_service_account === true ?
-                    Limit::perMinute(120)->by($request->user()->id) :
-                    (Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()))
-        );
     }
 }
