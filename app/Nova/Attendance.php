@@ -194,16 +194,12 @@ class Attendance extends Resource
     {
         $resourceId = $request->resourceId ?? $request->resources;
 
-        if (is_array($resourceId) && count($resourceId) === 1) {
-            $resourceId = $resourceId[0];
+        if ($resourceId === null || (is_array($resourceId) && count($resourceId) > 1)) {
+            return [];
         }
 
-        if ($resourceId === null ||
-            (
-                is_array($resourceId) && count($resourceId) > 1
-            )
-        ) {
-            return [];
+        if (is_array($resourceId) && count($resourceId) === 1) {
+            $resourceId = $resourceId[0];
         }
 
         return [
