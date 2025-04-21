@@ -43,6 +43,11 @@ class CreateUserFromAttendance extends Action
             return Action::danger('Cannot create a user from more than one attendance record.');
         }
         $gtid = $models->sole()->gtid;
+        if (!is_int($gtid)) {
+            return Action::danger('Failed to save user: No GTID found for this attendance record.');
+        } else {
+            $gtid = (int) $gtid;
+        }
         try {
             CreateOrUpdateUserFromBuzzAPI::dispatchSync(
                 CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_GTID,
