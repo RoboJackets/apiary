@@ -46,16 +46,15 @@ class CreateUserFromAttendance extends Action
         if (! is_int($gtid)) {
             return Action::danger('Failed to save user: No GTID found for this attendance record.');
         } else {
-            $gtid = (int) $gtid;
-        }
-        try {
-            CreateOrUpdateUserFromBuzzAPI::dispatchSync(
-                CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_GTID,
-                $gtid,
-                'attendance-record-action'
-            );
-        } catch (\Throwable $ex) {
-            return Action::danger('Failed to save user: ', $ex->getMessage());
+            try {
+                CreateOrUpdateUserFromBuzzAPI::dispatchSync(
+                    CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_GTID,
+                    $gtid,
+                    'attendance-record-action'
+                );
+            } catch (\Throwable $ex) {
+                return Action::danger('Failed to save user: ', $ex->getMessage());
+            }
         }
 
         return Action::message('Successfully created user!');
