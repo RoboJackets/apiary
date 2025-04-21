@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\Attendance as AppModelsAttendance;
+use App\Models\User as AppModelsUser;
+use App\Nova\Actions\CreateUserFromAttendance;
 use App\Nova\Filters\Attendable;
 use App\Nova\Filters\DateFrom;
 use App\Nova\Filters\DateTo;
@@ -189,7 +192,27 @@ class Attendance extends Resource
     #[\Override]
     public function actions(Request $request): array
     {
-        return [];
+        $resourceId = $request->resourceId ?? $request->resources;
+
+        if ($resourceId === null || (is_array($resourceId) && count($resourceId) > 1)) {
+            return [];
+        }
+
+        if (is_array($resourceId) && count($resourceId) === 1) {
+            $resourceId = $resourceId[0];
+        }
+
+        return [
+            (new CreateUserFromAttendance())->canRun(
+                static fn (Request $request): bool => $request->user()->can('create-users')
+            )->canSee(
+                static fn (Request $request): bool => AppModelsUser::where(
+                    'gtid',
+                    AppModelsAttendance::whereId($resourceId)
+                        ->sole()->gtid
+                )->doesntExist()
+            ),
+        ];
     }
 
     /**
