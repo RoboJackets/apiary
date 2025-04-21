@@ -1233,4 +1233,12 @@ class User extends Authenticatable
             'id'
         );
     }
+
+    /**
+     * Get the API rate limit for this user.
+     */
+    public function getApiRateLimitAttribute(): int
+    {
+        return $this->is_service_account ? 600 : 60;
+    }
 }
