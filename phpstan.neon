@@ -118,6 +118,7 @@ parameters:
     - '#Offset 0 might not exist on array<Square\\Types\\Tender>\|null\.#'
     - '#Only booleans are allowed in &&, Illuminate\\Support\\Carbon\|null given on the (right|left) side\.#'
     - '#Only booleans are allowed in a negated boolean, bool\|string given\.#'
+    - '#Only booleans are allowed in a ternary operator condition, bool\|null given\.#'
     - '#Only numeric types are allowed in \/, int\|null given on the left side\.#'
     - '#Parameter \#1 \$assignment of job class App\\Jobs\\SendTravelAssignmentReminder constructor expects App\\Models\\TravelAssignment in App\\Jobs\\SendTravelAssignmentReminder::dispatch\(\), App\\Models\\DuesTransaction\|App\\Models\\TravelAssignment given\.#'
     - '#Parameter \#1 \$assignment of job class App\\Jobs\\SendTravelAssignmentReminder constructor expects App\\Models\\TravelAssignment in App\\Jobs\\SendTravelAssignmentReminder::dispatch\(\), App\\Models\\TravelAssignment\|null given\.#'
