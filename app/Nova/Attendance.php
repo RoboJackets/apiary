@@ -192,13 +192,27 @@ class Attendance extends Resource
     #[\Override]
     public function actions(Request $request): array
     {
+        $resourceId = $request->resourceId ?? $request->resources;
+
+        if (is_array($resourceId) && count($resourceId) === 1) {
+            $resourceId = $resourceId[0];
+        }
+
+        if ($resourceId === null ||
+            (
+                is_array($resourceId) && count($resourceId) > 1
+            )
+        ) {
+            return [];
+        }
+
         return [
             (new CreateUserFromAttendance())->canRun(
                 static fn (Request $request): bool => $request->user()->can('create-users')
             )->canSee(
                 static fn (Request $request): bool => AppModelsUser::where(
                     'gtid',
-                    AppModelsAttendance::whereId($request->resourceId ?? $request->resources)
+                    AppModelsAttendance::whereId($resourceId)
                         ->first()
                 )->doesntExist()
             ),
