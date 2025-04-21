@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \Spatie\Csp\AddCspHeaders::class,
         ]);
 
-        $middleware->throttleApi();
+        $middleware->throttleApi(redis: true);
         $middleware->api(\App\Http\Middleware\Sentry::class);
 
         $middleware->alias([
