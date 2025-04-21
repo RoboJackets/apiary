@@ -178,6 +178,7 @@ parameters:
     - '#Parameter \#2 \$query \(Laravel\\Scout\\Builder<App\\Models\\User>\) of method App\\Nova\\User::scoutQuery\(\) should be contravariant with parameter \$query \(Laravel\\Scout\\Builder\) of method App\\Nova\\Resource<App\\Models\\User>::scoutQuery\(\)#'
     - '#Parameter \#2 \$string of function explode expects string, bool\|string given\.#'
     - '#Parameter \#2 \$validator \(Illuminate\\Validation\\Validator\) of method App\\Nova\\[a-zA-Z]+::afterValidation\(\) should be contravariant with parameter \$validator \(Illuminate\\Contracts\\Validation\\Validator\) of method Laravel\\Nova\\Resource<Illuminate\\Database\\Eloquent\\Model>::afterValidation\(\)#'
+    - '#Parameter \#2 \$value of job class App\\Jobs\\CreateOrUpdateUserFromBuzzAPI constructor expects App\\Models\\User\|int\|string in App\\Jobs\\CreateOrUpdateUserFromBuzzAPI::dispatchSync\(\), int\|null given\.#'
     - '#Parameter \#3 \$fail of method App\\Rules\\[a-zA-Z]+::validate\(\) expects Closure\(string, string\|null=\): Illuminate\\Translation\\PotentiallyTranslatedString, Closure\(string\): void given\.#'
     - '#Parameter \#3 \$user of static method App\\Util\\SquareCheckout::redirectToSquare\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'

@@ -5,16 +5,25 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
 class CreateUserFromAttendance extends Action
 {
-    use InteractsWithQueue;
-    use Queueable;
+    /**
+     * The displayable name of the action.
+     *
+     * @var \Stringable|string
+     */
+    public $name = 'Create User';
+
+    /**
+     * Determine where the action redirection should be without confirmation.
+     *
+     * @var bool
+     */
+    public $withoutConfirmation = true;
 
     /**
      * Indicates if this action is only available on the resource detail view.
@@ -22,13 +31,6 @@ class CreateUserFromAttendance extends Action
      * @var bool
      */
     public $onlyOnDetail = true;
-
-    /**
-     * The text to be used for the action's confirm button.
-     *
-     * @var string
-     */
-    public $confirmButtonText = 'Create User';
 
     /**
      * Perform the action on the given models.
@@ -39,23 +41,11 @@ class CreateUserFromAttendance extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        if ($models->count() > 1) {
-            return Action::danger('Cannot create a user from more than one attendance record.');
-        }
-        $gtid = $models->sole()->gtid;
-        if (! is_int($gtid)) {
-            return Action::danger('Failed to save user: No GTID found for this attendance record.');
-        } else {
-            try {
-                CreateOrUpdateUserFromBuzzAPI::dispatchSync(
-                    CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_GTID,
-                    $gtid,
-                    'attendance-record-action'
-                );
-            } catch (\Throwable $ex) {
-                return Action::danger('Failed to save user: ', $ex->getMessage());
-            }
-        }
+        CreateOrUpdateUserFromBuzzAPI::dispatchSync(
+            CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_GTID,
+            $models->sole()->gtid,
+            'attendance-record-action'
+        );
 
         return Action::message('Successfully created user!');
     }
