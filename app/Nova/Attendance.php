@@ -209,7 +209,7 @@ class Attendance extends Resource
                 static fn (Request $request): bool => AppModelsUser::where(
                     'gtid',
                     AppModelsAttendance::whereId($resourceId)
-                        ->first()
+                        ->sole()->gtid
                 )->doesntExist()
             ),
         ];
