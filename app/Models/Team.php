@@ -7,10 +7,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\TeamObserver;
 use App\Traits\GetMorphClassStatic;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -83,6 +85,7 @@ use Laravel\Scout\Searchable;
  *
  * @phan-suppress PhanUnreferencedPublicClassConstant
  */
+#[ObservedBy([TeamObserver::class])]
 class Team extends Model
 {
     use Actionable;
