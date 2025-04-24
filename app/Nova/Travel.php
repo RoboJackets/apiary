@@ -44,6 +44,7 @@ use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Stack;
+use Laravel\Nova\Fields\Tag;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -586,6 +587,14 @@ class Travel extends Resource
                 ->default('draft')
                 ->onlyOnForms()
                 ->hideWhenUpdating(),
+
+            ...(
+                $request->is('*/airports') ? [
+                    Tag::make('Origin Airports', 'origin_airports', Airport::class),
+
+                    Tag::make('Destination Airports', 'destination_airports', Airport::class),
+                ] : []
+            ),
         ];
     }
 
@@ -600,7 +609,9 @@ class Travel extends Resource
         $tripId = $request->resourceId ?? $request->resources;
 
         if ($tripId === null) {
-            return [];
+            return [
+                MatrixAirfareSearch::make(),
+            ];
         }
 
         $trip = \App\Models\Travel::with('assignments.user', 'assignments.envelope')

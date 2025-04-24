@@ -45,6 +45,13 @@ class MatrixAirfareSearch extends Action
         'the Matrix search page if needed.';
 
     /**
+     * Indicates if the action can be run without any models.
+     *
+     * @var bool
+     */
+    public $standalone = true;
+
+    /**
      * The size of the modal. Can be "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl".
      *
      * @var string
@@ -155,15 +162,11 @@ class MatrixAirfareSearch extends Action
     {
         $resourceId = $request->resourceId ?? $request->resources;
 
-        if ($resourceId === null) {
-            return [];
-        }
-
-        $trip = Travel::whereId($resourceId)->sole();
+        $trip = $resourceId === null ? null : Travel::whereId($resourceId)->sole();
 
         return [
             Date::make('Outbound Date')
-                ->default(static fn (): string => $trip->departure_date->format('Y-m-d'))
+                ->default(static fn (): ?string => $trip?->departure_date?->format('Y-m-d'))
                 ->rules('required', 'date', 'after:tomorrow', 'before:+1 year')
                 ->required(),
 
@@ -174,7 +177,7 @@ class MatrixAirfareSearch extends Action
                 ->required(),
 
             Date::make('Return Date')
-                ->default(static fn (): string => $trip->return_date->format('Y-m-d'))
+                ->default(static fn (): ?string => $trip?->return_date?->format('Y-m-d'))
                 ->rules('required', 'date', 'after:tomorrow', 'after:outbound_date', 'before:+1 year')
                 ->required(),
 
@@ -201,7 +204,7 @@ class MatrixAirfareSearch extends Action
 
             BooleanGroup::make('Policy Filters')
                 ->options(MatrixItineraryBusinessPolicy::POLICY_LABELS)
-                ->default(static fn (): array => $trip->airfare_policy ?? [])
+                ->default(static fn (): array => $trip?->airfare_policy ?? [])
                 ->rules('required', new FareClassPolicyRequiresMarketingCarrierPolicy())
                 ->required()
                 ->help(view('nova.matrixpolicyhelp')->render()),
