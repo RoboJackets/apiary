@@ -164,6 +164,21 @@ class MatrixAirfareSearch extends Action
 
         $trip = $resourceId === null ? null : Travel::whereId($resourceId)->sole();
 
+        $suggestedDefaultDestinationAirport = null;
+
+        if ($trip !== null) {
+            $results = \App\Models\Airport::search($trip->destination)->get();
+
+            if ($results->count() > 0) {
+                $suggestedDefaultDestinationAirport = [
+                    [
+                        'display' => $results->first()->id,
+                        'value' => $results->first()->id,
+                    ],
+                ];
+            }
+        }
+
         return [
             Date::make('Outbound Date')
                 ->default(static fn (): ?string => $trip?->departure_date?->format('Y-m-d'))
@@ -193,6 +208,7 @@ class MatrixAirfareSearch extends Action
                 ->required(),
 
             Tag::make('Destination Airports', 'destination_airports', Airport::class)
+                ->default(static fn (): ?array => $suggestedDefaultDestinationAirport)
                 ->rules('required')
                 ->required(),
 
