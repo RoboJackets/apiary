@@ -236,4 +236,5 @@ parameters:
     - '#Unable to resolve the template type TKey in call to function collect#'
     - '#Unable to resolve the template type TMapWithKeysValue in call to method Illuminate\\Database\\Eloquent\\Collection<int,App\\Models\\[a-zA-Z]+>::mapWithKeys\(\)#'
     - '#Unable to resolve the template type TValue in call to function collect#'
+    - '#Using nullsafe property access "\?->[a-z_]_" on left side of \?\? is unnecessary. Use -> instead\.#'
     - '#Variable property access on App\\Models\\User\.#'
