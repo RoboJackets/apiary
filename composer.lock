@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a6a693c5d54512b0584ce62f9a45b56",
+    "content-hash": "440b537fcbc55102025056da32606949",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3162,17 +3162,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.5.3",
+            "version": "5.5.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "d9004062b3282eff150926b692cf19da89d5edf3"
+                "reference": "5ed6e2a12c394428731afbcb1f58d188e615e6bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-d9004062b3282eff150926b692cf19da89d5edf3-zip-dccfc1.zip",
-                "reference": "d9004062b3282eff150926b692cf19da89d5edf3",
-                "shasum": "6dc3f20e65b29703741d0bb7b1ff4c84d3b6b83f"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-5ed6e2a12c394428731afbcb1f58d188e615e6bf-zip-ac7b46.zip",
+                "reference": "5ed6e2a12c394428731afbcb1f58d188e615e6bf",
+                "shasum": "ddac0470152f712ca1ac27ba75cafcb100ebf3e3"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -3189,6 +3189,7 @@
                 "symfony/deprecation-contracts": "^2.5|^3.0",
                 "symfony/finder": "^6.4.13|^7.0.3",
                 "symfony/polyfill-intl-icu": "^1.31",
+                "symfony/polyfill-php82": "^1.31",
                 "symfony/polyfill-php83": "^1.31",
                 "symfony/polyfill-php84": "^1.31",
                 "symfony/process": "^6.4.14|^7.0.3"
@@ -3196,11 +3197,12 @@
             "require-dev": {
                 "doctrine/dbal": "^3.5.1|^4.0",
                 "larastan/larastan": "^2.9.14|^3.1",
+                "laravel/nova-devtool": "^1.8",
                 "laravel/pint": "^1.20",
                 "laravel/scout": "^10.12.2",
                 "orchestra/testbench-core": "^8.35|^9.12|^10.1",
                 "orchestra/testbench-dusk": "^8.36|^9.15|^10.1",
-                "orchestra/workbench": "^8.17.3|^9.13.3|^10.0.1",
+                "orchestra/workbench": "^8.17.4|^9.13.4|^10.0.3",
                 "phpstan/phpstan": "^1.12.20|^2.1.7",
                 "phpunit/phpunit": "^10.5.35|^11.3.5",
                 "predis/predis": "^2.3",
@@ -3334,10 +3336,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.5.3",
+                "source": "https://github.com/laravel/nova/tree/v5.5.4",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-04-15T00:06:19+00:00"
+            "time": "2025-04-21T23:06:48+00:00"
         },
         {
             "name": "laravel/passport",
