@@ -172,8 +172,8 @@ class MatrixAirfareSearch extends Action
             if ($results->count() > 0) {
                 $suggestedDefaultDestinationAirport = [
                     [
-                        'display' => $results->first()->id,
-                        'value' => $results->first()->id,
+                        'display' => $results->first()->iata,
+                        'value' => $results->first()->iata,
                     ],
                 ];
             }
