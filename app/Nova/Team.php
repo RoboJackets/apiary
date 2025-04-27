@@ -101,6 +101,7 @@ class Team extends Resource
                 ->rules('required'),
 
             BelongsTo::make('Project Manager', 'projectManager', User::class)
+                ->help(view('nova.help.team.projectmanager')->render())
                 ->searchable()
                 ->nullable()
                 ->withoutTrashed(),
