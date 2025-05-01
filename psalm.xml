@@ -312,6 +312,7 @@
                 <referencedFunction name="Laravel\Nova\Fields\Text::showOnDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\URL::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Http\Requests\LensRequest::withFilters"/>
+                <referencedFunction name="Laravel\Nova\Panel::__construct"/>
                 <referencedFunction name="Square\Types\Fulfillment::__construct"/>
                 <referencedFunction name="Square\Types\Order::__construct"/>
                 <referencedFunction name="Square\Types\OrderLineItem::__construct"/>
