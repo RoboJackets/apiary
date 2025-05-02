@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c4e97d9a1d6e636639f83aafad8610a",
+    "content-hash": "ad11070ba8cb2b421b4fcb3c155bb7a6",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -9482,16 +9482,16 @@
         },
         {
             "name": "symfony/postmark-mailer",
-            "version": "v7.2.4",
+            "version": "v7.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/postmark-mailer.git",
-                "reference": "d11c8ce0ff5974a2ee4a9a3297ba89ecdf6d1952"
+                "reference": "71ac001f8bc2ac36cc0bbea3fd6f4a4087d0cec0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/postmark-mailer/zipball/d11c8ce0ff5974a2ee4a9a3297ba89ecdf6d1952",
-                "reference": "d11c8ce0ff5974a2ee4a9a3297ba89ecdf6d1952",
+                "url": "https://api.github.com/repos/symfony/postmark-mailer/zipball/71ac001f8bc2ac36cc0bbea3fd6f4a4087d0cec0",
+                "reference": "71ac001f8bc2ac36cc0bbea3fd6f4a4087d0cec0",
                 "shasum": ""
             },
             "require": {
@@ -9532,7 +9532,7 @@
             "description": "Symfony Postmark Mailer Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/postmark-mailer/tree/v7.2.4"
+                "source": "https://github.com/symfony/postmark-mailer/tree/v7.2.6"
             },
             "funding": [
                 {
@@ -9548,7 +9548,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-26T08:19:39+00:00"
+            "time": "2025-04-30T07:52:47+00:00"
         },
         {
             "name": "symfony/process",
