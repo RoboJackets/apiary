@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions\Payments;
 
-use App\Models\Payment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -157,11 +156,9 @@ class RefundSquarePayment extends Action
     #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $payment = Payment::whereId($request->resourceId ?? $request->resources)->sole();
-
         return [
             Currency::make('Refund Amount')
-                ->default(static fn (): string => $payment->amount)
+                ->default(fn (): string => $this->resource->amount)
                 ->required()
                 ->help('Partial refunds aren\'t supported.')
                 ->readonly(),

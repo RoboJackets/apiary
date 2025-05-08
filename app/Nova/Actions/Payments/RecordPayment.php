@@ -13,7 +13,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 abstract class RecordPayment extends Action
 {
@@ -84,26 +83,17 @@ abstract class RecordPayment extends Action
         return Action::message('Recorded '.static::METHOD.' payment!');
     }
 
-    protected static function getPayableAmount(NovaRequest $request): int
+    protected function getPayableAmount(): int
     {
-        $resourceType = $request->resource;
-        $resourceId = $request->resourceId ?? $request->resources;
-
-        if ($resourceType === null) {
-            throw new Exception('resourceType is null');
+        if ($this->resource::class === \App\Models\DuesTransaction::class) {
+            return intval($this->resource->package->cost);
         }
 
-        if ($resourceId === null) {
-            throw new Exception('resourceId is null');
+        if ($this->resource->class === \App\Models\TravelAssignment::class) {
+            return intval($this->resource->travel->fee_amount);
         }
 
-        if ($resourceType === \App\Nova\DuesTransaction::uriKey()) {
-            return intval(DuesTransaction::whereId($resourceId)->sole()->package->cost);
-        } elseif ($resourceType === \App\Nova\TravelAssignment::uriKey()) {
-            return intval(TravelAssignment::whereId($resourceId)->sole()->travel->fee_amount);
-        }
-
-        throw new Exception('Unexpected resourceType '.$resourceType);
+        throw new Exception('Unexpected resource class '.$this->resource->class);
     }
 
     private static function prettyPayableName(Payable $payable): string

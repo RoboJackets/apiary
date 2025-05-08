@@ -6,7 +6,6 @@ namespace App\Nova\Actions;
 
 use App\Models\DuesTransaction;
 use App\Models\DuesTransactionMerchandise;
-use App\Models\Merchandise;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -34,22 +33,6 @@ class DistributeMerchandise extends Action
      */
     public $confirmText = 'Select the member to whom you are distributing merchandise. Only members that are '.
         'currently eligible to pick up this item are shown in the list.';
-
-    /**
-     * The Merchandise model that will be distributed. This is used to build the list of users.
-     */
-    private readonly ?Merchandise $resource;
-
-    public function __construct(?string $resourceId)
-    {
-        if ($resourceId === null) {
-            $this->resource = null;
-
-            return;
-        }
-
-        $this->resource = Merchandise::where('id', '=', $resourceId)->sole();
-    }
 
     /**
      * Perform the action on the given models.
@@ -107,21 +90,19 @@ class DistributeMerchandise extends Action
     #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $resource = $this->resource;
-
         return [
             Select::make('Member', 'member')
                 ->options(
-                    static fn (): array => User::whereHas(
+                    fn (): array => User::whereHas(
                         'duesTransactions',
-                        static function (Builder $query) use ($resource): void {
+                        function (Builder $query): void {
                             $query->whereHas(
                                 'merchandise',
-                                static function (Builder $query) use ($resource): void {
+                                function (Builder $query): void {
                                     $query->when(
-                                        $resource !== null,
-                                        static function (Builder $query) use ($resource): void {
-                                            $query->where('merchandise.id', $resource->id);
+                                        $this->resource !== null,
+                                        function (Builder $query): void {
+                                            $query->where('merchandise.id', $this->resource->id);
                                         }
                                     )
                                         ->whereNull('dues_transaction_merchandise.provided_at');
