@@ -142,7 +142,7 @@ class Merchandise extends Resource
         }
 
         return [
-            (new Actions\DistributeMerchandise($resourceId))
+            (new Actions\DistributeMerchandise())
                 ->canSee(static fn (Request $request): bool => $request->user()->can('distribute-swag'))
                 ->canRun(
                     static fn (NovaRequest $request, AppModelsMerchandise $merchandise): bool => $request->user()->can(
@@ -150,7 +150,7 @@ class Merchandise extends Resource
                     )
                 )
                 ->onlyOnDetail(),
-            (new Actions\UndoMerchandiseDistribution($resourceId))
+            (new Actions\UndoMerchandiseDistribution())
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->canRun(
                     static fn (
