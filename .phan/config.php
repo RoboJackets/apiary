@@ -57,6 +57,8 @@ return [
         'PhanTypeMismatchArgumentSuperType',
         'PhanTypeMismatchReturn',
         'PhanTypeSuspiciousStringExpression',
+        'PhanUndeclaredClassProperty',
+        'PhanUndeclaredClassReference',
         'PhanUndeclaredFunctionInCallable',
         'PhanUndeclaredMethod',
         'PhanUnreferencedClosure',

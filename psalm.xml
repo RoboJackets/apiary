@@ -343,12 +343,13 @@
         </RawObjectIteration>
         <RiskyTruthyFalsyComparison>
             <errorLevel type="suppress">
-                <file name="app/Util/CasUser.php"/>
-                <directory name="app/Providers"/>
                 <directory name="app/Http/Controllers/"/>
+                <directory name="app/Providers"/>
                 <file name="app/Http/Middleware/Sentry.php"/>
                 <file name="app/Jobs/ProcessPostmarkOutboundWebhook.php"/>
+                <file name="app/Nova/Actions/ReviewTrip.php"/>
                 <file name="app/Nova/Dashboards/Main.php"/>
+                <file name="app/Util/CasUser.php"/>
             </errorLevel>
         </RiskyTruthyFalsyComparison>
         <InvalidPropertyFetch>
@@ -398,6 +399,7 @@
         </InvalidNullableReturnType>
         <NullableReturnStatement>
             <errorLevel type="suppress">
+                <directory name="app/Nova/Actions/"/>
                 <file name="app/Mail/PaymentReceipt.php"/>
                 <file name="app/Models/Payment.php"/>
             </errorLevel>

@@ -39,7 +39,7 @@ class RecordCashPayment extends RecordPayment
     #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $payable_amount = self::getPayableAmount($request);
+        $payable_amount = $this->getPayableAmount();
 
         return [
             Currency::make('Amount')

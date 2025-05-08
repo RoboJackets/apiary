@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Models\Travel;
 use App\Nova\Airport;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
@@ -160,14 +159,10 @@ class MatrixAirfareSearch extends Action
     #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $resourceId = $request->resourceId ?? $request->resources;
-
-        $trip = $resourceId === null ? null : Travel::whereId($resourceId)->sole();
-
         $suggestedDefaultDestinationAirport = null;
 
-        if ($trip !== null) {
-            $results = \App\Models\Airport::search($trip->destination)->get();
+        if ($this->resource !== null) {
+            $results = \App\Models\Airport::search($this->resource->destination)->get();
 
             if ($results->count() > 0) {
                 $suggestedDefaultDestinationAirport = [
@@ -181,7 +176,7 @@ class MatrixAirfareSearch extends Action
 
         return [
             Date::make('Outbound Date')
-                ->default(static fn (): ?string => $trip?->departure_date?->format('Y-m-d'))
+                ->default(fn (): ?string => $this->resource?->departure_date?->format('Y-m-d'))
                 ->rules('required', 'date', 'after:tomorrow', 'before:+1 year')
                 ->required(),
 
@@ -192,7 +187,7 @@ class MatrixAirfareSearch extends Action
                 ->required(),
 
             Date::make('Return Date')
-                ->default(static fn (): ?string => $trip?->return_date?->format('Y-m-d'))
+                ->default(fn (): ?string => $this->resource?->return_date?->format('Y-m-d'))
                 ->rules('required', 'date', 'after:tomorrow', 'after:outbound_date', 'before:+1 year')
                 ->required(),
 
@@ -220,7 +215,7 @@ class MatrixAirfareSearch extends Action
 
             BooleanGroup::make('Policy Filters')
                 ->options(MatrixItineraryBusinessPolicy::POLICY_LABELS)
-                ->default(static fn (): array => $trip?->airfare_policy ?? [])
+                ->default(fn (): array => $this->resource?->airfare_policy ?? [])
                 ->rules('required', new FareClassPolicyRequiresMarketingCarrierPolicy())
                 ->required()
                 ->help(view('nova.matrixpolicyhelp')->render()),
