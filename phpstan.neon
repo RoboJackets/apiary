@@ -53,7 +53,6 @@ parameters:
     - '#Call to an undefined method Laravel\\Nova\\Actions\\Action\|Laravel\\Nova\\Actions\\ActionResponse::withMessage\(\)\.#'
     - '#Call to an undefined method Laravel\\Nova\\Actions\\Action\|Laravel\\Nova\\Actions\\ActionResponse::withoutConfirmation\(\)\.#'
     - '#Cannot access constant class on App\\Models\\User\|null\.#'
-    - '#Cannot access constant class on Illuminate\\Database\\Eloquent\\Model\|null\.#'
     - '#Cannot access offset ''[a-z]+'' on mixed\.#'
     - '#Cannot access offset ''[A-Za-z_0-9]+'' on mixed\.#'
     - '#Cannot access offset 0 on mixed\.#'
@@ -240,4 +239,5 @@ parameters:
     - '#Unable to resolve the template type TMapWithKeysValue in call to method Illuminate\\Database\\Eloquent\\Collection<int,App\\Models\\[a-zA-Z]+>::mapWithKeys\(\)#'
     - '#Unable to resolve the template type TValue in call to function collect#'
     - '#Using nullsafe property access "\?->[a-z_]+" on left side of \?\? is unnecessary. Use -> instead\.#'
+    - '#Using nullsafe property access on non-nullable type Illuminate\\Database\\Eloquent\\Model. Use -> instead\.#'
     - '#Variable property access on App\\Models\\User\.#'
