@@ -93,7 +93,7 @@ abstract class RecordPayment extends Action
             return intval($this->resource->package->cost);
         }
 
-        if ($this->resource->class === \App\Models\TravelAssignment::class) {
+        if ($this->resource::class === \App\Models\TravelAssignment::class) {
             return intval($this->resource->travel->fee_amount);
         }
 
