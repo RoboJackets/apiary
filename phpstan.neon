@@ -230,7 +230,6 @@ parameters:
     - '#Property App\\Models\\Payment::\$(?:amount|processing_fee) \(string(?:\|null)?\) does not accept (?:float|int|float\|int)\.#'
     - '#Property App\\Models\\User::\$docusign_access_token_expires_at \(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\CarbonImmutable\.#'
     - '#Property App\\Models\\User::\$docusign_refresh_token_expires_at \(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\CarbonImmutable\.#'
-    - '#Property Illuminate\\Database\\Migrations\\Migration\@anonymous/database/migrations/[a-zA-Z0-9_]+.php:9::\$schema with generic class Illuminate\\Database\\Schema\\Builder does not specify its types: TResolver#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\[a-zA-Z]+>\) of method App\\Models\\[a-zA-Z]+::user\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\Payable>\) of method App\\Models\\Payable::user\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Payment, App\\Models\\[a-zA-Z]+>\) of method App\\Models\\[a-zA-Z]+::payment\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Payment, App\\Models\\Payable>\) of method App\\Models\\Payable::payment\(\)#'
     - '#Strict comparison using !== between string and null will always evaluate to true\.#'
