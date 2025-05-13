@@ -85,6 +85,10 @@ abstract class RecordPayment extends Action
 
     protected function getPayableAmount(): int
     {
+        if ($this->resource === null) {
+            return 0;
+        }
+
         if ($this->resource::class === \App\Models\DuesTransaction::class) {
             return intval($this->resource->package->cost);
         }

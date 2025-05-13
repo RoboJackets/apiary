@@ -103,7 +103,7 @@ class RefundOfflinePayment extends Action
     {
         return [
             Currency::make('Refund Amount')
-                ->default(fn (): string => $this->resource->amount)
+                ->default(fn (): string => $this->resource?->amount)
                 ->required()
                 ->help('Partial refunds aren\'t supported.')
                 ->readonly(),

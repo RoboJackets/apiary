@@ -112,12 +112,12 @@ class ReviewTrip extends Action
     #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $totalCost = intval($this->resource->tar_lodging) +
-            intval($this->resource->tar_registration) +
-            intval($this->resource->car_rental_cost) +
-            intval($this->resource->meal_per_diem);
+        $totalCost = intval($this->resource?->tar_lodging) +
+            intval($this->resource?->tar_registration) +
+            intval($this->resource?->car_rental_cost) +
+            intval($this->resource?->meal_per_diem);
 
-        $airfareCost = $this->resource->assignments->reduce(
+        $airfareCost = $this->resource?->assignments?->reduce(
             static function (?float $carry, \App\Models\TravelAssignment $assignment): ?float {
                 $thisAirfareCost = Matrix::getHighestDisplayPrice($assignment->matrix_itinerary);
 
@@ -139,7 +139,7 @@ class ReviewTrip extends Action
             Heading::make('Review Name'),
 
             Text::make('Trip Name')
-                ->default(fn (): string => $this->resource->name)
+                ->default(fn (): string => $this->resource?->name)
                 ->readonly(),
 
             BooleanGroup::make('Review Criteria')
@@ -155,54 +155,54 @@ class ReviewTrip extends Action
             Heading::make('Review Financials'),
 
             Currency::make('Trip Fee')
-                ->default(fn (): float => $this->resource->fee_amount)
+                ->default(fn (): float => $this->resource?->fee_amount)
                 ->readonly()
                 ->help('This is the amount that will be collected from each traveler.'),
 
-            ...($this->resource->fee_amount > 0 ? [
+            ...($this->resource?->fee_amount > 0 ? [
                 Currency::make('Square Processing Fee')
-                    ->default(fn (): float => Payment::calculateProcessingFee($this->resource->fee_amount * 100) / 100)
+                    ->default(fn (): float => Payment::calculateProcessingFee($this->resource?->fee_amount * 100) / 100)
                     ->readonly()
                     ->help(
                         view(
                             'nova.help.travel.review.processingfee',
                             [
-                                'fee_amount' => $this->resource->fee_amount,
+                                'fee_amount' => $this->resource?->fee_amount,
                             ]
                         )->render()
                     ),
             ] : []),
 
-            ...($this->resource->needs_docusign ? [
+            ...($this->resource?->needs_docusign ? [
                 Currency::make('Total Cost per Traveler')
                     ->default(static fn (): float => $totalCost)
                     ->readonly(),
             ] : []),
 
-            ...($this->resource->fee_amount > 0 ? [
+            ...($this->resource?->fee_amount > 0 ? [
                 Text::make('Fee-to-Cost Ratio')
                     ->default(
                         fn (): string => $totalCost === 0 ?
                             'Not Applicable' :
-                            intval(ceil(($this->resource->fee_amount / $totalCost) * 100)).'%'
+                            intval(ceil(($this->resource?->fee_amount / $totalCost) * 100)).'%'
                     )
                     ->readonly()
                     ->help('This is the percentage of costs that are paid by travelers via the trip fee.'),
             ] : []),
 
-            ...($this->resource->needs_docusign ? [
+            ...($this->resource?->needs_docusign ? [
                 Text::make('Workday Account Number')
-                    ->default(fn (): ?string => $this->resource->tar_project_number)
+                    ->default(fn (): ?string => $this->resource?->tar_project_number)
                     ->readonly(),
             ] : []),
 
             BooleanGroup::make('Review Criteria')
                 ->options([
                     'fee_reasonable' => 'Trip fee is reasonable',
-                    ...($this->resource->fee_amount > 0 ? [
+                    ...($this->resource?->fee_amount > 0 ? [
                         'ratio_reasonable' => 'Ratio of trip fee to cost is reasonable',
                     ] : []),
-                    ...($this->resource->needs_docusign ? [
+                    ...($this->resource?->needs_docusign ? [
                         'account_number_correct' => 'Workday account number is correct',
                     ] : []),
                 ])
@@ -212,13 +212,13 @@ class ReviewTrip extends Action
             Heading::make('Review Assignments'),
 
             Number::make('Number of Travelers')
-                ->default(fn (): int => $this->resource->assignments->count())
+                ->default(fn (): int => $this->resource?->assignments?->count())
                 ->readonly(),
 
             BooleanGroup::make('Review Criteria')
                 ->options([
                     'travelers_finalized' => 'List of travelers is final',
-                    ...($this->resource->needs_airfare_form ? [
+                    ...($this->resource?->needs_airfare_form ? [
                         'airfare_reasonable' => 'Flight selections and prices are reasonable',
                     ] : []),
                 ])

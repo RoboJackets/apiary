@@ -108,7 +108,7 @@ class UndoMerchandiseDistribution extends Action
                                     $query->when(
                                         $this->resource !== null,
                                         function (Builder $query): void {
-                                            $query->where('merchandise.id', $this->resource->id);
+                                            $query->where('merchandise.id', $this->resource?->id);
                                         }
                                     )
                                         ->whereNotNull('dues_transaction_merchandise.provided_at');
