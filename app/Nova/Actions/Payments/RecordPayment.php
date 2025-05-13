@@ -97,7 +97,7 @@ abstract class RecordPayment extends Action
             return intval($this->resource->travel->fee_amount);
         }
 
-        throw new Exception('Unexpected resource class '.$this->resource->class);
+        throw new Exception('Unexpected resource class '.$this->resource::class);
     }
 
     private static function prettyPayableName(Payable $payable): string
