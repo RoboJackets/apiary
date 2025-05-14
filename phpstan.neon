@@ -48,6 +48,7 @@ parameters:
     - '#Binary operation "\." between ''.+'' and mixed results in an error\.#'
     - '#Binary operation "\." between mixed and ''.+'' results in an error\.#'
     - '#Binary operation "\/" between mixed and int results in an error\.#'
+    - '#Call to an undefined method App\\Http\\Resources\\User::getAllPermissions\(\)\.#'
     - '#Call to an undefined method App\\Models\\Payment\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\Payment>::getSquareOrderState\(\)\.#'
     - '#Call to an undefined method Illuminate\\Http\\Request::model\(\)\.#'
     - '#Call to an undefined method Laravel\\Nova\\Actions\\Action\|Laravel\\Nova\\Actions\\ActionResponse::withMessage\(\)\.#'
