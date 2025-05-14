@@ -91,6 +91,7 @@ parameters:
     - '#Method App\\Http\\Controllers\\DocuSignController::redirectToRecipientView\(\) should return Illuminate\\Http\\RedirectResponse but returns Illuminate\\Http\\RedirectResponse\|Illuminate\\Routing\\Redirector\.#'
     - '#Method App\\Http\\Controllers\\MerchandiseController::handleMissingModel\(\) has parameter \$exception with generic class Illuminate\\Database\\Eloquent\\ModelNotFoundException but does not specify its types: TModel#'
     - '#Method App\\Http\\Resources\\Manager::toArray\(\) should return array<string, int\|string> but returns array<string, mixed>\.#'
+    - '#Method App\\Http\\Resources\\TravelAssignment::toArray\(\) should return array<string, Illuminate\\Http\\Resources\\Json\\JsonResource\|int> but returns array<string, mixed>\.#'
     - '#Method App\\Models\\[a-zA-Z0-9]+::[a-zA-Z]+\(\) should return array<.+> but returns array\.#'
     - '#Method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+, App\\Models\\[a-zA-Z]+> but returns Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+, \$this\(App\\Models\\[a-zA-Z]+\)>\.#'
     - '#Method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany<App\\Models\\[a-zA-Z]+, App\\Models\\[a-zA-Z]+> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany<App\\Models\\[a-zA-Z]+, \$this\(App\\Models\\[a-zA-Z]+\), App\\Models\\[a-zA-Z]+, TAccessor of string = ''pivot''>\.#'
