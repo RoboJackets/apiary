@@ -68,7 +68,7 @@ class Main extends Dashboard
         ];
 
         if (request()->is('nova-api/dashboards/main')) {
-            foreach (Travel::all() as $travel) {
+            foreach (Travel::orderBy('departure_date')->orderBy('return_date')->get() as $travel) {
                 $should_include = false;
 
                 if ($travel->return_date > Carbon::now() && $travel->assignments()->exists()) {
