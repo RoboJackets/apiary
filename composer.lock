@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc911686ad1416edd48b3c077edea8a3",
+    "content-hash": "ea0d4129dfeae3afa22e9e780dfdbb19",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -836,29 +836,29 @@
         },
         {
             "name": "chelout/laravel-relationship-events",
-            "version": "dev-l12-compatibility",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/laravel-shift/laravel-relationship-events.git",
-                "reference": "4de4c81666f9681b4560b48e86a8bb9636c25d05"
+                "url": "https://github.com/chelout/laravel-relationship-events.git",
+                "reference": "84c3490d8ba47e15b740070b9b9c8ec726530da0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-shift/laravel-relationship-events/zipball/4de4c81666f9681b4560b48e86a8bb9636c25d05",
-                "reference": "4de4c81666f9681b4560b48e86a8bb9636c25d05",
+                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/84c3490d8ba47e15b740070b9b9c8ec726530da0",
+                "reference": "84c3490d8ba47e15b740070b9b9c8ec726530da0",
                 "shasum": ""
             },
             "require": {
-                "illuminate/container": "^11.0|^12.0",
-                "illuminate/database": "^11.0|^12.0",
-                "illuminate/events": "^11.0|^12.0",
-                "illuminate/support": "^11.0|^12.0",
+                "illuminate/container": "^12.0",
+                "illuminate/database": "^12.0",
+                "illuminate/events": "^12.0",
+                "illuminate/support": "^12.0",
                 "php": "^8.2"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.14",
-                "orchestra/testbench": "^9.0|^10.0",
-                "phpunit/phpunit": "^10.5|^11.0"
+                "orchestra/testbench": "^10.0",
+                "phpunit/phpunit": "^10.5.35|^11.5.3|^12.0.1"
             },
             "type": "library",
             "extra": {
@@ -873,19 +873,7 @@
                     "Chelout\\RelationshipEvents\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Chelout\\RelationshipEvents\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "fix": [
-                    "php-cs-fixer --config=.php-cs-fixer.php --dry-run --allow-risky=yes --verbose fix"
-                ],
-                "test": [
-                    "phpunit tests"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -904,9 +892,10 @@
                 "relationship"
             ],
             "support": {
-                "source": "https://github.com/laravel-shift/laravel-relationship-events/tree/l12-compatibility"
+                "issues": "https://github.com/chelout/laravel-relationship-events/issues",
+                "source": "https://github.com/chelout/laravel-relationship-events/tree/v4.0.0"
             },
-            "time": "2025-02-16T19:35:26+00:00"
+            "time": "2025-05-16T21:41:54+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -16771,7 +16760,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "chelout/laravel-relationship-events": 20,
         "htmlmin/htmlmin": 20,
         "madewithlove/laravel-nova-uuid-support": 20,
         "robojackets/client-id-and-secret-modal": 20,
