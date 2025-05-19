@@ -169,7 +169,6 @@ parameters:
     - '#Parameter \#1 \$to of function redirect expects string\|null, array\|string\|null given\.#'
     - '#Parameter \#1 \$travel of job class App\\Jobs\\CheckAllTravelAssignmentsComplete constructor expects App\\Models\\Travel in App\\Jobs\\CheckAllTravelAssignmentsComplete::dispatch\(\), App\\Models\\Travel\|null given\.#'
     - '#Parameter \#1 \$user of job class App\\Jobs\\PushToJedi constructor expects App\\Models\\User in App\\Jobs\\PushToJedi::dispatch\(\), App\\Models\\User\|null given\.#'
-    - '#Parameter \#1 \$user of method App\\Policies\\DocuSignEnvelopePolicy::delete\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#1 \$user of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\DuesPackage>::userCanPurchase\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#1 \$user of static method App\\Util\\DocuSign::getApiClientForUser\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#1 \$user of static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\DuesPackage>::userCanPurchase\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
