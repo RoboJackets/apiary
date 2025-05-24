@@ -42,7 +42,7 @@ class ApplyWaiver extends RecordPayment
         return [
             Currency::make('Amount')
                 ->rules('required')
-                ->default($this->getPayableAmount())
+                ->default($this->getPayableAmount($request))
                 ->withMeta(['extraAttributes' => ['readonly' => true]]),
         ];
     }

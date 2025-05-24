@@ -54,7 +54,7 @@ class RecordCheckPayment extends RecordPayment
     #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $payable_amount = $this->getPayableAmount();
+        $payable_amount = $this->getPayableAmount($request);
 
         return [
             Date::make('Check Date')

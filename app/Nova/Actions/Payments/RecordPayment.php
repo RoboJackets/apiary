@@ -13,6 +13,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 abstract class RecordPayment extends Action
 {
@@ -83,10 +84,25 @@ abstract class RecordPayment extends Action
         return Action::message('Recorded '.static::METHOD.' payment!');
     }
 
-    protected function getPayableAmount(): int
+    protected function getPayableAmount(NovaRequest $request): int
     {
         if ($this->resource === null) {
-            return 0;
+            $resourceType = $request->resource;
+            $resourceId = $request->resourceId ?? $request->resources;
+
+            if ($resourceType === null) {
+                throw new Exception('resourceType is null');
+            }
+
+            if ($resourceId === null) {
+                throw new Exception('resourceId is null');
+            }
+
+            if ($resourceType === \App\Nova\DuesTransaction::uriKey()) {
+                return intval(DuesTransaction::whereId($resourceId)->sole()->package->cost);
+            } elseif ($resourceType === \App\Nova\TravelAssignment::uriKey()) {
+                return intval(TravelAssignment::whereId($resourceId)->sole()->travel->fee_amount);
+            }
         }
 
         if ($this->resource::class === \App\Models\DuesTransaction::class) {
