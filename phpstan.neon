@@ -53,6 +53,7 @@ parameters:
     - '#Call to an undefined method Laravel\\Nova\\Actions\\Action\|Laravel\\Nova\\Actions\\ActionResponse::withMessage\(\)\.#'
     - '#Call to an undefined method Laravel\\Nova\\Actions\\Action\|Laravel\\Nova\\Actions\\ActionResponse::withoutConfirmation\(\)\.#'
     - '#Cannot access constant class on App\\Models\\User\|null\.#'
+    - '#Cannot access constant class on Illuminate\\Database\\Eloquent\\Model\|null\.#'
     - '#Cannot access offset ''[a-z]+'' on mixed\.#'
     - '#Cannot access offset ''[A-Za-z_0-9]+'' on mixed\.#'
     - '#Cannot access offset 0 on mixed\.#'
