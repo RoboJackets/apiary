@@ -57,7 +57,7 @@
         "sentry/sentry-laravel": "4.13.0",
         "spatie/laravel-csp": "2.10.3",
         "spatie/laravel-failed-job-monitor": "4.3.3",
-        "spatie/laravel-permission": "6.18.0",
+        "spatie/laravel-permission": "6.19.0",
         "spatie/laravel-responsecache": "7.7.0",
         "spatie/laravel-webhook-client": "3.4.3",
         "square/square": "42.2.0.20250521",
