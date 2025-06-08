@@ -18,6 +18,7 @@ use App\Nova\Actions\ReviewTrip;
 use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
+use App\Rules\DisallowConfusingTripNames;
 use App\Rules\DisallowNumericValues;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
@@ -169,8 +170,14 @@ class Travel extends Resource
                 ->rules('required', 'min:5', 'max:70')
                 ->maxlength(70)
                 ->enforceMaxlength()
-                ->creationRules('unique:travel,name')
-                ->updateRules('unique:travel,name,{{resourceId}}'),
+                ->creationRules(
+                    'unique:travel,name',
+                    new DisallowConfusingTripNames()
+                )
+                ->updateRules(
+                    'unique:travel,name,{{resourceId}}',
+                    new DisallowConfusingTripNames()
+                ),
 
             Text::make('Destination')
                 ->sortable()
