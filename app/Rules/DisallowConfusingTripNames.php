@@ -19,7 +19,10 @@ class DisallowConfusingTripNames implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (Str::contains($value, ['due', 'fee', 'pay', 'deposit'], ignoreCase: true)) {
-            $fail('Your trip name contains a disallowed word. Please name your trip with the competition or event you are attending, and the year.');
+            $fail(
+                'Your trip name contains a disallowed word. Please name your trip with the competition or event you'.
+                ' are attending, and the year.'
+            );
         }
     }
 }
