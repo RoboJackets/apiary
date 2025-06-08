@@ -29,10 +29,10 @@
       </div>
       <div class="row">
         <div class="col-6">
-          <button @click="back" class="btn btn-secondary float-left">Back</button>
+          <button @click="back" class="btn btn-secondary float-start">Back</button>
         </div>
         <div class="col-6">
-          <button @click="next" class="btn btn-primary float-right">Finish</button>
+          <button @click="next" class="btn btn-primary float-end">Finish</button>
         </div>
       </div>
     </div>

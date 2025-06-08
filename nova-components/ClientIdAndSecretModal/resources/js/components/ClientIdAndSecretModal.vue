@@ -53,12 +53,12 @@
             </div>
           </div>
             <ModalFooter>
-                <div class="flex items-center ml-auto">
+                <div class="flex items-center ms-auto">
                     <CancelButton
                         component="button"
                         type="button"
                         dusk="cancel-action-button"
-                        class="ml-auto mr-3"
+                        class="ms-auto me-3"
                         @click="$emit('close')"
                     >
                         Close

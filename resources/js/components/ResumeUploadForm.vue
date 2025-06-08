@@ -8,20 +8,13 @@
         to ensure they're always accurate.</p>
       <p>Your resume must be a one page PDF. The maximum file size is 1MB.</p>
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Resume</label>
-        <div class="col-sm-10 col-lg-4">
-          <div class="input-group mb-3">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="resume" name="resume" accept="application/pdf"
+      <div class="mb-3 row">
+        <label for="resume" class="col-sm-2 col-form-label">Resume</label>
+          <input type="file" class="form-control" id="resume" name="resume" accept="application/pdf"
                      v-on:change="fileChange">
-              <label class="custom-file-label" for="resume">{{ fileLabel }}</label>
-            </div>
-          </div>
-        </div>
       </div>
 
-      <div class="form-group">
+      <div class="mb-3">
         <button class="btn btn-primary" :disabled="uploading || !selectedFile" v-on:click="onSubmit">{{ uploading ? "Uploading file..." : "Upload" }}</button>
       </div>
     </div>

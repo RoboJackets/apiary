@@ -5,7 +5,7 @@
         <h3>Demographics</h3>
         <p>RoboJackets collects demographics data from members in order to supply aggregate statistics to Georgia Tech and corporate sponsors. Identifiable data is never provided.</p>
 
-        <fieldset class="form-group">
+        <fieldset class="mb-3">
           <label class ="lead" for="gender">What is your gender?</label>
           <div v-for="option in genderOptions" class="custom-control custom-radio">
             <input v-model="gender" type="radio" class="custom-control-input" :value="option.value" name="gender" :id="'gender-'+option.value">
@@ -13,7 +13,7 @@
           </div>
         </fieldset>
 
-        <fieldset class="form-group">
+        <fieldset class="mb-3">
           <label class="lead" for="ethnicity">What is your ethnicity/race? (Check all that Apply)</label>
           <div v-for="option in ethnicityOptions" class="custom-control custom-checkbox">
             <input v-model="ethnicity" type="checkbox" class="custom-control-input" :value="option.value" :id="'ethnicity-'+option.value" name="ethnicity">
@@ -23,11 +23,11 @@
 
         <div class="row">
           <div class="col-lg-3 col-6">
-            <button @click.prevent="$emit('back')" class="btn btn-secondary float-left">Back</button>
+            <button @click.prevent="$emit('back')" class="btn btn-secondary float-start">Back</button>
           </div>
           <div class="col-lg-3 col-6">
-            <button type="submit" class="btn btn-primary float-right">Continue</button>
-            <button @click.prevent="$emit('next')" class="btn btn-secondary float-right mx-2">Skip</button>
+            <button type="submit" class="btn btn-primary float-end">Continue</button>
+            <button @click.prevent="$emit('next')" class="btn btn-secondary float-end mx-2">Skip</button>
           </div>
         </div>
 
