@@ -12,6 +12,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
 class TransactionReminder extends Mailable implements ShouldQueue
@@ -40,7 +41,12 @@ class TransactionReminder extends Mailable implements ShouldQueue
             ->subject('Reminder: payment required for '.$package_name.'dues')
             ->text('mail.dues.transactionreminder')
             ->withSymfonyMessage(static function (Email $email): void {
-                $email->replyTo('RoboJackets <treasurer@robojackets.org>');
+                $email->replyTo(
+                    new Address(
+                        config('services.payment_contact.email_address'),
+                        config('services.payment_contact.display_name')
+                    )
+                );
             })
             ->tag('dues-transaction-reminder')
             ->metadata('user-id', strval($this->user->id));

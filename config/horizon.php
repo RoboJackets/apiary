@@ -78,7 +78,7 @@ return [
         'production' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'meilisearch', 'docusign', 'default'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'meilisearch', 'docusign', 'default'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
@@ -89,7 +89,7 @@ return [
         'test' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'meilisearch', 'docusign', 'default'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'meilisearch', 'docusign', 'default'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
@@ -100,7 +100,7 @@ return [
         'local' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'meilisearch', 'docusign', 'default'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'meilisearch', 'docusign', 'default'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,

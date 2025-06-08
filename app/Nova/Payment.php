@@ -21,7 +21,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Square\Models\OrderState;
+use Square\Types\OrderState;
 
 /**
  * A Nova resource for payments.
@@ -75,6 +75,7 @@ class Payment extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -180,6 +181,7 @@ class Payment extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(NovaRequest $request): array
     {
         $resourceId = $request->resourceId ?? $request->resources;
@@ -225,7 +227,7 @@ class Payment extends Resource
             $payment->order_id !== null &&
             $payment->created_at !== null &&
             Carbon::now()->subYear()->lessThanOrEqualTo($payment->created_at) &&
-            $payment->getSquareOrderState() === OrderState::COMPLETED
+            OrderState::from($payment->getSquareOrderState()) === OrderState::Completed
         ) {
             if ($payment->payable->user->id === $user->id) {
                 return [
@@ -248,7 +250,7 @@ class Payment extends Resource
             $payment->order_id !== null &&
             $payment->created_at !== null &&
             Carbon::now()->subYear()->greaterThan($payment->created_at) &&
-            $payment->getSquareOrderState() === OrderState::COMPLETED
+            OrderState::from($payment->getSquareOrderState()) === OrderState::Completed
         ) {
             return [
                 self::squareTransactionTooOld(),
@@ -273,6 +275,7 @@ class Payment extends Resource
     /**
      * Determine if this resource is available for navigation.
      */
+    #[\Override]
     public static function availableForNavigation(Request $request): bool
     {
         return $request->user()->hasRole('admin');

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions\Payments;
 
-use App\Models\Payment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -14,10 +13,11 @@ use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Square\Models\Builders\MoneyBuilder;
-use Square\Models\Builders\RefundPaymentRequestBuilder;
-use Square\Models\OrderState;
+use Square\Orders\Requests\GetOrdersRequest;
+use Square\Refunds\Requests\RefundPaymentRequest;
 use Square\SquareClient;
+use Square\Types\Money;
+use Square\Types\OrderState;
 
 class RefundSquarePayment extends Action
 {
@@ -65,7 +65,6 @@ class RefundSquarePayment extends Action
      * @param  \Illuminate\Support\Collection<int,\App\Models\Payment>  $models
      *
      * @phan-suppress PhanTypeMismatchPropertyProbablyReal
-     * @phan-suppress PhanTypeSuspiciousStringExpression
      * @phan-suppress PhanPossiblyFalseTypeArgument
      */
     public function handle(ActionFields $fields, Collection $models)
@@ -90,43 +89,41 @@ class RefundSquarePayment extends Action
             return self::danger('You do not have access to refund payments.');
         }
 
-        $square = new SquareClient([
-            'accessToken' => config('square.access_token'),
-            'environment' => config('square.environment'),
-        ]);
+        $square = new SquareClient(
+            token: config('square.access_token'),
+            options: [
+                'baseUrl' => config('square.base_url'),
+            ]
+        );
 
-        $retrieveOrderResponse = $square->getOrdersApi()->retrieveOrder($payment->order_id);
+        $getOrderResponse = $square->orders->get(new GetOrdersRequest(['orderId' => $payment->order_id]));
 
-        if (! $retrieveOrderResponse->isSuccess()) {
-            Log::error(self::class.' Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));
+        if ($getOrderResponse->getOrder() === null) {
+            Log::error(self::class.' Error retrieving order - '.json_encode($getOrderResponse->getErrors()));
 
-            $this->markAsFailed($payment, json_encode($retrieveOrderResponse->getErrors()));
+            $this->markAsFailed($payment, json_encode($getOrderResponse->getErrors()));
 
             return self::danger('Error retrieving order information from Square.');
         }
 
-        if ($retrieveOrderResponse->getResult()->getOrder()->getState() !== OrderState::COMPLETED) {
+        if (OrderState::from($getOrderResponse->getOrder()->getState()) !== OrderState::Completed) {
             $this->markAsFailed($payment, 'This order is not complete.');
 
             return self::danger('This order is not complete.');
         }
 
-        $paymentId = $retrieveOrderResponse->getResult()->getOrder()->getTenders()[0]->getId();
+        $refundPaymentResponse = $square->refunds->refundPayment(new RefundPaymentRequest([
+            // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
+            'paymentId' => $getOrderResponse->getOrder()->getTenders()[0]->getId(),
+            'reason' => $fields->reason,
+            'idempotencyKey' => $payment->unique_id,
+            'amountMoney' => new Money([
+                'amount' => intval(floatval($payment->amount) * 100),
+                'currency' => 'USD',
+            ]),
+        ]));
 
-        $refundPaymentResponse = $square->getRefundsApi()->refundPayment(
-            RefundPaymentRequestBuilder::init(
-                $payment->unique_id,
-                MoneyBuilder::init()
-                    ->amount(intval(floatval($payment->amount) * 100))
-                    ->currency('USD')
-                    ->build()
-            )
-                ->paymentId($paymentId)
-                ->reason($fields->reason)
-                ->build()
-        );
-
-        if (! $refundPaymentResponse->isSuccess()) {
+        if ($refundPaymentResponse->getRefund() === null) {
             Log::error(self::class.' Error refunding payment - '.json_encode($refundPaymentResponse->getErrors()));
 
             $this->markAsFailed($payment, json_encode($refundPaymentResponse->getErrors()));
@@ -134,7 +131,7 @@ class RefundSquarePayment extends Action
             return self::danger('Error refunding payment.');
         }
 
-        $status = $refundPaymentResponse->getResult()->getRefund()->getStatus();
+        $status = $refundPaymentResponse->getRefund()->getStatus();
 
         if (! in_array($status, ['PENDING', 'COMPLETED'], true)) {
             Log::error(self::class.' Error refunding payment - refund status is '.$status);
@@ -156,13 +153,12 @@ class RefundSquarePayment extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $payment = Payment::whereId($request->resourceId ?? $request->resources)->sole();
-
         return [
             Currency::make('Refund Amount')
-                ->default(static fn (): string => $payment->amount)
+                ->default(fn (): string => $this->resource?->amount)
                 ->required()
                 ->help('Partial refunds aren\'t supported.')
                 ->readonly(),

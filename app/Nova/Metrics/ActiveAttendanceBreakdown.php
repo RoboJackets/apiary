@@ -16,6 +16,7 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * Get the displayable name of the metric.
      */
+    #[\Override]
     public function name(): string
     {
         $ret = $this->showAllTime ? 'Active Attendees' : 'Attendees Last 4 Weeks';
@@ -84,6 +85,7 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return $this->resourceId === null ? 'active-attendance-breakdown' :

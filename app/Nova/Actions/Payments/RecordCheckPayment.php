@@ -35,9 +35,9 @@ class RecordCheckPayment extends RecordPayment
      *
      * @phan-suppress PhanUnreferencedProtectedClassConstant
      */
-    public const METHOD = 'check';
+    public const string METHOD = 'check';
 
-    private const ALLOWABLE_PAY_TO_NAMES = [
+    private const array ALLOWABLE_PAY_TO_NAMES = [
         'georgia tech',
         'georgia institute of technology',
         'robojackets',
@@ -51,9 +51,10 @@ class RecordCheckPayment extends RecordPayment
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $payable_amount = self::getPayableAmount($request);
+        $payable_amount = $this->getPayableAmount($request);
 
         return [
             Date::make('Check Date')
@@ -104,9 +105,8 @@ class RecordCheckPayment extends RecordPayment
 
     /**
      * The note to add to the payment.
-     *
-     * @phan-suppress PhanTypeSuspiciousStringExpression
      */
+    #[\Override]
     protected static function note(ActionFields $fields): string
     {
         return 'Check #'.$fields->check_number.

@@ -33,6 +33,7 @@ class Rsvp extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'RSVPs';
@@ -41,6 +42,7 @@ class Rsvp extends Resource
     /**
      * Get the displayable singular label of the resource.
      */
+    #[\Override]
     public static function singularLabel(): string
     {
         return 'RSVP';
@@ -70,6 +72,7 @@ class Rsvp extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [

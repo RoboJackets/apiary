@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
-class GoogleController extends Controller
+class GoogleController
 {
     public function redirectToProvider(Request $request)
     {

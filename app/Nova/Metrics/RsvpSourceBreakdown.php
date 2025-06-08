@@ -16,6 +16,7 @@ class RsvpSourceBreakdown extends Partition
     /**
      * The displayable name of the metric.
      */
+    #[\Override]
     public function name(): string
     {
         return $this->resourceId === null ? 'RSVP Sources' : 'RSVP Sources for '.Event::where(
@@ -63,6 +64,7 @@ class RsvpSourceBreakdown extends Partition
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return $this->resourceId === null ? 'rsvp-source-breakdown' : 'rsvp-source-breakdown-'.$this->resourceId;

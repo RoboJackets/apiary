@@ -52,6 +52,7 @@ class AttendanceSourceBreakdown extends Partition
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'attendance-sources';

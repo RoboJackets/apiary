@@ -47,41 +47,41 @@ use Ramsey\Uuid\Uuid;
 
 class DocuSign
 {
-    private const CACHE_KEY = 'docusign_access_token';
+    private const string CACHE_KEY = 'docusign_access_token';
 
-    private const TIF_X_ALIGN_TOP = 110;
+    private const int TIF_X_ALIGN_TOP = 110;
 
-    private const TIF_X_ALIGN_BOTTOM = 82;
+    private const int TIF_X_ALIGN_BOTTOM = 82;
 
-    private const TIF_X_ALIGN_FLIGHT_TIME = 228;
+    private const int TIF_X_ALIGN_FLIGHT_TIME = 228;
 
-    private const TIF_X_ALIGN_FLIGHT_NUMBER = 332;
+    private const int TIF_X_ALIGN_FLIGHT_NUMBER = 332;
 
-    private const TIF_X_ALIGN_TOTAL_COST = 296;
+    private const int TIF_X_ALIGN_TOTAL_COST = 296;
 
-    private const TIF_Y_ALIGN_DEPARTURE = 244;
+    private const int TIF_Y_ALIGN_DEPARTURE = 244;
 
-    private const TIF_Y_ALIGN_RETURN = 275;
+    private const int TIF_Y_ALIGN_RETURN = 275;
 
-    private const TIF_Y_ALIGN_AIRFARE_REGISTRATION = 328;
+    private const int TIF_Y_ALIGN_AIRFARE_REGISTRATION = 328;
 
-    private const DBA_X_ALIGN_TRAVELER_INFO = 150;
+    private const int DBA_X_ALIGN_TRAVELER_INFO = 150;
 
-    private const DBA_X_ALIGN_TRAVELER_TYPE = 56;
+    private const int DBA_X_ALIGN_TRAVELER_TYPE = 56;
 
-    private const DBA_X_ALIGN_DOMESTIC = 294;
+    private const int DBA_X_ALIGN_DOMESTIC = 294;
 
-    private const DBA_X_ALIGN_INTERNATIONAL = 450;
+    private const int DBA_X_ALIGN_INTERNATIONAL = 450;
 
-    private const DBA_Y_ALIGN_NAME = 180;
+    private const int DBA_Y_ALIGN_NAME = 180;
 
-    private const DBA_Y_ALIGN_CONTACT = 236;
+    private const int DBA_Y_ALIGN_CONTACT = 236;
 
-    private const DBA_Y_ALIGN_NOTES_FOR_AGENT = 356;
+    private const int DBA_Y_ALIGN_NOTES_FOR_AGENT = 356;
 
-    private const DBA_Y_ALIGN_NON_EMPLOYEE = 423;
+    private const int DBA_Y_ALIGN_NON_EMPLOYEE = 423;
 
-    private const DBA_Y_ALIGN_EMPLOYEE = 446;
+    private const int DBA_Y_ALIGN_EMPLOYEE = 446;
 
     private static function getConfiguration(bool $withAccessToken): Configuration
     {

@@ -11,6 +11,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
 class PaymentReceipt extends Mailable implements ShouldQueue
@@ -30,7 +31,7 @@ class PaymentReceipt extends Mailable implements ShouldQueue
      */
     public function build(): self
     {
-        return $this->from('noreply@my.robojackets.org', 'RoboJackets')
+        $mail = $this->from('noreply@my.robojackets.org', 'RoboJackets')
             ->to($this->payment->payable->user->gt_email, $this->payment->payable->user->name)
             ->subject('Receipt for your '.$this->getPayableDisplayNameSubject().' payment')
             ->text(
@@ -40,10 +41,26 @@ class PaymentReceipt extends Mailable implements ShouldQueue
                 ]
             )
             ->withSymfonyMessage(static function (Email $email): void {
-                $email->replyTo('RoboJackets <treasurer@robojackets.org>');
+                $email->replyTo(
+                    new Address(
+                        config('services.payment_contact.email_address'),
+                        config('services.payment_contact.display_name')
+                    )
+                );
             })
             ->tag('payment-receipt')
             ->metadata('payment-id', strval($this->payment->id));
+
+        if (in_array($this->payment->method, ['cash', 'check'], true)) {
+            $mail->bcc(
+                new Address(
+                    config('services.payment_contact.email_address'),
+                    config('services.payment_contact.display_name')
+                )
+            );
+        }
+
+        return $mail;
     }
 
     /**

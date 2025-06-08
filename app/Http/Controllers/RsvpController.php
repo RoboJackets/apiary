@@ -13,17 +13,22 @@ use App\Util\AuthorizeInclude;
 use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 
-class RsvpController extends Controller
+class RsvpController implements HasMiddleware
 {
-    public function __construct()
+    #[\Override]
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-rsvps', ['only' => ['index']]);
-        $this->middleware('permission:create-rsvps|create-rsvps-own', ['only' => ['store']]);
-        $this->middleware('permission:read-rsvps|read-rsvps-own', ['only' => ['show']]);
-        $this->middleware('permission:update-rsvps|update-rsvps-own', ['only' => ['update']]);
-        $this->middleware('permission:delete-rsvps|delete-rsvps-own', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-rsvps', only: ['index']),
+            new Middleware('permission:create-rsvps|create-rsvps-own', only: ['store']),
+            new Middleware('permission:read-rsvps|read-rsvps-own', only: ['show']),
+            new Middleware('permission:update-rsvps|update-rsvps-own', only: ['update']),
+            new Middleware('permission:delete-rsvps|delete-rsvps-own', only: ['destroy']),
+        ];
     }
 
     /**

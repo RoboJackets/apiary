@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class BuzzApiMockController extends Controller
+class BuzzApiMockController
 {
     public function anything(Request $request, string $resource, string $action): JsonResponse
     {

@@ -29,16 +29,17 @@ class RecordCashPayment extends RecordPayment
      *
      * @phan-suppress PhanUnreferencedProtectedClassConstant
      */
-    public const METHOD = 'cash';
+    public const string METHOD = 'cash';
 
     /**
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $payable_amount = self::getPayableAmount($request);
+        $payable_amount = $this->getPayableAmount($request);
 
         return [
             Currency::make('Amount')
@@ -58,6 +59,7 @@ class RecordCashPayment extends RecordPayment
      *
      * @phan-suppress PhanUnusedProtectedMethodParameter
      */
+    #[\Override]
     protected static function note(ActionFields $fields): string
     {
         return 'Recorded in Nova';

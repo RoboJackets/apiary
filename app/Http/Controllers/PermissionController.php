@@ -7,14 +7,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePermissionRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class PermissionController extends Controller
+class PermissionController implements HasMiddleware
 {
-    public function __construct()
+    #[\Override]
+    public static function middleware(): array
     {
-        $this->middleware('role:admin');
+        return [
+            'role:admin',
+        ];
     }
 
     /**

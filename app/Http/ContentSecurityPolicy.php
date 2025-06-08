@@ -11,6 +11,7 @@ use Spatie\Csp\Value;
 
 class ContentSecurityPolicy extends Policy
 {
+    #[\Override]
     public function configure(): void
     {
         if (config('csp.report_uri') !== '' && config('csp.report_uri') !== null) {

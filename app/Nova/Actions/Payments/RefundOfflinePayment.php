@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions\Payments;
 
-use App\Models\Payment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -16,7 +15,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class RefundOfflinePayment extends Action
 {
-    public const REFUNDABLE_OFFLINE_PAYMENT_METHODS = [
+    public const array REFUNDABLE_OFFLINE_PAYMENT_METHODS = [
         'cash',
         'check',
     ];
@@ -64,7 +63,6 @@ class RefundOfflinePayment extends Action
      * @param  \Illuminate\Support\Collection<int,\App\Models\Payment>  $models
      *
      * @phan-suppress PhanTypeMismatchPropertyProbablyReal
-     * @phan-suppress PhanTypeSuspiciousStringExpression
      */
     public function handle(ActionFields $fields, Collection $models)
     {
@@ -100,13 +98,12 @@ class RefundOfflinePayment extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $payment = Payment::whereId($request->resourceId ?? $request->resources)->sole();
-
         return [
             Currency::make('Refund Amount')
-                ->default(static fn (): string => $payment->amount)
+                ->default(fn (): string => $this->resource?->amount)
                 ->required()
                 ->help('Partial refunds aren\'t supported.')
                 ->readonly(),

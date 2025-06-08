@@ -71,11 +71,18 @@ return [
         ])
         ->environments([Rule::ENV_PRODUCTION]),
 
-    Rule::make('treasurer_email')
+    Rule::make('payment_contact.email_address')
         ->rules([
             'required',
             'string',
             'email:rfc,strict,dns,spoof',
+        ])
+        ->environments([Rule::ENV_PRODUCTION]),
+
+    Rule::make('payment_contact.display_name')
+        ->rules([
+            'required',
+            'string',
         ])
         ->environments([Rule::ENV_PRODUCTION]),
 

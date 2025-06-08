@@ -33,6 +33,7 @@ class DuesTransactionTeam extends Filter
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
+    #[\Override]
     public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $query
@@ -45,6 +46,7 @@ class DuesTransactionTeam extends Filter
      *
      * @return array<string,string>
      */
+    #[\Override]
     public function options(Request $request): array
     {
         $teams = [];

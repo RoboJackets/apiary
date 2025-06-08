@@ -87,6 +87,8 @@ job "apiary" {
     task "prestart" {
       driver = "docker"
 
+      consul {}
+
       lifecycle {
         hook = "prestart"
       }
@@ -160,6 +162,8 @@ EOF
 
     task "web" {
       driver = "docker"
+
+      consul {}
 
       config {
         image = var.image
@@ -267,7 +271,8 @@ EOF
         }
 
         meta {
-          nginx-config = var.precompressed_assets ? local.compressed_nginx_configuration : local.compressed_nginx_configuration_without_gzip_static
+          nginx-config = substr(var.precompressed_assets ? local.compressed_nginx_configuration : local.compressed_nginx_configuration_without_gzip_static, 0, 511)
+          nginx-config-more = substr(var.precompressed_assets ? local.compressed_nginx_configuration : local.compressed_nginx_configuration_without_gzip_static, 511, 1024)
           socket = "/var/opt/nomad/run/${NOMAD_JOB_NAME}-${NOMAD_ALLOC_ID}.sock"
           firewall-rules = jsonencode(["internet"])
           referrer-policy = "same-origin"
@@ -312,6 +317,8 @@ EOF
 
       content {
         driver = "docker"
+
+        consul {}
 
         lifecycle {
           hook = "poststart"
@@ -449,7 +456,7 @@ EOF
             success_before_passing = 3
             failures_before_critical = 2
 
-            interval = "5s"
+            interval = "1s"
 
             name = "TCP"
             port = "resp"

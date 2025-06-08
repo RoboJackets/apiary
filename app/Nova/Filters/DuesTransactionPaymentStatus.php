@@ -25,6 +25,7 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      * @param  array<string,bool>  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
+    #[\Override]
     public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $value['pending'] === true ? $query->pending() : $query;
@@ -35,6 +36,7 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      *
      * @return array<string,string>
      */
+    #[\Override]
     public function options(Request $request): array
     {
         return [

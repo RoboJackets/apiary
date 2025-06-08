@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property string|null $cas_service_url_hash
  * @property string|null $cas_ticket
  * @property string|null $ip_address
- * @property array|null $ip_address_location_estimate
+ * @property array<string,string>|null $ip_address_location_estimate
  * @property string|null $user_agent
  * @property bool $complete
  * @property \Illuminate\Support\Carbon|null $render_timestamp
@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property \Illuminate\Support\Carbon|null $cas_ticket_redeemed_timestamp
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelope
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $envelope
  * @property-read int|null $envelope_count
  * @property-read \App\Models\MembershipAgreementTemplate $membershipAgreementTemplate
  * @property-read \App\Models\User|null $uploadedBy
@@ -85,6 +85,7 @@ class Signature extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

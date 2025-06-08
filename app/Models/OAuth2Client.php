@@ -20,10 +20,10 @@ use Laravel\Passport\Client;
  * @property bool $revoked
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Passport\AuthCode> $authCodes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Laravel\Passport\AuthCode> $authCodes
  * @property-read int|null $auth_codes_count
  * @property-read string|null $plain_secret
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\User|null $user
  *
@@ -49,6 +49,7 @@ class OAuth2Client extends Client
     /**
      * Determine if the client should skip the authorization prompt.
      */
+    #[\Override]
     public function skipsAuthorization(): bool
     {
         return true;

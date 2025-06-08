@@ -5,12 +5,12 @@
         "framework",
         "laravel"
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
@@ -25,69 +25,68 @@
         "ext-uuid": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "ans-group/laravel-health-check": "2.0.1",
+        "ans-group/laravel-health-check": "2.1.1",
         "apereo/phpcas": "1.6.1",
-        "ashallendesign/laravel-config-validator": "2.7.0",
-        "barryvdh/laravel-dompdf": "3.0.1",
-        "calebporzio/sushi": "2.5.2",
-        "chelout/laravel-relationship-events": "3.0.0",
-        "docusign/esign-client": "6.19.0",
+        "ashallendesign/laravel-config-validator": "2.8.0",
+        "barryvdh/laravel-dompdf": "3.1.1",
+        "calebporzio/sushi": "2.5.3",
+        "chelout/laravel-relationship-events": "4.0.0",
+        "docusign/esign-client": "8.1.0",
         "eluceo/ical": "2.14.0",
-        "enlightn/enlightn": "2.10.0",
         "enlightn/security-checker": "2.0.0",
         "fakerphp/faker": "1.24.1",
-        "guzzlehttp/guzzle": "7.9.2",
+        "guzzlehttp/guzzle": "7.9.3",
         "htmlmin/htmlmin": "dev-master",
         "http-interop/http-factory-guzzle": "1.2.0",
-        "kiritokatklian/nova-permission": "5.1.0",
-        "laravel/framework": "11.39.0",
-        "laravel/horizon": "5.30.1",
-        "laravel/nova": "5.1.3",
-        "laravel/passport": "12.3.1",
-        "laravel/scout": "10.11.9",
-        "laravel/slack-notification-channel": "3.4.2",
-        "laravel/socialite": "5.16.1",
-        "laravel/tinker": "2.10.0",
-        "madewithlove/laravel-nova-uuid-support": "1.6",
-        "meilisearch/meilisearch-php": "1.12.0",
+        "kiritokatklian/nova-permission": "5.1.1",
+        "laravel/framework": "12.17.0",
+        "laravel/horizon": "5.32.1",
+        "laravel/nova": "5.7.2",
+        "laravel/passport": "12.4.2",
+        "laravel/scout": "10.15.0",
+        "laravel/slack-notification-channel": "3.5.0",
+        "laravel/socialite": "5.21.0",
+        "laravel/tinker": "2.10.1",
+        "madewithlove/laravel-nova-uuid-support": "dev-l12-compatibility",
+        "meilisearch/meilisearch-php": "1.14.0",
         "mrclay/jsmin-php": "2.4.3",
         "mwgg/airports": "1.0",
-        "realrashid/sweet-alert": "7.2.0",
+        "realrashid/sweet-alert": "7.3.0",
         "robojackets/client-id-and-secret-modal": "@dev",
         "robojackets/personal-access-token-modal": "@dev",
-        "sentry/sentry-laravel": "4.10.2",
-        "spatie/laravel-csp": "2.10.2",
-        "spatie/laravel-failed-job-monitor": "4.3.2",
-        "spatie/laravel-permission": "6.10.1",
-        "spatie/laravel-responsecache": "7.6.3",
-        "spatie/laravel-webhook-client": "3.4.2",
-        "square/square": "39.1.0.20241218",
-        "subfission/cas": "5.1.0",
-        "symfony/http-client": "7.2.2",
-        "symfony/postmark-mailer": "7.2.0",
-        "xammie/mailbook": "1.8.3"
+        "sentry/sentry-laravel": "4.14.0",
+        "spatie/laravel-csp": "2.10.3",
+        "spatie/laravel-failed-job-monitor": "4.3.3",
+        "spatie/laravel-permission": "6.19.0",
+        "spatie/laravel-responsecache": "7.7.0",
+        "spatie/laravel-webhook-client": "3.4.3",
+        "square/square": "42.2.0.20250521",
+        "subfission/cas": "dev-master",
+        "symfony/http-client": "7.2.4",
+        "symfony/postmark-mailer": "7.2.6",
+        "xammie/mailbook": "1.9.0"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "3.3.0",
-        "beyondcode/laravel-dump-server": "2.0.0",
-        "filp/whoops": "2.15.4",
-        "laravel/pint": "1.19.0",
+        "barryvdh/laravel-ide-helper": "3.5.5",
+        "beyondcode/laravel-dump-server": "2.1.0",
+        "larastan/larastan": "3.2.0",
+        "laravel/pail": "1.2.3",
+        "laravel/pint": "1.22.1",
         "mockery/mockery": "1.6.12",
-        "mxl/laravel-job": "1.6.0",
-        "nunomaduro/collision": "8.1.1",
-        "larastan/larastan": "2.9.12",
+        "mxl/laravel-job": "1.7.0",
+        "nunomaduro/collision": "8.6.1",
         "phan/phan": "5.4.5",
         "phpstan/extension-installer": "1.4.3",
-        "phpstan/phpstan": "1.12.14",
-        "phpstan/phpstan-deprecation-rules": "1.2.1",
-        "phpstan/phpstan-strict-rules": "1.6.1",
-        "phpunit/phpunit": "10.5.40",
-        "psalm/plugin-laravel": "2.11.0",
-        "slevomat/coding-standard": "8.15.0",
-        "spatie/laravel-ignition": "2.7.0",
-        "spatie/ray": "1.41.4",
-        "squizlabs/php_codesniffer": "3.10.1",
-        "vimeo/psalm": "5.24.0"
+        "phpstan/phpstan": "2.1.14",
+        "phpstan/phpstan-deprecation-rules": "2.0.2",
+        "phpstan/phpstan-strict-rules": "2.0.4",
+        "phpunit/phpunit": "11.5.12",
+        "psalm/plugin-laravel": "3.0.1",
+        "slevomat/coding-standard": "8.16.0",
+        "spatie/laravel-ignition": "2.9.1",
+        "spatie/ray": "1.42.0",
+        "squizlabs/php_codesniffer": "3.11.3",
+        "vimeo/psalm": "6.7.0"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
@@ -140,7 +139,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
             "sed -i 's/getHtmlBody/getTextBody/' vendor/xammie/mailbook/src/Data/ResolvedMail.php",
-            "sed -i \"s/return \\$html;/return \\'<pre>\\'.\\$html.\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php"
+            "sed -i \"s/\\$html = \\$this->message->getTextBody();/return \\'<pre>\\'.\\$this->message->getTextBody().\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
@@ -160,6 +159,10 @@
             "php artisan passport:keys --no-interaction",
             "cp storage/db-clean.sqlite storage/db-testing.sqlite",
             "vendor/phpunit/phpunit/phpunit"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
         ]
     },
     "config": {
@@ -174,7 +177,7 @@
             "php-http/discovery": true
         },
         "platform": {
-            "php": "8.3.6"
+            "php": "8.3.16"
         }
     },
     "extra": {
@@ -212,6 +215,14 @@
         {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/Laravel-HTMLMin.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/RoboJackets/cas.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git"
         }
     ]
 }

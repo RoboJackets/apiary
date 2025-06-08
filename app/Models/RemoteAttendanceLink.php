@@ -24,7 +24,7 @@ use Illuminate\Support\Str;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\Team|\App\Models\Event $attendable
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Attendance> $attendance
  * @property-read int|null $attendance_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink newModelQuery()
@@ -66,7 +66,7 @@ class RemoteAttendanceLink extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array<int,string>
+     * @var array<string>
      */
     protected $with = ['attendable'];
 
@@ -89,6 +89,7 @@ class RemoteAttendanceLink extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

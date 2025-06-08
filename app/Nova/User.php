@@ -16,6 +16,7 @@ use App\Nova\Actions\OverrideAccess;
 use App\Nova\Actions\RefreshFromGTED;
 use App\Nova\Actions\RevokeOAuth2Tokens;
 use App\Nova\Actions\SyncAccess;
+use App\Nova\Actions\SyncInactiveAccess;
 use App\Nova\Metrics\CreateReasonBreakdown;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
@@ -109,6 +110,7 @@ class User extends Resource
      *
      * @phan-suppress PhanTypeInvalidCallableMethodName
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -184,17 +186,6 @@ class User extends Resource
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             Boolean::make('Latest Agreement Signed', 'signed_latest_agreement')
-                ->onlyOnDetail()
-                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
-
-            URL::make('Manager', static fn (AppModelsUser $user): ?string => $user->manager === null ? null : route(
-                'nova.pages.detail',
-                [
-                    'resource' => self::uriKey(),
-                    'resourceId' => $user->manager->id,
-                ]
-            ))
-                ->displayUsing(fn (): ?string => $this->manager?->name)
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
@@ -285,6 +276,37 @@ class User extends Resource
                     Boolean::make('BuzzCard Access Opt-Out', 'buzzcard_access_opt_out')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+                ]
+            ),
+
+            new Panel(
+                'Organization Hierarchy',
+                [
+                    URL::make('Manager', static fn (
+                        AppModelsUser $user
+                    ): ?string => $user->manager === null ? null : route(
+                        'nova.pages.detail',
+                        [
+                            'resource' => self::uriKey(),
+                            'resourceId' => $user->manager->id,
+                        ]
+                    ))
+                        ->displayUsing(fn (): ?string => $this->manager?->name)
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+
+                    URL::make('Primary Team', static fn (
+                        AppModelsUser $user
+                    ): ?string => $user->primaryTeam === null ? null : route(
+                        'nova.pages.detail',
+                        [
+                            'resource' => Team::uriKey(),
+                            'resourceId' => $user->primaryTeam->id,
+                        ]
+                    ))
+                        ->displayUsing(fn (): ?string => $this->primaryTeam?->name)
+                        ->onlyOnDetail()
                         ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
                 ]
             ),
@@ -568,6 +590,7 @@ class User extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(NovaRequest $request): array
     {
         return [
@@ -585,6 +608,7 @@ class User extends Resource
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
+    #[\Override]
     public function filters(NovaRequest $request): array
     {
         return [
@@ -600,6 +624,7 @@ class User extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(NovaRequest $request): array
     {
         $user = AppModelsUser::whereId($request->resourceId ?? $request->resources)->withTrashed()->first();
@@ -714,6 +739,10 @@ class User extends Resource
         }
 
         return [
+            SyncInactiveAccess::make()
+                ->canSee(static fn (Request $r): bool => self::adminCanSee($r))
+                ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminCanRun($r)),
+
             ...$syncAccess,
 
             ...$overrideAccess,
@@ -742,6 +771,7 @@ class User extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
+    #[\Override]
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if ($request->is('nova-api/'.DuesTransaction::uriKey().'/*')) {
@@ -758,6 +788,7 @@ class User extends Resource
     /**
      * Get the search result subtitle for the resource.
      */
+    #[\Override]
     public function subtitle(): ?string
     {
         $managed_team_names = $this->manages()->pluck('name');
@@ -853,6 +884,7 @@ class User extends Resource
      * @param  \Laravel\Scout\Builder<\App\Models\User>  $query
      * @return \Laravel\Scout\Builder<\App\Models\User>
      */
+    #[\Override]
     public static function scoutQuery(NovaRequest $request, $query): \Laravel\Scout\Builder
     {
         if (

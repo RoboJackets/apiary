@@ -16,10 +16,6 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
-    <stubs>
-        <file name="stubs/Permission.php" />
-        <file name="stubs/Role.php" />
-    </stubs>
     <issueHandlers>
         <UndefinedClass>
             <errorLevel type="suppress">
@@ -72,11 +68,6 @@
                 <directory name="database/factories" />
             </errorLevel>
         </UndefinedMagicPropertyFetch>
-        <PossiblyInvalidPropertyFetch>
-            <errorLevel type="suppress">
-                <directory name="app" />
-            </errorLevel>
-        </PossiblyInvalidPropertyFetch>
         <ArgumentTypeCoercion>
             <errorLevel type="suppress">
                 <directory name="app" />
@@ -154,11 +145,6 @@
                 <file name="routes/mailbook.php"/>
             </errorLevel>
         </InvalidPropertyAssignmentValue>
-        <TooManyTemplateParams>
-            <errorLevel type="suppress">
-                <directory name="app" />
-            </errorLevel>
-        </TooManyTemplateParams>
         <PossiblyUndefinedVariable>
             <errorLevel type="suppress">
                 <file name="app/Http/Controllers/SquareCheckoutController.php" />
@@ -192,24 +178,10 @@
                 <directory name="app/Nova/" />
             </errorLevel>
         </MethodSignatureMismatch>
-        <NullOperand>
-            <errorLevel type="suppress">
-                <file name="app/Models/Attendance.php" />
-            </errorLevel>
-        </NullOperand>
-        <InvalidArrayOffset>
-            <errorLevel type="suppress">
-                <file name="app/Models/TravelAssignment.php" />
-            </errorLevel>
-        </InvalidArrayOffset>
-        <PossiblyNullPropertyAssignmentValue>
-            <errorLevel type="suppress">
-                <directory name="app/Nova/Actions" />
-            </errorLevel>
-        </PossiblyNullPropertyAssignmentValue>
         <InvalidScalarArgument>
             <errorLevel type="suppress">
                 <file name="app/Nova/Actions/CreateDuesPackages.php" />
+                <referencedFunction name="array_filter"/>
             </errorLevel>
         </InvalidScalarArgument>
         <PossiblyNullPropertyAssignment>
@@ -224,17 +196,18 @@
         </MoreSpecificImplementedParamType>
         <UndefinedPropertyAssignment>
             <errorLevel type="suppress">
-                <directory name="app/Nova/Metrics" />
+                <directory name="app/Nova/Metrics/" />
             </errorLevel>
         </UndefinedPropertyAssignment>
         <ImplicitToStringCast>
             <errorLevel type="suppress">
-                <directory name="app/Nova/Metrics" />
+                <directory name="app/Nova/Metrics/" />
+                <file name="app/Jobs/CreateOrUpdateUserFromBuzzAPI.php"/>
             </errorLevel>
         </ImplicitToStringCast>
         <InvalidFalsableReturnType>
             <errorLevel type="suppress">
-                <directory name="app/Nova/Metrics" />
+                <directory name="app/Nova/Metrics/" />
                 <file name="app/Traits/GetMorphClassStatic.php" />
             </errorLevel>
         </InvalidFalsableReturnType>
@@ -245,18 +218,16 @@
         </FalsableReturnStatement>
         <DocblockTypeContradiction>
             <errorLevel type="suppress">
+                <directory name="app/Nova/Actions/"/>
                 <directory name="app/Policies" />
+                <file name="app/Http/Controllers/BuzzApiMockController.php"/>
                 <file name="app/Http/Controllers/MerchandiseController.php"/>
                 <file name="app/Jobs/CreateOrUpdateUserFromBuzzAPI.php"/>
+                <file name="app/Jobs/PushToJedi.php"/>
                 <file name="app/Nova/Actions/OverrideAccess.php"/>
                 <file name="app/Util/CasUser.php"/>
             </errorLevel>
         </DocblockTypeContradiction>
-        <UndefinedMagicPropertyAssignment>
-            <errorLevel type="suppress">
-                <file name="app/Observers/DocuSignEnvelopeObserver.php" />
-            </errorLevel>
-        </UndefinedMagicPropertyAssignment>
         <PossiblyInvalidCast>
             <errorLevel type="suppress">
                 <directory name="app" />
@@ -296,9 +267,15 @@
         </UnusedForeachValue>
         <UndefinedMagicPropertyAssignment>
             <errorLevel type="suppress">
-                <file name="app/Http/Controllers/PermissionController.php"/>
-                <file name="app/Http/Controllers/RoleController.php"/>
-                <file name="app/Observers/DocuSignEnvelopeObserver.php"/>
+                <referencedProperty name="App\Models\AccessCard::$access_card_number"/>
+                <referencedProperty name="App\Models\AccessCard::$user_id"/>
+                <referencedProperty name="App\Models\Signature::$tar_received"/>
+                <referencedProperty name="App\Models\TravelAssignment::$complete"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$airfare_policy"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$preferred_first_name"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$resume_date"/>
+                <referencedProperty name="Spatie\Permission\Models\Permission::$name"/>
+                <referencedProperty name="Spatie\Permission\Models\Role::$name"/>
             </errorLevel>
         </UndefinedMagicPropertyAssignment>
         <InvalidReturnType>
@@ -335,10 +312,26 @@
                 <referencedFunction name="Laravel\Nova\Fields\Text::showOnDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\URL::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Http\Requests\LensRequest::withFilters"/>
+                <referencedFunction name="Laravel\Nova\Panel::__construct"/>
+                <referencedFunction name="Square\Types\Fulfillment::__construct"/>
+                <referencedFunction name="Square\Types\Order::__construct"/>
+                <referencedFunction name="Square\Types\OrderLineItem::__construct"/>
+                <referencedFunction name="array_filter"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidOperand>
             <errorLevel type="suppress">
+                <directory name="app/Http/Controllers/"/>
+                <directory name="app/Jobs/"/>
+                <directory name="app/Listeners/"/>
+                <directory name="app/Mail/"/>
+                <directory name="app/Models/"/>
+                <directory name="app/Notifications/"/>
+                <directory name="app/Nova/"/>
+                <directory name="app/Observers/"/>
+                <file name="app/Console/Commands/Ping.php"/>
+                <file name="app/Http/ContentSecurityPolicy.php"/>
+                <file name="app/Rules/TripFeeMinimumNonZeroValue.php"/>
                 <file name="app/Util/DocuSign.php"/>
             </errorLevel>
         </InvalidOperand>
@@ -350,12 +343,13 @@
         </RawObjectIteration>
         <RiskyTruthyFalsyComparison>
             <errorLevel type="suppress">
-                <file name="app/Util/CasUser.php"/>
-                <directory name="app/Providers"/>
                 <directory name="app/Http/Controllers/"/>
+                <directory name="app/Providers"/>
                 <file name="app/Http/Middleware/Sentry.php"/>
                 <file name="app/Jobs/ProcessPostmarkOutboundWebhook.php"/>
+                <file name="app/Nova/Actions/ReviewTrip.php"/>
                 <file name="app/Nova/Dashboards/Main.php"/>
+                <file name="app/Util/CasUser.php"/>
             </errorLevel>
         </RiskyTruthyFalsyComparison>
         <InvalidPropertyFetch>
@@ -371,6 +365,9 @@
         <RedundantConditionGivenDocblockType>
             <errorLevel type="suppress">
                 <directory name="app/Observers/"/>
+                <file name="app/Http/ContentSecurityPolicy.php"/>
+                <file name="app/Http/Controllers/DashboardController.php"/>
+                <file name="app/Providers/AppServiceProvider.php"/>
             </errorLevel>
         </RedundantConditionGivenDocblockType>
         <RedundantCondition>
@@ -385,6 +382,7 @@
         </PossiblyUndefinedArrayOffset>
         <PossiblyInvalidOperand>
             <errorLevel type="suppress">
+                <directory name="app/Jobs/"/>
                 <file name="app/Nova/Resource.php"/>
             </errorLevel>
         </PossiblyInvalidOperand>
@@ -396,11 +394,14 @@
         <InvalidNullableReturnType>
             <errorLevel type="suppress">
                 <file name="app/Mail/PaymentReceipt.php"/>
+                <file name="app/Models/Payment.php"/>
             </errorLevel>
         </InvalidNullableReturnType>
         <NullableReturnStatement>
             <errorLevel type="suppress">
+                <directory name="app/Nova/Actions/"/>
                 <file name="app/Mail/PaymentReceipt.php"/>
+                <file name="app/Models/Payment.php"/>
             </errorLevel>
         </NullableReturnStatement>
         <InvalidStaticInvocation>
@@ -409,5 +410,71 @@
                 <file name="app/Util/CasUser.php"/>
             </errorLevel>
         </InvalidStaticInvocation>
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <directory name="app/Console/Commands/"/>
+                <directory name="app/Http/Middleware/"/>
+                <directory name="app/Listeners/"/>
+                <directory name="app/Nova/"/>
+                <directory name="app/Policies/"/>
+                <directory name="app/Providers/"/>
+                <directory name="database/factories/"/>
+                <directory name="database/seeders/"/>
+            </errorLevel>
+        </UnusedClass>
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="app/Http/Controllers/"/>
+                <directory name="app/Http/Middleware/"/>
+                <directory name="app/Http/Requests/"/>
+                <directory name="app/Http/Resources/"/>
+                <directory name="app/Jobs/"/>
+                <directory name="app/Mail/"/>
+                <directory name="app/Models/"/>
+                <directory name="app/Notifiables/"/>
+                <directory name="app/Notifications/"/>
+                <directory name="app/Nova/Actions/"/>
+                <directory name="app/Nova/Metrics/"/>
+                <directory name="app/Observers/"/>
+                <directory name="app/Policies/"/>
+                <directory name="database/seeders/"/>
+                <referencedMethod name="App\HorizonHealthCheck::__construct"/>
+                <referencedMethod name="App\Util\Sentry::tracesSampler"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
+        <PossiblyUnusedParam>
+            <errorLevel type="suppress">
+                <directory name="app/Http/Controllers/"/>
+                <directory name="app/Models/"/>
+                <directory name="app/Notifiables/"/>
+                <directory name="app/Notifications/"/>
+                <directory name="app/Nova/Actions/"/>
+                <directory name="app/Nova/Metrics/"/>
+                <directory name="app/Policies/"/>
+            </errorLevel>
+        </PossiblyUnusedParam>
+        <PossiblyUnusedReturnValue>
+            <errorLevel type="suppress">
+                <directory name="app/Models/"/>
+                <file name="app/Http/Controllers/MerchandiseController.php"/>
+            </errorLevel>
+        </PossiblyUnusedReturnValue>
+        <PossiblyUnusedProperty>
+            <errorLevel type="suppress">
+                <directory name="app/Jobs/"/>
+                <directory name="app/Nova/"/>
+            </errorLevel>
+        </PossiblyUnusedProperty>
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <directory name="app/"/>
+                <directory name="database/"/>
+            </errorLevel>
+        </ClassMustBeFinal>
+        <MissingClassConstType>
+            <errorLevel type="error">
+                <directory name="app/"/>
+            </errorLevel>
+        </MissingClassConstType>
     </issueHandlers>
 </psalm>

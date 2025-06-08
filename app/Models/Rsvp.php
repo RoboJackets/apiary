@@ -62,7 +62,7 @@ class Rsvp extends Model
         'updated_at',
     ];
 
-    public const RELATIONSHIP_PERMISSIONS = [
+    public const array RELATIONSHIP_PERMISSIONS = [
         'user' => 'read-users',
         'event' => 'read-events',
     ];

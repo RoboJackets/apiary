@@ -20,7 +20,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
  */
 trait RecordPaymentActions
 {
-    private const OFFLINE_PAYMENT_METHODS = [
+    private const array OFFLINE_PAYMENT_METHODS = [
         RecordCashPayment::METHOD => RecordCashPayment::class,
         RecordCheckPayment::METHOD => RecordCheckPayment::class,
         ApplyWaiver::METHOD => ApplyWaiver::class,

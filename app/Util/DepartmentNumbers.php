@@ -10,7 +10,7 @@ namespace App\Util;
  */
 class DepartmentNumbers
 {
-    public const DESCRIPTIONS = [
+    public const array DESCRIPTIONS = [
         '118' => 'Computational Mechanics Ctr',
         '125' => 'GT/Emory Biomedical Engineering',
         '146' => 'BME TEP CORE FACL',

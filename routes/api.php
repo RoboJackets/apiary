@@ -70,7 +70,7 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         // Teams
         Route::get('teams/{id}/members', [TeamController::class, 'showMembers'])->name('teams.show.members');
         Route::post('teams/{id}/members', [TeamController::class, 'updateMembers'])->name('teams.update.members');
-        Route::apiResource('teams', TeamController::class);
+        Route::apiResource('teams', TeamController::class)->middleware('cache:86400');
 
         // Merchandise
         Route::get('merchandise', [MerchandiseController::class, 'index']);

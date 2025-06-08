@@ -12,6 +12,7 @@ class TripFeeMinimumNonZeroValue implements ValidationRule
     /**
      * Run the validation rule.
      */
+    #[\Override]
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if ($value > 0 && $value < config('travelpolicy.minimum_trip_fee')) {

@@ -18,12 +18,4 @@ class TreasurerNotifiable
     {
         return config('services.treasurer_slack_webhook_url');
     }
-
-    /**
-     * Route notifications for the mail channel.
-     */
-    public function routeNotificationForMail(Notification $notification): ?string
-    {
-        return config('services.treasurer_email');
-    }
 }

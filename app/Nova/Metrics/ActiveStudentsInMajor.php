@@ -31,6 +31,7 @@ class ActiveStudentsInMajor extends Value
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'active-students-in-major';

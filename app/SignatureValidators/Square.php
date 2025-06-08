@@ -14,13 +14,14 @@ class Square implements SignatureValidator
     /**
      * Verifies a signature on a request from Square.
      */
+    #[\Override]
     public function isValid(Request $request, WebhookConfig $config): bool
     {
-        return WebhooksHelper::isValidWebhookEventSignature(
-            $request->getContent(),
-            $request->header($config->signatureHeaderName),
-            $config->signingSecret,
-            $request->url()
+        return WebhooksHelper::verifySignature(
+            requestBody: $request->getContent(),
+            signatureHeader: $request->header($config->signatureHeaderName),
+            signatureKey: $config->signingSecret,
+            notificationUrl: $request->url()
         );
     }
 }

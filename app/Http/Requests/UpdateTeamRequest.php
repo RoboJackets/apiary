@@ -32,6 +32,11 @@ class UpdateTeamRequest extends FormRequest
                 'max:4096',
                 'nullable',
             ],
+            'project_manager_id' => [
+                'integer',
+                'nullable',
+                'exists:users,id',
+            ],
             'attendable' => [
                 'boolean',
             ],
@@ -57,15 +62,5 @@ class UpdateTeamRequest extends FormRequest
                 'nullable',
             ],
         ];
-    }
-
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string,string>
-     */
-    public function messages(): array
-    {
-        return [];
     }
 }

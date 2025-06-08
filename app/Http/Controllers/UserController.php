@@ -17,18 +17,23 @@ use App\Util\AuthorizeInclude;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class UserController implements HasMiddleware
 {
-    public function __construct()
+    #[\Override]
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-users', ['only' => ['index', 'indexManagers', 'search']]);
-        $this->middleware('permission:create-users', ['only' => ['store']]);
-        $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
-        $this->middleware('permission:update-users|update-users-own', ['only' => ['update', 'applySelfOverride']]);
-        $this->middleware('permission:delete-users', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-users', only: ['index', 'indexManagers', 'search']),
+            new Middleware('permission:create-users', only: ['store']),
+            new Middleware('permission:read-users|read-users-own', only: ['show']),
+            new Middleware('permission:update-users|update-users-own', only: ['update', 'applySelfOverride']),
+            new Middleware('permission:delete-users', only: ['destroy']),
+        ];
     }
 
     /**

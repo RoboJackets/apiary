@@ -45,6 +45,7 @@ class DuesTransaction extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'Dues Transactions';
@@ -53,6 +54,7 @@ class DuesTransaction extends Resource
     /**
      * Get the displayable singular label of the resource.
      */
+    #[\Override]
     public static function singularLabel(): string
     {
         return 'Dues Transaction';
@@ -66,22 +68,16 @@ class DuesTransaction extends Resource
     public static $group = 'Dues';
 
     /**
-     * The number of results to display in the global search.
+     * Indicates if the resource should be globally searchable.
      *
-     * @var int
+     * @var bool
      */
-    public static $globalSearchResults = 2;
-
-    /**
-     * The number of results to display when searching the resource using Scout.
-     *
-     * @var int
-     */
-    public static $scoutSearchResults = 2;
+    public static $globallySearchable = false;
 
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -142,6 +138,7 @@ class DuesTransaction extends Resource
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
+    #[\Override]
     public function filters(NovaRequest $request): array
     {
         return $request->user()->can('read-teams-membership') ? [
@@ -155,6 +152,7 @@ class DuesTransaction extends Resource
     /**
      * Hide the edit button from indexes, in particular on merchandise pivots.
      */
+    #[\Override]
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
         return false;
@@ -163,6 +161,7 @@ class DuesTransaction extends Resource
     /**
      * Get the search result subtitle for the resource.
      */
+    #[\Override]
     public function subtitle(): ?string
     {
         return $this->user->full_name.' | '.$this->package->name.' | '.ucfirst($this->status);

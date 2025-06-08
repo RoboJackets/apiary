@@ -6,7 +6,9 @@ Your {{ config('app.name') }} personal access token called "{{ $token->name }}" 
 Your {{ config('app.name') }} personal access token called "{{ $token->name }}" will expire on {{ $token->expires_at }} and will not work after that time.
 @endif
 
-Token expiration dates cannot be extended. If you're still using this token, you must create a new token to continue accessing the {{ config('app.name') }} API. You can create a new token by accessing your user page in the {{ config('app.name') }} admin interface and running the "Create Personal Access Token" action.
+You can view this token at {{ route('nova.pages.detail', ['resource' => \App\Nova\OAuth2AccessToken::uriKey(), 'resourceId' => $token->id]) }}.
+
+Token expiration dates cannot be extended. If you're still using this token, you must create a new token to continue accessing the {{ config('app.name') }} API. You can create a new token by visiting your user page at {{ route('nova.pages.detail', ['resource' => \App\Nova\User::uriKey(), 'resourceId' => $token->user_id]) }} and running the "Create Personal Access Token" action.
 
 If you need any assistance, ask in #it-helpdesk in Slack.
 

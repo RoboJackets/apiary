@@ -44,6 +44,7 @@ class AttendancePerWeek extends Trend
      *
      * @return array<int,string>
      */
+    #[\Override]
     public function ranges(): array
     {
         return [
@@ -57,6 +58,7 @@ class AttendancePerWeek extends Trend
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'attendance-per-week';

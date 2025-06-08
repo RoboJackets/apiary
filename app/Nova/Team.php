@@ -85,6 +85,7 @@ class Team extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [
@@ -100,6 +101,7 @@ class Team extends Resource
                 ->rules('required'),
 
             BelongsTo::make('Project Manager', 'projectManager', User::class)
+                ->help(view('nova.help.team.projectmanager')->render())
                 ->searchable()
                 ->nullable()
                 ->withoutTrashed(),
@@ -204,6 +206,7 @@ class Team extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(Request $request): array
     {
         return [
@@ -245,6 +248,7 @@ class Team extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(Request $request): array
     {
         return [
@@ -272,6 +276,7 @@ class Team extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Team>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Team>
      */
+    #[\Override]
     public static function indexQuery(NovaRequest $request, $query): Builder
     {
         return $request->user()->cant('read-teams-hidden') ? $query->where('visible', 1) : $query;
@@ -285,6 +290,7 @@ class Team extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Team>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Team>
      */
+    #[\Override]
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         return $request->user()->cant('read-teams-hidden') ? $query->where('visible', 1) : $query;
@@ -293,6 +299,7 @@ class Team extends Resource
     /**
      * Get the search result subtitle for the resource.
      */
+    #[\Override]
     public function subtitle(): ?string
     {
         if ($this->projectManager !== null) {

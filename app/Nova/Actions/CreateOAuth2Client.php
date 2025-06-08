@@ -60,9 +60,9 @@ class CreateOAuth2Client extends Action
      */
     public $name = 'Create Client';
 
-    private const STANDARD_CLIENT = 'standard';
+    private const string STANDARD_CLIENT = 'standard';
 
-    private const PUBLIC_CLIENT = 'public';
+    private const string PUBLIC_CLIENT = 'public';
 
     public function __construct(private ClientRepository $clientRepository)
     {
@@ -125,6 +125,7 @@ class CreateOAuth2Client extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [

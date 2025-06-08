@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
-class GitHubController extends Controller
+class GitHubController
 {
     public function redirectToProvider(Request $request)
     {

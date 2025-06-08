@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ClickUpController extends Controller
+class ClickUpController
 {
     public function index(Request $request)
     {

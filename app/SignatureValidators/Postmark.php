@@ -13,6 +13,7 @@ class Postmark implements SignatureValidator
     /**
      * Verifies a signature on a request from Postmark.
      */
+    #[\Override]
     public function isValid(Request $request, WebhookConfig $config): bool
     {
         $sentToken = $request->header($config->signatureHeaderName);

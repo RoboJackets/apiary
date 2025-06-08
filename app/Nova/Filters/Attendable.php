@@ -42,6 +42,7 @@ class Attendable extends Filter
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
+    #[\Override]
     public function apply(NovaRequest $request, $query, $value): Builder
     {
         $parts = explode(',', $value);
@@ -60,6 +61,7 @@ class Attendable extends Filter
      *
      * @return array<string,string>
      */
+    #[\Override]
     public function options(Request $request): array
     {
         // Get all the teams and events (attendables), display them as "Team: <team name>" or "Event: <event name>"

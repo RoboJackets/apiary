@@ -20,7 +20,10 @@ return [
 
     'treasurer_slack_webhook_url' => env('TREASURER_SLACK_WEBHOOK_URL'),
 
-    'treasurer_email' => env('TREASURER_EMAIL'),
+    'payment_contact' => [
+        'email_address' => env('PAYMENT_CONTACT_EMAIL', 'payments@robojackets.org'),
+        'display_name' => env('PAYMENT_CONTACT_DISPLAY_NAME', 'Payment Operations'),
+    ],
 
     'core_slack_webhook_url' => env('CORE_SLACK_WEBHOOK_URL'),
 

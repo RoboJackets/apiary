@@ -37,7 +37,6 @@ abstract class RecordPayment extends Action
      * @param  \Illuminate\Support\Collection<int,\App\Models\Payable>  $models
      *
      * @phan-suppress PhanUndeclaredConstantOfClass
-     * @phan-suppress PhanTypeSuspiciousStringExpression
      * @phan-suppress PhanTypeMismatchProperty
      */
     public function handle(ActionFields $fields, Collection $models)
@@ -85,26 +84,36 @@ abstract class RecordPayment extends Action
         return Action::message('Recorded '.static::METHOD.' payment!');
     }
 
-    protected static function getPayableAmount(NovaRequest $request): int
+    protected function getPayableAmount(NovaRequest $request): int
     {
-        $resourceType = $request->resource;
-        $resourceId = $request->resourceId ?? $request->resources;
+        if ($this->resource === null) {
+            $resourceType = $request->resource;
+            $resourceId = $request->resourceId ?? $request->resources;
 
-        if ($resourceType === null) {
-            throw new Exception('resourceType is null');
+            if ($resourceType === null) {
+                throw new Exception('resourceType is null');
+            }
+
+            if ($resourceId === null) {
+                throw new Exception('resourceId is null');
+            }
+
+            if ($resourceType === \App\Nova\DuesTransaction::uriKey()) {
+                return intval(DuesTransaction::whereId($resourceId)->sole()->package->cost);
+            } elseif ($resourceType === \App\Nova\TravelAssignment::uriKey()) {
+                return intval(TravelAssignment::whereId($resourceId)->sole()->travel->fee_amount);
+            }
         }
 
-        if ($resourceId === null) {
-            throw new Exception('resourceId is null');
+        if ($this->resource::class === \App\Models\DuesTransaction::class) {
+            return intval($this->resource->package->cost);
         }
 
-        if ($resourceType === \App\Nova\DuesTransaction::uriKey()) {
-            return intval(DuesTransaction::whereId($resourceId)->sole()->package->cost);
-        } elseif ($resourceType === \App\Nova\TravelAssignment::uriKey()) {
-            return intval(TravelAssignment::whereId($resourceId)->sole()->travel->fee_amount);
+        if ($this->resource::class === \App\Models\TravelAssignment::class) {
+            return intval($this->resource->travel->fee_amount);
         }
 
-        throw new Exception('Unexpected resourceType '.$resourceType);
+        throw new Exception('Unexpected resource class '.$this->resource::class);
     }
 
     private static function prettyPayableName(Payable $payable): string

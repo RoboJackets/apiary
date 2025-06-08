@@ -44,6 +44,7 @@ use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Stack;
+use Laravel\Nova\Fields\Tag;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -114,6 +115,7 @@ class Travel extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'Trips';
@@ -122,6 +124,7 @@ class Travel extends Resource
     /**
      * Get the URI key for the resource.
      */
+    #[\Override]
     public static function uriKey(): string
     {
         return 'trips';
@@ -132,6 +135,7 @@ class Travel extends Resource
      *
      * @phan-suppress PhanInvalidFQSENInClasslike
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [
@@ -583,6 +587,14 @@ class Travel extends Resource
                 ->default('draft')
                 ->onlyOnForms()
                 ->hideWhenUpdating(),
+
+            ...(
+                $request->is('*/airports') ? [
+                    Tag::make('Origin Airports', 'origin_airports', Airport::class),
+
+                    Tag::make('Destination Airports', 'destination_airports', Airport::class),
+                ] : []
+            ),
         ];
     }
 
@@ -591,12 +603,15 @@ class Travel extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(Request $request): array
     {
         $tripId = $request->resourceId ?? $request->resources;
 
         if ($tripId === null) {
-            return [];
+            return [
+                MatrixAirfareSearch::make(),
+            ];
         }
 
         $trip = \App\Models\Travel::with('assignments.user', 'assignments.envelope')
@@ -770,6 +785,7 @@ class Travel extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(Request $request): array
     {
         if ($request->resourceId === null) {
@@ -798,6 +814,7 @@ class Travel extends Resource
      *
      * @param  \Illuminate\Validation\Validator  $validator
      */
+    #[\Override]
     protected static function afterValidation(NovaRequest $request, $validator): void
     {
         // require trip name to include the departure or return year
@@ -901,6 +918,7 @@ class Travel extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>
      */
+    #[\Override]
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if ($request->current !== null) {
@@ -917,6 +935,7 @@ class Travel extends Resource
     /**
      * Get the search result subtitle for the resource.
      */
+    #[\Override]
     public function subtitle(): string
     {
         return $this->destination.' | '.$this->departure_date->format('F Y');
@@ -925,6 +944,7 @@ class Travel extends Resource
     /**
      * Register a callback to be called after the resource is created.
      */
+    #[\Override]
     public static function afterCreate(NovaRequest $request, Model $model): void
     {
         if ($model->airfare_policy !== null) {

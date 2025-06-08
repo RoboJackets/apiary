@@ -29,7 +29,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
  * @property string|null $tar_itinerary
  * @property string|null $tar_purpose
@@ -51,12 +51,12 @@ use Laravel\Scout\Searchable;
  * @property string $international_travel_justification
  * @property bool $payment_completion_email_sent
  * @property bool $form_completion_email_sent
- * @property array|null $airfare_policy
+ * @property array<string,bool>|null $airfare_policy
  * @property int|null $meal_per_diem
  * @property int|null $car_rental_cost
  * @property string|null $hotel_name
  * @property string|null $department_number
- * @property array|null $forms
+ * @property array<string,bool>|null $forms
  * @property string|null $status
  * @property-read bool $needs_airfare_form
  * @property-read bool $needs_travel_information_form
@@ -115,11 +115,11 @@ class Travel extends Model
     use Searchable;
     use SoftDeletes;
 
-    public const TRAVEL_INFORMATION_FORM_KEY = 'travel_information';
+    public const string TRAVEL_INFORMATION_FORM_KEY = 'travel_information';
 
-    public const AIRFARE_REQUEST_FORM_KEY = 'airfare_request';
+    public const string AIRFARE_REQUEST_FORM_KEY = 'airfare_request';
 
-    public const FORM_LABELS = [
+    public const array FORM_LABELS = [
         self::TRAVEL_INFORMATION_FORM_KEY => 'Travel Information Form',
         self::AIRFARE_REQUEST_FORM_KEY => 'Airfare Request Form',
     ];
@@ -141,6 +141,7 @@ class Travel extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -161,7 +162,7 @@ class Travel extends Model
     /**
      * The attributes that Nova might think can be used for filtering, but actually can't.
      */
-    public const DO_NOT_FILTER_ON = [
+    public const array DO_NOT_FILTER_ON = [
         'user_id',
     ];
 

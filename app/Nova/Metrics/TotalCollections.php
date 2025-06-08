@@ -23,6 +23,21 @@ class TotalCollections extends Value
     public $icon = 'currency-dollar';
 
     /**
+     * The displayable name of the metric.
+     *
+     * @var string
+     */
+    public $name = 'Net Dues Revenue';
+
+    /**
+     * The help text for the metric.
+     *
+     * @var string
+     */
+    public $helpText = 'Total dues revenue collected for this fiscal year, including all payment methods,'
+        .' excluding waivers and processing fees';
+
+    /**
      * Calculate the value of the metric.
      */
     public function calculate(Request $request): ValueResult
@@ -107,6 +122,7 @@ class TotalCollections extends Value
      *
      * @return array<int,string>
      */
+    #[\Override]
     public function ranges(): array
     {
         return [
@@ -121,6 +137,7 @@ class TotalCollections extends Value
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'total-collections';

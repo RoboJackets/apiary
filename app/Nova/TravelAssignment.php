@@ -61,18 +61,11 @@ class TravelAssignment extends Resource
     ];
 
     /**
-     * The number of results to display in the global search.
+     * Indicates if the resource should be globally searchable.
      *
-     * @var int
+     * @var bool
      */
-    public static $globalSearchResults = 2;
-
-    /**
-     * The number of results to display when searching the resource using Scout.
-     *
-     * @var int
-     */
-    public static $scoutSearchResults = 2;
+    public static $globallySearchable = false;
 
     /**
      * The relationships that should be eager loaded on index queries.
@@ -87,6 +80,7 @@ class TravelAssignment extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'Trip Assignments';
@@ -95,6 +89,7 @@ class TravelAssignment extends Resource
     /**
      * Get the URI key for the resource.
      */
+    #[\Override]
     public static function uriKey(): string
     {
         return 'trip-assignments';
@@ -103,6 +98,7 @@ class TravelAssignment extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -224,6 +220,7 @@ class TravelAssignment extends Resource
      *
      * @param  \Illuminate\Validation\Validator  $validator
      */
+    #[\Override]
     protected static function afterValidation(NovaRequest $request, $validator): void
     {
         if ($request->travel === null || $request->matrix_itinerary === null) {
@@ -246,6 +243,7 @@ class TravelAssignment extends Resource
     /**
      * Get the search result subtitle for the resource.
      */
+    #[\Override]
     public function subtitle(): ?string
     {
         return $this->user->full_name.' | '.$this->travel->name.' | '.($this->is_paid ? 'Paid' : 'Unpaid');

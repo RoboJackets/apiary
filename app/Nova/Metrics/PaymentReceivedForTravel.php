@@ -29,6 +29,7 @@ class PaymentReceivedForTravel extends Partition
     /**
      * Get the displayable name of the metric.
      */
+    #[\Override]
     public function name(): string
     {
         return $this->resourceId === -1 ? 'Payment Received' : 'Payment Received for '.Travel::where(
@@ -70,6 +71,7 @@ class PaymentReceivedForTravel extends Partition
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return $this->resourceId === -1 ? 'payment-received' : 'payment-received-'.$this->resourceId;

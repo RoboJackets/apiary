@@ -56,6 +56,7 @@ class MembershipAgreementTemplate extends Resource
     /**
      * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'Templates';
@@ -64,6 +65,7 @@ class MembershipAgreementTemplate extends Resource
     /**
      * Get the displayable singular label of the resource.
      */
+    #[\Override]
     public static function singularLabel(): string
     {
         return 'Template';
@@ -72,6 +74,7 @@ class MembershipAgreementTemplate extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(Request $request): array
     {
         return [
@@ -89,6 +92,7 @@ class MembershipAgreementTemplate extends Resource
         ];
     }
 
+    #[\Override]
     public static function searchable(): bool
     {
         return false;

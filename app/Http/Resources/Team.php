@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed.DisallowedPartiallyKeyed
+
 namespace App\Http\Resources;
 
 use App\Http\Resources\Attendance as AttendanceResource;
@@ -14,14 +16,23 @@ class Team extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string,mixed>
+     * @return array<int|string,mixed>
      */
+    #[\Override]
     public function toArray(Request $request): array
     {
         return [
             // Attributes
             'id' => $this->id,
             'name' => $this->name,
+            $this->mergeWhen(
+                $this->resource->relationLoaded('projectManager'),
+                [
+                    'project_manager' => $this->resource->relationLoaded('projectManager') ? (
+                        $this->projectManager === null ? null : new Manager($this->projectManager)
+                    ) : null,
+                ]
+            ),
             'self_serviceable' => $this->self_serviceable,
             'visible' => $this->visible,
             'visible_on_kiosk' => $this->visible_on_kiosk,

@@ -6,7 +6,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\MembershipAgreementTemplateObserver;
 use Exception;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,7 +24,7 @@ use Throwable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Signature> $signatures
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Signature> $signatures
  * @property-read int|null $signatures_count
  *
  * @method static \Database\Factories\MembershipAgreementTemplateFactory factory(...$parameters)
@@ -40,6 +42,7 @@ use Throwable;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
+#[ObservedBy([MembershipAgreementTemplateObserver::class])]
 class MembershipAgreementTemplate extends Model
 {
     use HasFactory;

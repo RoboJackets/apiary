@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \Spatie\Csp\AddCspHeaders::class,
         ]);
 
-        $middleware->throttleApi('180,1');
+        $middleware->throttleApi(limiter: '60|api_rate_limit,1', redis: true);
         $middleware->api(\App\Http\Middleware\Sentry::class);
 
         $middleware->alias([
@@ -46,6 +46,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->priority([
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Illuminate\Auth\Middleware\Authenticate::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class,
             \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -55,7 +56,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(static function (Exceptions $exceptions): void {
         $exceptions->reportable(static function (Throwable $e): void {
             if (app()->bound('sentry')) {
-                // @phan-suppress-next-line PhanUndeclaredClassReference
                 app('sentry')->captureException($e);
             }
         });

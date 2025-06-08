@@ -15,16 +15,21 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PaymentController extends Controller
+class PaymentController implements HasMiddleware
 {
-    public function __construct()
+    #[\Override]
+    public static function middleware(): array
     {
-        $this->middleware('permission:read-payments', ['only' => ['index']]);
-        $this->middleware('permission:create-payments|create-payments-own', ['only' => ['store']]);
-        $this->middleware('permission:read-payments|read-payments-own', ['only' => ['show', 'indexForUser']]);
-        $this->middleware('permission:update-payments', ['only' => ['update']]);
-        $this->middleware('permission:delete-payments', ['only' => ['destroy']]);
+        return [
+            new Middleware('permission:read-payments', only: ['index']),
+            new Middleware('permission:create-payments|create-payments-own', only: ['store']),
+            new Middleware('permission:read-payments|read-payments-own', only: ['show', 'indexForUser']),
+            new Middleware('permission:update-payments', only: ['update']),
+            new Middleware('permission:delete-payments', only: ['destroy']),
+        ];
     }
 
     /**

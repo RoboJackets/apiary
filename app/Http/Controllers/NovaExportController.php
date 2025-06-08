@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 
-class NovaExportController extends Controller
+class NovaExportController
 {
     /**
      * Trigger a download of the specified file.

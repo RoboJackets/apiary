@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ExportDemographicsSurveyRecipients extends Action
 {
@@ -76,15 +75,5 @@ class ExportDemographicsSurveyRecipients extends Action
 
         return ActionResponse::download($filename, $url)
             ->withMessage('The demographics survey recipient list was successfully exported!');
-    }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
     }
 }

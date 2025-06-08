@@ -118,6 +118,7 @@ class ExportUsersBuzzCardAccess extends Action
      *
      * @return array<int, Select>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [

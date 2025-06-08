@@ -8,8 +8,10 @@
 /public/js/app.js.LICENSE.txt
 /public/js/nova.js
 /storage/*.key
+/storage/pail
 /vendor
 /.idea
+/.nova
 /.vagrant
 Homestead.json
 Homestead.yaml

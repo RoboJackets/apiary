@@ -53,6 +53,12 @@
             </li>
             @endcan
 
+            @can('access-nova')
+            <li class="nav-item">
+              <a class="nav-link" href="/docs/">Docs</a>
+            </li>
+            @endcan
+
           </ul>
 
           @if (auth()->user())

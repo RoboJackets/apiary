@@ -33,6 +33,7 @@ class UserTeam extends Filter
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
+    #[\Override]
     public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $query->whereHas('teams', static function (Builder $query) use ($value): void {
@@ -45,6 +46,7 @@ class UserTeam extends Filter
      *
      * @return array<string,string>
      */
+    #[\Override]
     public function options(Request $request): array
     {
         $teams = [];

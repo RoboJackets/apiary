@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 
-class InfoController extends Controller
+class InfoController
 {
     public function show(): JsonResponse
     {

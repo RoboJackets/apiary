@@ -52,6 +52,7 @@ class Notification extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -85,6 +86,7 @@ class Notification extends Resource
         ];
     }
 
+    #[\Override]
     public static function searchable(): bool
     {
         return false;

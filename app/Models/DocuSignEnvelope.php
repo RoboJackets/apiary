@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\DocuSignEnvelopeObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -76,6 +78,7 @@ use Illuminate\Support\Str;
  *
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereAcknowledgementSent($value)
  */
+#[ObservedBy([DocuSignEnvelopeObserver::class])]
 class DocuSignEnvelope extends Model
 {
     use SoftDeletes;
@@ -92,6 +95,7 @@ class DocuSignEnvelope extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

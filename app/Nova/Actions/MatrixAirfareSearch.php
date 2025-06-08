@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Models\Travel;
 use App\Nova\Airport;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
@@ -45,13 +44,20 @@ class MatrixAirfareSearch extends Action
         'the Matrix search page if needed.';
 
     /**
+     * Indicates if the action can be run without any models.
+     *
+     * @var bool
+     */
+    public $standalone = true;
+
+    /**
      * The size of the modal. Can be "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl".
      *
      * @var string
      */
     public $modalSize = '4xl';
 
-    private const DATE_FLEXIBILITY_LABELS = [
+    private const array DATE_FLEXIBILITY_LABELS = [
         '0' => 'This day only',
         '10' => 'Or day before',
         '1' => 'Or day after',
@@ -150,19 +156,27 @@ class MatrixAirfareSearch extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
-        $resourceId = $request->resourceId ?? $request->resources;
+        $suggestedDefaultDestinationAirport = null;
 
-        if ($resourceId === null) {
-            return [];
+        if ($this->resource !== null) {
+            $results = \App\Models\Airport::search($this->resource->destination)->get();
+
+            if ($results->count() > 0) {
+                $suggestedDefaultDestinationAirport = [
+                    [
+                        'display' => $results->first()->iata,
+                        'value' => $results->first()->iata,
+                    ],
+                ];
+            }
         }
-
-        $trip = Travel::whereId($resourceId)->sole();
 
         return [
             Date::make('Outbound Date')
-                ->default(static fn (): string => $trip->departure_date->format('Y-m-d'))
+                ->default(fn (): ?string => $this->resource?->departure_date?->format('Y-m-d'))
                 ->rules('required', 'date', 'after:tomorrow', 'before:+1 year')
                 ->required(),
 
@@ -173,7 +187,7 @@ class MatrixAirfareSearch extends Action
                 ->required(),
 
             Date::make('Return Date')
-                ->default(static fn (): string => $trip->return_date->format('Y-m-d'))
+                ->default(fn (): ?string => $this->resource?->return_date?->format('Y-m-d'))
                 ->rules('required', 'date', 'after:tomorrow', 'after:outbound_date', 'before:+1 year')
                 ->required(),
 
@@ -189,6 +203,7 @@ class MatrixAirfareSearch extends Action
                 ->required(),
 
             Tag::make('Destination Airports', 'destination_airports', Airport::class)
+                ->default(static fn (): ?array => $suggestedDefaultDestinationAirport)
                 ->rules('required')
                 ->required(),
 
@@ -200,7 +215,7 @@ class MatrixAirfareSearch extends Action
 
             BooleanGroup::make('Policy Filters')
                 ->options(MatrixItineraryBusinessPolicy::POLICY_LABELS)
-                ->default(static fn (): array => $trip->airfare_policy ?? [])
+                ->default(fn (): array => $this->resource?->airfare_policy ?? [])
                 ->rules('required', new FareClassPolicyRequiresMarketingCarrierPolicy())
                 ->required()
                 ->help(view('nova.matrixpolicyhelp')->render()),

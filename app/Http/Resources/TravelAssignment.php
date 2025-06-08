@@ -15,6 +15,7 @@ class TravelAssignment extends JsonResource
      *
      * @return array<string, int|JsonResource>
      */
+    #[\Override]
     public function toArray(Request $request): array
     {
         return [

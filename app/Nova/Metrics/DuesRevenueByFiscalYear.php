@@ -13,6 +13,21 @@ use Laravel\Nova\Metrics\TrendResult;
 class DuesRevenueByFiscalYear extends Trend
 {
     /**
+     * The displayable name of the metric.
+     *
+     * @var string
+     */
+    public $name = 'Net Dues Revenue By Fiscal Year';
+
+    /**
+     * The help text for the metric.
+     *
+     * @var string
+     */
+    public $helpText = 'Total dues revenue collected for each fiscal year, including all payment methods,'
+        .' excluding waivers and processing fees';
+
+    /**
      * Calculate the value of the metric.
      */
     public function calculate(NovaRequest $request): TrendResult
@@ -59,6 +74,7 @@ class DuesRevenueByFiscalYear extends Trend
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'dues-revenue-by-fiscal-year';

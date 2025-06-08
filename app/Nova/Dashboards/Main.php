@@ -31,6 +31,7 @@ class Main extends Dashboard
     /**
      * Get the displayable name of the dashboard.
      */
+    #[\Override]
     public function name(): string
     {
         return 'Home';
@@ -41,6 +42,7 @@ class Main extends Dashboard
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(): array
     {
         $cards = [
@@ -66,7 +68,7 @@ class Main extends Dashboard
         ];
 
         if (request()->is('nova-api/dashboards/main')) {
-            foreach (Travel::all() as $travel) {
+            foreach (Travel::orderBy('departure_date')->orderBy('return_date')->get() as $travel) {
                 $should_include = false;
 
                 if ($travel->return_date > Carbon::now() && $travel->assignments()->exists()) {

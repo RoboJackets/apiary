@@ -22,7 +22,7 @@ use Eluceo\iCal\Domain\ValueObject\Uri;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Illuminate\Http\Request;
 
-class CalendarController extends Controller
+class CalendarController
 {
     /**
      * Handle the incoming request.

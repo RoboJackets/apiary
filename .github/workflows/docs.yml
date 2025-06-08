@@ -5,11 +5,13 @@ on:
     - main
     paths:
     - 'docs/**'
+    - '.github/workflows/docs.yml'
   pull_request:
     branches:
     - main
     paths:
     - 'docs/**'
+    - '.github/workflows/docs.yml'
 
 jobs:
   docs:
@@ -28,7 +30,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
 
       - name: Setup Poetry
         uses: abatilo/actions-poetry@v4

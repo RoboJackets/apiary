@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class MatrixItineraryDataStructure implements ValidationRule
 {
-    private const RULES = [
+    private const array RULES = [
         'passengerCount' => [
             'required',
             'integer',
@@ -229,13 +229,14 @@ class MatrixItineraryDataStructure implements ValidationRule
         ],
     ];
 
-    private const MESSAGES = [
+    private const array MESSAGES = [
         'displayTotal' => 'Airfare must be priced in USD.',
     ];
 
     /**
      * Run the validation rule.
      */
+    #[\Override]
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if ($value === null) {
