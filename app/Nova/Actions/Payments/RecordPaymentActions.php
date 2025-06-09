@@ -15,7 +15,6 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 /**
  * Registers Nova actions for offline payment methods.
  *
- * @phan-suppress PhanCompatibleTraitConstant
  * @phan-suppress PhanUnreferencedPrivateClassConstant
  */
 trait RecordPaymentActions
