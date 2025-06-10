@@ -147,6 +147,9 @@ return [
                     'city',
                     'state',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true
+                ]
             ],
             \App\Models\Attendance::class => [
                 'displayedAttributes' => [
@@ -166,6 +169,9 @@ return [
                     'exactness',
                     'updated_at_unix:desc',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true
+                ]
             ],
             \App\Models\DuesTransaction::class => [
                 'displayedAttributes' => [
@@ -205,6 +211,9 @@ return [
                     'user_id',
                     'merchandise_id',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true
+                ]
             ],
             \App\Models\Event::class => [
                 'displayedAttributes' => [
@@ -220,6 +229,9 @@ return [
                     'start_time_unix:desc',
                     'end_time_unix:desc',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true
+                ]
             ],
             \App\Models\Team::class => [
                 'displayedAttributes' => [
@@ -237,6 +249,9 @@ return [
                     'exactness',
                     'attendance_count:desc',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true
+                ]
             ],
             \App\Models\Travel::class => [
                 'displayedAttributes' => [
@@ -252,6 +267,9 @@ return [
                     'departure_date_unix:desc',
                     'return_date_unix:desc',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true
+                ]
             ],
             \App\Models\TravelAssignment::class => [
                 'displayedAttributes' => [
@@ -290,6 +308,9 @@ return [
                     'user_id',
                     'travel_id',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true
+                ]
             ],
             \App\Models\User::class => [
                 'displayedAttributes' => [
@@ -2742,6 +2763,9 @@ return [
                         'zane',
                     ],
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true
+                ]
             ],
         ],
     ],
