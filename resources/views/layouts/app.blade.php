@@ -13,7 +13,7 @@
         <a href="{{ route('stopImpersonating') }}">Click here to stop impersonating.</a>
     </div>
     @endif
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark nav-color">
       <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -23,21 +23,21 @@
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item {{ $request->is('/') ? 'active' : '' }}">
-              <a class="nav-link" href="/">Dashboard</a>
+            <li class="nav-item">
+              <a class="nav-link {{ $request->is('/') ? 'active' : '' }}" href="/">Dashboard</a>
             </li>
-            <li class="nav-item {{ $request->is('teams*') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('teams.index') }}">Teams</a>
+            <li class="nav-item">
+              <a class="nav-link {{ $request->is('teams*') ? 'active' : '' }}" href="{{ route('teams.index') }}">Teams</a>
             </li>
             @if (config('features.resumes') && auth()->user() && auth()->user()->is_student)
-            <li class="nav-item {{ $request->is('resume*') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('resume.index') }}">Resume</a>
+            <li class="nav-item">
+              <a class="nav-link {{ $request->is('resume*') ? 'active' : '' }}" href="{{ route('resume.index') }}">Resume</a>
             </li>
             @endif
 
             @if (auth()->user() && auth()->user()->assignments()->count() > 0)
-            <li class="nav-item {{ $request->is('travel*') || $request->is('pay/travel*') || $request->is('sign/travel*') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('travel.index') }}">Travel<sub><small>&nbspbeta</small></sub></a>
+            <li class="nav-item">
+              <a class="nav-link {{ $request->is('travel*') || $request->is('pay/travel*') || $request->is('sign/travel*') ? 'active' : '' }}" href="{{ route('travel.index') }}">Travel<sub><small>&nbspbeta</small></sub></a>
             </li>
             @endif
 
