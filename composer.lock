@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd64e71075fce6d82bd861c310109bc9",
+    "content-hash": "4c642504998a2f0376c3c19ecafe0fd6",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2786,16 +2786,16 @@
         },
         {
             "name": "laravel/fortify",
-            "version": "v1.25.4",
+            "version": "v1.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/fortify.git",
-                "reference": "f185600e2d3a861834ad00ee3b7863f26ac25d3f"
+                "reference": "2b3f76ba2fef31713d80bdfee66d0d36e6fc5d04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/fortify/zipball/f185600e2d3a861834ad00ee3b7863f26ac25d3f",
-                "reference": "f185600e2d3a861834ad00ee3b7863f26ac25d3f",
+                "url": "https://api.github.com/repos/laravel/fortify/zipball/2b3f76ba2fef31713d80bdfee66d0d36e6fc5d04",
+                "reference": "2b3f76ba2fef31713d80bdfee66d0d36e6fc5d04",
                 "shasum": ""
             },
             "require": {
@@ -2847,7 +2847,7 @@
                 "issues": "https://github.com/laravel/fortify/issues",
                 "source": "https://github.com/laravel/fortify"
             },
-            "time": "2025-01-26T19:34:46+00:00"
+            "time": "2025-06-05T16:18:11+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3146,17 +3146,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.7.2",
+            "version": "5.7.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "cab491f15b738636f24492ae17df1e9da4623418"
+                "reference": "9dda06a42db7252c371d1912174bd19a22d73ba5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-cab491f15b738636f24492ae17df1e9da4623418-zip-75397f.zip",
-                "reference": "cab491f15b738636f24492ae17df1e9da4623418",
-                "shasum": "d34243609dae1269585a566335285b1bab0afccd"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-9dda06a42db7252c371d1912174bd19a22d73ba5-zip-e47098.zip",
+                "reference": "9dda06a42db7252c371d1912174bd19a22d73ba5",
+                "shasum": "1f9bbcfd0f84136ee58441f644744911fbcdf591"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -3164,7 +3164,7 @@
                 "illuminate/filesystem": "^10.48.29|^11.44.1|^12.1.1",
                 "illuminate/support": "^10.48.29|^11.44.1|^12.1.1",
                 "inertiajs/inertia-laravel": "^1.3.2|^2.0",
-                "laravel/fortify": "^1.25.4",
+                "laravel/fortify": "^1.26.0",
                 "nesbot/carbon": "^2.62.1|^3.4",
                 "orchestra/sidekick": "^1.2.9",
                 "php": "^8.1",
@@ -3188,7 +3188,7 @@
                 "orchestra/testbench-core": "^8.35|^9.12|^10.1",
                 "orchestra/testbench-dusk": "^8.36|^9.15|^10.1",
                 "orchestra/workbench": "^8.17.4|^9.13.4|^10.0.3",
-                "phpstan/phpstan": "^1.12.20|^2.1.13",
+                "phpstan/phpstan": "^1.12.27|^2.1.17",
                 "phpunit/phpunit": "^10.5.35|^11.3.5",
                 "predis/predis": "^2.3|^3.0",
                 "spatie/laravel-ray": "^1.39.1"
@@ -3321,10 +3321,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.7.2",
+                "source": "https://github.com/laravel/nova/tree/v5.7.3",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-06-02T08:14:22+00:00"
+            "time": "2025-06-16T05:01:11+00:00"
         },
         {
             "name": "laravel/passport",
