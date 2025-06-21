@@ -125,7 +125,6 @@ parameters:
     - '#Method App\\Nova\\Resource::scoutQuery\(\) return type with generic class Laravel\\Scout\\Builder does not specify its types: TModel#'
     - '#Method App\\Nova\\Travel::showFieldOnForms\(\) has parameter \$formData with generic class Laravel\\Nova\\Fields\\FormData but does not specify its types: TKey, TValue#'
     - '#Method App\\Nova\\User::adminCanRun\(\) should return bool but returns mixed\.#'
-    - '#Method App\\Util\\Matrix::[a-zA-Z]+\(\) has parameter \$itinerary with no value type specified in iterable type array\.#'
     - '#Method Database\\Factories\\[a-zA-Z]+::definition\(\) should return array<string, .+> but returns array<string, mixed>\.#'
     - '#Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/[a-zA-Z0-9_]+.php:[0-9]+::getConnection\(\) should return string but returns mixed\.#'
     - '#Offset ''[a-zA-Z]+'' might not exist on App\\Models\\[a-zA-Z]+\|null\.#'
