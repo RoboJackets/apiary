@@ -39,6 +39,7 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         // Users
         // The search endpoint MUST be registered before the apiResource, otherwise it will not take precedence
         Route::get('users/search', [UserController::class, 'search']);
+        Route::post('users/searchByEmail', [UserController::class, 'searchByEmail']);
         Route::get('users/managers', [UserController::class, 'indexManagers'])->middleware('cache:86400');
         Route::apiResource('users', UserController::class)->middleware('cache:86400');
         Route::post('users/{id}/resume', [ResumeController::class, 'store']);

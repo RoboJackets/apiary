@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchByEmailRequest;
 use App\Http\Requests\SelfServiceAccessOverrideRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -103,6 +104,22 @@ class UserController implements HasMiddleware
         }
 
         return response()->json(['status' => 'success', 'users' => UserResource::collection($results)]);
+    }
+
+    public function searchByEmail(SearchByEmailRequest $request): JsonResponse
+    {
+        return response()->json(
+            [
+                'status' => 'success',
+                'user' => new UserResource(
+                    User::where('gt_email', '=', $request->input('email'))
+                        ->orWhere('gmail_address', '=', $request->input('email'))
+                        ->orWhere('clickup_email', '=', $request->input('email'))
+                        ->sole(),
+                    withManager: false
+                ),
+            ]
+        );
     }
 
     /**
