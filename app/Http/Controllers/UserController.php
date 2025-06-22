@@ -29,7 +29,7 @@ class UserController implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:read-users', only: ['index', 'indexManagers', 'search']),
+            new Middleware('permission:read-users', only: ['index', 'indexManagers', 'search', 'searchByEmail']),
             new Middleware('permission:create-users', only: ['store']),
             new Middleware('permission:read-users|read-users-own', only: ['show']),
             new Middleware('permission:update-users|update-users-own', only: ['update', 'applySelfOverride']),
