@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d2cec475dfca5119c067bfd06b22a29",
+    "content-hash": "70f2bd123c768f23978c8d14b9f49fa3",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -7910,21 +7910,22 @@
         },
         {
             "name": "spatie/laravel-webhook-client",
-            "version": "3.4.3",
+            "version": "3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-webhook-client.git",
-                "reference": "c7148e271a52b85da666bc7e3e1112b56138568b"
+                "reference": "a6555740d84598a202c4ebb56b5486a3b0f3700f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/c7148e271a52b85da666bc7e3e1112b56138568b",
-                "reference": "c7148e271a52b85da666bc7e3e1112b56138568b",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/a6555740d84598a202c4ebb56b5486a3b0f3700f",
+                "reference": "a6555740d84598a202c4ebb56b5486a3b0f3700f",
                 "shasum": ""
             },
             "require": {
                 "illuminate/bus": "^9.0 || ^10.0 || ^11.0 || ^12.0",
                 "illuminate/database": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "illuminate/http": "^9.0 || ^10.0 || ^11.0 || ^12.0",
                 "illuminate/support": "^9.0 || ^10.0 || ^11.0 || ^12.0",
                 "php": "^8.1 || ^8.2",
                 "spatie/laravel-package-tools": "^1.11"
@@ -7973,7 +7974,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-webhook-client/issues",
-                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.4.3"
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.4.4"
             },
             "funding": [
                 {
@@ -7981,7 +7982,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-02-14T13:01:09+00:00"
+            "time": "2025-06-27T16:01:51+00:00"
         },
         {
             "name": "square/square",
