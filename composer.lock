@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7e30abbc91f584b555b3bf2d0a1ccab",
+    "content-hash": "db90e97875d005da36534868a8784236",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3463,16 +3463,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v10.15.0",
+            "version": "v10.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "102fe09ae1c045c6f9cf1b3a2234e1fadb2198f2"
+                "reference": "5d56b6116a05d004e6a5d16a8ed95c2dc089b587"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/102fe09ae1c045c6f9cf1b3a2234e1fadb2198f2",
-                "reference": "102fe09ae1c045c6f9cf1b3a2234e1fadb2198f2",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/5d56b6116a05d004e6a5d16a8ed95c2dc089b587",
+                "reference": "5d56b6116a05d004e6a5d16a8ed95c2dc089b587",
                 "shasum": ""
             },
             "require": {
@@ -3496,7 +3496,7 @@
                 "orchestra/testbench": "^7.31|^8.11|^9.0|^10.0",
                 "php-http/guzzle7-adapter": "^1.0",
                 "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^9.3|^10.4",
+                "phpunit/phpunit": "^9.3|^10.4|^11.5",
                 "typesense/typesense-php": "^4.9.3"
             },
             "suggest": {
@@ -3540,7 +3540,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2025-05-13T13:34:05+00:00"
+            "time": "2025-07-08T15:09:47+00:00"
         },
         {
             "name": "laravel/serializable-closure",
