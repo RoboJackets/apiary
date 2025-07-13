@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Jobs\PruneIndexingNotificationsInNova;
 use App\Models\Airport;
 use App\Models\Attendance;
 use App\Models\DuesTransaction;
@@ -71,6 +72,8 @@ class ImportAllModels extends Command
         $this->call('scout:import', [
             'model' => User::class,
         ]);
+
+        PruneIndexingNotificationsInNova::dispatch();
 
         return 0;
     }

@@ -28,3 +28,5 @@ fi
 
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
 cp --recursive --verbose public/* /assets/${NOMAD_JOB_NAME}/
+
+php artisan notify-indexing-in-progress --no-interaction --verbose
