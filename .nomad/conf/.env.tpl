@@ -11,8 +11,6 @@ CAS_ENABLE_SAML="false"
 {{- range service "mysql" }}
 DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
-MEILISEARCH_HOST="http://127.0.0.1:{{- env "NOMAD_PORT_meilisearch" -}}"
-MEILISEARCH_KEY="{{- env "NOMAD_ALLOC_ID" -}}"
 SESSION_SECURE_COOKIE="true"
 SESSION_COOKIE="__Host-apiary_session"
 {{ range $key, $value := (key (printf "apiary/%s" (slice (env "NOMAD_JOB_NAME") 7)) | parseJSON) -}}
@@ -34,3 +32,5 @@ REDIS_HOST="/alloc/tmp/redis.sock"
 REDIS_PASSWORD="{{ env "NOMAD_ALLOC_ID" }}"
 REDIS_DB=0
 REDIS_CACHE_DB=1
+MEILISEARCH_HOST="http://127.0.0.1:{{- env "NOMAD_PORT_meilisearch" -}}"
+MEILISEARCH_KEY="{{- env "NOMAD_ALLOC_ID" -}}"
