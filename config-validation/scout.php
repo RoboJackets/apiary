@@ -54,7 +54,7 @@ return [
         ->rules([
             'required',
             'string',
-            'alpha_num',
+            'uuid',
         ])
         ->environments(['test', Rule::ENV_PRODUCTION]),
 ];
