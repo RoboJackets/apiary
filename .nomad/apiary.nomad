@@ -242,7 +242,7 @@ EOF
       }
 
       service {
-        name = "${NOMAD_JOB_NAME}-web"
+        name = "${NOMAD_JOB_NAME}"
 
         tags = [
           "fastcgi"
