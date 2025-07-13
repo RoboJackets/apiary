@@ -15,7 +15,6 @@ use Illuminate\Console\Command;
  */
 class NotifyUsersIndexingInProgress extends Command
 {
-
     /**
      * The name and signature of the console command.
      *

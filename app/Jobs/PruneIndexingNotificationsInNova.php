@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Notifications\Nova\IndexingInProgress;
@@ -19,7 +21,8 @@ class PruneIndexingNotificationsInNova implements ShouldBeUnique, ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->queue = 'meilisearch';
     }
 
