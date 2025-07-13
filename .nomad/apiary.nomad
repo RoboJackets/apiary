@@ -496,12 +496,12 @@ EOF
         }
 
         config {
-          image = "getmeili/meilisearch:v1.15.1"
+          image = "getmeili/meilisearch"
 
           entrypoint = [
             "/bin/meilisearch",
             "--db-path",
-            "/meilisearch_data/",
+            "${NOMAD_TASK_DIR}",
             "--http-addr",
             "127.0.0.1:${NOMAD_PORT_meilisearch}",
             "--env",
@@ -510,7 +510,6 @@ EOF
             "4Gb",
             "--http-payload-size-limit",
             "100Mb",
-            "--experimental-dumpless-upgrade",
             "--master-key",
             "${NOMAD_ALLOC_ID}"
           ]
@@ -518,17 +517,6 @@ EOF
           force_pull = true
 
           network_mode = "host"
-
-          mount {
-            type = "volume"
-            target = "/meilisearch_data/"
-            source = "${NOMAD_JOB_NAME}-meilisearch"
-            readonly = false
-
-            volume_options {
-              no_copy = true
-            }
-          }
         }
 
         resources {
