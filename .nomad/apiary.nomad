@@ -556,7 +556,7 @@ EOF
 
             name = "HTTP"
             path = "/health"
-            port = "http"
+            port = "meilisearch"
             protocol = "http"
             timeout = "1s"
             type = "http"
