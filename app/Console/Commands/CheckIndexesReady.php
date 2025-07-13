@@ -7,7 +7,6 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Meilisearch\Client;
 
-
 /**
  * Check if all expected indexes are present in Meilisearch.
  *
