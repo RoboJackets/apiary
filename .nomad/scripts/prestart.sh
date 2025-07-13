@@ -28,9 +28,3 @@ fi
 
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
 cp --recursive --verbose public/* /assets/${NOMAD_JOB_NAME}/
-
-if [ ${SCOUT_DRIVER} = "meilisearch" ]
-then
-    php artisan scout:sync-index-settings --no-interaction --verbose || true
-    php artisan scout:import \\App\\Models\\Airport
-fi

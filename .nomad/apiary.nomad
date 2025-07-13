@@ -76,7 +76,8 @@ job "apiary" {
 
   group "apiary" {
     network {
-      port "resp" {}
+      port "redis" {}
+      port "meilisearch" {}
     }
 
     volume "run" {
@@ -241,7 +242,7 @@ EOF
       }
 
       service {
-        name = "${NOMAD_JOB_NAME}"
+        name = "${NOMAD_JOB_NAME}-web"
 
         tags = [
           "fastcgi"
@@ -430,7 +431,7 @@ EOF
         template {
           data = <<EOH
   bind 127.0.0.1
-  port {{ env "NOMAD_PORT_resp" }}
+  port {{ env "NOMAD_PORT_redis" }}
   unixsocket /alloc/tmp/redis.sock
   unixsocketperm 777
   requirepass {{ env "NOMAD_ALLOC_ID" }}
@@ -444,7 +445,7 @@ EOF
         service {
           name = "${NOMAD_JOB_NAME}-redis"
 
-          port = "resp"
+          port = "redis"
 
           address = "127.0.0.1"
 
@@ -459,7 +460,7 @@ EOF
             interval = "1s"
 
             name = "TCP"
-            port = "resp"
+            port = "redis"
             timeout = "1s"
             type = "tcp"
           }
@@ -478,6 +479,174 @@ EOF
         }
 
         shutdown_delay = "60s"
+      }
+    }
+
+    dynamic "task" {
+      for_each = var.run_background_containers ? ["meilisearch"] : []
+
+      labels = [task.value]
+
+      content {
+        driver = "docker"
+
+        lifecycle {
+          hook = "prestart"
+          sidecar = true
+        }
+
+        config {
+          image = "getmeili/meilisearch:v1.15.1"
+
+          entrypoint = [
+            "/bin/meilisearch",
+            "--db-path",
+            "/meilisearch_data/",
+            "--http-addr",
+            "127.0.0.1:${NOMAD_PORT_meilisearch}",
+            "--env",
+            "production",
+            "--max-indexing-memory",
+            "4Gb",
+            "--http-payload-size-limit",
+            "100Mb",
+            "--experimental-dumpless-upgrade",
+            "--master-key",
+            "${NOMAD_ALLOC_ID}"
+          ]
+
+          force_pull = true
+
+          network_mode = "host"
+
+          mount {
+            type = "volume"
+            target = "/meilisearch_data/"
+            source = "${NOMAD_JOB_NAME}-meilisearch"
+            readonly = false
+
+            volume_options {
+              no_copy = true
+            }
+          }
+        }
+
+        resources {
+          cpu = 100
+          memory = 256
+          memory_max = 8096
+        }
+
+        service {
+          name = "${NOMAD_JOB_NAME}-meilisearch"
+
+          port = "meilisearch"
+
+          address = "127.0.0.1"
+
+          tags = [
+            "http"
+          ]
+
+          check {
+            success_before_passing = 3
+            failures_before_critical = 2
+
+            interval = "1s"
+
+            name = "HTTP"
+            path = "/health"
+            port = "http"
+            protocol = "http"
+            timeout = "1s"
+            type = "http"
+          }
+
+          check_restart {
+            limit = 5
+            grace = "20s"
+          }
+        }
+
+        restart {
+          attempts = 5
+          delay = "10s"
+          interval = "1m"
+          mode = "fail"
+        }
+      }
+    }
+
+    dynamic "task" {
+      for_each = var.run_background_containers ? ["poststart"] : []
+
+      labels = [task.value]
+
+      content {
+        driver = "docker"
+
+        lifecycle {
+          hook = "poststart"
+          sidecar = false
+        }
+
+        config {
+          image = var.image
+
+          network_mode = "host"
+
+          entrypoint = [
+            "/bin/bash",
+            "-xeuo",
+            "pipefail",
+            "-c",
+            trimspace(file("scripts/${task.value}.sh"))
+          ]
+        }
+
+        resources {
+          cpu = 100
+          memory = 128
+          memory_max = 2048
+        }
+
+        restart {
+          attempts = 5
+          delay = "10s"
+          interval = "1m"
+          mode = "fail"
+        }
+
+        volume_mount {
+          volume = "run"
+          destination = "/var/opt/nomad/run/"
+        }
+
+        template {
+          data = trimspace(file("conf/.env.tpl"))
+
+          destination = "/secrets/.env"
+          env = true
+
+          change_mode = "restart"
+        }
+
+        template {
+          data = "DOCKER_IMAGE_DIGEST=\"${split("@", var.image)[1]}\""
+
+          destination = "/secrets/.docker_image_digest"
+          env = true
+
+          change_mode = "noop"
+        }
+
+        template {
+          data = trimspace(file("conf/.my.cnf"))
+
+          destination = "/secrets/.my.cnf"
+
+          change_mode = "noop"
+        }
       }
     }
   }
