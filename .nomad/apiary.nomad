@@ -585,6 +585,8 @@ EOF
       content {
         driver = "docker"
 
+        consul {}
+
         lifecycle {
           hook = "poststart"
           sidecar = false
