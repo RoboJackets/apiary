@@ -510,8 +510,9 @@ EOF
             "4Gb",
             "--http-payload-size-limit",
             "100Mb",
+            "--experimental-dumpless-upgrade",
             "--master-key",
-            "${NOMAD_ALLOC_ID}"
+            "${NOMAD_ALLOC_ID}",
           ]
 
           force_pull = true
