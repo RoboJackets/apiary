@@ -98,6 +98,7 @@ class CalendarController
             ->get()
             ->map(
                 static fn (TravelAssignment $assignment): Collection => collect(
+                    // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
                     $assignment->matrix_itinerary['itinerary']['slices']
                 )->map(
                     static fn (array $slice): Collection => collect($slice['segments'])->map(
