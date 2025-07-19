@@ -22,7 +22,7 @@ In particular:
 
 - The server must be Internet-accessible for inbound webhooks from vendor services to work, including Square, DocuSign, and Postmark
 - The server must have a valid :abbr:`TLS (Transport Layer Security)` certificate
-- MySQL and Meilisearch must be installed
+- MySQL must be installed
 
 .. vale Google.Acronyms = YES
 .. vale Google.Parens = YES

@@ -17,7 +17,6 @@ JEDI
 jobspec
 JWT
 Laravel
-Meilisearch
 NFC
 Nginx
 OAuth
