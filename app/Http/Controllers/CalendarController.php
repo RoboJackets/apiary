@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.PHP.UselessParentheses.UselessParentheses
+
 namespace App\Http\Controllers;
 
 use App\Models\DuesPackage;
 use App\Models\Event;
 use App\Models\Travel;
+use App\Models\TravelAssignment;
+use Carbon\CarbonImmutable;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Domain\Entity\Event as CalendarEvent;
 use Eluceo\iCal\Domain\ValueObject\Date;
@@ -21,6 +25,7 @@ use Eluceo\iCal\Domain\ValueObject\UniqueIdentifier;
 use Eluceo\iCal\Domain\ValueObject\Uri;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class CalendarController
 {
@@ -89,6 +94,52 @@ class CalendarController
                     )
             );
 
+        $assignments = TravelAssignment::whereNotNull('matrix_itinerary')
+            ->get()
+            ->map(
+                static fn (TravelAssignment $assignment): Collection => collect(
+                    $assignment->matrix_itinerary['itinerary']['slices']
+                )->map(
+                    static fn (array $slice): Collection => collect($slice['segments'])->map(
+                        static fn (array $segment): CalendarEvent => (new CalendarEvent(
+                            new UniqueIdentifier(
+                                'segment-'.$segment['carrier']['code'].$segment['flight']['number'].'-'.
+                                $segment['origin']['code'].'-'.$segment['destination']['code'].'-'.
+                                substr($segment['departure'], 0, 10).'@'.$request->getHost()
+                            )
+                        ))
+                            ->setSummary(
+                                $segment['carrier']['code'].$segment['flight']['number'].' '.
+                                $segment['origin']['code'].' to '.$segment['destination']['code']
+                            )
+                            ->setUrl(new Uri(
+                                'https://www.flightaware.com/search/'.$segment['carrier']['code'].
+                                $segment['flight']['number']
+                            ))
+                            ->setOccurrence(new TimeSpan(
+                                begin: new DateTime(CarbonImmutable::parse($segment['departure']), applyTimeZone: true),
+                                end: new DateTime(CarbonImmutable::parse($segment['arrival']), applyTimeZone: true)
+                            ))
+                            ->setLocation(
+                                new Location(
+                                    $segment['origin']['city']['name'].' ('.$segment['origin']['code'].')'
+                                )
+                            )
+                            ->setDescription(
+                                (
+                                    (
+                                        array_key_exists('ext', $segment) &&
+                                        array_key_exists('operationalDisclosure', $segment['ext'])
+                                    ) ? $segment['ext']['operationalDisclosure']."\n\n" : '').
+                                'https://www.flightaware.com/search/'.$segment['carrier']['code'].
+                                $segment['flight']['number']
+                            )
+                    )
+                )
+            )
+            ->flatten()
+            ->unique(static fn (CalendarEvent $event): string => $event->getUniqueIdentifier()->__toString());
+
         $packages = DuesPackage::all();
 
         $membershipEndDates = $packages->map(
@@ -129,6 +180,7 @@ class CalendarController
             content: (new CalendarFactory())->createCalendar(new Calendar([
                 ...$events,
                 ...$trips,
+                ...$assignments,
                 ...$membershipEndDates,
                 ...$accessEndDates,
             ]))->__toString(),
