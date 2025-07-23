@@ -78,17 +78,9 @@ return [
         'production' => [
             'main' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'docusign', 'default'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'docusign', 'default', 'meilisearch'],
                 'balance' => 'simple',
                 'processes' => 1,
-                'tries' => 1,
-                'block_for' => null,
-            ],
-            'meilisearch' => [
-                'connection' => 'redis',
-                'queue' => ['meilisearch'],
-                'balance' => 'simple',
-                'processes' => 2,
                 'tries' => 1,
                 'block_for' => null,
             ],
