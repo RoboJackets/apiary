@@ -28,7 +28,7 @@
     "dependencies": {
         "@popperjs/core": "2.11.8",
         "@sentry/vue": "8.55.0",
-        "axios": "1.10.0",
+        "axios": "1.11.0",
         "caniuse-lite": "1.0.30001727",
         "chartist": "0.11.4",
         "chartist-plugin-legend": "0.6.2",
