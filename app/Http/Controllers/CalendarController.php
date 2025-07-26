@@ -118,8 +118,8 @@ class CalendarController
                                 $segment['flight']['number']
                             ))
                             ->setOccurrence(new TimeSpan(
-                                begin: new DateTime(CarbonImmutable::parse($segment['departure']), applyTimeZone: true),
-                                end: new DateTime(CarbonImmutable::parse($segment['arrival']), applyTimeZone: true)
+                                begin: new DateTime(CarbonImmutable::parse($segment['departure'])->utc(), applyTimeZone: true),
+                                end: new DateTime(CarbonImmutable::parse($segment['arrival'])->utc(), applyTimeZone: true)
                             ))
                             ->setLocation(
                                 new Location(
