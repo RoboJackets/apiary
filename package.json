@@ -29,7 +29,7 @@
         "@popperjs/core": "2.11.8",
         "@sentry/vue": "8.55.0",
         "axios": "1.11.0",
-        "caniuse-lite": "1.0.30001727",
+        "caniuse-lite": "1.0.30001731",
         "chartist": "0.11.4",
         "chartist-plugin-legend": "0.6.2",
         "chartist-plugin-pointlabels": "0.0.6",
