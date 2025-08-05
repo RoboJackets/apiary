@@ -703,14 +703,14 @@ test = ["pytest"]
 
 [[package]]
 name = "sphinxext-opengraph"
-version = "0.11.0"
+version = "0.12.0"
 description = "Sphinx Extension to enable OGP support"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "sphinxext_opengraph-0.11.0-py3-none-any.whl", hash = "sha256:200d7492aaf25813062ed68b34ba65201a6adba83089cc11324c92e25066e83f"},
-    {file = "sphinxext_opengraph-0.11.0.tar.gz", hash = "sha256:8f145274ae7add372277f69d57fca768d2349ea9a202637f506a6fdde5808cf4"},
+    {file = "sphinxext_opengraph-0.12.0-py3-none-any.whl", hash = "sha256:f60892d5fa4cc25889b0baa5ec1c778a8ef87aa7c1f4bb5f93f11befdb0d7b9c"},
+    {file = "sphinxext_opengraph-0.12.0.tar.gz", hash = "sha256:38bc17addd5d8bccc148daa7c6c13845c329c2687378ee8fdfc81942cc72a79d"},
 ]
 
 [package.dependencies]
@@ -989,4 +989,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "afe39b8d141bd3433a0b7f8f55ee9fe73b30d66b8f96a71c70dbad4fb012a112"
+content-hash = "f2bea8b06a6b611a509c9380a8e958183d1e8ba2955171f6964dfd6b594d7b01"
