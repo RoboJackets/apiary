@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4240bf04bfba31f2979c3c9e9c3e1ae7",
+    "content-hash": "9b101813bf2809bcefc14129b344200b",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -13334,16 +13334,16 @@
         },
         {
             "name": "phan/phan",
-            "version": "5.4.6",
+            "version": "5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phan/phan.git",
-                "reference": "5963ad2e55f7c4b3fd8349d25ddd7b43414d2d79"
+                "reference": "2b6a846eff1a65dd0229ffa2370b4c35a96b7f3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan/zipball/5963ad2e55f7c4b3fd8349d25ddd7b43414d2d79",
-                "reference": "5963ad2e55f7c4b3fd8349d25ddd7b43414d2d79",
+                "url": "https://api.github.com/repos/phan/phan/zipball/2b6a846eff1a65dd0229ffa2370b4c35a96b7f3c",
+                "reference": "2b6a846eff1a65dd0229ffa2370b4c35a96b7f3c",
                 "shasum": ""
             },
             "require": {
@@ -13408,9 +13408,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phan/phan/issues",
-                "source": "https://github.com/phan/phan/tree/5.4.6"
+                "source": "https://github.com/phan/phan/tree/5.5.1"
             },
-            "time": "2025-06-09T13:26:52+00:00"
+            "time": "2025-08-05T20:10:06+00:00"
         },
         {
             "name": "phar-io/manifest",

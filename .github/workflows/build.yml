@@ -46,7 +46,7 @@ jobs:
         run: vendor/bin/phpcs .
 
       - name: Run Phan
-        run: vendor/bin/phan --no-progress-bar --analyze-twice
+        run: vendor/bin/phan --output-mode github --no-progress-bar --analyze-twice
 
       - name: Run Psalm
         run: vendor/bin/psalm --output-format=github --no-progress
