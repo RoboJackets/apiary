@@ -70,17 +70,12 @@
         "barryvdh/laravel-ide-helper": "3.5.5",
         "beyondcode/laravel-dump-server": "2.1.0",
         "danog/advanced-json-rpc": "3.2.2",
-        "larastan/larastan": "3.4.1",
         "laravel/pail": "1.2.3",
         "laravel/pint": "1.24.0",
         "mockery/mockery": "1.6.12",
         "mxl/laravel-job": "1.7.0",
         "nunomaduro/collision": "8.6.1",
         "phan/phan": "5.4.6",
-        "phpstan/extension-installer": "1.4.3",
-        "phpstan/phpstan": "2.1.17",
-        "phpstan/phpstan-deprecation-rules": "2.0.3",
-        "phpstan/phpstan-strict-rules": "2.0.4",
         "phpunit/phpunit": "11.5.28",
         "psalm/plugin-laravel": "3.0.3",
         "slevomat/coding-standard": "8.16.0",
@@ -152,7 +147,6 @@
         "ci": [
             "vendor/bin/pint --test",
             "vendor/bin/phpcs",
-            "vendor/bin/phpstan analyse --level=max .",
             "vendor/bin/phan",
             "vendor/bin/psalm"
         ],
@@ -174,7 +168,6 @@
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
-            "phpstan/extension-installer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "php-http/discovery": true
         },
