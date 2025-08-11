@@ -73,8 +73,6 @@ class MembershipAgreementTemplate extends Model
      * Wrapper around Blade engine stolen from https://stackoverflow.com/a/39802153.
      *
      * @param  array<string,string|bool>  $data  data to pass to the template
-     *
-     * @phan-suppress PhanPossiblyInfiniteLoop
      */
     private static function render(string $string, array $data): string
     {

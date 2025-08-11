@@ -22,6 +22,8 @@ use Laravel\Scout\Builder;
  * @mixin TModel  @phan-suppress-current-line PhanInvalidMixin
  *
  * @method string getKey()
+ *
+ * @extends \Laravel\Nova\Resource<\Illuminate\Database\Eloquent\Model>
  */
 abstract class Resource extends NovaResource
 {
@@ -29,8 +31,6 @@ abstract class Resource extends NovaResource
      * Build a Scout search query for the given resource.
      *
      * @param  \Laravel\Scout\Builder  $query
-     *
-     * @phan-suppress PhanTypeExpectedObjectOrClassName
      */
     #[\Override]
     public static function scoutQuery(NovaRequest $request, $query): Builder
@@ -90,8 +90,6 @@ abstract class Resource extends NovaResource
 
     /**
      * Timestamp fields.
-     *
-     * @phan-suppress PhanTypeInvalidCallableMethodName
      */
     protected static function metadataPanel(): Panel
     {

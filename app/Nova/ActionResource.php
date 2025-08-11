@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// @phan-file-suppress PhanGenericConstructorTypes
-
 namespace App\Nova;
 
 use App\Models\ActionEvent;

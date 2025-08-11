@@ -34,6 +34,7 @@ return [
         'PhanAccessNonStaticToStatic',
         'PhanCompatibleStandaloneType',
         'PhanCompatibleTrueType',
+        'PhanGenericConstructorTypes',
         'PhanInvalidFQSENInCallable',
         'PhanParamSignatureMismatch',
         'PhanPartialTypeMismatchArgument',

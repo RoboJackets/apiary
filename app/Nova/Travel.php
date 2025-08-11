@@ -133,8 +133,6 @@ class Travel extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @phan-suppress PhanInvalidFQSENInClasslike
      */
     #[\Override]
     public function fields(Request $request): array
