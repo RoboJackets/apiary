@@ -250,7 +250,7 @@ sphinx-basic-ng = ">=1.0.0.beta2"
 type = "git"
 url = "https://github.com/pradyunsg/furo"
 reference = "HEAD"
-resolved_reference = "a1f74d89a18ca59d231fe365bcc1616f6934ad28"
+resolved_reference = "426ea05d879ee7dfdf74ba7c8b089f73081abbfd"
 
 [[package]]
 name = "h11"
