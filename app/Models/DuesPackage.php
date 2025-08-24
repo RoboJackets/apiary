@@ -225,6 +225,7 @@ class DuesPackage extends Model
                     ->where('payments_ucp.amount', '>', 0);
             })
             ->where('available_for_purchase', true)
+            ->where('dues_packages.effective_start', '<=', now())
             ->where('dues_packages.effective_end', '>=', now())
             ->where('restricted_to_students', $user->is_student);
 

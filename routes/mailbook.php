@@ -154,7 +154,9 @@ Mailbook::category('Dues Reminders')->group(static function () use ($user): void
                 'cost' => 55,
                 'restricted_to_students' => true,
                 'available_for_purchase' => true,
+                'effective_start' => now()->subHours(1),
                 'effective_end' => now()->addDays(1),
+                'available_for_purchase' => true,
             ]));
 
             return new TransactionReminder();
@@ -164,6 +166,9 @@ Mailbook::category('Dues Reminders')->group(static function () use ($user): void
                 'name' => 'Fall 2022',
                 'cost' => 55,
                 'restricted_to_students' => true,
+                'effective_start' => now()->subHours(1),
+                'effective_end' => now()->addHours(1),
+                'available_for_purchase' => true,
             ]));
 
             DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::updateOrCreate([
@@ -171,6 +176,38 @@ Mailbook::category('Dues Reminders')->group(static function () use ($user): void
             ], [
                 'cost' => 100,
                 'restricted_to_students' => true,
+                'effective_start' => now()->subHours(1),
+                'effective_end' => now()->addHours(1),
+                'available_for_purchase' => true,
+            ]));
+
+            return new TransactionReminder();
+        })
+        ->variant('Three Available Packages', static function (): TransactionReminder {
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::firstOrCreate([
+                'name' => 'Fall 2025',
+                'cost' => 55,
+                'restricted_to_students' => true,
+                'effective_start' => now()->subHours(1),
+                'effective_end' => now()->addHours(1),
+                'available_for_purchase' => true,
+            ]));
+
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::firstOrCreate([
+                'name' => 'Spring 2026',
+                'cost' => 55,
+                'restricted_to_students' => true,
+                'effective_start' => now()->addHours(1),
+                'effective_end' => now()->addHours(2),
+                'available_for_purchase' => true,
+            ]));
+
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::updateOrCreate([
+                'name' => 'Full Year (2025-2026)',
+            ], [
+                'cost' => 100,
+                'restricted_to_students' => true,
+                'effective_start' => now()->subHours(1),
                 'effective_end' => now()->addHours(1),
                 'available_for_purchase' => true,
             ]));
@@ -236,6 +273,61 @@ Mailbook::category('Dues Reminders')->group(static function () use ($user): void
             ], [
                 'cost' => 100,
                 'restricted_to_students' => true,
+                'effective_end' => now()->addHours(1),
+                'available_for_purchase' => true,
+            ]));
+
+            $transaction = DuesTransaction::withoutEvents(static function () use ($user, $package): DuesTransaction {
+                $transaction = DuesTransaction::factory()->make([
+                    'user_id' => $user->id,
+                    'dues_package_id' => $package->id,
+                ]);
+                $transaction->save();
+
+                return $transaction;
+            });
+
+            return new PaymentReminder($transaction);
+        })
+        ->variant('Two Other Packages', static function (): PaymentReminder {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $package = DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::firstOrCreate([
+                'name' => 'Fall 2025',
+                'cost' => 55,
+                'restricted_to_students' => true,
+                'effective_start' => now()->subHours(1),
+                'effective_end' => now()->addHours(1),
+                'available_for_purchase' => true,
+            ]));
+
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::updateOrCreate([
+                'name' => 'Spring 2026',
+            ], [
+                'cost' => 100,
+                'restricted_to_students' => true,
+                'effective_start' => now()->addHours(1),
+                'effective_end' => now()->addHours(2),
+                'available_for_purchase' => true,
+            ]));
+
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::updateOrCreate([
+                'name' => 'Full Year (2025-2026)',
+            ], [
+                'cost' => 100,
+                'restricted_to_students' => true,
+                'effective_start' => now()->subHours(1),
                 'effective_end' => now()->addHours(1),
                 'available_for_purchase' => true,
             ]));
