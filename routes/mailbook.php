@@ -153,7 +153,6 @@ Mailbook::category('Dues Reminders')->group(static function () use ($user): void
             ], [
                 'cost' => 55,
                 'restricted_to_students' => true,
-                'available_for_purchase' => true,
                 'effective_start' => now()->subHours(1),
                 'effective_end' => now()->addDays(1),
                 'available_for_purchase' => true,
