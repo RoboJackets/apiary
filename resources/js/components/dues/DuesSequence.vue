@@ -110,7 +110,12 @@ export default {
       if (this.currentStep < this.steps.length) {
         //transition
         this.currentStep = this.currentStep + 1;
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+
       } else {
         warn('No more steps');
       }
@@ -119,7 +124,11 @@ export default {
       if (this.currentStep > 0) {
         //transition
         this.currentStep = this.currentStep - 1;
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
       } else {
         warn('No step to go back to');
       }
