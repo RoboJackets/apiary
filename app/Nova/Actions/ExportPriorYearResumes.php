@@ -1,0 +1,160 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Nova\Actions;
+
+use App\Models\FiscalYear;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\ActionResponse;
+use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\NovaRequest;
+
+class ExportPriorYearResumes extends Action
+{
+    /**
+     * Indicates if this action is only available on the resource index view.
+     *
+     * @var bool
+     */
+    public $onlyOnIndex = true;
+
+    /**
+     * Indicates if the action can be run without any models.
+     *
+     * @var bool
+     */
+    public $standalone = true;
+
+    /**
+     * The text to be used for the action's confirm button.
+     *
+     * @var string
+     */
+    public $confirmButtonText = 'Export';
+
+    /**
+     * Disables action log events for this action.
+     *
+     * @var bool
+     */
+    public $withoutActionEvents = true;
+
+    /**
+     * Perform the action on the given models.
+     *
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
+     */
+    public function handle(ActionFields $fields, Collection $models)
+    {
+        if (! Auth::user()->can('read-users-resume')) {
+            return Action::danger('Sorry! You are not authorized to perform this action.');
+        }
+
+        $fiscal_year_id = $fields->fiscal_year;
+
+        $users = User::whereHas('dues', static function (Builder $q) use ($fiscal_year_id): void {
+            $q->whereHas('for', static function (Builder $q) use ($fiscal_year_id): void {
+                $q->where('fiscal_year_id', '=', $fiscal_year_id);
+            })
+                ->paid();
+        })
+            ->whereNotNull('resume_date')
+            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                $q->where('restricted_to_students', false);
+            })
+            ->orderBy('last_name')
+            ->orderBy('first_name')
+            ->pluck('uid');
+
+        if ($users->count() === 0) {
+            return Action::danger('No resumes matched the provided criteria!');
+        }
+
+        $filenames = $users->uniqueStrict()->map(
+            static fn (string $uid): string => escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'))
+        );
+
+        $datecode = now()->format('Y-m-d-H-i-s');
+        $filename = 'robojackets-resumes-'.$datecode.'.pdf';
+        $path = Storage::disk('local')->path('nova-exports/'.$filename);
+
+        $coverfilename = 'robojackets-resumes-'.$datecode.'-cover.pdf';
+        $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
+
+        Pdf::loadView(
+            'resumecover',
+            [
+                'majors' => [],
+                'class_standings' => [],
+                'cutoff_date' => '',
+                'generation_date' => $datecode,
+            ]
+        )->save($coverpath);
+
+        // Ghostscript: -q -dNOPAUSE -dBATCH for disabling interactivity, -sDEVICE= for setting output type, -dSAFER
+        // because the input is untrusted
+        $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile='.escapeshellarg($path).' ';
+        $cmd .= $coverpath.' ';
+        $cmd .= $filenames->join(' ');
+
+        Log::debug('Running shell command: '.$cmd);
+        $gsOutput = [];
+        $gsExit = -1;
+        exec($cmd, $gsOutput, $gsExit);
+
+        if ($gsExit !== 0) {
+            Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
+
+            return Action::danger('Error exporting resumes');
+        }
+
+        // This is not perfect! The original metadata is recoverable (exiftool can't remove it permanently).
+        $cmdExif = 'exiftool -Title="RoboJackets Resumes" -Creator="MyRoboJackets" -Author="RoboJackets" ';
+        $cmdExif .= escapeshellarg($path);
+        Log::debug('Running shell command: '.$cmdExif);
+        $exifOutput = [];
+        $exifExit = -1;
+        exec($cmdExif, $exifOutput, $exifExit);
+
+        if ($exifExit !== 0) {
+            Log::error('exiftool did not exit cleanly (status code '.$exifExit.'), output: '
+                .implode("\n", $exifOutput));
+
+            return Action::danger('Error exporting resumes');
+        }
+
+        // Generate signed URL to pass to frontend to facilitate file download
+        $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
+
+        return ActionResponse::download($filename, $url)
+            ->withMessage('The resumes were successfully exported!');
+    }
+
+    /**
+     * Get the fields available on the action.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    #[\Override]
+    public function fields(NovaRequest $request): array
+    {
+        return [
+            Select::make('Fiscal Year')
+                ->options(
+                    FiscalYear::all()
+                        ->mapWithKeys(static fn (FiscalYear $year): array => [$year->id, $year->ending_year])
+                        ->toArray()
+                ),
+        ];
+    }
+}
