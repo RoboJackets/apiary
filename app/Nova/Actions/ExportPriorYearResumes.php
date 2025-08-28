@@ -43,6 +43,13 @@ class ExportPriorYearResumes extends Action
     public $confirmButtonText = 'Export';
 
     /**
+     * The text to be used for the action's confirmation text.
+     *
+     * @var string
+     */
+    public $confirmText = 'This will generate a resume book with all members for the selected fiscal year.';
+
+    /**
      * Disables action log events for this action.
      *
      * @var bool
@@ -60,7 +67,7 @@ class ExportPriorYearResumes extends Action
             return Action::danger('Sorry! You are not authorized to perform this action.');
         }
 
-        $fiscal_year_id = $fields->fiscal_year;
+        $fiscal_year_id = FiscalYear::where('ending_year', '=', $fields->fiscal_year)->sole()->id;
 
         $users = User::whereHas('dues', static function (Builder $q) use ($fiscal_year_id): void {
             $q->whereHas('for', static function (Builder $q) use ($fiscal_year_id): void {
@@ -152,7 +159,7 @@ class ExportPriorYearResumes extends Action
             Select::make('Fiscal Year')
                 ->options(
                     FiscalYear::all()
-                        ->mapWithKeys(static fn (FiscalYear $year): array => [$year->id, $year->ending_year])
+                        ->mapWithKeys(static fn (FiscalYear $year): array => [$year->ending_year => $year->ending_year])
                         ->toArray()
                 ),
         ];
