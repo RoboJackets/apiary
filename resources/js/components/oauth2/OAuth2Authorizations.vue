@@ -13,27 +13,29 @@
         Applications may be listed multiple times if you have provided multiple authorizations, such as by signing in
         on multiple devices. To completely remove an application, click Remove for each of its entries below.
       </div>
-      <table class="table table-sm table-responsive table-borderless">
-        <thead>
-        <tr>
-          <th scope="col">Application</th>
-          <th scope="col">Authorized On</th>
-          <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="token in tokens" :key="token.id">
-          <td class="align-middle" v-if="token.client && token.client.name">{{ token.client.name }}</td>
-          <td class="align-middle" v-else>Unnamed Client Application</td>
-          <td class="align-middle">{{ token.created_at | moment("MMM D, YYYY") }}</td>
-          <td class="align-middle">
-            <button type="button" class="btn btn-sm btn-outline-danger"
-                    :disabled="deleting"
-                    v-on:click="deleteToken(token)">Remove</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-sm table-borderless">
+          <thead>
+          <tr>
+            <th scope="col">Application</th>
+            <th scope="col">Authorized On</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="token in tokens" :key="token.id">
+            <td class="align-middle" v-if="token.client && token.client.name">{{ token.client.name }}</td>
+            <td class="align-middle" v-else>Unnamed Client Application</td>
+            <td class="align-middle">{{ token.created_at | moment("MMM D, YYYY") }}</td>
+            <td class="align-middle">
+              <button type="button" class="btn btn-sm btn-outline-danger"
+                      :disabled="deleting"
+                      v-on:click="deleteToken(token)">Remove</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

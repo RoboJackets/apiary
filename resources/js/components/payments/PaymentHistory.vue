@@ -8,31 +8,33 @@
     <div v-if="!loading && error" class="alert alert-danger" role="alert">
       {{ error }}. Check your internet connection or try refreshing the page.
     </div>
-    <table v-else-if="!loading" class="table table-responsive table-borderless table-striped payments-table">
-      <thead>
-      <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Item</th>
-        <th scope="col">Amount Paid</th>
-        <th scope="col">Payment Method</th>
-        <th scope="col">Notes</th>
-      </tr>
-      </thead>
-      <tbody>
-        <tr v-if="!payments.length">
-          <td class="align-middle text-center" colspan="5">You haven't made any payments yet.</td>
+    <div v-else-if="!loading" class="table-responsive">
+      <table class="table table-borderless table-striped payments-table">
+        <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Item</th>
+          <th scope="col">Amount Paid</th>
+          <th scope="col">Payment Method</th>
+          <th scope="col">Notes</th>
         </tr>
-        <tr v-for="payment in payments" :key="payment.id">
-          <td class="align-middle">{{ payment.updated_at | moment("MMM D, YYYY h:mm A") }}</td>
-          <td class="align-middle">{{ getPaymentTitle(payment) }}</td>
-          <td class="align-middle">${{ payment.amount }}</td>
-          <td class="align-middle">
-            <payment-method-details :payment="payment"/>
-          </td>
-          <td class="align-middle"><a v-if="payment.receipt_url" :href="payment.receipt_url">View Receipt</a></td>
-        </tr>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <tr v-if="!payments.length">
+            <td class="align-middle text-center" colspan="5">You haven't made any payments yet.</td>
+          </tr>
+          <tr v-for="payment in payments" :key="payment.id">
+            <td class="align-middle">{{ payment.updated_at | moment("MMM D, YYYY h:mm A") }}</td>
+            <td class="align-middle">{{ getPaymentTitle(payment) }}</td>
+            <td class="align-middle">${{ payment.amount }}</td>
+            <td class="align-middle">
+              <payment-method-details :payment="payment"/>
+            </td>
+            <td class="align-middle"><a v-if="payment.receipt_url" :href="payment.receipt_url">View Receipt</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 

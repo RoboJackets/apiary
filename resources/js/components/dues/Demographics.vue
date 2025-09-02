@@ -7,17 +7,17 @@
 
         <fieldset class="mb-3">
           <label class ="lead" for="gender">What is your gender?</label>
-          <div v-for="option in genderOptions" class="custom-control custom-radio">
-            <input v-model="gender" type="radio" class="custom-control-input" :value="option.value" name="gender" :id="'gender-'+option.value">
-            <label class="custom-control-label" :for="'gender-'+option.value">{{option.text}}</label>
+          <div v-for="option in genderOptions" class="form-check custom-radio">
+            <input v-model="gender" type="radio" class="form-check-input" :value="option.value" name="gender" :id="'gender-'+option.value">
+            <label class="form-check-label" :for="'gender-'+option.value">{{option.text}}</label>
           </div>
         </fieldset>
 
         <fieldset class="mb-3">
           <label class="lead" for="ethnicity">What is your ethnicity/race? (Check all that Apply)</label>
-          <div v-for="option in ethnicityOptions" class="custom-control custom-checkbox">
-            <input v-model="ethnicity" type="checkbox" class="custom-control-input" :value="option.value" :id="'ethnicity-'+option.value" name="ethnicity">
-            <label class="custom-control-label" :for="'ethnicity-'+option.value">{{option.text}}</label>
+          <div v-for="option in ethnicityOptions" class="form-check custom-checkbox">
+            <input v-model="ethnicity" type="checkbox" class="form-check-input" :value="option.value" :id="'ethnicity-'+option.value" name="ethnicity">
+            <label class="form-check-label" :for="'ethnicity-'+option.value">{{option.text}}</label>
           </div>
         </fieldset>
 

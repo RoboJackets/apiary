@@ -9,26 +9,28 @@
     </div>
     <div v-else-if="!loading">
       <p>The following personal access tokens have access to your account.</p>
-      <table class="table table-sm table-responsive table-borderless">
-        <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Created On</th>
-          <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="token in tokens" :key="token.id">
-          <td class="align-middle">{{ token.name || "Unnamed Personal Access Token" }}</td>
-          <td class="align-middle">{{ token.created_at | moment("MMMM D, YYYY") }}</td>
-          <td class="align-middle">
-            <button type="button" class="btn btn-sm btn-outline-danger"
-                    :disabled="deleting"
-                    v-on:click="deletePersonalAccessToken(token)">Remove</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-sm table-borderless">
+          <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Created On</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="token in tokens" :key="token.id">
+            <td class="align-middle">{{ token.name || "Unnamed Personal Access Token" }}</td>
+            <td class="align-middle">{{ token.created_at | moment("MMMM D, YYYY") }}</td>
+            <td class="align-middle">
+              <button type="button" class="btn btn-sm btn-outline-danger"
+                      :disabled="deleting"
+                      v-on:click="deletePersonalAccessToken(token)">Remove</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

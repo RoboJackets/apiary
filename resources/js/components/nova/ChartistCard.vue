@@ -7,7 +7,7 @@
           <span v-if="totalSuffix" class="ml-.5 text-sm text-80">{{ totalSuffix }}</span>
         </p>
       </div>
-      <div ref="chart" class="z-40 absolute pin rounded-b-lg ct-chart ct-double-octave text-black"/>
+      <div ref="chart" class="z-40 absolute pin rounded-b-lg ct-chart ct-double-octave text-black"></div>
     </loading-card>
   </div>
 </template>

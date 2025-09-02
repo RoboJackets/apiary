@@ -163,7 +163,7 @@
           <div class="mb-3 row">
             <label for="legal-gender" class="col-sm-2 col-form-label">Legal Gender</label>
             <div class="col-sm-10 col-lg-4">
-              <select id="legal-gender" v-model="user.legal_gender" class="custom-select" @input="onFormChange();">
+              <select id="legal-gender" v-model="user.legal_gender" class="form-select" @input="onFormChange();">
                 <option value="M">Male (M)</option>
                 <option value="F">Female (F)</option>
                 <option value="X">Unspecified (X)</option>
@@ -193,7 +193,7 @@
             <div class="col-sm-10 col-lg-4">
               <div class="input-group">
                 <input v-model="user.github_username" type="text" readonly class="form-control" id="user-github" placeholder="No account linked">
-                <div class="input-group-append" v-if="!user.github_username">
+                <div  v-if="!user.github_username">
                   <a href="/github" class="btn btn-secondary">Link Account</a>
                 </div>
               </div>
@@ -205,7 +205,7 @@
             <div class="col-sm-10 col-lg-4">
               <div class="input-group">
                 <input v-model="user.gmail_address" type="text" readonly class="form-control" id="user-google" placeholder="No account linked">
-                <div class="input-group-append" v-if="!user.gmail_address">
+                <div  v-if="!user.gmail_address">
                   <a href="/google" class="btn btn-secondary">Link Account</a>
                 </div>
               </div>
@@ -221,7 +221,7 @@
               </template>
               <template v-else>
                 <input type="text" readonly class="form-control" id="user-sums" placeholder="No account linked">
-                <div class="input-group-append">
+                <div>
                   <a href="/sums" class="btn btn-secondary">Link Account</a>
                 </div>
               </template>
@@ -235,7 +235,7 @@
               <div class="input-group">
               <template v-if="user.clickup_email && user.clickup_email === clickUpEmailInDatabase">
                 <input v-model="user.clickup_email" type="text" readonly class="form-control" id="user-clickup">
-                <div class="input-group-append" v-if="user.clickup_invite_pending === true">
+                <div v-if="user.clickup_invite_pending === true">
                   <a href="/clickup" class="btn btn-secondary">Resend Invitation</a>
                 </div>
               </template>
@@ -243,7 +243,7 @@
                 <select class="form-control" id="user-clickup" v-model="user.clickup_email" @input="onFormChange();">
                   <option v-for="option in clickUpEmailOptions" :value="option">{{ option }}</option>
                 </select>
-                <div class="input-group-append">
+                <div>
                   <button type="submit" class="btn btn-secondary">Send Invitation</button>
                 </div>
               </template>
