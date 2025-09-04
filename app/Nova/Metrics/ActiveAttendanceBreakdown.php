@@ -89,6 +89,6 @@ class ActiveAttendanceBreakdown extends Partition
     public function uriKey(): string
     {
         return $this->resourceId === null ? 'active-attendance-breakdown' :
-            '/nova-api/'.$this->attendableType.'s/'.$this->resourceId.'/metrics/active-attendance-breakdown';
+            'active-attendance-breakdown-'.$this->resourceId;
     }
 }
