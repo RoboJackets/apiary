@@ -123,7 +123,7 @@
             </div>
         @endif
         @if($signedLatestAgreement && $needsResume)
-            <div class="col-sm-6 com-md-3 col-lg-4">
+            <div class="col-sm-6 col-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
@@ -138,7 +138,7 @@
             </div>
         @endif
         @if($githubInvitePending)
-            <div class="col-sm-6 com-md-3 col-lg-4">
+            <div class="col-sm-6 col-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
@@ -153,7 +153,7 @@
             </div>
         @endif
         @if($clickupInvitePending)
-        <div class="col-sm-6 com-md-3 col-lg-4">
+        <div class="col-sm-6 col-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
@@ -167,7 +167,7 @@
             </div>
         @endif
         @if($sumsAccessPending)
-            <div class="col-sm-6 com-md-3 col-lg-4">
+            <div class="col-sm-6 col-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
@@ -181,7 +181,7 @@
             </div>
         @endif
         @if($travelAssignment && (!$signedLatestAgreement || (!$status && $needsTransaction) || (!$status && $needsPayment) || ($travelAssignment->needs_docusign) || (!$travelAssignment->is_paid) || (!$hasEmergencyContactInformation)))
-            <div class="col-sm-6 com-md-3 col-lg-4">
+            <div class="col-sm-6 col-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
