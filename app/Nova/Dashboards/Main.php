@@ -164,7 +164,7 @@ class Main extends Dashboard
             ];
         }
 
-        if (request()->is('nova-api/dashboards/cards/main/metrics/active-attendance-breakdown-event-*')) {
+        if (request()->is('nova-api/dashboards/cards/main/metrics/active-attendance-breakdown-*')) {
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $id = intval($parts->last());
 
