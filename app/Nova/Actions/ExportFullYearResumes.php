@@ -19,7 +19,7 @@ use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ExportPriorYearResumes extends Action
+class ExportFullYearResumes extends Action
 {
     /**
      * Indicates if this action is only available on the resource index view.
