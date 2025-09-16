@@ -102,7 +102,7 @@
                         } else {
                             Swal.fire(
                                 'Error',
-                                'Unable to process data. Check your internet connection or try refreshing the page.',
+                                error.toString(),
                                 'error'
                             );
                         }
@@ -155,7 +155,7 @@
                 //Remove focus from button
                 document.activeElement.blur();
                 // When a team button is clicked, show a prompt to swipe BuzzCard
-                this.attendance.attendable_id = event.target.id;
+                this.attendance.attendable_id = event.currentTarget.id;
                 Swal.fire(this.getTeamSwalConfig(event.target.innerText, false)).then(() => {
                     // Clear fields in case of any modal dismissal
                     // This *does not* fire in normal card processing flow
@@ -178,12 +178,12 @@
                             <span onClick="document.getElementById('stick-checkbox').click()">
                             <em>Multiple people attending the same team?</em>
                             </span>
-                            <div class="form-check">
-                              <input class="form-check-input stick-checkbox" type="checkbox" id="stick-checkbox">
-                              <label class="form-check-label" for="stick-checkbox">
-                                Stick to this team
-                              </label>
-                            </div>
+                              <div class="d-flex align-items-center justify-content-center">
+                                <input class="form-check-input stick-checkbox me-2" type="checkbox" id="stick-checkbox">
+                                <label class="form-check-label" for="stick-checkbox">
+                                    Stick to this team
+                                </label>
+                              </div>
                             </div>`,
                     showCancelButton: true,
                     allowOutsideClick: () => !Swal.isLoading(),
@@ -207,10 +207,11 @@
                         Swal.getTitle().parentNode.insertBefore(cardDiv, Swal.getTitle());
                     },
                     didDestroy: () => {
-                      let checkbox = document.getElementById('stick-checkbox')
+                      let checkbox = document.getElementById('stick-checkbox');
                       if (checkbox) {
                         checkbox.removeEventListener("change", checkboxEventListener);
                       }
+                      this.clearFields();
                     }
                 }
             },
