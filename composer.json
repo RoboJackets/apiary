@@ -48,7 +48,7 @@
         "laravel/socialite": "5.23.0",
         "laravel/tinker": "2.10.1",
         "madewithlove/laravel-nova-uuid-support": "dev-l12-compatibility",
-        "meilisearch/meilisearch-php": "1.16.0",
+        "meilisearch/meilisearch-php": "1.16.1",
         "mrclay/jsmin-php": "2.4.3",
         "mwgg/airports": "1.0",
         "realrashid/sweet-alert": "7.3.0",
