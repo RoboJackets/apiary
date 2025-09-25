@@ -69,7 +69,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: Install exiftool
-        run: sudo apt-get install --assume-yes libimage-exiftool-perl
+        run: sudo apt-get update && sudo apt-get install --assume-yes libimage-exiftool-perl
 
       - name: Prepare the environment
         run: cp .env.example .env
