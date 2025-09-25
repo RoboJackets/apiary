@@ -1,4 +1,4 @@
-The following dues {{ count($packages) === 1 ? 'package has an' : 'packages have' }} access end {{ \Illuminate\Support\Str::plural('date', count($packages)) }} within the next 7 days:
+The following dues {{ count($packages) === 1 ? 'deadline is' : 'deadlines are' }} occurring within the next 7 days:
 
 @foreach($packages as $package)
 - {{ $package->name }} expires on {{ $package->access_end->format('l, F j') }}
