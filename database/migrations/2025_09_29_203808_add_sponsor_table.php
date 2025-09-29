@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sponsors', function (Blueprint $table) {
+        Schema::create('sponsors', static function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->dateTime('start_date');
