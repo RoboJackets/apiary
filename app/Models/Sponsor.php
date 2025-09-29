@@ -47,8 +47,8 @@ class Sponsor extends Model
     protected function casts(): array
     {
         return [
-            'start_date'   => 'datetime',
-            'end_date'     => 'datetime',
+            'start_date' => 'datetime',
+            'end_date' => 'datetime',
             'domain_names' => 'array',
         ];
     }
