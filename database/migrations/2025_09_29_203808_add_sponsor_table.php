@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->json('domain_names')->nullable(); // array cast in model
+            $table->json('domain_names')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
