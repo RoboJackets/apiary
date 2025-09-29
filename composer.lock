@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2364fa78de5d7f258ddd2a7811a1348",
+    "content-hash": "3fb4ac3c2d0bed5b31f4c66264d7f552",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -10894,16 +10894,16 @@
         },
         {
             "name": "xammie/mailbook",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Xammie/mailbook.git",
-                "reference": "7eba0a9326a305b5297967e1b1505d1584b0a6d8"
+                "reference": "00bdb6eb94af4837c99b3009883264b10db3470c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/7eba0a9326a305b5297967e1b1505d1584b0a6d8",
-                "reference": "7eba0a9326a305b5297967e1b1505d1584b0a6d8",
+                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/00bdb6eb94af4837c99b3009883264b10db3470c",
+                "reference": "00bdb6eb94af4837c99b3009883264b10db3470c",
                 "shasum": ""
             },
             "require": {
@@ -10963,7 +10963,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Xammie/mailbook/issues",
-                "source": "https://github.com/Xammie/mailbook/tree/1.9.0"
+                "source": "https://github.com/Xammie/mailbook/tree/1.10.0"
             },
             "funding": [
                 {
@@ -10971,7 +10971,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-17T21:55:12+00:00"
+            "time": "2025-09-20T08:38:02+00:00"
         }
     ],
     "packages-dev": [

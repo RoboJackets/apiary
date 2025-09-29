@@ -111,6 +111,8 @@ class Team extends Resource
             new Panel('Controls', $this->controlFields()),
 
             BelongsToMany::make('Members', 'members', User::class)
+                ->searchable()
+                ->withoutTrashed()
                 ->canSee(
                     static fn (Request $request): bool => $request->user()->can(
                         'read-teams-membership'
