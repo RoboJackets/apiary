@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
-
  */
 class SponsorDomain extends Model
 {
@@ -54,6 +53,7 @@ class SponsorDomain extends Model
     public static function sponsorEmail(string $email): bool
     {
         $domain = substr(strrchr($email, '@'), 1);
+
         return self::where('domain_name', $domain)->exists();
     }
 }
