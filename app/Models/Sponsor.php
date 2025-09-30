@@ -23,7 +23,6 @@ class Sponsor extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    use HasManyEvents;
 
     /**
      * The attributes that are not mass assignable.

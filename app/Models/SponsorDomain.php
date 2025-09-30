@@ -23,7 +23,6 @@ class SponsorDomain extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    use HasBelongsToManyEvents;
 
     /**
      * The attributes that are not mass assignable.
