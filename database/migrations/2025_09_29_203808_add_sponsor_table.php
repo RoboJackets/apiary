@@ -16,9 +16,14 @@ return new class extends Migration
         Schema::create('sponsors', static function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->json('domain_names')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+        Schema::create('sponsor_domains', static function (Blueprint $table) {
+            $table->id();
+            $table->string('domain_name');
+            $table->foreignId('sponsor_id')->constrained('sponsors')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,5 +35,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('sponsors');
+        Schema::dropIfExists('sponsor_domains');
     }
 };

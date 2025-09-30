@@ -7,15 +7,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * This model represents a sponsor entity in the application.
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon $start_date
  * @property \Illuminate\Support\Carbon $end_date
- * @property array $domain_names
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -24,6 +23,7 @@ class Sponsor extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasManyEvents;
 
     /**
      * The attributes that are not mass assignable.
@@ -36,9 +36,7 @@ class Sponsor extends Model
         'updated_at',
         'deleted_at',
         'name',
-        'start_date',
         'end_date',
-        'domain_names',
     ];
 
     /**
@@ -50,9 +48,7 @@ class Sponsor extends Model
     protected function casts(): array
     {
         return [
-            'start_date' => 'datetime',
             'end_date' => 'datetime',
-            'domain_names' => 'array',
         ];
     }
 
@@ -67,10 +63,8 @@ class Sponsor extends Model
     /**
      * Check if the given email is authorized for the sponsor.
      */
-    public function authorized(string $email): bool
+    public function domainNames(): HasMany
     {
-        $domain = substr(strrchr($email, '@'), 1);
-
-        return in_array($domain, $this->domain_names, true);
+        return $this->hasMany(SponsorDomain::class, "sponsor_id");
     }
 }
