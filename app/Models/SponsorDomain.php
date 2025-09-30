@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -6,8 +6,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * This model represents a sponsor entity in the application.
@@ -25,7 +25,7 @@ class SponsorDomain extends Model
     use HasFactory;
     use SoftDeletes;
     use HasBelongsToManyEvents;
-    
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -49,7 +49,7 @@ class SponsorDomain extends Model
     }
 
     /**
-     * Checks whether a given email is associated with a Sponsor
+     * Checks whether a given email is associated with a Sponsor.
      */
     public static function sponsorEmail(string $email): bool
     {
