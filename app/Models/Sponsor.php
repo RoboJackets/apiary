@@ -56,7 +56,7 @@ class Sponsor extends Model
      */
     public function active(): bool
     {
-        return $this->end_date > now() && $this->start_date < now();
+        return $this->end_date > now();
     }
 
     /**
