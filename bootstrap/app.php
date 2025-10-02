@@ -32,7 +32,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \Spatie\Csp\AddCspHeaders::class,
         ]);
 
-        $middleware->throttleApi(limiter: '60|api_rate_limit,1', redis: true);
+        $middleware->throttleApi(
+            limiter: '60|api_rate_limit,1',
+            redis: env('CACHE_STORE') === 'redis'
+        );
         $middleware->api(\App\Http\Middleware\Sentry::class);
 
         $middleware->alias([
