@@ -6,7 +6,7 @@
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <style type="text/css">
         b {
-            font-weight: bold; !important
+            font-weight: bold !important;
         }
     </style>
     @include('favicon')

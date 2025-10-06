@@ -10,8 +10,8 @@ use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Models\User as AppModelsUser;
 use App\Nova\Actions\CreatePersonalAccessToken;
 use App\Nova\Actions\ExportDemographicsSurveyRecipients;
-use App\Nova\Actions\ExportPriorYearResumes;
-use App\Nova\Actions\ExportResumes;
+use App\Nova\Actions\ExportFilteredResumes;
+use App\Nova\Actions\ExportFullYearResumes;
 use App\Nova\Actions\ExportUsersBuzzCardAccess;
 use App\Nova\Actions\OverrideAccess;
 use App\Nova\Actions\RefreshFromGTED;
@@ -682,15 +682,15 @@ class User extends Resource
 
         if ($request->user()->can('read-users-resume')) {
             $exportResumes = [
-                ExportResumes::make()
+                ExportFilteredResumes::make()
                     ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
-                ExportPriorYearResumes::make()
+                ExportFullYearResumes::make()
                     ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
             ];
         } else {
             $exportResumes = [
                 Action::danger(
-                    ExportResumes::make()->name(),
+                    ExportFilteredResumes::make()->name(),
                     'You do not have access to export resumes.'
                 )
                     ->withoutConfirmation()
@@ -699,7 +699,7 @@ class User extends Resource
                     ->onlyOnIndex()
                     ->canRun(static fn (): bool => true),
                 Action::danger(
-                    ExportPriorYearResumes::make()->name(),
+                    ExportFullYearResumes::make()->name(),
                     'You do not have access to export resumes.'
                 )
                     ->withoutConfirmation()

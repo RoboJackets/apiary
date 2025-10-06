@@ -22,7 +22,7 @@
                         <div class="row pt-3">
                             <div class="col-sm-3 pt-3">
                                 <button type="submit"
-                                        class="btn btn-default btn-primary inline-flex items-center relative"
+                                        class="btn btn-primary inline-flex items-center relative"
                                         @click="submit">
                                     <span>Submit</span>
                                 </button>

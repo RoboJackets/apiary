@@ -1,4 +1,4 @@
-# syntax = docker/dockerfile:1.17
+# syntax = docker/dockerfile:1.19
 
 FROM python:3.13-bookworm AS docs-source
 
@@ -13,7 +13,7 @@ RUN set -euxo pipefail && \
     /root/.local/bin/poetry install --no-interaction && \
     /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build"
 
-FROM node:22.18.0 AS docs-minification
+FROM node:22.20.0 AS docs-minification
 
 COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
 
@@ -42,7 +42,7 @@ COPY --link package.json package-lock.json webpack.mix.js artisan /app/
 COPY --link resources/ /app/resources/
 COPY --link public/ /app/public/
 
-FROM node:22.18.0 AS nova-components
+FROM node:22.20.0 AS nova-components
 
 COPY --link /nova-components/ /nova-components/
 
@@ -60,7 +60,7 @@ RUN set -eux && \
     npm install --no-progress && \
     npm run production --no-progress
 
-FROM node:22.18.0 AS frontend
+FROM node:22.20.0 AS frontend
 
 COPY --link --from=frontend-source /app/ /app/
 

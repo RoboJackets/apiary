@@ -52,9 +52,9 @@ class PackageExpirationReminder extends Mailable implements ShouldQueue
                 ->unique();
 
             if ($expirations->count() === 1) {
-                $subject = 'Dues packages expiring on '.$expirations->first();
+                $subject = 'Upcoming dues deadline on '.$expirations->first();
             } else {
-                $subject = 'Dues packages expiring within the next 7 days';
+                $subject = 'Upcoming dues deadlines within the next 7 days';
             }
         }
 

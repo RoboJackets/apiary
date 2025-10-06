@@ -24,7 +24,7 @@ use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ExportResumes extends Action
+class ExportFilteredResumes extends Action
 {
     /**
      * Indicates if this action is only available on the resource index view.

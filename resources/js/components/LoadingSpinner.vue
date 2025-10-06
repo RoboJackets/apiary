@@ -1,7 +1,7 @@
 <template>
   <div v-if="active" class="mx-auto text-center">
     <div class="spinner-border mb-2 mx-auto" role="status">
-      <span class="sr-only">{{ text }}</span>
+      <span class="visually-hidden">{{ text }}</span>
     </div>
     <p>{{ text }}</p>
   </div>
