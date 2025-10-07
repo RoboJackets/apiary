@@ -132,10 +132,14 @@ class ExportFullYearResumes extends Action
         $outdir = Storage::disk('local')->path('nova-exports/robojackets-resumes-'.$datecode);
 
         $coverfilename = 'robojackets-resumes-'.$datecode.'-cover.pdf';
-        $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
+        $coverpath = Storage::disk('local')->path($outdir.'/'.$coverfilename);
 
         if (! is_dir($outdir)) {
             mkdir($outdir, 0755, true);
+        }
+        $dir = dirname($coverpath);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
         }
 
         Pdf::loadView(
@@ -192,6 +196,11 @@ class ExportFullYearResumes extends Action
 
         $coverfilename = 'robojackets-resumes-'.$datecode.'-cover.pdf';
         $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
+
+        $dir = dirname($coverpath);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
 
         Pdf::loadView(
             'resumecover',
