@@ -166,7 +166,7 @@ class ExportFullYearResumes extends Action
             if ($gsExit !== 0) {
                 Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
 
-                return Action::danger('Error exporting resumes.');
+                return Action::danger('Error sanitizing PDFs.');
             }
 
             array_push($filenames_cleaned, $outdir.'/'.$f_trimmed);
@@ -181,7 +181,7 @@ class ExportFullYearResumes extends Action
             }
             $zip->close();
         } else {
-            return Action::danger('Error exporting resumes.');
+            return Action::danger('Error exporting resumes to ZIP.');
         }
 
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $outfilename], now()->addMinutes(5));
