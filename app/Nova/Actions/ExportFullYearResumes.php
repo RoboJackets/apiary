@@ -155,7 +155,7 @@ class ExportFullYearResumes extends Action
         
         $filenames_cleaned = [];
         foreach ($filenames as $f) {
-            $f_trimmed = preg_replace("/resumes\//", '', $f);
+            $f_trimmed = basename($f);
             $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile='.escapeshellarg($path).' ';
             $cmd .= $outdir.'/'.$f_trimmed.' ';
             $cmd .= $f;
