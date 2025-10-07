@@ -132,7 +132,7 @@ class ExportFullYearResumes extends Action
         $outdir = Storage::disk('local')->path('nova-exports/robojackets-resumes-'.$datecode);
 
         $coverfilename = 'robojackets-resumes-'.$datecode.'-cover.pdf';
-        $coverpath = Storage::disk('local')->path($outdir.'/'.$coverfilename);
+        $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
 
         if (! is_dir($outdir)) {
             mkdir($outdir, 0755, true);
@@ -152,14 +152,14 @@ class ExportFullYearResumes extends Action
                 'generation_date' => $datecode,
             ]
         )->save($coverpath);
-        $filenames = array_push($filenames, $coverpath);
-        
+
+        $filenames_dirty = array_merge($filenames->toArray(), [$coverpath]);
         $filenames_cleaned = [];
-        foreach ($filenames as $f) {
+        foreach ($filenames_dirty as $f) {
             $f_trimmed = $outdir.'/'.basename($f);
             $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile=';
-            $cmd .= $f_trimmed.' ';
-            $cmd .= $f;
+            $cmd .= escapeshellarg($f_trimmed).' ';
+            $cmd .= escapeshellarg($f);
             $gsOutput = [];
             $gsExit = -1;
             exec($cmd, $gsOutput, $gsExit);
@@ -178,9 +178,9 @@ class ExportFullYearResumes extends Action
         if ($archive->open($path, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
             $archive->addFile(storage_path($coverpath), $coverfilename);
             foreach ($filenames_cleaned as $f) {
-                $archive->addFile(storage_path($f), $f);
+                $archive->addFile($f, basename($f));
             }
-            $zip->close();
+            $archive->close();
         } else {
             return Action::danger('Error exporting resumes to ZIP.');
         }
