@@ -159,7 +159,7 @@ class ExportFullYearResumes extends Action
             $f_trimmed = $outdir.'/'.basename($f);
             $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile=';
             $cmd .= escapeshellarg($f_trimmed).' ';
-            $cmd .= escapeshellarg($f);
+            $cmd .= $f;
             $gsOutput = [];
             $gsExit = -1;
             exec($cmd, $gsOutput, $gsExit);
