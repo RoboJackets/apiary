@@ -137,10 +137,6 @@ class ExportFullYearResumes extends Action
         if (! is_dir($outdir)) {
             mkdir($outdir, 0755, true);
         }
-        $dir = dirname($coverpath);
-        if (!is_dir($dir)) {
-            mkdir($dir, 0755, true);
-        }
 
         Pdf::loadView(
             'resumecover',
@@ -156,7 +152,7 @@ class ExportFullYearResumes extends Action
         foreach ($filenames as $f) {
             $f_trimmed = preg_replace("/resumes\//", '', $f);
             $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile='.escapeshellarg($path).' ';
-            $cmd .= $outdir.$f_trimmed;
+            $cmd .= $outdir.'/'.$f_trimmed.' ';
             $cmd .= $f;
             $gsOutput = [];
             $gsExit = -1;
