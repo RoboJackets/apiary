@@ -170,7 +170,7 @@ class ExportFullYearResumes extends Action
                 return Action::danger('Error sanitizing PDFs.'.implode("\n", $gsOutput));
             }
 
-            array_push($filenames_cleaned, $outdir.'/'.$f_trimmed);
+            array_push($filenames_cleaned, $f_trimmed);
         }
 
         $archive = new ZipArchive();
