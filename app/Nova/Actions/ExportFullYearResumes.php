@@ -89,7 +89,7 @@ class ExportFullYearResumes extends Action
         }
 
         $filenames = $users->uniqueStrict()->map(
-            static fn (string $uid): string => escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'))
+            static fn (string $uid): string => Storage::disk('local')->path('resumes/'.$uid.'.pdf')
         );
 
         if ($fields->output_type === 'mono') {
@@ -159,7 +159,7 @@ class ExportFullYearResumes extends Action
             $f_trimmed = $outdir.'/'.basename($f);
             $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile=';
             $cmd .= escapeshellarg($f_trimmed).' ';
-            $cmd .= $f;
+            $cmd .= escapeshellarg($f);
             $gsOutput = [];
             $gsExit = -1;
             exec($cmd, $gsOutput, $gsExit);
@@ -194,6 +194,10 @@ class ExportFullYearResumes extends Action
     }
 
     private function exportMono(Collection $filenames) {
+        $filenames = $filenames->map(function ($f) {
+            return escapeshellarg($f);
+        });
+
         $datecode = now()->format('Y-m-d-H-i-s');
         $filename = 'robojackets-resumes-'.$datecode.'.pdf';
         $path = Storage::disk('local')->path('nova-exports/'.$filename);
