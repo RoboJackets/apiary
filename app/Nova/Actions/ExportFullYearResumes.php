@@ -176,7 +176,6 @@ class ExportFullYearResumes extends Action
         $archive = new ZipArchive();
 
         if ($archive->open($path, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
-            $archive->addFile(storage_path($coverpath), $coverfilename);
             foreach ($filenames_cleaned as $f) {
                 if (! file_exists($f)) {
                     return Action::danger('GhostScript did not create the file '.$f);
