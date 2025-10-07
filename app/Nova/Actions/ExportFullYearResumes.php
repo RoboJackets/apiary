@@ -93,9 +93,9 @@ class ExportFullYearResumes extends Action
         );
 
         if ($fields->output_type === 'mono') {
-            return exportMono();
+            return self.exportMono();
         } else {
-            return exportZip();
+            return self.exportZip();
         }
     }
 
