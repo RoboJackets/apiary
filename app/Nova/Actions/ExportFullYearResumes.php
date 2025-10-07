@@ -161,10 +161,10 @@ class ExportFullYearResumes extends Action
             if ($gsExit !== 0) {
                 Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
 
-                return Action::danger('Error exporting resumes');
+                return Action::danger('Error exporting resumes.');
             }
 
-            array_push($filenames_cleaned, $outdir.$f_trimmed);
+            array_push($filenames_cleaned, $outdir.'/'.$f_trimmed);
         }
 
         $archive = new ZipArchive();
