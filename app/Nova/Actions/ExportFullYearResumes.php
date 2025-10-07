@@ -93,9 +93,9 @@ class ExportFullYearResumes extends Action
         );
 
         if ($fields->output_type === 'mono') {
-            return $this->exportMono();
+            return $this->exportMono($filenames);
         } else {
-            return $this->exportZip();
+            return $this->exportZip($filenames);
         }
     }
 
