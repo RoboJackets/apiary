@@ -138,6 +138,11 @@ class ExportFullYearResumes extends Action
             mkdir($outdir, 0755, true);
         }
 
+        $dir = dirname($coverpath);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
         Pdf::loadView(
             'resumecover',
             [
