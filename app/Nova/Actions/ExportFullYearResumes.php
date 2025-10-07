@@ -152,12 +152,13 @@ class ExportFullYearResumes extends Action
                 'generation_date' => $datecode,
             ]
         )->save($coverpath);
+        $filenames = array_push($filenames, $coverpath);
         
         $filenames_cleaned = [];
         foreach ($filenames as $f) {
-            $f_trimmed = basename($f);
-            $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile='.escapeshellarg($path).' ';
-            $cmd .= $outdir.'/'.$f_trimmed.' ';
+            $f_trimmed = $outdir.'/'.basename($f);
+            $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile=';
+            $cmd .= $f_trimmed.' ';
             $cmd .= $f;
             $gsOutput = [];
             $gsExit = -1;
@@ -166,7 +167,7 @@ class ExportFullYearResumes extends Action
             if ($gsExit !== 0) {
                 Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
 
-                return Action::danger('Error sanitizing PDFs.');
+                return Action::danger('Error sanitizing PDFs.'.implode("\n", $gsOutput));
             }
 
             array_push($filenames_cleaned, $outdir.'/'.$f_trimmed);
