@@ -18,6 +18,7 @@ use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use ZipArchive;
 
 class ExportFullYearResumes extends Action
 {
@@ -91,6 +92,100 @@ class ExportFullYearResumes extends Action
             static fn (string $uid): string => escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'))
         );
 
+        if ($fields->output_type === 'mono') {
+            return exportMono();
+        } else {
+            return exportZip();
+        }
+    }
+
+    /**
+     * Get the fields available on the action.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    #[\Override]
+    public function fields(NovaRequest $request): array
+    {
+        return [
+            Select::make('Fiscal Year')
+                ->options(
+                    FiscalYear::all()
+                        ->mapWithKeys(static fn (FiscalYear $year): array => [$year->ending_year => $year->ending_year])
+                        ->toArray()
+                ),
+            Select::make('Output Type')
+                ->options([
+                    'mono' => 'Single PDF',
+                    'zip' => 'Zip Archive of PDFs',
+                ])
+                ->displayUsingLabels()
+                ->rules('required'),
+        ];
+    }
+
+    private function exportZip(Collection $filenames) 
+    {
+        $datecode = now()->format('Y-m-d-H-i-s');
+        $outfilename = 'robojackets-resumes-'.$datecode.'.zip';
+        $path = Storage::disk('local')->path('nova-exports/'.$outfilename);
+        $outdir = Storage::disk('local')->path('nova-exports/robojackets-resumes-'.$datecode);
+
+        $coverfilename = 'robojackets-resumes-'.$datecode.'-cover.pdf';
+        $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
+
+        if (! is_dir($outdir)) {
+            mkdir($outdir, 0755, true);
+        }
+
+        Pdf::loadView(
+            'resumecover',
+            [
+                'majors' => [],
+                'class_standings' => [],
+                'cutoff_date' => '',
+                'generation_date' => $datecode,
+            ]
+        )->save($coverpath);
+        
+        $filenames_cleaned = [];
+        foreach ($filenames as $f) {
+            $f_trimmed = preg_replace("/resumes\//", '', $f);
+            $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile='.escapeshellarg($path).' ';
+            $cmd .= $outdir.$f_trimmed;
+            $cmd .= $f;
+            $gsOutput = [];
+            $gsExit = -1;
+            exec($cmd, $gsOutput, $gsExit);
+
+            if ($gsExit !== 0) {
+                Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
+
+                return Action::danger('Error exporting resumes');
+            }
+
+            array_push($filenames_cleaned, $outdir.$f_trimmed);
+        }
+
+        $archive = new ZipArchive();
+
+        if ($archive->open($path, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            $archive->addFile(storage_path($coverpath), $coverfilename);
+            foreach ($filenames_cleaned as $f) {
+                $archive->addFile(storage_path($f), $f);
+            }
+            $zip->close();
+        } else {
+            return Action::danger('Error exporting resumes.');
+        }
+
+        $url = URL::signedRoute('api.v1.nova.export', ['file' => $outfilename], now()->addMinutes(5));
+
+        return ActionResponse::download($outfilename, $url)
+            ->withMessage('The resumes were successfully exported!');
+    }
+
+    private function exportMono(Collection $filenames) {
         $datecode = now()->format('Y-m-d-H-i-s');
         $filename = 'robojackets-resumes-'.$datecode.'.pdf';
         $path = Storage::disk('local')->path('nova-exports/'.$filename);
@@ -145,23 +240,5 @@ class ExportFullYearResumes extends Action
 
         return ActionResponse::download($filename, $url)
             ->withMessage('The resumes were successfully exported!');
-    }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    #[\Override]
-    public function fields(NovaRequest $request): array
-    {
-        return [
-            Select::make('Fiscal Year')
-                ->options(
-                    FiscalYear::all()
-                        ->mapWithKeys(static fn (FiscalYear $year): array => [$year->ending_year => $year->ending_year])
-                        ->toArray()
-                ),
-        ];
     }
 }
