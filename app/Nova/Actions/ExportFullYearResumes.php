@@ -165,7 +165,7 @@ class ExportFullYearResumes extends Action
             if ($gsExit !== 0) {
                 Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
 
-                return Action::danger('Error sanitizing PDFs.'.implode("\n", $gsOutput));
+                return Action::danger('Error sanitizing PDFs.');
             }
 
             array_push($filenames_cleaned, $f_trimmed);
