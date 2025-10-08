@@ -92,11 +92,9 @@ class ExportFullYearResumes extends Action
             static fn (string $uid): string => Storage::disk('local')->path('resumes/'.$uid.'.pdf')
         );
 
-        if ($fields->output_type === 'mono') {
-            return $this->exportMono($filenames);
-        } else {
-            return $this->exportZip($filenames);
-        }
+        return $fields->output_type === 'mono' ?
+            $this->exportMono($filenames) :
+            $this->exportZip($filenames);
     }
 
     /**
@@ -124,7 +122,7 @@ class ExportFullYearResumes extends Action
         ];
     }
 
-    private function exportZip(Collection $filenames) 
+    private function exportZip(Collection $filenames)
     {
         $datecode = now()->format('Y-m-d-H-i-s');
         $outfilename = 'robojackets-resumes-'.$datecode.'.zip';
@@ -139,7 +137,7 @@ class ExportFullYearResumes extends Action
         }
 
         $dir = dirname($coverpath);
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
 
@@ -193,10 +191,9 @@ class ExportFullYearResumes extends Action
             ->withMessage('The resumes were successfully exported!');
     }
 
-    private function exportMono(Collection $filenames) {
-        $filenames = $filenames->map(function ($f) {
-            return escapeshellarg($f);
-        });
+    private function exportMono(Collection $filenames)
+    {
+        $filenames = $filenames->map(static fn ($f) => escapeshellarg($f));
 
         $datecode = now()->format('Y-m-d-H-i-s');
         $filename = 'robojackets-resumes-'.$datecode.'.pdf';
@@ -206,7 +203,7 @@ class ExportFullYearResumes extends Action
         $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
 
         $dir = dirname($coverpath);
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
 
