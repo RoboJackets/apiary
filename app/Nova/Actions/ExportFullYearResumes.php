@@ -111,7 +111,8 @@ class ExportFullYearResumes extends Action
                     FiscalYear::all()
                         ->mapWithKeys(static fn (FiscalYear $year): array => [$year->ending_year => $year->ending_year])
                         ->toArray()
-                ),
+                )
+                ->rules('required'),
             Select::make('Output Type')
                 ->options([
                     'mono' => 'Single PDF',
