@@ -7,7 +7,7 @@ license = "MIT"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.12,<3.14"
 sphinx = "8.2.3"
 sphinx-autobuild = "2025.8.25"
 sphinxext-opengraph = "0.13.0"
