@@ -27,17 +27,24 @@
         <div v-if="emailValidated" key="password-step">
           <label for="password" class="form-label">One-Time Password</label>
           <input 
-            type="password" 
+            type="text" 
             v-model="password" 
             class="form-control" 
-            placeholder="Enter the one-time password emailed to you." 
+            placeholder="One-Time Password" 
             required>
-          <button type="submit" class="btn btn-success mt-3">Login</button>
+          <button type="submit" class="btn btn-success mt-3">Submit</button>
         </div>
       </transition>
     </form>
   </div>
   <transition name="slide-fade">
+      <div v-if="emailValidated" class="alert alert-primary" role="alert">
+        <h4>One-Time Password Sent!</h4>
+        <p>Please type the one-time password sent to your email.</p>
+        <p>Be sure to check your Spam folder if you do not see it. 
+          If you believe the password did not send correctly, press the button below to resend it.</p>
+        <p></p>
+      </div>
       <div v-if="emailValidated" class="resend-section">
         <button
           class="btn btn-link"
@@ -96,7 +103,9 @@ export default {
             this.emailValidated = true;
             this.sendOTP();
         } else {
-            this.showToast('Email domain not approved.', 'error');
+          // NOTE: hello@robojackets.org is a placeholder for now; will change when I find out
+          // who is a good point of contact
+          Swal.fire('Authentication Error', 'Could not validate email domain. Please try again, or contact "hello@robojackets.org" if issues persist.', 'error');
         }
     },
     beginResendCooldown() {
@@ -115,7 +124,6 @@ export default {
     sendOTP() {
         //TODO: OTP Logic. Rate-limiting should be implemented on backend.
         this.beginResendCooldown();
-        this.showToast('A one-time password has been sent to your email.', 'info');
     },
     handleSubmit() {
     //   axios.post('/sponsor/login', { email: this.email, password: this.password })
