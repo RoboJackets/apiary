@@ -33,7 +33,6 @@ use Laravel\Passport\Http\Controllers\AuthorizationController;
 */
 
 Route::middleware('auth.cas.force')->group(static function (): void {
-    
     Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     Route::get('sums', [SUMSController::class, 'index']);
