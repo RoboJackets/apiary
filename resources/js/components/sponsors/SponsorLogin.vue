@@ -105,7 +105,7 @@ export default {
         } else {
           // NOTE: hello@robojackets.org is a placeholder for now; will change when I find out
           // who is a good point of contact
-          Swal.fire('Authentication Error', 'Could not validate email domain. Please try again, or contact "hello@robojackets.org" if issues persist.', 'error');
+          Swal.fire('Authentication Error', 'Could not validate email domain. Please try again, or contact <a href="hello@robojackets.org">hello@robojackets.org</a> if issues persist.', 'error');
         }
     },
     beginResendCooldown() {
@@ -137,7 +137,14 @@ export default {
     //     .catch(() => {
     //       this.showToast('Something went wrong. Please try again.', 'error');
     //     });
-    window.location.href='/';
+      if (this.password === 'hello') {
+        window.location.href='/';
+      } else {
+        Swal.fire(
+          'Authentication Error', 
+          'Could not validate password. Please try again or contact <a href="hello@robojackets.org">hello@robojackets.org</a> if the issue persists.', 
+          'error');
+      }
     }
   }
 };
