@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  */
-class Sponsor extends Model
+class SponsorUser extends Model
 {
     use HasFactory;
     use SoftDeletes;
