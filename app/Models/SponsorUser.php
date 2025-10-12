@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
 
 /**
  * This model represents a sponsor entity in the application.
@@ -22,6 +23,7 @@ class SponsorUser extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasOneTimePasswords;
 
     /**
      * The attributes that are not mass assignable.
