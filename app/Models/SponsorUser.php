@@ -39,7 +39,7 @@ class SponsorUser extends Model
     ];
 
     /**
-     * Get the sponsor company that this SponsorUser belongs to
+     * Get the sponsor company that this SponsorUser belongs to.
      */
     public function company(): BelongsTo
     {
