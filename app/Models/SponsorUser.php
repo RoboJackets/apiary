@@ -22,8 +22,8 @@ use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
 class SponsorUser extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use HasOneTimePasswords;
+    use SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.
