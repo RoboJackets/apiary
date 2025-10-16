@@ -41,8 +41,7 @@
       <div v-if="emailValidated" class="alert alert-primary" role="alert">
         <h4>One-Time Password Sent!</h4>
         <p>Enter the one-time password that was sent to your email.</p>
-        <p>Be sure to check your Spam folder if you do not see it. 
-          If you believe the password did not send correctly, press the button below to resend it.</p>
+        <p>Check your spam folder if the message is not in your inbox. If you did not receive the password, use the button below to resend it.</p>
         <p></p>
       </div>
       <div v-if="emailValidated" class="resend-section">
