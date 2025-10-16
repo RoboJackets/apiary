@@ -6,7 +6,7 @@ return [
     /*
      * one-time passwords should be consumed within this number of minutes
      */
-    'default_expires_in_minutes' => 2,
+    'default_expires_in_minutes' => 10,
 
     /*
      * When this setting is active, we'll delete all previous one-time passwords for
