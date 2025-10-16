@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "529de87037114a2dd4110f4e663ad72f",
+    "content-hash": "5c3359fc4f3ef365ba85d548fe83fcc7",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -16070,16 +16070,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.42.0",
+            "version": "1.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "152250ce7c490bf830349fa30ba5200084e95860"
+                "reference": "ee9c0477e0b7e5ff49e62cd1f4f75be27da91dbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/152250ce7c490bf830349fa30ba5200084e95860",
-                "reference": "152250ce7c490bf830349fa30ba5200084e95860",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/ee9c0477e0b7e5ff49e62cd1f4f75be27da91dbe",
+                "reference": "ee9c0477e0b7e5ff49e62cd1f4f75be27da91dbe",
                 "shasum": ""
             },
             "require": {
@@ -16139,7 +16139,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.42.0"
+                "source": "https://github.com/spatie/ray/tree/1.43.0"
             },
             "funding": [
                 {
@@ -16151,7 +16151,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2025-04-18T08:17:40+00:00"
+            "time": "2025-10-16T10:01:03+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
