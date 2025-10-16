@@ -40,7 +40,7 @@
   <transition name="slide-fade">
       <div v-if="emailValidated" class="alert alert-primary" role="alert">
         <h4>One-Time Password Sent!</h4>
-        <p>Please type the one-time password sent to your email.</p>
+        <p>Enter the one-time password that was sent to your email.</p>
         <p>Be sure to check your Spam folder if you do not see it. 
           If you believe the password did not send correctly, press the button below to resend it.</p>
         <p></p>
