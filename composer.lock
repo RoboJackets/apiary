@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40c205d81bb1eca24529c5b4aad91bb3",
+    "content-hash": "0b6747f6e6582569b728578957a29daa",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2852,16 +2852,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.33.0",
+            "version": "v12.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "124efc5f09d4668a4dc13f94a1018c524a58bcb1"
+                "reference": "f9ec5a5d88bc8c468f17b59f88e05c8ac3c8d687"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/124efc5f09d4668a4dc13f94a1018c524a58bcb1",
-                "reference": "124efc5f09d4668a4dc13f94a1018c524a58bcb1",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f9ec5a5d88bc8c468f17b59f88e05c8ac3c8d687",
+                "reference": "f9ec5a5d88bc8c468f17b59f88e05c8ac3c8d687",
                 "shasum": ""
             },
             "require": {
@@ -2973,7 +2973,7 @@
                 "league/flysystem-sftp-v3": "^3.25.1",
                 "mockery/mockery": "^1.6.10",
                 "opis/json-schema": "^2.4.1",
-                "orchestra/testbench-core": "^10.6.5",
+                "orchestra/testbench-core": "^10.7.0",
                 "pda/pheanstalk": "^5.0.6|^7.0.0",
                 "php-http/discovery": "^1.15",
                 "phpstan/phpstan": "^2.0",
@@ -3067,20 +3067,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-10-07T14:30:39+00:00"
+            "time": "2025-10-14T13:58:31+00:00"
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.35.2",
+            "version": "v5.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "11f9a980d84de56402dec19cf1e78050b211fcef"
+                "reference": "eccc804c9da78064c97a8f506bb148f05c816409"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/11f9a980d84de56402dec19cf1e78050b211fcef",
-                "reference": "11f9a980d84de56402dec19cf1e78050b211fcef",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/eccc804c9da78064c97a8f506bb148f05c816409",
+                "reference": "eccc804c9da78064c97a8f506bb148f05c816409",
                 "shasum": ""
             },
             "require": {
@@ -3145,9 +3145,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.35.2"
+                "source": "https://github.com/laravel/horizon/tree/v5.36.0"
             },
-            "time": "2025-10-08T12:50:15+00:00"
+            "time": "2025-10-10T13:44:39+00:00"
         },
         {
             "name": "laravel/nova",
@@ -3468,16 +3468,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v10.19.1",
+            "version": "v10.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "bc8dbffc06472e28147ee739aec95fdf653f9d91"
+                "reference": "a04d7a8eb27b66c8b7edb7e0c6a078e9e78c4f5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/bc8dbffc06472e28147ee739aec95fdf653f9d91",
-                "reference": "bc8dbffc06472e28147ee739aec95fdf653f9d91",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/a04d7a8eb27b66c8b7edb7e0c6a078e9e78c4f5b",
+                "reference": "a04d7a8eb27b66c8b7edb7e0c6a078e9e78c4f5b",
                 "shasum": ""
             },
             "require": {
@@ -3545,7 +3545,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2025-10-07T14:48:20+00:00"
+            "time": "2025-10-14T14:09:26+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -7233,7 +7233,7 @@
         },
         {
             "name": "robojackets/client-id-and-secret-modal",
-            "version": "dev-main",
+            "version": "dev-sponsor_user",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ClientIdAndSecretModal",
@@ -7269,7 +7269,7 @@
         },
         {
             "name": "robojackets/personal-access-token-modal",
-            "version": "dev-main",
+            "version": "dev-sponsor_user",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/PersonalAccessTokenModal",
@@ -7703,6 +7703,80 @@
                 }
             ],
             "time": "2025-02-19T07:00:54+00:00"
+        },
+        {
+            "name": "spatie/laravel-one-time-passwords",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-one-time-passwords.git",
+                "reference": "9315e258013a292424bdfb5ac3496c6c61fa7b1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/9315e258013a292424bdfb5ac3496c6c61fa7b1a",
+                "reference": "9315e258013a292424bdfb5ac3496c6c61fa7b1a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^11.0|^12.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.14",
+                "livewire/livewire": "^3.6",
+                "nunomaduro/collision": "^8.1.1",
+                "orchestra/testbench": "^9.0|^10.0.0",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-arch": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "phpstan/phpstan": "^2.1",
+                "spatie/laravel-ray": "^1.35"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\OneTimePasswords\\OneTimePasswordsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\OneTimePasswords\\": "src/",
+                    "Spatie\\OneTimePasswords\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Use one-time passwords (OTP) to authenticate in your Laravel app",
+            "homepage": "https://github.com/spatie/laravel-one-time-passwords",
+            "keywords": [
+                "laravel",
+                "laravel-one-time-passwords",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-one-time-passwords/issues",
+                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-08-18T07:42:30+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -16070,16 +16144,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.42.0",
+            "version": "1.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "152250ce7c490bf830349fa30ba5200084e95860"
+                "reference": "ee9c0477e0b7e5ff49e62cd1f4f75be27da91dbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/152250ce7c490bf830349fa30ba5200084e95860",
-                "reference": "152250ce7c490bf830349fa30ba5200084e95860",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/ee9c0477e0b7e5ff49e62cd1f4f75be27da91dbe",
+                "reference": "ee9c0477e0b7e5ff49e62cd1f4f75be27da91dbe",
                 "shasum": ""
             },
             "require": {
@@ -16139,7 +16213,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.42.0"
+                "source": "https://github.com/spatie/ray/tree/1.43.0"
             },
             "funding": [
                 {
@@ -16151,7 +16225,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2025-04-18T08:17:40+00:00"
+            "time": "2025-10-16T10:01:03+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
