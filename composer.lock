@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5c3359fc4f3ef365ba85d548fe83fcc7",
+    "content-hash": "8b0de468f929b7d556289c35661a4bf1",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -7460,16 +7460,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "4.16.0",
+            "version": "4.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "b33b2e487b02db02d92988228f142d7fa2be2bfa"
+                "reference": "f321c450f1ff31fc97cf42c249de4a47d593d216"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/b33b2e487b02db02d92988228f142d7fa2be2bfa",
-                "reference": "b33b2e487b02db02d92988228f142d7fa2be2bfa",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/f321c450f1ff31fc97cf42c249de4a47d593d216",
+                "reference": "f321c450f1ff31fc97cf42c249de4a47d593d216",
                 "shasum": ""
             },
             "require": {
@@ -7533,7 +7533,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/4.16.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/4.17.0"
             },
             "funding": [
                 {
@@ -7545,7 +7545,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-09-10T16:38:18+00:00"
+            "time": "2025-10-15T09:58:47+00:00"
         },
         {
             "name": "spatie/laravel-csp",
@@ -8009,16 +8009,16 @@
         },
         {
             "name": "square/square",
-            "version": "43.1.1.20250924",
+            "version": "43.2.0.20251016",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "85e54df83af1cef173eacccc4eaafabfd2a4097d"
+                "reference": "b5ec427123861b00bcb20044516d149c1b9f2a26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/85e54df83af1cef173eacccc4eaafabfd2a4097d",
-                "reference": "85e54df83af1cef173eacccc4eaafabfd2a4097d",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/b5ec427123861b00bcb20044516d149c1b9f2a26",
+                "reference": "b5ec427123861b00bcb20044516d149c1b9f2a26",
                 "shasum": ""
             },
             "require": {
@@ -8053,9 +8053,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/43.1.1.20250924"
+                "source": "https://github.com/square/square-php-sdk/tree/43.2.0.20251016"
             },
-            "time": "2025-10-09T14:06:00+00:00"
+            "time": "2025-10-16T16:17:20+00:00"
         },
         {
             "name": "subfission/cas",
