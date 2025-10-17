@@ -66,4 +66,12 @@ class Sponsor extends Model
     {
         return $this->hasMany(SponsorDomain::class, 'sponsor_id');
     }
+
+    /**
+     * Return the users that have logged in under this sponsor.
+     */
+    public function users(): HasMany
+    {
+        return $this->hasMany(SponsorUser::class, 'sponsor_id');
+    }
 }
