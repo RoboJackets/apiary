@@ -1,19 +1,15 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Models\Sponsor as AppModelsSponsor;
 use App\Models\SponsorDomain as AppModelsSponsorDomain;
-use Laravel\Nova\Resource;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Resource;
 
 class SponsorDomain extends Resource
 {
@@ -74,7 +70,7 @@ class SponsorDomain extends Resource
                 ->sortable(),
             Text::make('Domain Name', 'domain_name')
                 ->rules('required', 'max:255')
-                ->sortable()
+                ->sortable(),
         ];
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Rules;
 
+use App\Models\Sponsor;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use App\Models\Sponsor;
 
 class SponsorUserValidEmail implements ValidationRule
 {
@@ -23,18 +23,18 @@ class SponsorUserValidEmail implements ValidationRule
 
         $domain = substr(strrchr((string) $value, '@'), 1);
 
-        if (!$domain) {
+        if (! $domain) {
             $fail('Please enter a valid email address.');
             return;
         }
 
-        if (!$sponsorId) {
+        if (! $sponsorId) {
             $fail('Please select a sponsor before entering an email.');
             return;
         }
 
         $sponsor = Sponsor::with('domainNames')->find($sponsorId);
-        if (!$sponsor) {
+        if (! $sponsor) {
             $fail('The selected sponsor could not be found.');
             return;
         }
@@ -43,7 +43,7 @@ class SponsorUserValidEmail implements ValidationRule
             ->where('domain_name', $domain)
             ->exists();
 
-        if (!$exists) {
+        if (! $exists) {
             $fail("The email domain '{$domain}' is not allowed for {$sponsor->name}.");
         }
     }

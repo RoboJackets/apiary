@@ -1,17 +1,17 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
 namespace App\Nova;
 
 use App\Models\Sponsor as AppModelsSponsor;
-use Laravel\Nova\Resource;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Resource;
 
 class Sponsor extends Resource
 {
