@@ -10,6 +10,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class SponsorUserValidEmail implements ValidationRule
 {
+    #[\Override]
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $sponsorId = request()->input('company');
@@ -17,7 +18,7 @@ class SponsorUserValidEmail implements ValidationRule
         $email = (string) $value;
         $domain = substr(strrchr($email, '@'), 1);
 
-        if ($domain === false || $domain === '') {
+        if ($domain === null || $domain === '') {
             $fail('Please enter a valid email address.');
 
             return;
