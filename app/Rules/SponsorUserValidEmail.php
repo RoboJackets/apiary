@@ -19,7 +19,7 @@ class SponsorUserValidEmail implements ValidationRule
             $sponsorId = $sponsorInput['resourceId'];
         } elseif (is_scalar($sponsorInput)) {
             $sponsorId = $sponsorInput;
-        } elseif ($tmp = request()->input('company_id')) {
+        } elseif (($tmp = request()->input('company_id'))) {
             $sponsorId = $tmp;
         }
 
@@ -49,7 +49,7 @@ class SponsorUserValidEmail implements ValidationRule
             ->exists();
 
         if (! $exists) {
-            $fail("The email domain '{$domain}' is not allowed for {$sponsor->name}.");
+            $fail('The email domain "' . $domain . '" is not allowed for ' . $sponsor->name . '.');
         }
     }
 }
