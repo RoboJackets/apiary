@@ -20,6 +20,7 @@ class SponsorUser extends Resource
      * @var class-string<\App\Models\SponsorUser>
      */
     public static $model = AppModelsSponsorUser::class;
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -70,7 +71,7 @@ class SponsorUser extends Resource
                 ->rules('required')
                 ->sortable(),
             Text::make('Email', 'email')
-                ->rules('required', 'email', 'max:255', new SponsorUserValidEmail)
+                ->rules('required', 'email', 'max:255', new SponsorUserValidEmail())
                 ->sortable(),
         ];
     }
