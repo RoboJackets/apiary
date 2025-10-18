@@ -17,20 +17,20 @@ class SponsorUserValidEmail implements ValidationRule
         $email = (string) $value;
         $domain = substr(strrchr($email, '@'), 1);
 
-        if (empty($domain)) {
+        if ($domain === false || $domain === '') {
             $fail('Please enter a valid email address.');
 
             return;
         }
 
-        if (empty($sponsorId)) {
+        if ($sponsorId === null || $sponsorId === '') {
             $fail('Please select a sponsor before entering an email.');
 
             return;
         }
 
         $sponsor = Sponsor::with('domainNames')->find($sponsorId);
-        if (empty($sponsor)) {
+        if ($sponsor === null) {
             $fail('The selected sponsor could not be found.');
 
             return;
