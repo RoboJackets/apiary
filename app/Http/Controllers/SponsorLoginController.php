@@ -18,7 +18,7 @@ class SponsorLoginController extends Controller
      */
     public function showLoginForm()
     {
-        // TODO: Replace with actual view when created.
+        // TODO: Replace with actual view when created
         return view('sponsor.login');
     }
 
@@ -47,32 +47,26 @@ class SponsorLoginController extends Controller
 
         // checks if domain is valid and sponsor is active; if not, return json error 
         if (! $this->isValidSponsorDomain($email)) {
-            return response()->json([
-                'error' => true,
-                'title' => 'Authentication Error',
-                'message' => 'Could not validate email or sponsor is no longer active. Please contact hello@robojackets.org if the issue persists.',
-            ], 422);
+            return $this->errorResponse(
+                'Authentication Error',
+                'Could not validate email or sponsor is no longer active. Contact hello@robojackets.org if the issue persists.'
+            );
         }
 
-        // Check if user exists in sponsor_users table; if not, return json error
-        if (! $this->sponsorUserExists($email)) {
-            // TODO: Redirect to sponsor sign-up page instead of returning error
-            return response()->json([
-                'error' => true,
-                'title' => 'Account Not Found',
-                'message' => 'No account found for this email. Please sign up first.',
-            ], 404);
-        }
-
-        // Get sponsor user (already validated to exist)
+        // Get sponsor user and check if exists in one query
         $sponsorUser = SponsorUser::where('email', $email)->first();
+        if (! $sponsorUser) {
+            // Create new unsaved SponsorUser model for new users
+            $sponsorUser = new SponsorUser();
+            $sponsorUser->email = $email;
+        
+        }
 
         // Generate and dispatch OTP using Spatie
         $sponsorUser->sendOneTimePassword();
 
         // Cache minimal state for OTP verification.
         session([
-            'sponsor_user_id' => $sponsorUser->id,
             'sponsor_email' => $email,
         ]);
 
@@ -93,21 +87,24 @@ class SponsorLoginController extends Controller
      */
     public function verifyOtp(Request $request)
     {
+        // Laravel will automatically throw an error if OTP is invalid
         $request->validate([
             'otp' => ['required', 'string', 'digits:6'],
         ]);
+        // TODO: Override error message?
 
         // Validate session and retrieve user
-        $sponsorUserId = session('sponsor_user_id');
         $email = session('sponsor_email');
-
-        if (! $sponsorUserId || ! $email) {
+        if (! $email) {
             return $this->errorResponse('Session Expired', 'Your session has expired. Please start the login process again.');
         }
 
-        $sponsorUser = SponsorUser::find($sponsorUserId);
+        // Retrieve existing user or create temporary one for OTP verification
+        $sponsorUser = SponsorUser::where('email', $email)->first();
         if (! $sponsorUser) {
-            return $this->errorResponse('Authentication Error', 'Unable to find user information. Please start the login process again.');
+            // Create temporary unsaved user for OTP verification
+            $sponsorUser = new SponsorUser();
+            $sponsorUser->email = $email;
         }
 
         // Verify OTP using Spatie
@@ -116,14 +113,21 @@ class SponsorLoginController extends Controller
             return $this->errorResponse('Invalid OTP', $result->validationMessage());
         }
 
-        // Verify sponsor is still active
-        $sponsor = $sponsorUser->company;
-        if (! $sponsor || ! $sponsor->active()) {
+        // Verify sponsor domain is still valid and active before saving new user
+        if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
                 'Authentication Error',
-                'Sponsor information unavailable or no longer active. Please contact hello@robojackets.org.'
+                'Could not validate email or sponsor is no longer active. Please contact hello@robojackets.org if the issue persists.'
             );
         }
+
+        // Save new user to database after successful OTP verification and sponsor check
+        if (! $sponsorUser->exists) {
+            $sponsorUser->save();
+        }
+
+        // Retrieve sponsor for session data
+        $sponsor = $sponsorUser->company;
 
         // Establish authenticated session
         $request->session()->regenerate();
@@ -133,12 +137,13 @@ class SponsorLoginController extends Controller
             'sponsor_name' => $sponsor->name,
             'sponsor_email' => $email,
         ]);
-        session()->forget(['sponsor_user_id', 'sponsor_email']);
+        session()->forget(['sponsor_email']);
 
         return response()->json([
             'success' => true,
             'message' => 'Login successful! Redirecting to dashboard...',
-            'redirect' => route('sponsor.dashboard'),
+            // TODO: change to correct route
+            'redirect' => route('sponsor.dashboard'), 
         ]);
     }
 
@@ -158,17 +163,6 @@ class SponsorLoginController extends Controller
         }
 
         return $sponsorDomain->sponsor && $sponsorDomain->sponsor->active();
-    }
-
-    /**
-     * Check if user exists in sponsor_users table.
-     *
-     * @param string $email
-     * @return bool
-     */
-    private function sponsorUserExists(string $email): bool
-    {
-        return SponsorUser::where('email', $email)->exists();
     }
 
     /**
