@@ -70,7 +70,7 @@ class MatrixAirfareSearch extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Travel>  $models
      *
-     * @phan-suppress PhanTypeArraySuspiciousNull
+     * @phan-suppress PhanTypeArraySuspiciousNullable
      */
     public function handle(ActionFields $fields, Collection $models): ActionResponse
     {

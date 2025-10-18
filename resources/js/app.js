@@ -142,11 +142,14 @@ Vue.component('team-card', require('./components/teams/TeamCard.vue').default);
 Vue.component('team-membership-button', require('./components/teams/TeamMembershipButton.vue').default);
 
 // OAuth2
-Vue.component('oauth2-authorizations', require('./components/oauth2/OAuth2Authorizations').default)
-Vue.component('personal-access-tokens', require('./components/oauth2/PersonalAccessTokens').default)
+Vue.component('oauth2-authorizations', require('./components/oauth2/OAuth2Authorizations').default);
+Vue.component('personal-access-tokens', require('./components/oauth2/PersonalAccessTokens').default);
 
 // Utilities
-Vue.component('loading-spinner', require('./components/LoadingSpinner').default)
+Vue.component('loading-spinner', require('./components/LoadingSpinner').default);
+
+// Sponsors
+Vue.component('sponsor-login', require('./components/sponsors/SponsorLogin.vue').default);
 
 const app = new Vue({
     el: '#app',

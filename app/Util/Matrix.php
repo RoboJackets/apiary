@@ -93,7 +93,7 @@ class Matrix
     /**
      * Returns the latest departure time on this itinerary, if there are exactly two slices.
      *
-     * @phan-suppress PhanTypeArraySuspiciousNull
+     * @phan-suppress PhanTypeArraySuspiciousNullable
      */
     public static function getReturnDateTime(array $decoded_itinerary): ?CarbonImmutable
     {
@@ -157,7 +157,7 @@ class Matrix
     /**
      * Return the itinerary origin and destination as a string for the airfare request form.
      *
-     * @phan-suppress PhanTypeArraySuspiciousNull
+     * @phan-suppress PhanTypeArraySuspiciousNullable
      */
     public static function getOriginDestinationString(array $decoded_itinerary): string
     {
