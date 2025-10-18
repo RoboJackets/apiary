@@ -12,16 +12,7 @@ class SponsorUserValidEmail implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $sponsorInput = request()->input('company');
-        $sponsorId = null;
-
-        if (is_array($sponsorInput) && isset($sponsorInput['resourceId'])) {
-            $sponsorId = $sponsorInput['resourceId'];
-        } elseif (is_scalar($sponsorInput)) {
-            $sponsorId = $sponsorInput;
-        } elseif (($tmp = request()->input('company_id'))) {
-            $sponsorId = $tmp;
-        }
+        $sponsorId = request()->input('company');
 
         $domain = substr(strrchr((string) $value, '@'), 1);
 
@@ -49,7 +40,7 @@ class SponsorUserValidEmail implements ValidationRule
             ->exists();
 
         if (! $exists) {
-            $fail('The email domain "' . $domain . '" is not allowed for ' . $sponsor->name . '.');
+            $fail('The email domain "'.$domain.'" is not allowed for '.$sponsor->name.'.');
         }
     }
 }
