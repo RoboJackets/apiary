@@ -40,6 +40,7 @@ use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -295,18 +296,46 @@ class User extends Resource
                         ->onlyOnDetail()
                         ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-                    URL::make('Primary Team', static fn (
-                        AppModelsUser $user
-                    ): ?string => $user->primaryTeam === null ? null : route(
-                        'nova.pages.detail',
-                        [
-                            'resource' => Team::uriKey(),
-                            'resourceId' => $user->primaryTeam->id,
-                        ]
-                    ))
-                        ->displayUsing(fn (): ?string => $this->primaryTeam?->name)
-                        ->onlyOnDetail()
-                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+                    Stack::make('Primary Team', [
+                        URL::make('Primary Team', static fn (
+                            AppModelsUser $user
+                        ): ?string => $user->primaryTeam === null ? null : route(
+                            'nova.pages.detail',
+                            [
+                                'resource' => Team::uriKey(),
+                                'resourceId' => $user->primaryTeam->id,
+                            ]
+                        ))
+                            ->displayUsing(fn (): ?string => $this->primaryTeam?->name)
+                            ->onlyOnDetail()
+                            ->textAlign('left')
+                            ->hideFromDetail(
+                                static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account
+                            ),
+
+                        Text::make(
+                            'Primary Team Membership',
+                            static fn (AppModelsUser $user): string => view(
+                                'nova.partials.user.primaryteam',
+                                ['user' => $user]
+                            )->render()
+                        )
+                            ->asHtml()
+                            ->onlyOnDetail()
+                            ->showOnDetail(
+                                static fn (
+                                    NovaRequest $request,
+                                    AppModelsUser $user
+                                ): bool => $user->teams()->where(
+                                    'teams.id',
+                                    '=',
+                                    $user->primaryTeam?->id
+                                )->doesntExist()
+                            ),
+                    ])
+                        ->hideFromDetail(
+                            static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account
+                        ),
                 ]
             ),
 
@@ -431,6 +460,7 @@ class User extends Resource
 
                     return $request->user()->can('read-teams-membership');
                 })
+                ->withoutTrashed()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             HasMany::make('Access Cards')

@@ -439,6 +439,7 @@
                 <directory name="app/Policies/"/>
                 <directory name="database/seeders/"/>
                 <referencedMethod name="App\HorizonHealthCheck::__construct"/>
+                <referencedMethod name="App\Providers\AppServiceProvider::boot"/>
                 <referencedMethod name="App\Util\Sentry::tracesSampler"/>
             </errorLevel>
         </PossiblyUnusedMethod>
