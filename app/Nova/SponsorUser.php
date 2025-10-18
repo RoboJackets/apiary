@@ -5,22 +5,26 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Sponsor as AppModelsSponsor;
+use App\Models\SponsorDomain as AppModelsSponsorDomain;
+use App\Models\SponsorUser as AppModelsSponsorUser;
 use Laravel\Nova\Resource;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
+use App\Rules\SponsorUserValidEmail;
 
-class Sponsor extends Resource
+class SponsorUser extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Sponsor>
+     * @var class-string<\App\Models\SponsorUser>
      */
-    public static $model = AppModelsSponsor::class;
+    public static $model = AppModelsSponsorUser::class;
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -67,17 +71,12 @@ class Sponsor extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name')
-                ->rules('required', 'max:255')
-                ->sortable(),
-            DateTime::make('End Date')
+            BelongsTo::make('Sponsor', 'company', Sponsor::class)
                 ->rules('required')
                 ->sortable(),
-            HasMany::make('Domain Names', 'domainNames', SponsorDomain::class),
-            HasMany::make('Users', 'users', SponsorUser::class),
-            Boolean::make('Active', function () {
-                return $this->active();
-            })->onlyOnIndex(),
+            Text::make('Email', 'email')
+                ->rules('required', 'email', 'max:255', new SponsorUserValidEmail)
+                ->sortable()
         ];
     }
 }
