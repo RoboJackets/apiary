@@ -31,7 +31,7 @@ class SponsorUserValidEmail implements ValidationRule
 
         if (! $sponsorId) {
             $fail('Please select a sponsor before entering an email.');
-            
+
             return;
         }
 
