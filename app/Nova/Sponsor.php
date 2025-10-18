@@ -76,9 +76,7 @@ class Sponsor extends Resource
                 ->sortable(),
             HasMany::make('Domain Names', 'domainNames', SponsorDomain::class),
             HasMany::make('Users', 'users', SponsorUser::class),
-            Boolean::make('Active', function () {
-                return $this->active();
-            })->onlyOnIndex(),
+            Boolean::make('Active', fn () => $this->active())->onlyOnIndex(),
         ];
     }
 }
