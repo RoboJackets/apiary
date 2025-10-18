@@ -29,14 +29,12 @@ class SponsorUserValidEmail implements ValidationRule
             $fail('Please enter a valid email address.');
 
             return;
-
         }
 
         if (! $sponsorId) {
             $fail('Please select a sponsor before entering an email.');
 
             return;
-
         }
 
         $sponsor = Sponsor::with('domainNames')->find($sponsorId);
@@ -44,7 +42,6 @@ class SponsorUserValidEmail implements ValidationRule
             $fail('The selected sponsor could not be found.');
 
             return;
-
         }
 
         $exists = $sponsor->domainNames()

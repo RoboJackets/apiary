@@ -19,7 +19,7 @@ class SponsorDomain extends Resource
      * @var class-string<\App\Models\SponsorDomain>
      */
     public static $model = AppModelsSponsorDomain::class;
-    
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
