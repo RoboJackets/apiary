@@ -13,6 +13,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 
+/**
+ * A Nova resource for sponsors.
+ *
+ * @extends \App\Nova\Resource<\App\Models\Sponsor>
+ */
 class Sponsor extends Resource
 {
     /**
