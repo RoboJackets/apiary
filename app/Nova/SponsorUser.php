@@ -71,7 +71,7 @@ class SponsorUser extends Resource
                 ->sortable(),
             Text::make('Email', 'email')
                 ->rules('required', 'email', 'max:255', new SponsorUserValidEmail)
-                ->sortable()
+                ->sortable(),
         ];
     }
 }
