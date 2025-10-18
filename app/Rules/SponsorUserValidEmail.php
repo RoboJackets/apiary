@@ -18,7 +18,7 @@ class SponsorUserValidEmail implements ValidationRule
         $email = (string) $value;
         $domain = substr(strrchr($email, '@'), 1);
 
-        if ($domain === null || $domain === '') {
+        if ($domain === '') {
             $fail('Please enter a valid email address.');
 
             return;
