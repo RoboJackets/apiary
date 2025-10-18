@@ -56,7 +56,7 @@ class Sponsor extends Model
      */
     public function active(): bool
     {
-        return $this->end_date > now() && $this->start_date < now();
+        return $this->end_date > now();
     }
 
     /**
@@ -65,5 +65,13 @@ class Sponsor extends Model
     public function domainNames(): HasMany
     {
         return $this->hasMany(SponsorDomain::class, 'sponsor_id');
+    }
+
+    /**
+     * Return the users that have logged in under this sponsor.
+     */
+    public function users(): HasMany
+    {
+        return $this->hasMany(SponsorUser::class, 'sponsor_id');
     }
 }
