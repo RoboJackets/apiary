@@ -15,6 +15,7 @@ use App\Http\Resources\User as UserResource;
 use App\Jobs\PushToJedi;
 use App\Models\User;
 use App\Util\AuthorizeInclude;
+use App\Util\Numverify;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -233,11 +234,69 @@ class UserController implements HasMiddleware
             $user->preferred_first_name = $validatedFields['preferred_first_name'];
         }
 
-        $user->update($validatedFields);
+        if (
+            $request->filled('phone') &&
+            $request->input('phone_verified') !== true &&
+            (
+                $request->input('phone') !== $user->phone ||
+                $user->phone_verified !== true
+            ) &&
+            config('services.numverify_api_key') !== null
+        ) {
+            $result = Numverify::verifyPhoneNumber($request->input('phone'));
 
-        if ($request->filled('roles')) {
-            $user->roles()->sync($request->input('roles'));
+            if ($result === null) {
+                $validatedFields['phone_verified'] = false;
+            } else {
+                if ($result->isValid()) {
+                    $validatedFields['phone'] = $result->getInternationalFormat();
+                    $validatedFields['phone_verified'] = true;
+                } else {
+                    return response()->json(['status' => 'error',
+                        'message' => 'The phone number provided is invalid. Please provide a valid US phone number.',
+                        'errors' => [
+                            'phone' => [
+                                'The phone number provided is invalid. Please provide a valid US phone number.',
+                            ],
+                        ],
+                    ], 422);
+                }
+            }
         }
+
+        if (
+            $request->filled('emergency_contact_phone') &&
+            $request->input('emergency_contact_phone_verified') !== true &&
+            (
+                $request->input('emergency_contact_phone') !== $user->emergency_contact_phone ||
+                $user->emergency_contact_phone_verified !== true
+            ) &&
+            config('services.numverify_api_key') !== null
+        ) {
+            $result = Numverify::verifyPhoneNumber($request->input('emergency_contact_phone'));
+
+            if ($result === null) {
+                $validatedFields['phone_verified'] = false;
+            } else {
+                if ($result->isValid()) {
+                    $validatedFields['emergency_contact_phone'] = $result->getInternationalFormat();
+                    $validatedFields['emergency_contact_phone_verified'] = true;
+                } else {
+                    return response()->json(['status' => 'error',
+                        'message' => 'The emergency contact phone number provided is invalid.'.
+                            ' Please provide a valid US phone number.',
+                        'errors' => [
+                            'emergency_contact_phone' => [
+                                'The emergency contact phone number provided is invalid.'.
+                                ' Please provide a valid US phone number.',
+                            ],
+                        ],
+                    ], 422);
+                }
+            }
+        }
+
+        $user->update($validatedFields);
 
         $user = User::find($user->id);
 

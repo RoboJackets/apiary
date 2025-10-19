@@ -75,9 +75,6 @@ class StoreUserRequest extends FormRequest
                 'in:'.implode(',', array_keys(User::$shirt_sizes)),
                 'nullable',
             ],
-            'generateToken' => [
-                'boolean',
-            ],
         ];
     }
 }

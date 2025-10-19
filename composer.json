@@ -34,6 +34,7 @@
         "docusign/esign-client": "8.4.0",
         "eluceo/ical": "2.15.0",
         "enlightn/security-checker": "2.0.0",
+        "esi/numverify-api-client-php": "^3.0",
         "fakerphp/faker": "1.24.1",
         "guzzlehttp/guzzle": "7.10.0",
         "htmlmin/htmlmin": "dev-master",
