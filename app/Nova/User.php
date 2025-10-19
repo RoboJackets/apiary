@@ -180,6 +180,12 @@ class User extends Resource
                 ->rules('nullable', 'max:15')
                 ->copyable(),
 
+            Boolean::make('Phone Number Verified', 'phone_verified')
+                ->hideWhenCreating()
+                ->hideFromIndex()
+                ->hideWhenUpdating()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+
             Boolean::make('Membership Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
@@ -539,6 +545,12 @@ class User extends Resource
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-emergency_contact'))
                 ->copyable(),
+
+            Boolean::make('Emergency Contact Phone Number Verified', 'emergency_contact_phone_verified')
+                ->hideWhenCreating()
+                ->hideFromIndex()
+                ->hideWhenUpdating()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
         ];
     }
 
