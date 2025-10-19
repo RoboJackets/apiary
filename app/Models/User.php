@@ -362,6 +362,8 @@ class User extends Authenticatable
             'docusign_access_token_expires_at' => 'datetime',
             'docusign_refresh_token_expires_at' => 'datetime',
             'date_of_birth' => 'date',
+            'phone_verified' => 'boolean',
+            'emergency_contact_phone_verified' => 'boolean',
         ];
     }
 

@@ -47,9 +47,11 @@ class User extends JsonResource
             'full_name' => $this->full_name,
             'name' => $this->name,
             'phone' => $this->phone,
+            'phone_verified' => $this->phone_verified,
             $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-users-emergency_contact'), [
                 'emergency_contact_name' => $this->emergency_contact_name,
                 'emergency_contact_phone' => $this->emergency_contact_phone,
+                'emergency_contact_phone_verified' => $this->emergency_contact_phone_verified,
             ]),
             'join_semester' => $this->join_semester,
             'graduation_semester' => $this->graduation_semester,
