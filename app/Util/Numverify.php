@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Util;
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Cache;
 use Numverify\Api;
-use Numverify\Exception\NumverifyApiFailureException;
 use Numverify\PhoneNumber\PhoneNumberInterface;
 
 class Numverify
@@ -37,7 +37,7 @@ class Numverify
 
         try {
             return $numverify->validatePhoneNumber(phoneNumber: $phoneNumber, countryCode: 'US');
-        } catch (NumverifyApiFailureException $exception) {
+        } catch (ClientException $exception) {
             if ($exception->getStatusCode() === 429) {
                 return null;
             } else {
