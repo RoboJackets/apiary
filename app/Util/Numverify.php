@@ -38,7 +38,7 @@ class Numverify
         try {
             return $numverify->validatePhoneNumber(phoneNumber: $phoneNumber, countryCode: 'US');
         } catch (ClientException $exception) {
-            if ($exception->getStatusCode() === 429) {
+            if ($exception->hasResponse() && $exception->getResponse()->getStatusCode() === 429) {
                 return null;
             } else {
                 throw $exception;
