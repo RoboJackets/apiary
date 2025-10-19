@@ -354,6 +354,8 @@ export default {
       }
 
       delete this.user.dues;
+      delete this.user.phone_verified;
+      delete this.user.emergency_contact_phone_verified;
 
       axios
         .put(this.dataUrl, this.user)
