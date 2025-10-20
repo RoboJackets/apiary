@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d718fa848457707e219b2a86babbc33d",
+    "content-hash": "028247cce05a8597df2079c08f1bee3f",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3327,17 +3327,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.7.5",
+            "version": "5.7.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "7e9937b5f7447bcd0c52abaed44c3961c4a790f0"
+                "reference": "40b3aeffcaa4f295a8136aad744895e6e8f64ae4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-7e9937b5f7447bcd0c52abaed44c3961c4a790f0-zip-696677.zip",
-                "reference": "7e9937b5f7447bcd0c52abaed44c3961c4a790f0",
-                "shasum": "5988533137431173f553db23e7e3bd310ded313e"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-40b3aeffcaa4f295a8136aad744895e6e8f64ae4-zip-293061.zip",
+                "reference": "40b3aeffcaa4f295a8136aad744895e6e8f64ae4",
+                "shasum": "a89416fe9ff4be5e085e16942805199ba995ad26"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -3502,10 +3502,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.7.5",
+                "source": "https://github.com/laravel/nova/tree/v5.7.6",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-07-31T13:20:04+00:00"
+            "time": "2025-10-19T03:38:32+00:00"
         },
         {
             "name": "laravel/passport",
@@ -7458,7 +7458,7 @@
         },
         {
             "name": "robojackets/client-id-and-secret-modal",
-            "version": "dev-kristaps/verify-phone-numbers",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ClientIdAndSecretModal",
@@ -7494,7 +7494,7 @@
         },
         {
             "name": "robojackets/personal-access-token-modal",
-            "version": "dev-kristaps/verify-phone-numbers",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/PersonalAccessTokenModal",
