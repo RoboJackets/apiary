@@ -179,7 +179,20 @@ class ExportFullYearResumes extends Action
                 if (! file_exists($f)) {
                     return Action::danger('GhostScript did not create the file '.$f);
                 }
-                $archive->addFile($f, basename($f));
+                $user_fname = User::where('uid', basename($f, ".pdf"))->first()->first_name;
+                $user_lname = User::where('uid', basename($f, ".pdf"))->first()->last_name;
+
+                // Add incrementing number to file name if the name is already found
+                $out_filename = $user_lname."_".$user_fname."_Resume";
+                if ($archive->locateName($out_filename.".pdf") !== false) {
+                    $i = 0;
+                    while ($archive->locateName($out_filename."_".$i.".pdf") !== false) {
+                        $i++;
+                    }
+                    $out_filename .= "_".$i;
+                }
+                $out_filename .= ".pdf";
+                $archive->addFile($f, $out_filename);
             }
             $archive->close();
         } else {
