@@ -7,7 +7,7 @@ return [
     /*
      * The notification that will be sent when a job fails.
      */
-    'notification' => \Spatie\FailedJobMonitor\Notification::class,
+    'notification' => \App\Util\JobFailureNotification::class,
 
     /*
      * The notifiable to which the notification will be sent. The default
