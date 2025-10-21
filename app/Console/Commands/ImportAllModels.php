@@ -58,6 +58,18 @@ class ImportAllModels extends Command
         ]);
 
         $this->call('scout:import', [
+            'model' => Sponsor::class,
+        ]);
+
+        $this->call('scout:import', [
+            'model' => SponsorDomain::class,
+        ]);
+
+        $this->call('scout:import', [
+            'model' => SponsorUser::class,
+        ]);
+
+        $this->call('scout:import', [
             'model' => Team::class,
         ]);
 

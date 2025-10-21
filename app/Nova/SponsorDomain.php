@@ -30,7 +30,7 @@ class SponsorDomain extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'domain_name';
 
     /**
      * The logical group associated with the resource.

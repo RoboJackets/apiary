@@ -31,7 +31,7 @@ class SponsorUser extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'email';
 
     /**
      * The logical group associated with the resource.
@@ -76,7 +76,7 @@ class SponsorUser extends Resource
                 ->rules('required')
                 ->sortable(),
             Text::make('Email', 'email')
-                ->rules('required', 'email', 'max:255', new SponsorUserValidEmail())
+                ->rules('required', 'email:rfc,strict,dns,spoof', 'max:255', new SponsorUserValidEmail())
                 ->sortable(),
         ];
     }
