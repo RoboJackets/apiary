@@ -267,7 +267,6 @@ return [
                     'attribute',
                     'sort',
                     'exactness',
-                    'end_date_unix:desc',
                 ],
                 'typoTolerance' => [
                     'disableOnNumbers' => true,
@@ -287,7 +286,6 @@ return [
                     'attribute',
                     'sort',
                     'exactness',
-                    'end_date_unix:desc',
                 ],
                 'typoTolerance' => [
                     'disableOnNumbers' => true,

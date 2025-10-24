@@ -34,6 +34,7 @@ return new class extends Migration
     {
         app()['cache']->forget('spatie.permission.cache');
 
-        Permission::where('name', 'approve-travel')->delete();
+        Permission::where('name', 'view-sponsors')->delete();
+        Permission::where('name', 'manage-sponsors')->delete();
     }
 };

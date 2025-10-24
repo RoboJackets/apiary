@@ -33,7 +33,7 @@ class SponsorUserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('manage-sponsors');
+        return false;
     }
 
     /**
@@ -41,7 +41,7 @@ class SponsorUserPolicy
      */
     public function update(User $user, SponsorUser $sponsorUser): bool
     {
-        return $user->can('manage-sponsors');
+        return false;
     }
 
     /**
