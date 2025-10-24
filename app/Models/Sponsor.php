@@ -74,4 +74,18 @@ class Sponsor extends Model
     {
         return $this->hasMany(SponsorUser::class, 'sponsor_id');
     }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $array['end_date_unix'] = $this->end_date->getTimestamp();
+
+        return $array;
+    }
 }

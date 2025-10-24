@@ -45,3 +45,4 @@ resume-monitoring.sh
 .envault.json
 .phpunit.result.cache
 /docs/_build/
+.DS_Store
