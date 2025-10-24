@@ -18,8 +18,7 @@ class SponsorLoginController extends Controller
      */
     public function showLoginForm()
     {
-        // TODO: Replace with actual view when created
-        return view('sponsor.login');
+        return view('sponsors.login');
     }
 
     /**
@@ -33,6 +32,7 @@ class SponsorLoginController extends Controller
     public function validateEmail(Request $request)
     {
         // validates input request using Laravel's in-built validator
+        // TODO: add UI functionality
         $request->validate([
             'email' => [
                 'required',
@@ -47,6 +47,7 @@ class SponsorLoginController extends Controller
 
         // checks if domain is valid and sponsor is active; if not, return json error 
         if (! $this->isValidSponsorDomain($email)) {
+            // TODO: add UI functionality
             return $this->errorResponse(
                 'Authentication Error',
                 'Could not validate email or sponsor is no longer active. Contact hello@robojackets.org if the issue persists.'
