@@ -48,7 +48,7 @@
         <button
           class="btn btn-link"
           :disabled="!canResend"
-          @click="sendOTP"
+          @click="validateEmail"
         >
           {{ canResend ? 'Resend OTP' : `Resend in ${resendCooldown}s` }}
         </button>
@@ -73,6 +73,10 @@ export default {
       resendCooldown: 30,
     };
   },
+  beforeUnmount() {
+    // Clean up interval timer when app is exited to prevent memory leaks
+    clearInterval(this.resendTimer);
+  },
   methods: {
     showToast(message, icon = 'info') {
       Swal.fire({
@@ -85,30 +89,42 @@ export default {
         timerProgressBar: true
       });
     },
-    validateEmail() {
-    //   axios.post('/sponsor/check-email', { email: this.email })
-    //     .then(res => {
-    //       if (res.data.valid) {
-    //         this.emailValidated = true;
-    //         this.showToast('A one-time password has been sent to your email.', 'info');
-    //       } else {
-    //         this.showToast('Email domain not approved.', 'error');
-    //       }
-    //     })
-    //     .catch(() => {
-    //       this.showToast('Something went wrong. Please try again.', 'error');
-    //     });
-        if (this.email === 'gpburdell3@gatech.edu') {
-            this.emailValidated = true;
-            this.sendOTP();
-        } else {
-          // NOTE: hello@robojackets.org is a placeholder for now; will change when I find out
-          // who is a good point of contact
-          Swal.fire('Authentication Error', 'Could not validate email domain. Please try again, or contact <a href="hello@robojackets.org">hello@robojackets.org</a> if issues persist.', 'error');
+    handleApiError(error, validationField = null) {
+      if (error.response?.data) {
+        const data = error.response.data;
+        
+        // Custom error response from controller
+        if (data.error && data.title && data.message) {
+          Swal.fire(data.title, data.message, 'error');
+        } 
+        // Laravel validation error
+        else if (validationField && data.errors?.[validationField]) {
+          Swal.fire('Validation Error', data.errors[validationField][0], 'error');
         }
+        // Any other server error
+        else {
+          Swal.fire('Error', 'Something went wrong. Please try again. If the issue persists, contact hello@robojackets.org.', 'error');
+        }
+      } else {
+        // Network error (no response from server)
+        Swal.fire('Connection Error', 'Unable to reach the server. Please check your connection. If the issue persists, contact hello@robojackets.org.', 'error');
+      }
+    },
+    validateEmail() {
+      axios.post('/sponsor/validate-email', { email: this.email })
+        .then(res => {
+          if (res.data.success) { // else need to throw error
+            this.emailValidated = true;
+            this.beginResendCooldown();
+          
+          }
+        })
+        .catch(error => {
+          this.handleApiError(error, 'email');
+        });
     },
     beginResendCooldown() {
-        this.resendCooldown = 30;
+        this.resendCooldown = 60; // may want to increase to 2 mins in future
         this.canResend = false;
         clearInterval(this.resendTimer);
         this.resendTimer = setInterval(() => {
@@ -120,30 +136,18 @@ export default {
             }
         }, 1000);
     },
-    sendOTP() {
-        //TODO: OTP Logic. Rate-limiting should be implemented on backend.
-        this.beginResendCooldown();
-    },
     handleSubmit() {
-    //   axios.post('/sponsor/login', { email: this.email, password: this.password })
-    //     .then(res => {
-    //       if (res.data.success) {
-    //         window.location.href = '/sponsor/dashboard';
-    //       } else {
-    //         this.showToast('Invalid password.', 'error');
-    //       }
-    //     })
-    //     .catch(() => {
-    //       this.showToast('Something went wrong. Please try again.', 'error');
-    //     });
-      if (this.password === 'hello') {
-        window.location.href='/';
-      } else {
-        Swal.fire(
-          'Authentication Error', 
-          'Could not validate password. Please try again or contact <a href="hello@robojackets.org">hello@robojackets.org</a> if the issue persists.', 
-          'error');
-      }
+      // TODO: ensure correct route
+      axios.post('/sponsor/verify-otp', { otp: this.password })
+        .then(res => {
+          if (res.data.success) {
+            // Redirect to the URL provided by the controller
+            window.location.href = res.data.redirect;
+          }
+        })
+        .catch(error => {
+          this.handleApiError(error, 'otp');
+        });
     }
   }
 };

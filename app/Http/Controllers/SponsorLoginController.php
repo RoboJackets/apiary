@@ -9,6 +9,8 @@ use App\Models\SponsorUser;
 use Illuminate\Http\Request;
 use Spatie\OneTimePasswords\Enums\ConsumeOneTimePasswordResult;
 
+// TODO: might need to add server-side rate limiting for OTP
+
 class SponsorLoginController extends Controller
 {
     /**
@@ -18,7 +20,7 @@ class SponsorLoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('sponsors.login');
+        return view('sponsor.login');
     }
 
     /**
@@ -32,7 +34,6 @@ class SponsorLoginController extends Controller
     public function validateEmail(Request $request)
     {
         // validates input request using Laravel's in-built validator
-        // TODO: add UI functionality
         $request->validate([
             'email' => [
                 'required',
@@ -47,7 +48,6 @@ class SponsorLoginController extends Controller
 
         // checks if domain is valid and sponsor is active; if not, return json error 
         if (! $this->isValidSponsorDomain($email)) {
-            // TODO: add UI functionality
             return $this->errorResponse(
                 'Authentication Error',
                 'Could not validate email or sponsor is no longer active. Contact hello@robojackets.org if the issue persists.'
@@ -68,10 +68,9 @@ class SponsorLoginController extends Controller
 
         // Cache minimal state for OTP verification.
         session([
-            'sponsor_email' => $email,
+            'sponsor_email_pending' => $email,
         ]);
 
-        // TODO: Frontend should show message somehow
         return response()->json([
             'success' => true,
             'message' => 'One-Time Password Sent! Please type the one-time password sent to your email.',
@@ -92,10 +91,9 @@ class SponsorLoginController extends Controller
         $request->validate([
             'otp' => ['required', 'string', 'digits:6'],
         ]);
-        // TODO: Override error message?
 
         // Validate session and retrieve user
-        $email = session('sponsor_email');
+        $email = session('sponsor_email_pending');
         if (! $email) {
             return $this->errorResponse('Session Expired', 'Your session has expired. Please start the login process again.');
         }
@@ -108,18 +106,18 @@ class SponsorLoginController extends Controller
             $sponsorUser->email = $email;
         }
 
-        // Verify OTP using Spatie
-        $result = $sponsorUser->attemptLoginUsingOneTimePassword($request->input('otp'));
-        if (! $result->isOk()) {
-            return $this->errorResponse('Invalid OTP', $result->validationMessage());
-        }
-
-        // Verify sponsor domain is still valid and active before saving new user
+        // Verify sponsor domain is still valid and active BEFORE verifying OTP
         if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
                 'Authentication Error',
                 'Could not validate email or sponsor is no longer active. Please contact hello@robojackets.org if the issue persists.'
             );
+        }
+
+        // Verify OTP using Spatie
+        $result = $sponsorUser->attemptLoginUsingOneTimePassword($request->input('otp'));
+        if (! $result->isOk()) {
+            return $this->errorResponse('Invalid OTP', $result->validationMessage());
         }
 
         // Save new user to database after successful OTP verification and sponsor check
@@ -138,13 +136,13 @@ class SponsorLoginController extends Controller
             'sponsor_name' => $sponsor->name,
             'sponsor_email' => $email,
         ]);
-        session()->forget(['sponsor_email']);
+        session()->forget('sponsor_email_pending');
 
         return response()->json([
             'success' => true,
             'message' => 'Login successful! Redirecting to dashboard...',
-            // TODO: change to correct route
-            'redirect' => route('sponsor.dashboard'), 
+
+            'redirect' => route('home'), 
         ]);
     }
 
