@@ -13,24 +13,11 @@ use Spatie\OneTimePasswords\Enums\ConsumeOneTimePasswordResult;
 
 class SponsorLoginController extends Controller
 {
-    /**
-     * Show sponsor login page.
-     *
-     * @return \Illuminate\View\View
-     */
     public function showLoginForm()
     {
         return view('sponsor.login');
     }
 
-    /**
-     * Validate email and send OTP.
-     *
-     * Validates format, checks spoofing, verifies domain, and ensures sponsor is active.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function validateEmail(Request $request)
     {
         // validates input request using Laravel's in-built validator
@@ -77,14 +64,6 @@ class SponsorLoginController extends Controller
         ], 200);
     }
 
-    /**
-     * Verify OTP and establish session.
-     *
-     * Validates input, checks session context, verifies OTP, and stores sponsor session data.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function verifyOtp(Request $request)
     {
         // Laravel will automatically throw an error if OTP is invalid
@@ -146,12 +125,6 @@ class SponsorLoginController extends Controller
         ]);
     }
 
-    /**
-     * Check if email domain is valid and sponsor is active.
-     *
-     * @param string $email
-     * @return bool
-     */
     private function isValidSponsorDomain(string $email): bool
     {
         $domain = substr(strrchr($email, '@'), 1);
@@ -164,14 +137,6 @@ class SponsorLoginController extends Controller
         return $sponsorDomain->sponsor && $sponsorDomain->sponsor->active();
     }
 
-    /**
-     * Return a standardized error response.
-     *
-     * @param string $title
-     * @param string $message
-     * @param int $status
-     * @return \Illuminate\Http\JsonResponse
-     */
     private function errorResponse(string $title, string $message, int $status = 422): \Illuminate\Http\JsonResponse
     {
         return response()->json([
