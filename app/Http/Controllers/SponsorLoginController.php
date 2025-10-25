@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Models\SponsorDomain;
 use App\Models\SponsorUser;
 use Illuminate\Http\Request;
-use Spatie\OneTimePasswords\Enums\ConsumeOneTimePasswordResult;
 
 // TODO: might need to add server-side rate limiting for OTP
 
@@ -33,7 +32,7 @@ class SponsorLoginController extends Controller
         // reads value
         $email = $request->input('email');
 
-        // checks if domain is valid and sponsor is active; if not, return json error 
+        // checks if domain is valid and sponsor is active; if not, return json error
         if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
                 'Authentication Error',
@@ -47,7 +46,6 @@ class SponsorLoginController extends Controller
             // Create new unsaved SponsorUser model for new users
             $sponsorUser = new SponsorUser();
             $sponsorUser->email = $email;
-        
         }
 
         // Generate and dispatch OTP using Spatie
@@ -121,7 +119,7 @@ class SponsorLoginController extends Controller
             'success' => true,
             'message' => 'Login successful! Redirecting to dashboard...',
 
-            'redirect' => route('home'), 
+            'redirect' => route('home'),
         ]);
     }
 

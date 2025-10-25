@@ -72,7 +72,7 @@
         "beyondcode/laravel-dump-server": "2.1.0",
         "danog/advanced-json-rpc": "3.2.2",
         "laravel/pail": "1.2.3",
-        "laravel/pint": "1.25.1",
+        "laravel/pint": "*",
         "mockery/mockery": "1.6.12",
         "mxl/laravel-job": "1.7.0",
         "nunomaduro/collision": "8.6.1",
@@ -181,23 +181,24 @@
             "dont-discover": []
         }
     },
-    "repositories": [
-        {
+    "repositories": {
+        "nova": false,
+        "0": {
             "type": "composer",
             "url": "https://nova.laravel.com",
             "only": [
                 "laravel/nova"
             ]
         },
-        {
+        "1": {
             "type": "path",
             "url": "./nova-components/PersonalAccessTokenModal"
         },
-        {
+        "2": {
             "type": "path",
             "url": "./nova-components/ClientIdAndSecretModal"
         },
-        {
+        "3": {
             "type": "package",
             "package": {
                 "name": "mwgg/airports",
@@ -208,17 +209,17 @@
                 }
             }
         },
-        {
+        "4": {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/Laravel-HTMLMin.git"
         },
-        {
+        "5": {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/cas.git"
         },
-        {
+        "6": {
             "type": "vcs",
             "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git"
         }
-    ]
+    }
 }
