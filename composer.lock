@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17892a6e6746b65072b964f4a687c6aa",
+    "content-hash": "8dd5258d4704c87b5d86fd4453df7139",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -7233,7 +7233,7 @@
         },
         {
             "name": "robojackets/client-id-and-secret-modal",
-            "version": "dev-logincontroller",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ClientIdAndSecretModal",
@@ -7269,7 +7269,7 @@
         },
         {
             "name": "robojackets/personal-access-token-modal",
-            "version": "dev-logincontroller",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/PersonalAccessTokenModal",
