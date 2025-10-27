@@ -6,7 +6,6 @@ namespace App\Nova;
 
 use App\Models\SponsorDomain as AppModelsSponsorDomain;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
