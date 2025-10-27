@@ -71,7 +71,6 @@ class SponsorUser extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make()->sortable(),
             BelongsTo::make('Sponsor', 'company', Sponsor::class)
                 ->rules('required')
                 ->sortable(),

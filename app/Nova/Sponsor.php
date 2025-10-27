@@ -72,7 +72,6 @@ class Sponsor extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make()->sortable(),
             Text::make('Name')
                 ->rules('required', 'max:255')
                 ->sortable(),

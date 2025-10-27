@@ -70,7 +70,6 @@ class SponsorDomain extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make()->sortable(),
             BelongsTo::make('Sponsor', 'sponsor', Sponsor::class)
                 ->rules('required')
                 ->sortable(),
