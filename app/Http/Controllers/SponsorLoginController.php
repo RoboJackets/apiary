@@ -9,7 +9,7 @@ use App\Models\SponsorUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class SponsorLoginController extends Controller
+class SponsorLoginController
 {
     public function showLoginForm()
     {
@@ -71,7 +71,7 @@ class SponsorLoginController extends Controller
 
         // Validate session and retrieve user
         $email = session('sponsor_email_pending');
-        if (! $email) {
+        if (! is_string($email)) {
             return $this->errorResponse(
                 'Session Expired',
                 'Your session has expired. Please start the login process again.'
