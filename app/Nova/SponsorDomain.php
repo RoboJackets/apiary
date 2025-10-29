@@ -70,10 +70,13 @@ class SponsorDomain extends Resource
     {
         return [
             BelongsTo::make('Sponsor', 'sponsor', Sponsor::class)
+                ->withoutTrashed()
                 ->rules('required')
                 ->sortable(),
             Text::make('Domain Name', 'domain_name')
                 ->rules('required', 'max:255')
+                ->creationRules('unique:sponsor_domains,domain_name')
+                ->updateRules('unique:sponsor_domains,domain_name,{{resourceId}}')
                 ->sortable(),
         ];
     }

@@ -73,6 +73,8 @@ class Sponsor extends Resource
         return [
             Text::make('Name')
                 ->rules('required', 'max:255')
+                ->creationRules('unique:sponsors,name')
+                ->updateRules('unique:sponsors,name,{{resourceId}}')
                 ->sortable(),
             DateTime::make('End Date')
                 ->rules('required')

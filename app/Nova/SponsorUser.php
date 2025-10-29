@@ -71,6 +71,7 @@ class SponsorUser extends Resource
     {
         return [
             BelongsTo::make('Sponsor', 'company', Sponsor::class)
+                ->withoutTrashed()
                 ->rules('required')
                 ->sortable(),
             Text::make('Email', 'email')
