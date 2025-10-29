@@ -36,7 +36,8 @@ class SponsorLoginController extends Controller
         if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
                 'Authentication Error',
-                'Could not validate email or sponsor is no longer active. Contact hello@robojackets.org if the issue persists.'
+                'Could not validate email or sponsor is no longer active. '
+                .'Contact hello@robojackets.org if the issue persists.'
             );
         }
 
@@ -72,7 +73,10 @@ class SponsorLoginController extends Controller
         // Validate session and retrieve user
         $email = session('sponsor_email_pending');
         if (! $email) {
-            return $this->errorResponse('Session Expired', 'Your session has expired. Please start the login process again.');
+            return $this->errorResponse(
+                'Session Expired',
+                'Your session has expired. Please start the login process again.'
+            );
         }
 
         // Retrieve existing user or create temporary one for OTP verification
@@ -87,7 +91,8 @@ class SponsorLoginController extends Controller
         if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
                 'Authentication Error',
-                'Could not validate email or sponsor is no longer active. Please contact hello@robojackets.org if the issue persists.'
+                'Could not validate email or sponsor is no longer active. '
+                .'Please contact hello@robojackets.org if the issue persists.'
             );
         }
 
