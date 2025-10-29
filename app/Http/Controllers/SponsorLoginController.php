@@ -8,8 +8,6 @@ use App\Models\SponsorDomain;
 use App\Models\SponsorUser;
 use Illuminate\Http\Request;
 
-// TODO: might need to add server-side rate limiting for OTP
-
 class SponsorLoginController extends Controller
 {
     public function showLoginForm()
