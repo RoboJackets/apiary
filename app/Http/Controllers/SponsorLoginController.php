@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SponsorDomain;
 use App\Models\SponsorUser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SponsorLoginController extends Controller
@@ -15,9 +16,9 @@ class SponsorLoginController extends Controller
         return view('sponsor.login');
     }
 
-    public function validateEmail(Request $request)
+    public function validateEmail(Request $request): JsonResponse
     {
-        // validates input request using Laravel's in-built validator
+        // Validate input request using Laravel's in-built validator
         $request->validate([
             'email' => [
                 'required',
@@ -27,15 +28,15 @@ class SponsorLoginController extends Controller
             ],
         ]);
 
-        // reads value
+        // Read value
         $email = $request->input('email');
 
-        // checks if domain is valid and sponsor is active; if not, return json error
+        // Check if domain is valid and sponsor is active; if not, return JSON error
         if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
                 'Authentication Error',
-                'Could not validate email or sponsor is no longer active. '
-                .'Contact hello@robojackets.org if the issue persists.'
+                'Could not validate email or sponsor is no longer active. '.
+                'Contact hello@robojackets.org if the issue persists.'
             );
         }
 
@@ -50,7 +51,7 @@ class SponsorLoginController extends Controller
         // Generate and dispatch OTP using Spatie
         $sponsorUser->sendOneTimePassword();
 
-        // Cache minimal state for OTP verification.
+        // Cache minimal state for OTP verification
         session([
             'sponsor_email_pending' => $email,
         ]);
@@ -61,7 +62,7 @@ class SponsorLoginController extends Controller
         ], 200);
     }
 
-    public function verifyOtp(Request $request)
+    public function verifyOtp(Request $request): JsonResponse
     {
         // Laravel will automatically throw an error if OTP is invalid
         $request->validate([
@@ -89,8 +90,8 @@ class SponsorLoginController extends Controller
         if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
                 'Authentication Error',
-                'Could not validate email or sponsor is no longer active. '
-                .'Please contact hello@robojackets.org if the issue persists.'
+                'Could not validate email or sponsor is no longer active. '.
+                'Please contact hello@robojackets.org if the issue persists.'
             );
         }
 
@@ -121,7 +122,6 @@ class SponsorLoginController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Login successful! Redirecting to dashboard...',
-
             'redirect' => route('home'),
         ]);
     }
@@ -138,7 +138,7 @@ class SponsorLoginController extends Controller
         return $sponsorDomain->sponsor && $sponsorDomain->sponsor->active();
     }
 
-    private function errorResponse(string $title, string $message, int $status = 422): \Illuminate\Http\JsonResponse
+    private function errorResponse(string $title, string $message, int $status = 422): JsonResponse
     {
         return response()->json([
             'error' => true,
