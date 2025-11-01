@@ -233,6 +233,64 @@ return [
                     'disableOnNumbers' => true,
                 ],
             ],
+            \App\Models\Sponsor::class => [
+                'displayedAttributes' => [
+                    'id',
+                ],
+                'searchableAttributes' => [
+                    'name',
+                ],
+                'rankingRules' => [
+                    'words',
+                    'typo',
+                    'proximity',
+                    'attribute',
+                    'sort',
+                    'exactness',
+                    'end_date_unix:desc',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
+                ],
+            ],
+            \App\Models\SponsorDomain::class => [
+                'displayedAttributes' => [
+                    'id',
+                ],
+                'searchableAttributes' => [
+                    'domain_name',
+                ],
+                'rankingRules' => [
+                    'words',
+                    'typo',
+                    'proximity',
+                    'attribute',
+                    'sort',
+                    'exactness',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
+                ],
+            ],
+            \App\Models\SponsorUser::class => [
+                'displayedAttributes' => [
+                    'id',
+                ],
+                'searchableAttributes' => [
+                    'email',
+                ],
+                'rankingRules' => [
+                    'words',
+                    'typo',
+                    'proximity',
+                    'attribute',
+                    'sort',
+                    'exactness',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
+                ],
+            ],
             \App\Models\Team::class => [
                 'displayedAttributes' => [
                     'id',
