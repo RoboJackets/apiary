@@ -13,6 +13,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
+use App\Http\Controllers\SponsorLoginController;
 use App\Http\Controllers\SquareCheckoutController;
 use App\Http\Controllers\SUMSController;
 use App\Http\Controllers\TeamController;
@@ -129,3 +130,9 @@ if (config('features.sandbox-mode') === true) {
 Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
     ->name('passport.authorizations.authorize')
     ->middleware('auth');
+
+Route::prefix('sponsor')->name('sponsor.')->group(static function (): void {
+    Route::get('/login', [SponsorLoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/validate-email', [SponsorLoginController::class, 'validateEmail'])->name('validate-email');
+    Route::post('/verify-otp', [SponsorLoginController::class, 'verifyOtp'])->name('verify-otp');
+});
