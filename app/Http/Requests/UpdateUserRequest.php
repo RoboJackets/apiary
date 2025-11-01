@@ -30,8 +30,12 @@ class UpdateUserRequest extends FormRequest
                 'regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
             ],
             'phone' => [
-                'digits_between:10,15',
+                'numeric',
                 'nullable',
+            ],
+            'phone_verified' => [
+                'nullable',
+                'boolean',
             ],
             'emergency_contact_name' => [
                 'required_with:emergency_contact_phone',
@@ -41,9 +45,13 @@ class UpdateUserRequest extends FormRequest
             ],
             'emergency_contact_phone' => [
                 'required_with:emergency_contact_name',
-                'digits_between:10,15',
+                'numeric',
                 'different:phone',
                 'nullable',
+            ],
+            'emergency_contact_phone_verified' => [
+                'nullable',
+                'boolean',
             ],
             'graduation_semester' => [
                 'regex:/^[0-9]{4}0[258]$/',
@@ -56,9 +64,6 @@ class UpdateUserRequest extends FormRequest
             'polo_size' => [
                 'in:'.implode(',', array_keys(User::$shirt_sizes)),
                 'nullable',
-            ],
-            'generateToken' => [
-                'boolean',
             ],
             'gender' => [
                 'string',

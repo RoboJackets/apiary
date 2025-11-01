@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8dd5258d4704c87b5d86fd4453df7139",
+    "content-hash": "6489247597c04cec038c21a25df1847c",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -390,16 +390,16 @@
         },
         {
             "name": "ashallendesign/laravel-config-validator",
-            "version": "v2.8.0",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ash-jc-allen/laravel-config-validator.git",
-                "reference": "8704ddcab0131df44b877dfba19cb73affa95462"
+                "reference": "ab11ba1bc19f8a2e3dbc308c6db42747ab072382"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/8704ddcab0131df44b877dfba19cb73affa95462",
-                "reference": "8704ddcab0131df44b877dfba19cb73affa95462",
+                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/ab11ba1bc19f8a2e3dbc308c6db42747ab072382",
+                "reference": "ab11ba1bc19f8a2e3dbc308c6db42747ab072382",
                 "shasum": ""
             },
             "require": {
@@ -453,7 +453,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ash-jc-allen/laravel-config-validator/issues",
-                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.8.0"
+                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.9.0"
             },
             "funding": [
                 {
@@ -461,7 +461,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-24T20:37:20+00:00"
+            "time": "2025-10-17T19:41:36+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1258,16 +1258,16 @@
         },
         {
             "name": "docusign/esign-client",
-            "version": "v8.4.0",
+            "version": "v8.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/docusign/docusign-esign-php-client.git",
-                "reference": "c95bbdb83e3945231fae03c34c18ec562b67db70"
+                "reference": "cfdc51f4d4535226aad150639127128a53306ac2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/c95bbdb83e3945231fae03c34c18ec562b67db70",
-                "reference": "c95bbdb83e3945231fae03c34c18ec562b67db70",
+                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/cfdc51f4d4535226aad150639127128a53306ac2",
+                "reference": "cfdc51f4d4535226aad150639127128a53306ac2",
                 "shasum": ""
             },
             "require": {
@@ -1311,9 +1311,9 @@
             ],
             "support": {
                 "issues": "https://github.com/docusign/docusign-esign-php-client/issues",
-                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v8.4.0"
+                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v8.5.0"
             },
-            "time": "2025-09-02T10:31:51+00:00"
+            "time": "2025-10-22T20:42:00+00:00"
         },
         {
             "name": "dompdf/dompdf",
@@ -1731,6 +1731,97 @@
                 "source": "https://github.com/enlightn/security-checker/tree/v2.0.0"
             },
             "time": "2023-12-10T07:17:09+00:00"
+        },
+        {
+            "name": "esi/numverify-api-client-php",
+            "version": "v3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ericsizemore/numverify-api-client-php.git",
+                "reference": "ede02a96140909c47680eba6dbc6f35406405ce2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ericsizemore/numverify-api-client-php/zipball/ede02a96140909c47680eba6dbc6f35406405ce2",
+                "reference": "ede02a96140909c47680eba6dbc6f35406405ce2",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.8",
+                "kevinrob/guzzle-cache-middleware": "^5.1",
+                "php": "^8.2 <8.5",
+                "symfony/cache": "^7.0"
+            },
+            "replace": {
+                "markrogoyski/numverify-api-client-php": "^2.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "dev-master",
+                "phpstan/phpstan": "^1.11",
+                "phpstan/phpstan-phpunit": "^1.4",
+                "phpstan/phpstan-strict-rules": "^1.6",
+                "phpunit/phpunit": "^11.0",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "vimeo/psalm": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Numverify\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Sizemore",
+                    "email": "admin@secondversion.com",
+                    "homepage": "https://www.secondversion.com/",
+                    "role": "Fork Developer"
+                },
+                {
+                    "name": "Mark Rogoyski",
+                    "email": "mark@rogoyski.com",
+                    "homepage": "https://github.com/markrogoyski",
+                    "role": "Original Developer"
+                }
+            ],
+            "description": "Numverify API Client for PHP",
+            "keywords": [
+                "api",
+                "carrier lookup",
+                "client",
+                "country codes",
+                "dialing codes",
+                "numverify",
+                "phone number",
+                "validate phone number"
+            ],
+            "support": {
+                "forum": "https://github.com/ericsizemore/numverify-api-client-php/discussions",
+                "issues": "https://github.com/ericsizemore/numverify-api-client-php/issues",
+                "security": "https://github.com/ericsizemore/numverify-api-client-php/security/policy",
+                "source": "https://github.com/ericsizemore/numverify-api-client-php/tree/master"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ericsizemore",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/ericsizemore",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2024-03-14T02:24:07+00:00"
         },
         {
             "name": "fakerphp/faker",
@@ -2735,6 +2826,91 @@
             "time": "2025-03-19T14:43:43+00:00"
         },
         {
+            "name": "kevinrob/guzzle-cache-middleware",
+            "version": "v5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kevinrob/guzzle-cache-middleware.git",
+                "reference": "6bd64dbbe5155107d84a0f67140a8822a709c6d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kevinrob/guzzle-cache-middleware/zipball/6bd64dbbe5155107d84a0f67140a8822a709c6d0",
+                "reference": "6bd64dbbe5155107d84a0f67140a8822a709c6d0",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0 || ^7.0",
+                "guzzlehttp/promises": "^1.4 || ^2.0",
+                "guzzlehttp/psr7": "^1.7.0 || ^2.0.0",
+                "php": ">=7.2.0"
+            },
+            "require-dev": {
+                "cache/array-adapter": "^0.4 || ^0.5 || ^1.0",
+                "cache/simple-cache-bridge": "^0.1 || ^1.0",
+                "doctrine/cache": "^1.10",
+                "illuminate/cache": "^5.0",
+                "league/flysystem": "^2.5",
+                "phpunit/phpunit": "^8.5.15 || ^9.5",
+                "psr/cache": "^1.0",
+                "symfony/cache": "^4.4 || ^5.0",
+                "symfony/phpunit-bridge": "^4.4 || ^5.0"
+            },
+            "suggest": {
+                "doctrine/cache": "This library has a lot of ready-to-use cache storage (to be used with Kevinrob\\GuzzleCache\\Storage\\DoctrineCacheStorage). Use only versions >=1.4.0 < 2.0.0",
+                "guzzlehttp/guzzle": "For using this library. It was created for Guzzle6 (but you can use it with any PSR-7 HTTP client).",
+                "laravel/framework": "To be used with Kevinrob\\GuzzleCache\\Storage\\LaravelCacheStorage",
+                "league/flysystem": "To be used with Kevinrob\\GuzzleCache\\Storage\\FlysystemStorage",
+                "psr/cache": "To be used with Kevinrob\\GuzzleCache\\Storage\\Psr6CacheStorage",
+                "psr/simple-cache": "To be used with Kevinrob\\GuzzleCache\\Storage\\Psr16CacheStorage"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kevinrob\\GuzzleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Robatel",
+                    "email": "kevinrob2@gmail.com",
+                    "homepage": "https://github.com/Kevinrob"
+                }
+            ],
+            "description": "A HTTP/1.1 Cache for Guzzle 6. It's a simple Middleware to be added in the HandlerStack. (RFC 7234)",
+            "homepage": "https://github.com/Kevinrob/guzzle-cache-middleware",
+            "keywords": [
+                "Etag",
+                "Flysystem",
+                "Guzzle",
+                "cache",
+                "cache-control",
+                "doctrine",
+                "expiration",
+                "guzzle6",
+                "handler",
+                "http",
+                "http 1.1",
+                "middleware",
+                "performance",
+                "php",
+                "promise",
+                "psr6",
+                "psr7",
+                "rfc7234",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/Kevinrob/guzzle-cache-middleware/issues",
+                "source": "https://github.com/Kevinrob/guzzle-cache-middleware/tree/v5.1.0"
+            },
+            "time": "2023-11-09T06:53:45+00:00"
+        },
+        {
             "name": "kiritokatklian/nova-permission",
             "version": "5.1.2",
             "source": {
@@ -2852,16 +3028,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.34.0",
+            "version": "v12.36.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f9ec5a5d88bc8c468f17b59f88e05c8ac3c8d687"
+                "reference": "cad110d7685fbab990a6bb8184d0cfd847d7c4d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f9ec5a5d88bc8c468f17b59f88e05c8ac3c8d687",
-                "reference": "f9ec5a5d88bc8c468f17b59f88e05c8ac3c8d687",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/cad110d7685fbab990a6bb8184d0cfd847d7c4d8",
+                "reference": "cad110d7685fbab990a6bb8184d0cfd847d7c4d8",
                 "shasum": ""
             },
             "require": {
@@ -3067,20 +3243,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-10-14T13:58:31+00:00"
+            "time": "2025-10-29T14:20:57+00:00"
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.36.0",
+            "version": "v5.38.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "eccc804c9da78064c97a8f506bb148f05c816409"
+                "reference": "3a3145345221df6a0eaacc478c22040d1252a065"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/eccc804c9da78064c97a8f506bb148f05c816409",
-                "reference": "eccc804c9da78064c97a8f506bb148f05c816409",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/3a3145345221df6a0eaacc478c22040d1252a065",
+                "reference": "3a3145345221df6a0eaacc478c22040d1252a065",
                 "shasum": ""
             },
             "require": {
@@ -3145,23 +3321,23 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.36.0"
+                "source": "https://github.com/laravel/horizon/tree/v5.38.0"
             },
-            "time": "2025-10-10T13:44:39+00:00"
+            "time": "2025-10-26T17:03:39+00:00"
         },
         {
             "name": "laravel/nova",
-            "version": "5.7.5",
+            "version": "5.7.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "7e9937b5f7447bcd0c52abaed44c3961c4a790f0"
+                "reference": "40b3aeffcaa4f295a8136aad744895e6e8f64ae4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-7e9937b5f7447bcd0c52abaed44c3961c4a790f0-zip-696677.zip",
-                "reference": "7e9937b5f7447bcd0c52abaed44c3961c4a790f0",
-                "shasum": "5988533137431173f553db23e7e3bd310ded313e"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-40b3aeffcaa4f295a8136aad744895e6e8f64ae4-zip-293061.zip",
+                "reference": "40b3aeffcaa4f295a8136aad744895e6e8f64ae4",
+                "shasum": "a89416fe9ff4be5e085e16942805199ba995ad26"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -3326,10 +3502,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.7.5",
+                "source": "https://github.com/laravel/nova/tree/v5.7.6",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-07-31T13:20:04+00:00"
+            "time": "2025-10-19T03:38:32+00:00"
         },
         {
             "name": "laravel/passport",
@@ -3675,16 +3851,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v5.23.0",
+            "version": "v5.23.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "e9e0fc83b9d8d71c8385a5da20e5b95ca6234cf5"
+                "reference": "83d7523c97c1101d288126948947891319eef800"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/e9e0fc83b9d8d71c8385a5da20e5b95ca6234cf5",
-                "reference": "e9e0fc83b9d8d71c8385a5da20e5b95ca6234cf5",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/83d7523c97c1101d288126948947891319eef800",
+                "reference": "83d7523c97c1101d288126948947891319eef800",
                 "shasum": ""
             },
             "require": {
@@ -3743,7 +3919,7 @@
                 "issues": "https://github.com/laravel/socialite/issues",
                 "source": "https://github.com/laravel/socialite"
             },
-            "time": "2025-07-23T14:16:08+00:00"
+            "time": "2025-10-27T15:36:41+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -6384,6 +6560,55 @@
             "time": "2024-09-05T11:56:40+00:00"
         },
         {
+            "name": "psr/cache",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/cache.git",
+                "reference": "aa5030cfa5405eccfdcb1083ce040c2cb8d253bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/aa5030cfa5405eccfdcb1083ce040c2cb8d253bf",
+                "reference": "aa5030cfa5405eccfdcb1083ce040c2cb8d253bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for caching libraries",
+            "keywords": [
+                "cache",
+                "psr",
+                "psr-6"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/cache/tree/3.0.0"
+            },
+            "time": "2021-02-03T23:26:27+00:00"
+        },
+        {
             "name": "psr/clock",
             "version": "1.0.0",
             "source": {
@@ -7706,32 +7931,32 @@
         },
         {
             "name": "spatie/laravel-one-time-passwords",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-one-time-passwords.git",
-                "reference": "9315e258013a292424bdfb5ac3496c6c61fa7b1a"
+                "reference": "7d45be36ffe5cdf5d237e8189a2a9cf84cacf950"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/9315e258013a292424bdfb5ac3496c6c61fa7b1a",
-                "reference": "9315e258013a292424bdfb5ac3496c6c61fa7b1a",
+                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/7d45be36ffe5cdf5d237e8189a2a9cf84cacf950",
+                "reference": "7d45be36ffe5cdf5d237e8189a2a9cf84cacf950",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^11.0|^12.0",
-                "php": "^8.2",
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
+                "php": "^8.1",
                 "spatie/laravel-package-tools": "^1.16"
             },
             "require-dev": {
                 "laravel/pint": "^1.14",
                 "livewire/livewire": "^3.6",
-                "nunomaduro/collision": "^8.1.1",
-                "orchestra/testbench": "^9.0|^10.0.0",
-                "pestphp/pest": "^3.0",
-                "pestphp/pest-plugin-arch": "^3.0",
-                "pestphp/pest-plugin-laravel": "^3.0",
-                "phpstan/phpstan": "^2.1",
+                "nunomaduro/collision": "^7.10.0|^8.1.1",
+                "orchestra/testbench": "^8.22|^9.0|^10.0.0",
+                "pestphp/pest": "^2.30|^3.0",
+                "pestphp/pest-plugin-arch": "^2.7|^3.0",
+                "pestphp/pest-plugin-laravel": "^2.2|^3.0",
+                "phpstan/phpstan": "^1.10|^2.1",
                 "spatie/laravel-ray": "^1.35"
             },
             "type": "library",
@@ -7768,7 +7993,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-one-time-passwords/issues",
-                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.5"
+                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.6"
             },
             "funding": [
                 {
@@ -7776,7 +8001,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-18T07:42:30+00:00"
+            "time": "2025-10-20T08:54:50+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -8205,6 +8430,184 @@
                 "source": "https://github.com/RoboJackets/cas/tree/master"
             },
             "time": "2025-03-01T21:29:16+00:00"
+        },
+        {
+            "name": "symfony/cache",
+            "version": "v7.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/cache.git",
+                "reference": "bf8afc8ffd4bfd3d9c373e417f041d9f1e5b863f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/bf8afc8ffd4bfd3d9c373e417f041d9f1e5b863f",
+                "reference": "bf8afc8ffd4bfd3d9c373e417f041d9f1e5b863f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "psr/cache": "^2.0|^3.0",
+                "psr/log": "^1.1|^2|^3",
+                "symfony/cache-contracts": "^3.6",
+                "symfony/deprecation-contracts": "^2.5|^3.0",
+                "symfony/service-contracts": "^2.5|^3",
+                "symfony/var-exporter": "^6.4|^7.0"
+            },
+            "conflict": {
+                "doctrine/dbal": "<3.6",
+                "symfony/dependency-injection": "<6.4",
+                "symfony/http-kernel": "<6.4",
+                "symfony/var-dumper": "<6.4"
+            },
+            "provide": {
+                "psr/cache-implementation": "2.0|3.0",
+                "psr/simple-cache-implementation": "1.0|2.0|3.0",
+                "symfony/cache-implementation": "1.1|2.0|3.0"
+            },
+            "require-dev": {
+                "cache/integration-tests": "dev-master",
+                "doctrine/dbal": "^3.6|^4",
+                "predis/predis": "^1.1|^2.0",
+                "psr/simple-cache": "^1.0|^2.0|^3.0",
+                "symfony/clock": "^6.4|^7.0",
+                "symfony/config": "^6.4|^7.0",
+                "symfony/dependency-injection": "^6.4|^7.0",
+                "symfony/filesystem": "^6.4|^7.0",
+                "symfony/http-kernel": "^6.4|^7.0",
+                "symfony/messenger": "^6.4|^7.0",
+                "symfony/var-dumper": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Cache\\": ""
+                },
+                "classmap": [
+                    "Traits/ValueWrapper.php"
+                ],
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides extended PSR-6, PSR-16 (and tags) implementations",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "caching",
+                "psr6"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/cache/tree/v7.3.4"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-09-11T10:12:26+00:00"
+        },
+        {
+            "name": "symfony/cache-contracts",
+            "version": "v3.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/cache-contracts.git",
+                "reference": "5d68a57d66910405e5c0b63d6f0af941e66fc868"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/5d68a57d66910405e5c0b63d6f0af941e66fc868",
+                "reference": "5d68a57d66910405e5c0b63d6f0af941e66fc868",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "psr/cache": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
+                "branch-alias": {
+                    "dev-main": "3.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Contracts\\Cache\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Generic abstractions related to caching",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "interfaces",
+                "interoperability",
+                "standards"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/cache-contracts/tree/v3.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-03-13T15:25:07+00:00"
         },
         {
             "name": "symfony/clock",
@@ -10483,6 +10886,87 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/var-dumper/tree/v7.3.4"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-09-11T10:12:26+00:00"
+        },
+        {
+            "name": "symfony/var-exporter",
+            "version": "v7.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-exporter.git",
+                "reference": "0f020b544a30a7fe8ba972e53ee48a74c0bc87f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/0f020b544a30a7fe8ba972e53ee48a74c0bc87f4",
+                "reference": "0f020b544a30a7fe8ba972e53ee48a74c0bc87f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/deprecation-contracts": "^2.5|^3"
+            },
+            "require-dev": {
+                "symfony/property-access": "^6.4|^7.0",
+                "symfony/serializer": "^6.4|^7.0",
+                "symfony/var-dumper": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\VarExporter\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Allows exporting any serializable PHP data structure to plain PHP code",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "clone",
+                "construct",
+                "export",
+                "hydrate",
+                "instantiate",
+                "lazy-loading",
+                "proxy",
+                "serialize"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/var-exporter/tree/v7.3.4"
             },
             "funding": [
                 {
@@ -16144,16 +16628,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.43.0",
+            "version": "1.43.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "ee9c0477e0b7e5ff49e62cd1f4f75be27da91dbe"
+                "reference": "2104ba5fb20cceda04aaa72dc7a4786a89c67cb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/ee9c0477e0b7e5ff49e62cd1f4f75be27da91dbe",
-                "reference": "ee9c0477e0b7e5ff49e62cd1f4f75be27da91dbe",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/2104ba5fb20cceda04aaa72dc7a4786a89c67cb4",
+                "reference": "2104ba5fb20cceda04aaa72dc7a4786a89c67cb4",
                 "shasum": ""
             },
             "require": {
@@ -16213,7 +16697,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.43.0"
+                "source": "https://github.com/spatie/ray/tree/1.43.1"
             },
             "funding": [
                 {
@@ -16225,7 +16709,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2025-10-16T10:01:03+00:00"
+            "time": "2025-10-29T14:30:35+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
