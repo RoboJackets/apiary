@@ -76,6 +76,8 @@ class SponsorUser extends Resource
                 ->sortable(),
             Text::make('Email', 'email')
                 ->rules('required', 'email:rfc,strict,dns,spoof', 'max:255', new SponsorUserValidEmail())
+                ->creationRules('unique:sponsor_users,email')
+                ->updateRules('unique:sponsor_users,email,{{resourceId}}')
                 ->sortable(),
         ];
     }
