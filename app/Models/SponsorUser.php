@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
 
 /**
@@ -23,6 +24,7 @@ class SponsorUser extends Model
 {
     use HasFactory;
     use HasOneTimePasswords;
+    use Searchable;
     use SoftDeletes;
 
     /**
