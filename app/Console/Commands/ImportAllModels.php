@@ -9,6 +9,9 @@ use App\Models\Airport;
 use App\Models\Attendance;
 use App\Models\DuesTransaction;
 use App\Models\Event;
+use App\Models\Sponsor;
+use App\Models\SponsorDomain;
+use App\Models\SponsorUser;
 use App\Models\Team;
 use App\Models\Travel;
 use App\Models\TravelAssignment;
@@ -55,6 +58,18 @@ class ImportAllModels extends Command
 
         $this->call('scout:import', [
             'model' => Event::class,
+        ]);
+
+        $this->call('scout:import', [
+            'model' => Sponsor::class,
+        ]);
+
+        $this->call('scout:import', [
+            'model' => SponsorDomain::class,
+        ]);
+
+        $this->call('scout:import', [
+            'model' => SponsorUser::class,
         ]);
 
         $this->call('scout:import', [
