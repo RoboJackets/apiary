@@ -10,6 +10,7 @@ use App\Http\Controllers\DocuSignController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
@@ -129,3 +130,5 @@ if (config('features.sandbox-mode') === true) {
 Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
     ->name('passport.authorizations.authorize')
     ->middleware('auth');
+
+Route::get('/.well-known/openid-configuration', [InfoController::class, 'showOpenIdConfiguration']);

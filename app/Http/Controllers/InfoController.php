@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 
 class InfoController
 {
-    public function show(): JsonResponse
+    public function showInfo(): JsonResponse
     {
         return response()->json([
             'status' => 'success',
@@ -18,14 +18,20 @@ class InfoController
                 'allocId' => config('app.alloc_id'),
                 'release' => config('sentry.release'),
                 'oAuthClients' => [
-                    'android' => [
+                    'reactNative' => [
                         'clientId' => config('oauth.android.client_id'),
-                    ],
-                    'ios' => [
-                        'clientId' => config('oauth.ios.client_id'),
                     ],
                 ],
             ],
+        ]);
+    }
+
+    public function showOpenIdConfiguration(): JsonResponse
+    {
+        return response()->json([
+            'issuer' => route('home'),
+            'authorization_endpoint' => route('passport.authorizations.authorize'),
+            'token_endpoint' => route('passport.token'),
         ]);
     }
 }
