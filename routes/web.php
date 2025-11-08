@@ -21,6 +21,7 @@ use App\Http\Controllers\TravelAssignmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Http\Controllers\AuthorizationController;
+use OpenIDConnect\Laravel\JwksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,5 +131,8 @@ if (config('features.sandbox-mode') === true) {
 Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
     ->name('passport.authorizations.authorize')
     ->middleware('auth');
+
+Route::get('oauth/jwks', JwksController::class)
+    ->name('passport.jwks');
 
 Route::get('/.well-known/openid-configuration', [InfoController::class, 'showOpenIdConfiguration']);
