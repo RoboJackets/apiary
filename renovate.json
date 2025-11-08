@@ -235,6 +235,15 @@
             "major": {
                 "enabled": true
             }
+        },
+        {
+            "matchDepNames": [
+                "node"
+            ],
+            "major": {
+                "enabled": true
+            },
+            "rangeStrategy": "replace"
         }
     ]
 }
