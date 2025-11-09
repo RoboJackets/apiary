@@ -138,12 +138,31 @@ class Travel extends Resource
     public function fields(Request $request): array
     {
         return [
-            Badge::make('Status')
-                ->map([
-                    'draft' => 'info',
-                    'approved' => 'success',
-                    'complete' => 'success',
-                ])
+            Stack::make('Status', [
+                Badge::make('Status')
+                    ->map([
+                        'draft' => 'info',
+                        'approved' => 'success',
+                        'complete' => 'success',
+                    ])
+                    ->onlyOnDetail(),
+
+                Text::make(
+                    'Approval Status Help Text',
+                    static fn (\App\Models\Travel $trip): string => view(
+                        'nova.partials.travel.approvalstatus',
+                        ['trip' => $trip]
+                    )->render()
+                )
+                    ->asHtml()
+                    ->onlyOnDetail()
+                    ->showOnDetail(
+                        static fn (
+                            NovaRequest $request,
+                            \App\Models\Travel $trip
+                        ): bool => $trip->status === 'draft'
+                    ),
+            ])
                 ->onlyOnDetail(),
 
             Select::make('Status')
