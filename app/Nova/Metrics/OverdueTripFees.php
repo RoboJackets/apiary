@@ -53,6 +53,7 @@ class OverdueTripFees extends Value
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'overdue-trip-fees';
