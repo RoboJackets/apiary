@@ -15,6 +15,7 @@ use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\DuesRevenueByFiscalYear;
 use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\MembersByFiscalYear;
+use App\Nova\Metrics\OverdueTripFees;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\PaymentsPerDay;
 use App\Nova\Metrics\RsvpSourceBreakdown;
@@ -65,6 +66,8 @@ class Main extends Dashboard
             ),
             (new TransactionsByDuesPackage())
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
+            (new OverdueTripFees())
+                ->canSee(static fn (Request $request): bool => $request->user()->can('manage-travel')),
         ];
 
         if (request()->is('nova-api/dashboards/main')) {
