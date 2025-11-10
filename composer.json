@@ -39,7 +39,7 @@
         "guzzlehttp/guzzle": "7.10.0",
         "htmlmin/htmlmin": "dev-master",
         "http-interop/http-factory-guzzle": "1.2.0",
-        "jeremy379/laravel-openid-connect": "^3.0",
+        "jeremy379/laravel-openid-connect": "3.0.1",
         "kiritokatklian/nova-permission": "5.1.2",
         "laravel/framework": "12.37.0",
         "laravel/horizon": "5.39.0",
