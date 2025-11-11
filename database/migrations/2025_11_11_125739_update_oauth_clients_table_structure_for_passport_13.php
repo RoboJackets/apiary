@@ -44,6 +44,8 @@ return new class extends Migration
         }
 
         $this->schema->table('oauth_clients', static function (Blueprint $table): void {
+            $table->dropIndex('oauth_clients_user_id_index');
+
             $table->dropColumn(['user_id', 'redirect', 'personal_access_client', 'password_client']);
 
             $table->text('redirect_uris')->nullable(false)->change();
