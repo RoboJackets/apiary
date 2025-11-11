@@ -46,7 +46,7 @@ $client = (new ClientRepository())->createPersonalAccessClient(null, 'test', 'ht
 Config::set('passport.personal_access_client.id', $client->id);
 Config::set('passport.personal_access_client.secret', $client->plain_secret);
 
-$clientRepository = new ClientRepository($client->id, $client->plain_secret);
+$clientRepository = new ClientRepository();
 
 Container::getInstance()->bind(ClientRepository::class, static fn () => $clientRepository);
 
