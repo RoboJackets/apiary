@@ -43,8 +43,18 @@ return new class extends Migration
             ])->save());
         }
 
-        $this->schema->table('oauth_clients', static function (Blueprint $table): void {
-            $table->dropColumn(['user_id', 'redirect', 'personal_access_client', 'password_client']);
+        $this->schema->table('oauth_clients', function (Blueprint $table): void {
+            $table->dropColumn(
+                array_filter(
+                    [
+                        'user_id',
+                        'redirect',
+                        'personal_access_client',
+                        'password_client',
+                    ],
+                    fn (string $column) => $this->schema->hasColumn('oauth_clients', $column)
+                )
+            );
 
             $table->text('redirect_uris')->nullable(false)->change();
             $table->text('grant_types')->nullable(false)->change();
