@@ -5,7 +5,7 @@ then
     php artisan migrate --no-interaction --force --verbose
     php artisan tinker --no-interaction --verbose --execute "\App\Models\OAuth2Client::create(['id' => '95158a03-4ce9-489d-9550-05655f9f27eb', 'redirect_uris' => ['org.robojackets.apiary://oauth'], 'name' => 'Android App', 'grant_types' => ['authorization_code', 'refresh_token'], 'revoked' => false]);"
     export PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=$(php artisan tinker --no-interaction --verbose --execute "echo ((new \\Laravel\\Passport\\ClientRepository())->createPersonalAccessGrantClient('Personal Access Client', 'users'))->plainSecret")
-    export PASSPORT_PERSONAL_ACCESS_CLIENT_ID=$(php artisan tinker --no-interaction --verbose --execute "echo \\Laravel\\Passport\\Passport::client()->where('personal_access_client', true)->sole()->getKey()")
+    export PASSPORT_PERSONAL_ACCESS_CLIENT_ID=$(php artisan tinker --no-interaction --verbose --execute "echo \\Laravel\\Passport\\Passport::client()->where('name', 'Personal Access Client')->sole()->getKey()")
 fi
 php artisan config:validate --no-interaction --verbose
 php artisan config:cache --no-interaction --verbose
