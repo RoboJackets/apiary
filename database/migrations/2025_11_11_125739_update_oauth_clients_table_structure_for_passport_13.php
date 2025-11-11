@@ -32,6 +32,22 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::table('oauth_clients', function (Blueprint $table): void {
+            if (! $this->schema->hasColumns('oauth_clients', ['owner_type', 'owner_id'])) {
+                $table->nullableMorphs('owner', after: 'user_id');
+            }
+
+            $table->after('provider', function (Blueprint $table): void {
+                if (! $this->schema->hasColumn('oauth_clients', 'redirect_uris')) {
+                    $table->text('redirect_uris')->nullable();
+                }
+
+                if (! $this->schema->hasColumn('oauth_clients', 'grant_types')) {
+                    $table->text('grant_types')->nullable();
+                }
+            });
+        });
+
         foreach (Passport::client()->cursor() as $client) {
             Model::withoutTimestamps(static fn () => $client->forceFill([
                 'owner_id' => $client->user_id,
