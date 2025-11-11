@@ -37,6 +37,7 @@ return new class extends Migration
     /**
      * Get the migration connection name.
      */
+    #[\Override]
     public function getConnection(): ?string
     {
         return $this->connection ?? config('passport.connection');
