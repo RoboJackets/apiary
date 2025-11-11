@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Models\User;
 use App\Nova\OAuth2Client;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
@@ -82,20 +81,10 @@ class CreateOAuth2Client extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $clientType = $fields->type;
-        $personalAccessClient = false; // Deliberately unsupported - creating a personal access client only has
-        // to be done once and the client ID/secret must be added as environment variables
-        $passwordGrantClient = false; // We don't support this right now
-        $confidential = $clientType !== self::PUBLIC_CLIENT; // Confidential means the client has a secret
-
-        $client = $this->clientRepository->create(
-            $fields->user,
-            $fields->name,
-            $fields->redirect_urls,
-            null,
-            $personalAccessClient,
-            $passwordGrantClient,
-            $confidential
+        $client = $this->clientRepository->createAuthorizationCodeGrantClient(
+            name: $fields->name,
+            redirectUris: explode(',', $fields->redirect_urls),
+            confidential: $fields->type !== self::PUBLIC_CLIENT
         );
 
         if ($client->confidential()) {
@@ -139,18 +128,6 @@ class CreateOAuth2Client extends Action
                     self::STANDARD_CLIENT => 'Confidential',
                     self::PUBLIC_CLIENT => 'Public',
                 ])
-                ->rules('required'),
-
-            Select::make('User', 'user')
-                ->options(
-                    static fn (): array => User::accessActive()
-                        ->get()
-                        ->mapWithKeys(static fn (User $user): array => [strval($user->id) => $user->name])
-                        ->toArray()
-                )
-                ->default(static fn (NovaRequest $r): int => intval($r->viaResourceId ?? $r->user()->id))
-                ->searchable()
-                ->required()
                 ->rules('required'),
         ];
     }
