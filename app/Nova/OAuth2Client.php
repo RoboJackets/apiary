@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -91,7 +92,7 @@ class OAuth2Client extends Resource
                 ->required()
                 ->rules('required'),
 
-            BelongsTo::make('User')
+            MorphTo::make('Owner')
                 ->searchable()
                 ->withoutTrashed()
                 ->help(

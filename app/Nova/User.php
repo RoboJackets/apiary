@@ -491,7 +491,7 @@ class User extends Resource
                 ->readonly(static fn (Request $request): bool => ! $request->user()->hasRole('admin'))
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            HasMany::make('OAuth2 Clients', 'clients')
+            MorphMany::make('OAuth2 Clients', 'oauthApps')
                 ->canSee(
                     static fn (Request $request): bool => $request->user()->hasRole(
                         'admin'
