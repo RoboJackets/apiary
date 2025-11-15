@@ -79,12 +79,7 @@ class SponsorLoginController
         }
 
         // Retrieve existing user or create temporary one for OTP verification
-        $sponsorUser = SponsorUser::where('email', $email)->first();
-        if (! $sponsorUser) {
-            // Create temporary unsaved user for OTP verification
-            $sponsorUser = new SponsorUser();
-            $sponsorUser->email = $email;
-        }
+        $sponsorUser = SponsorUser::where('email', $email)->sole();
 
         // Verify sponsor domain is still valid and active BEFORE verifying OTP
         if (! $this->isValidSponsorDomain($email)) {
