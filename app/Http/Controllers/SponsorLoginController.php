@@ -84,7 +84,6 @@ class SponsorLoginController
         // sole() ensures exactly one user exists (throws exception if 0 or >1 found)
         $sponsorUser = SponsorUser::where('email', $email)->sole();
 
-
         // Verify sponsor domain is still valid and active BEFORE verifying OTP
         if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
@@ -95,18 +94,17 @@ class SponsorLoginController
         }
 
         // Verify OTP using Spatie
-        $result = $sponsorUser->attemptLoginUsingOneTimePassword((string) $request->input('otp'));
+        $otp = (string) $request->input('otp');
+        $result = $sponsorUser->attemptLoginUsingOneTimePassword($otp);
         if (! $result->isOk()) {
             return $this->errorResponse('Invalid OTP', $result->validationMessage());
         }
 
-        // Save new user to database after successful OTP verification and sponsor check
-        if (! $sponsorUser->exists) {
-            $sponsorUser->save();
-        }
+        // Save user after successful OTP verification
+        $sponsorUser->save();
 
         // Establish authenticated session using Laravel's Auth facade
-        $request->session()->regenerate();
+        // $request->session()->regenerate();
         Auth::login($sponsorUser);
 
         // Store authentication timestamp (similar to CAS)

@@ -7,3 +7,7 @@ Your one-time password is: {{ $otp }}
 This password will expire in 10 minutes.
 
 If you did not request this password, please contact hello@robojackets.org.
+
+----
+
+To stop receiving emails from {{ config('app.name') }}, visit @{{{ pm:unsubscribe }}}.
