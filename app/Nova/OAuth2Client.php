@@ -6,7 +6,6 @@ namespace App\Nova;
 
 use App\Nova\Actions\CreateOAuth2Client;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;

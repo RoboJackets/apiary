@@ -498,13 +498,6 @@ class User extends Resource
                     ) || $request->resourceId === $request->user()->id
                 ),
 
-            HasMany::make('OAuth2 Access Tokens', 'tokens', OAuth2AccessToken::class)
-                ->canSee(
-                    static fn (Request $request): bool => $request->user()->hasRole(
-                        'admin'
-                    ) || $request->resourceId === $request->user()->id
-                ),
-
             MorphMany::make('Notifications', 'novaNotifications', Notification::class)
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
