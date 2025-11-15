@@ -107,8 +107,8 @@ class SponsorLoginController
         // $request->session()->regenerate();
         Auth::login($sponsorUser);
 
-        // Store authentication timestamp (similar to CAS)
-        $request->session()->put('authenticationInstant', Cas::getAttribute('authenticationDate'));
+        // Store authentication timestamp
+        $request->session()->put('authenticationInstant', now()->toIso8601String());
 
         session()->forget('sponsor_email_pending');
 
