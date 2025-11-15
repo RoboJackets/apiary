@@ -8,6 +8,7 @@ use App\Models\SponsorDomain;
 use App\Models\SponsorUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SponsorLoginController
 {
@@ -28,8 +29,8 @@ class SponsorLoginController
             ],
         ]);
 
-        // Read value
-        $email = $request->input('email');
+        // Read value - cast to string since validation guarantees it
+        $email = (string) $request->input('email');
 
         // Check if domain is valid and sponsor is active; if not, return JSON error
         if (! $this->isValidSponsorDomain($email)) {
@@ -43,9 +44,10 @@ class SponsorLoginController
         // Get sponsor user and check if exists in one query
         $sponsorUser = SponsorUser::where('email', $email)->first();
         if (! $sponsorUser) {
-            // Create new unsaved SponsorUser model for new users
+            // Create new SponsorUser model for new users
             $sponsorUser = new SponsorUser();
             $sponsorUser->email = $email;
+            $sponsorUser->save();
         }
 
         // Generate and dispatch OTP using Spatie
@@ -71,15 +73,17 @@ class SponsorLoginController
 
         // Validate session and retrieve user
         $email = session('sponsor_email_pending');
-        if (! is_string($email)) {
+        if (! is_string($email) || $email === '') {
             return $this->errorResponse(
                 'Session Expired',
                 'Your session has expired. Please start the login process again.'
             );
         }
 
-        // Retrieve existing user or create temporary one for OTP verification
+        // Retrieve existing user for OTP verification
+        // sole() ensures exactly one user exists (throws exception if 0 or >1 found)
         $sponsorUser = SponsorUser::where('email', $email)->sole();
+
 
         // Verify sponsor domain is still valid and active BEFORE verifying OTP
         if (! $this->isValidSponsorDomain($email)) {
@@ -91,7 +95,7 @@ class SponsorLoginController
         }
 
         // Verify OTP using Spatie
-        $result = $sponsorUser->attemptLoginUsingOneTimePassword($request->input('otp'));
+        $result = $sponsorUser->attemptLoginUsingOneTimePassword((string) $request->input('otp'));
         if (! $result->isOk()) {
             return $this->errorResponse('Invalid OTP', $result->validationMessage());
         }
@@ -101,17 +105,13 @@ class SponsorLoginController
             $sponsorUser->save();
         }
 
-        // Retrieve sponsor for session data
-        $sponsor = $sponsorUser->company;
-
-        // Establish authenticated session
+        // Establish authenticated session using Laravel's Auth facade
         $request->session()->regenerate();
-        session([
-            'sponsor_authenticated' => true,
-            'sponsor_id' => $sponsor->id,
-            'sponsor_name' => $sponsor->name,
-            'sponsor_email' => $email,
-        ]);
+        Auth::login($sponsorUser);
+
+        // Store authentication timestamp (similar to CAS)
+        $request->session()->put('authenticationInstant', Cas::getAttribute('authenticationDate'));
+
         session()->forget('sponsor_email_pending');
 
         return response()->json([
