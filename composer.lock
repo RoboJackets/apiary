@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f3a0e620d11aa17292620ca387628f5",
+    "content-hash": "d3e96029155c8a465c4ea3269c1ba295",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8136,16 +8136,16 @@
         },
         {
             "name": "spatie/laravel-one-time-passwords",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-one-time-passwords.git",
-                "reference": "7d45be36ffe5cdf5d237e8189a2a9cf84cacf950"
+                "reference": "463dd012c8bc079b5d282943c22f7da2d4a893ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/7d45be36ffe5cdf5d237e8189a2a9cf84cacf950",
-                "reference": "7d45be36ffe5cdf5d237e8189a2a9cf84cacf950",
+                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/463dd012c8bc079b5d282943c22f7da2d4a893ae",
+                "reference": "463dd012c8bc079b5d282943c22f7da2d4a893ae",
                 "shasum": ""
             },
             "require": {
@@ -8198,7 +8198,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-one-time-passwords/issues",
-                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.6"
+                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.7"
             },
             "funding": [
                 {
@@ -8206,7 +8206,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-20T08:54:50+00:00"
+            "time": "2025-11-20T12:52:34+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

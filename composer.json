@@ -59,7 +59,7 @@
         "sentry/sentry-laravel": "4.17.0",
         "spatie/laravel-csp": "2.10.3",
         "spatie/laravel-failed-job-monitor": "4.3.4",
-        "spatie/laravel-one-time-passwords": "1.0.6",
+        "spatie/laravel-one-time-passwords": "1.0.7",
         "spatie/laravel-permission": "6.23.0",
         "spatie/laravel-responsecache": "7.7.2",
         "spatie/laravel-webhook-client": "3.4.4",
