@@ -41,7 +41,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.cas.check' => \App\Http\Middleware\CasCheck::class,
             'auth.cas.force' => \App\Http\Middleware\CasAuthenticate::class,
-            'auth.sponsor' => \App\Http\Middleware\SponsorAuthenticate::class,
+            'auth.sponsor' => \App\Http\Middleware\SponsorAuthCheck::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'cache' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,

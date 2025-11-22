@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class SponsorAuthenticate
+class SponsorAuthCheck
 {
     public function handle($request, Closure $next)
     {
