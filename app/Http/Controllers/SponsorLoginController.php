@@ -41,12 +41,14 @@ class SponsorLoginController
             );
         }
 
-        // Get sponsor user and check if exists in one query
         $sponsorUser = SponsorUser::where('email', $email)->first();
         if (! $sponsorUser) {
-            // Create new SponsorUser model for new users
             $sponsorUser = new SponsorUser();
             $sponsorUser->email = $email;
+            $sponsorUser->sponsor_id = Sponsor::whereHas('domainNames', 
+                static fn($q) => $q->where('domain_name', substr(strrchr($email, '@'), 1)))
+                ->firstOrFail()
+                ->id();
             $sponsorUser->save();
         }
 
