@@ -110,7 +110,7 @@ class SponsorLoginController
         return response()->json([
             'success' => true,
             'message' => 'Login successful! Redirecting to dashboard...',
-            'redirect' => route('sponsor_home'),
+            'redirect' => route('sponsor.home'),
         ]);
     }
 
