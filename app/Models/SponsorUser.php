@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Scout\Searchable;
 use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
 
@@ -20,7 +21,7 @@ use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  */
-class SponsorUser extends Model
+class SponsorUser extends Authenticatable
 {
     use HasFactory;
     use HasOneTimePasswords;
