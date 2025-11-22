@@ -100,22 +100,14 @@ class SponsorLoginController
             return $this->errorResponse('Invalid OTP', $result->validationMessage());
         }
 
-        // Save user after successful OTP verification
-        $sponsorUser->save();
-
-        // Establish authenticated session using Laravel's Auth facade
-        // $request->session()->regenerate();
-        Auth::login($sponsorUser);
-
-        // Store authentication timestamp
-        $request->session()->put('authenticationInstant', now()->toIso8601String());
+        Auth::guard('sponsor')->login($sponsorUser);
 
         session()->forget('sponsor_email_pending');
 
         return response()->json([
             'success' => true,
             'message' => 'Login successful! Redirecting to dashboard...',
-            'redirect' => route('home'),
+            'redirect' => route('sponsor_home'),
         ]);
     }
 
