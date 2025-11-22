@@ -14,7 +14,7 @@ class SponsorLoginController
 {
     public function showLoginForm()
     {
-        return view('sponsor.login');
+        return view('sponsors.login');
     }
 
     public function validateEmail(Request $request): JsonResponse
