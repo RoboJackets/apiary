@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
 use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
 
@@ -25,6 +26,7 @@ class SponsorUser extends Authenticatable
 {
     use HasFactory;
     use HasOneTimePasswords;
+    use Notifiable;
     use Searchable;
     use SoftDeletes;
 
