@@ -49,7 +49,7 @@ class SponsorLoginController
             $sponsorUser->sponsor_id = Sponsor::whereHas('domainNames',
                 static fn ($q) => $q->where('domain_name', substr(strrchr($email, '@'), 1)))
                 ->firstOrFail()
-                ->id();
+                ->id;
             $sponsorUser->save();
         }
 
