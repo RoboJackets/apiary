@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Sponsor;
 use App\Models\SponsorDomain;
 use App\Models\SponsorUser;
 use Illuminate\Http\JsonResponse;
