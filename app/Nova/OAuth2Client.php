@@ -6,10 +6,9 @@ namespace App\Nova;
 
 use App\Nova\Actions\CreateOAuth2Client;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -91,7 +90,7 @@ class OAuth2Client extends Resource
                 ->required()
                 ->rules('required'),
 
-            BelongsTo::make('User')
+            MorphTo::make('Owner')
                 ->searchable()
                 ->withoutTrashed()
                 ->help(
@@ -110,8 +109,6 @@ class OAuth2Client extends Resource
 
             Boolean::make('Public (PKCE-Enabled Client)', fn (): bool => $this->secret === null)
                 ->hideFromIndex(),
-
-            HasMany::make('Tokens', 'tokens', OAuth2AccessToken::class),
 
             self::metadataPanel(),
         ];

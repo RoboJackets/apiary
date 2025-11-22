@@ -29,4 +29,5 @@ return [
 
     'core_officers_slack_webhook_url' => env('CORE_OFFICERS_SLACK_WEBHOOK_URL'),
 
+    'numverify_api_key' => env('NUMVERIFY_API_KEY'),
 ];

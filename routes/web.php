@@ -10,6 +10,7 @@ use App\Http\Controllers\DocuSignController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\TravelAssignmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Http\Controllers\AuthorizationController;
+use OpenIDConnect\Laravel\JwksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -137,3 +139,9 @@ Route::prefix('sponsor')->name('sponsor.')->group(static function (): void {
     Route::post('/validate-email', [SponsorLoginController::class, 'validateEmail'])->name('validate-email');
     Route::post('/verify-otp', [SponsorLoginController::class, 'verifyOtp'])->name('verify-otp');
 });
+
+Route::get('oauth/jwks', JwksController::class)
+    ->name('passport.jwks');
+
+Route::get('/.well-known/openid-configuration', [InfoController::class, 'showOpenIdConfiguration']);
+

@@ -90,10 +90,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Passport::useClientModel(OAuth2Client::class);
         Passport::useTokenModel(OAuth2AccessToken::class);
-        Passport::hashClientSecrets();
         Passport::tokensExpireIn(now()->addDay());
         Passport::refreshTokensExpireIn(now()->addMonth());
         Passport::personalAccessTokensExpireIn(now()->addYear());
         Passport::cookie(config('passport.cookie_name'));
+        Passport::$deviceCodeGrantEnabled = false;
+        Passport::authorizationView('errors.generic');
     }
 }

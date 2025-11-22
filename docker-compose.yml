@@ -35,8 +35,6 @@ services:
       CAS_LOGOUT_URL: http://127.0.0.1:8000
       JEDI_HOST: null
       JEDI_TOKEN: null
-      PASSPORT_PUBLIC_KEY: /app/storage/oauth-public.key
-      PASSPORT_PRIVATE_KEY: /app/storage/oauth-private.key
       SCOUT_DRIVER: collection
       MAIL_MAILER: log
       BUZZAPI_HOST: apiary-sandbox.robojackets.org

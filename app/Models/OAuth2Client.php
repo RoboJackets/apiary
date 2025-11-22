@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Client;
 
 /**
@@ -50,7 +54,7 @@ class OAuth2Client extends Client
      * Determine if the client should skip the authorization prompt.
      */
     #[\Override]
-    public function skipsAuthorization(): bool
+    public function skipsAuthorization(Authenticatable $user, array $scopes): bool
     {
         return true;
     }

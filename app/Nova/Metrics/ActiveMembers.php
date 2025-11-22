@@ -25,7 +25,8 @@ class ActiveMembers extends Value
     public function calculate(Request $request): ValueResult
     {
         if (isset($request->resourceId)) {
-            $count = Team::where('id', $request->resourceId)
+            $count = Team::withTrashed()
+                ->where('id', $request->resourceId)
                 ->first()
                 ->members()
                 ->active()

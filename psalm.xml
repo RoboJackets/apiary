@@ -362,6 +362,7 @@
                 <directory name="app/Observers/"/>
                 <file name="app/Http/ContentSecurityPolicy.php"/>
                 <file name="app/Http/Controllers/DashboardController.php"/>
+                <file name="app/Http/Controllers/UserController.php"/>
                 <file name="app/Providers/AppServiceProvider.php"/>
             </errorLevel>
         </RedundantConditionGivenDocblockType>

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 /**
  * This model represents a sponsor entity in the application.
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Sponsor extends Model
 {
     use HasFactory;
+    use Searchable;
     use SoftDeletes;
 
     /**
@@ -73,5 +75,19 @@ class Sponsor extends Model
     public function users(): HasMany
     {
         return $this->hasMany(SponsorUser::class, 'sponsor_id');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $array['end_date_unix'] = $this->end_date->getTimestamp();
+
+        return $array;
     }
 }
