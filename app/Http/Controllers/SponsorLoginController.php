@@ -45,7 +45,7 @@ class SponsorLoginController
         if (! $sponsorUser) {
             $sponsorUser = new SponsorUser();
             $sponsorUser->email = $email;
-            $sponsorUser->sponsor_id = Sponsor::whereHas('domainNames', 
+            $sponsorUser->sponsor_id = Sponsor::whereHas('domainNames',
                 static fn ($q) => $q->where('domain_name', substr(strrchr($email, '@'), 1)))
                 ->firstOrFail()
                 ->id();
