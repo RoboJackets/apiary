@@ -22,6 +22,4 @@ return [
             'model' => App\Models\SponsorUser::class,
         ],
     ],
-
-
 ];

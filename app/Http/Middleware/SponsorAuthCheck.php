@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -9,7 +11,7 @@ class SponsorAuthCheck
 {
     public function handle($request, Closure $next)
     {
-        if (!Auth::guard('sponsor')->check()) {
+        if (! Auth::guard('sponsor')->check()) {
             return redirect('/sponsor/login');
         }
 
