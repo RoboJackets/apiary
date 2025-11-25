@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a35be5d1eb6f48ce54f89860f4216478",
+    "content-hash": "f4b571bd213ac9fea975e85e99301f51",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2987,16 +2987,16 @@
         },
         {
             "name": "kiritokatklian/nova-permission",
-            "version": "5.1.2",
+            "version": "5.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kiritokatklian/nova-permission.git",
-                "reference": "e57a857487d064bd72db5de04bdcdb245aeb5e88"
+                "reference": "795fc0a0b4c128fbc9eaf52a92b9ce564d7a8c49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/e57a857487d064bd72db5de04bdcdb245aeb5e88",
-                "reference": "e57a857487d064bd72db5de04bdcdb245aeb5e88",
+                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/795fc0a0b4c128fbc9eaf52a92b9ce564d7a8c49",
+                "reference": "795fc0a0b4c128fbc9eaf52a92b9ce564d7a8c49",
                 "shasum": ""
             },
             "require": {
@@ -3032,9 +3032,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kiritokatklian/nova-permission/issues",
-                "source": "https://github.com/kiritokatklian/nova-permission/tree/5.1.2"
+                "source": "https://github.com/kiritokatklian/nova-permission/tree/5.1.3"
             },
-            "time": "2025-06-08T08:22:07+00:00"
+            "time": "2025-11-09T22:19:07+00:00"
         },
         {
             "name": "laravel/fortify",
