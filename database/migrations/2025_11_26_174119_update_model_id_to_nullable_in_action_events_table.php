@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('action_events', static function (Blueprint $table): void {
-            $table->string("model_id")->nullable()->change();
+            $table->string('model_id')->nullable()->change();
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('action_events', static function (Blueprint $table): void {
-            $table->string("model_id")->nullable(false)->change();
+            $table->string('model_id')->nullable(false)->change();
         });
     }
 };
