@@ -7,8 +7,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use BadMethodCallException;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\Access\Authorizable as AuthorizableTrait;
 use Laravel\Passport\Client;
+use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * An OAuth 2 client.
@@ -48,8 +54,15 @@ use Laravel\Passport\Client;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
-class OAuth2Client extends Client
+class OAuth2Client extends Client implements Authenticatable, Authorizable
 {
+    use AuthorizableTrait;
+    use HasApiTokens;
+    use HasPermissions;
+    use HasRoles;
+
+    protected string $guard_name = 'web';
+
     /**
      * Determine if the client should skip the authorization prompt.
      */
@@ -57,5 +70,55 @@ class OAuth2Client extends Client
     public function skipsAuthorization(Authenticatable $user, array $scopes): bool
     {
         return true;
+    }
+
+    #[\Override]
+    public function getAuthIdentifierName(): string
+    {
+        return 'id';
+    }
+
+    #[\Override]
+    public function getAuthIdentifier(): string
+    {
+        return $this->id;
+    }
+
+    #[\Override]
+    public function getAuthPasswordName()
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    #[\Override]
+    public function getAuthPassword()
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    #[\Override]
+    public function getRememberToken()
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    #[\Override]
+    public function setRememberToken($value)
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    #[\Override]
+    public function getRememberTokenName()
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    /**
+     * Get the API rate limit for this client.
+     */
+    public function getApiRateLimitAttribute(): int
+    {
+        return in_array('client_credentials', $this->grant_types, true) ? 600 : 60;
     }
 }

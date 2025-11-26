@@ -23,7 +23,7 @@ class Sentry
                 if (auth()->check()) {
                     $scope->setUser([
                         'id' => auth()->user()->id,
-                        'username' => auth()->user()->uid,
+                        'username' => property_exists(auth()->user(), 'uid') ? auth()->user()->uid : null,
                     ]);
                 }
 

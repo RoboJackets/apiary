@@ -7,7 +7,14 @@ return [
     'guards' => [
         'api' => [
             'driver' => 'passport',
-            'provider' => 'users',
+            'provider' => 'user_or_client',
+        ],
+    ],
+
+    'providers' => [
+        'user_or_client' => [
+            'driver' => 'user_or_client',
+            'model' => \App\Models\User::class,
         ],
     ],
 

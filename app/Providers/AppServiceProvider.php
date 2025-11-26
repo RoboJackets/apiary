@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed
@@ -23,6 +24,7 @@ use App\Policies\WebhookCallPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
@@ -84,6 +86,11 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::policy(WebhookCall::class, WebhookCallPolicy::class);
         Gate::policy(Notification::class, NotificationPolicy::class);
+
+        Auth::provider(
+            'user_or_client',
+            static fn ($app, array $config): UserOrClientUserProvider => new UserOrClientUserProvider()
+        );
     }
 
     public function bootAuth(): void
