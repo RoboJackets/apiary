@@ -73,7 +73,7 @@
         "barryvdh/laravel-ide-helper": "3.5.5",
         "beyondcode/laravel-dump-server": "2.1.0",
         "danog/advanced-json-rpc": "3.2.2",
-        "laravel/pail": "1.2.3",
+        "laravel/pail": "1.2.4",
         "laravel/pint": "1.25.1",
         "mockery/mockery": "1.6.12",
         "mxl/laravel-job": "1.7.0",
