@@ -80,6 +80,7 @@ class CreateOAuth2ClientCredentialsGrantClient extends Action
      *
      * @return array<int, \Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
