@@ -22,12 +22,12 @@ class UserOrClientUserProvider implements UserProvider
     #[\Override]
     public function retrieveById($identifier): Authenticatable
     {
-        if (Uuid::isValid($identifier)) {
-            return OAuth2Client::where('id', '=', $identifier)->sole();
+        if (is_integer($identifier) || is_numeric($identifier)) {
+            return User::where('id', '=', $identifier)->sole();
         }
 
-        if (is_numeric($identifier)) {
-            return User::where('id', '=', $identifier)->sole();
+        if (Uuid::isValid($identifier)) {
+            return OAuth2Client::where('id', '=', $identifier)->sole();
         }
 
         throw new InvalidArgumentException('Unrecognized identifier format');
