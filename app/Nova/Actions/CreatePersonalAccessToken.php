@@ -71,7 +71,7 @@ class CreatePersonalAccessToken extends Action
     {
         return [
             Text::make('Name')
-                ->rules('required'),
+                ->rules('required', 'unique:oauth_access_tokens,name'),
         ];
     }
 }
