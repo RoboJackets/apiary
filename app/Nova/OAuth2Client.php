@@ -19,7 +19,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 /**
  * A Nova resource for OAuth clients.
  *
- * @extends \App\Nova\Resource<\App\Models\Oauth2Client>
+ * @extends \App\Nova\Resource<\App\Models\OAuth2Client>
  */
 class OAuth2Client extends Resource
 {

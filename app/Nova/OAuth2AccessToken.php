@@ -12,6 +12,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for OAuth tokens.
+ *
+ * @extends \App\Nova\Resource<\App\Models\OAuth2AccessToken>
+ */
 class OAuth2AccessToken extends Resource
 {
     /**
