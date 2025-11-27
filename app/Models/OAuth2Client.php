@@ -2,17 +2,12 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed
-// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-
 namespace App\Models;
 
-use BadMethodCallException;
-use Illuminate\Contracts\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\Access\Authorizable as AuthorizableTrait;
 use Laravel\Passport\Client;
-use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -54,10 +49,9 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
-class OAuth2Client extends Client implements Authenticatable, Authorizable
+class OAuth2Client extends Client implements AuthorizableContract
 {
     use AuthorizableTrait;
-    use HasApiTokens;
     use HasPermissions;
     use HasRoles;
 
@@ -70,55 +64,5 @@ class OAuth2Client extends Client implements Authenticatable, Authorizable
     public function skipsAuthorization(Authenticatable $user, array $scopes): bool
     {
         return true;
-    }
-
-    #[\Override]
-    public function getAuthIdentifierName(): string
-    {
-        return 'id';
-    }
-
-    #[\Override]
-    public function getAuthIdentifier(): string
-    {
-        return $this->id;
-    }
-
-    #[\Override]
-    public function getAuthPasswordName()
-    {
-        throw new BadMethodCallException('Not implemented');
-    }
-
-    #[\Override]
-    public function getAuthPassword()
-    {
-        throw new BadMethodCallException('Not implemented');
-    }
-
-    #[\Override]
-    public function getRememberToken()
-    {
-        throw new BadMethodCallException('Not implemented');
-    }
-
-    #[\Override]
-    public function setRememberToken($value)
-    {
-        throw new BadMethodCallException('Not implemented');
-    }
-
-    #[\Override]
-    public function getRememberTokenName()
-    {
-        throw new BadMethodCallException('Not implemented');
-    }
-
-    /**
-     * Get the API rate limit for this client.
-     */
-    public function getApiRateLimitAttribute(): int
-    {
-        return in_array('client_credentials', $this->grant_types, true) ? 600 : 60;
     }
 }
