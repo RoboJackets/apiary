@@ -9,6 +9,7 @@ use App\Nova\Actions\CreateOAuth2ClientCredentialsGrantClient;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\MorphToMany;
@@ -41,7 +42,7 @@ class OAuth2Client extends Resource
      *
      * @var string
      */
-    public static $group = 'OAuth2';
+    public static $group = 'OAuth';
 
     /**
      * The columns that should be searched.
@@ -118,6 +119,8 @@ class OAuth2Client extends Resource
 
             Boolean::make('Public (PKCE-Enabled Client)', fn (): bool => $this->secret === null)
                 ->hideFromIndex(),
+
+            HasMany::make('Tokens', 'tokens', OAuth2AccessToken::class),
 
             MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
