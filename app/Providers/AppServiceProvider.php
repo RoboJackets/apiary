@@ -2,13 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed
-// phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments.DisallowedNamedArgument
-// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-
 namespace App\Providers;
 
 use App\Models\DuesTransaction;
