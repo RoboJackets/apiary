@@ -1245,12 +1245,4 @@ class User extends Authenticatable
     {
         return $this->is_service_account ? 600 : 60;
     }
-
-    /**
-     * Get the user provider name.
-     */
-    public function getProviderName(): string
-    {
-        return 'user_or_client';
-    }
 }

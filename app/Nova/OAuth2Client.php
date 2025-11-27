@@ -121,6 +121,7 @@ class OAuth2Client extends Resource
 
             MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->searchable()
                 ->showOnDetail(
                     static fn (
                         NovaRequest $request,
