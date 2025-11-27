@@ -23,8 +23,7 @@ class Sentry
                 if (auth()->check()) {
                     $scope->setUser([
                         'id' => auth()->user()->id,
-                        // @phan-suppress-next-line PhanPossiblyNullTypeArgumentInternal
-                        'username' => property_exists(auth()->user(), 'uid') ? auth()->user()->uid : null,
+                        'username' => auth()->user()->uid,
                     ]);
                 }
 
