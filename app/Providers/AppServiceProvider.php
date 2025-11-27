@@ -86,11 +86,6 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::policy(WebhookCall::class, WebhookCallPolicy::class);
         Gate::policy(Notification::class, NotificationPolicy::class);
-
-        Auth::provider(
-            'user_or_client',
-            static fn ($app, array $config): UserOrClientUserProvider => new UserOrClientUserProvider()
-        );
     }
 
     public function bootAuth(): void
