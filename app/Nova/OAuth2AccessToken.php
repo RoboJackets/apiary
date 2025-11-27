@@ -78,9 +78,8 @@ class OAuth2AccessToken extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @return array<int, \Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
