@@ -16,7 +16,7 @@ class SponsorAuthCheck
         }
 
         if (Auth::user() instanceof \App\Models\User) {
-            return redirect('/sponsor/login');
+            return redirect('/does/not/exist');
         }
 
         return $next($request);
