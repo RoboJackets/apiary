@@ -128,6 +128,7 @@ class SponsorLoginController
 
     private function errorResponse(string $title, string $message, int $status = 422): JsonResponse
     {
+        // Dummy comment to force a build on Github site.
         return response()->json([
             'error' => true,
             'title' => $title,
