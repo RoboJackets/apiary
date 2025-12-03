@@ -50,4 +50,12 @@ class SponsorUser extends Authenticatable
     {
         return $this->belongsTo(Sponsor::class, 'sponsor_id');
     }
+
+    /**
+     * Get a calculated uid based on the user portion of the sponsor's email.
+     */
+    public function getUidAttribute(): string
+    {
+        return strstr($this->email, '@', true) ?: '';
+    }
 }
