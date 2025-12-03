@@ -14,11 +14,7 @@ class SponsorAuthCheck
         if (! Auth::guard('sponsor')->check()) {
             return redirect('/sponsor/login');
         }
-
-        if (! (Auth::user() instanceof \App\Models\SponsorUser)) {
-            return redirect('/sponsor/login');
-        }
-
+        
         return $next($request);
     }
 }
