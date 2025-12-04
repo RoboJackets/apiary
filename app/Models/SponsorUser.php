@@ -17,6 +17,7 @@ use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
  *
  * @property int $id
  * @property string $email
+ * @property int|null $sponsor_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
