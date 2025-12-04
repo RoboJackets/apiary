@@ -55,6 +55,6 @@ class SponsorUser extends Authenticatable
      */
     public function getUidAttribute(): string
     {
-        return strstr($this->email, '@', true) ?: '';
+        return explode('@', (string) $this->email, 2)[0];
     }
 }
