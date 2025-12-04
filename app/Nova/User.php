@@ -332,11 +332,12 @@ class User extends Resource
                                 static fn (
                                     NovaRequest $request,
                                     AppModelsUser $user
-                                ): bool => $user->teams()->where(
-                                    'teams.id',
-                                    '=',
-                                    $user->primaryTeam?->id
-                                )->doesntExist()
+                                ): bool => $user->primaryTeam !== null &&
+                                    $user->teams()->where(
+                                        'teams.id',
+                                        '=',
+                                        $user->primaryTeam->id
+                                    )->doesntExist()
                             ),
                     ])
                         ->hideFromDetail(
