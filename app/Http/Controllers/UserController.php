@@ -157,8 +157,9 @@ class UserController implements HasMiddleware
         $user = User::findByIdentifier($id)->with(AuthorizeInclude::authorize(User::class, $include))->first();
         if ($user !== null) {
             $requestingUser = $request->user();
+
             // Enforce users only viewing themselves (read-users-own)
-            if ($requestingUser->cant('read-users') && $requestingUser->id !== $user->id) {
+            if ($requestingUser !== null && $requestingUser->cant('read-users') && $requestingUser->id !== $user->id) {
                 return response()->json(['status' => 'error',
                     'message' => 'Forbidden - You do not have permission to view this User.',
                 ], 403);

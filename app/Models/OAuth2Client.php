@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed
 // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\Access\Authorizable as AuthorizableTrait;
 use Laravel\Passport\Client;
+use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * An OAuth 2 client.
@@ -48,8 +51,14 @@ use Laravel\Passport\Client;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
-class OAuth2Client extends Client
+class OAuth2Client extends Client implements AuthorizableContract
 {
+    use AuthorizableTrait;
+    use HasPermissions;
+    use HasRoles;
+
+    protected string $guard_name = 'web';
+
     /**
      * Determine if the client should skip the authorization prompt.
      */

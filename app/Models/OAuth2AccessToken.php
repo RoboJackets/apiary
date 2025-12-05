@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Passport\Token;
 
 /**
@@ -50,4 +51,17 @@ class OAuth2AccessToken extends Token
         'scopes' => 'array',
         'revoked' => 'bool',
     ];
+
+    /**
+     * Get the user that the token belongs to.
+     *
+     * @deprecated Will be removed in a future Laravel version.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\Illuminate\Foundation\Auth\User, $this>
+     */
+    #[\Override]
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
