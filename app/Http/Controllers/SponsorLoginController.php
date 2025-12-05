@@ -69,7 +69,7 @@ class SponsorLoginController
         ], 200);
     }
 
-    public function verifyOtp(Request $request): JsonResponse
+    public function verifyOneTimePassword(Request $request): JsonResponse
     {
         // Laravel will automatically throw an error if OTP is invalid
         $request->validate([
@@ -130,7 +130,6 @@ class SponsorLoginController
 
     private function errorResponse(string $title, string $message, int $status = 422): JsonResponse
     {
-        // Dummy comment to force a build on Github site.
         return response()->json([
             'error' => true,
             'title' => $title,
