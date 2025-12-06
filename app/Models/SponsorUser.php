@@ -52,7 +52,7 @@ class SponsorUser extends Authenticatable
     }
 
     /**
-     * Get a calculated uid based on the user portion of the sponsor's email.
+     * If user ID requested for this SponsorUser, returns email instead.
      */
     public function getUidAttribute(): string
     {
