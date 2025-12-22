@@ -306,6 +306,7 @@
                 <referencedFunction name="Laravel\Nova\Fields\File::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\HasMany::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\MorphMany::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\MorphToMany::showOnDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Number::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Select::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Text::hideFromDetail"/>

@@ -15,7 +15,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Passport\ClientRepository;
 
-class CreateOAuth2Client extends Action
+class CreateOAuth2AuthorizationCodeGrantClient extends Action
 {
     /**
      * Indicates if this action is only available on the resource index view.
@@ -57,7 +57,7 @@ class CreateOAuth2Client extends Action
      *
      * @var string
      */
-    public $name = 'Create Client';
+    public $name = 'Create Authorization Code Grant Client';
 
     private const string STANDARD_CLIENT = 'standard';
 
@@ -68,16 +68,9 @@ class CreateOAuth2Client extends Action
     }
 
     /**
-     * Indicates if this action is only available on the resource detail view.
-     *
-     * @var bool
-     */
-    public $onlyOnDetail = true;
-
-    /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\OAuth2Client>  $models
      *
      * @phan-suppress PhanPossiblyNullTypeArgumentInternal
      */
@@ -119,7 +112,7 @@ class CreateOAuth2Client extends Action
     {
         return [
             Text::make('Name')
-                ->rules('required'),
+                ->rules('required', 'unique:oauth_clients,name'),
 
             Text::make('Redirect URLs')
                 ->rules('required')
