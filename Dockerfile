@@ -107,7 +107,7 @@ RUN set -eux && \
     apt-get upgrade -qq --assume-yes && \
     apt-get install -qq --assume-yes \
         php8.5-fpm php8.5-mysql php8.5-gd php8.5-xml php8.5-mbstring php8.5-zip php8.5-curl php8.5-intl \
-        php8.5-opcache php8.5-bcmath php8.5-ldap php8.5-uuid php8.5-sqlite sqlite3 exiftool ghostscript \
+        php8.5-bcmath php8.5-ldap php8.5-uuid php8.5-sqlite sqlite3 exiftool ghostscript \
         unzip libfcgi-bin default-mysql-client zopfli php8.5-redis file && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
