@@ -87,7 +87,7 @@ COPY --link --from=nova-components /nova-components/ClientIdAndSecretModal/dist/
 COPY --link --from=nova-components /nova-components/PersonalAccessTokenModal/dist/ /app/nova-components/PersonalAccessTokenModal/dist/
 COPY --link --from=docs-minification /docs/ /app/public/docs/
 
-FROM ubuntu:noble AS backend-uncompressed
+FROM debian:trixie-slim AS backend-uncompressed
 
 LABEL maintainer="developers@robojackets.org"
 
@@ -99,21 +99,28 @@ RUN set -eux && \
     apt-get update && \
     apt-get upgrade -qq --assume-yes && \
     apt-get install -qq --assume-yes \
-        php8.3-fpm php8.3-mysql php8.3-gd php8.3-xml php8.3-mbstring php8.3-zip php8.3-curl php8.3-intl \
-        php8.3-opcache php8.3-bcmath php8.3-ldap php8.3-uuid php8.3-sqlite sqlite3 exiftool ghostscript \
-        unzip libfcgi-bin default-mysql-client zopfli php8.3-redis file && \
+        lsb-release ca-certificates apt-transport-https curl && \
+    curl -sSLo /tmp/debsuryorg-archive-keyring.deb https://packages.sury.org/debsuryorg-archive-keyring.deb && \
+    dpkg -i /tmp/debsuryorg-archive-keyring.deb && \
+    sh -c 'echo "deb [signed-by=/usr/share/keyrings/debsuryorg-archive-keyring.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list' && \
+    apt-get update && \
+    apt-get upgrade -qq --assume-yes && \
+    apt-get install -qq --assume-yes \
+        php8.5-fpm php8.5-mysql php8.5-gd php8.5-xml php8.5-mbstring php8.5-zip php8.5-curl php8.5-intl \
+        php8.5-opcache php8.5-bcmath php8.5-ldap php8.5-uuid php8.5-sqlite sqlite3 exiftool ghostscript \
+        unzip libfcgi-bin default-mysql-client zopfli php8.5-redis file && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
     chown www-data:www-data /app && \
-    sed -i '/pid/c\\' /etc/php/8.3/fpm/php-fpm.conf && \
-    sed -i '/systemd_interval/c\systemd_interval = 0' /etc/php/8.3/fpm/php-fpm.conf && \
-    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.3/fpm/php-fpm.conf && \
-    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.3/fpm/php.ini && \
-    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.3/cli/php.ini && \
-    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.3/fpm/php.ini && \
-    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.3/cli/php.ini && \
-    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.3/fpm/php.ini && \
-    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.3/cli/php.ini
+    sed -i '/pid/c\\' /etc/php/8.5/fpm/php-fpm.conf && \
+    sed -i '/systemd_interval/c\systemd_interval = 0' /etc/php/8.5/fpm/php-fpm.conf && \
+    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.5/fpm/php-fpm.conf && \
+    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.5/fpm/php.ini && \
+    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.5/cli/php.ini && \
+    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.5/fpm/php.ini && \
+    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.5/cli/php.ini && \
+    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.5/fpm/php.ini && \
+    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.5/cli/php.ini
 
 COPY --link --from=composer /usr/bin/composer /usr/bin/composer
 
