@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DynamicClientRegistrationRequest;
@@ -31,10 +33,10 @@ class OAuthController
 
         return response()->json(
             data: [
-                "client_id" => $client->id,
-                "client_secret" => $client->plain_secret,
-                "client_id_issued_at" => $client->created_at->timestamp,
-                "client_secret_expires_at" => 0,
+                'client_id' => $client->id,
+                'client_secret' => $client->plain_secret,
+                'client_id_issued_at' => $client->created_at->timestamp,
+                'client_secret_expires_at' => 0,
             ],
             status: 201
         );

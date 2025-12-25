@@ -10,7 +10,6 @@ use App\Http\Controllers\DocuSignController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
-use App\Http\Controllers\InfoController;
 use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
@@ -22,7 +21,6 @@ use App\Http\Controllers\TravelAssignmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Http\Controllers\AuthorizationController;
-use OpenIDConnect\Laravel\JwksController;
 
 /*
 |--------------------------------------------------------------------------
