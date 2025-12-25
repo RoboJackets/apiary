@@ -274,6 +274,8 @@
                 <referencedProperty name="Illuminate\Database\Eloquent\Model::$airfare_policy"/>
                 <referencedProperty name="Illuminate\Database\Eloquent\Model::$preferred_first_name"/>
                 <referencedProperty name="Illuminate\Database\Eloquent\Model::$resume_date"/>
+                <referencedProperty name="Laravel\Passport\Client::$owner_id"/>
+                <referencedProperty name="Laravel\Passport\Client::$owner_type"/>
                 <referencedProperty name="Spatie\Permission\Models\Permission::$name"/>
                 <referencedProperty name="Spatie\Permission\Models\Role::$name"/>
             </errorLevel>
