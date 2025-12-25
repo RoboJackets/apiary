@@ -8,6 +8,7 @@ namespace App\Nova\Actions;
 
 use App\Nova\OAuth2Client;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
@@ -81,6 +82,10 @@ class CreateOAuth2AuthorizationCodeGrantClient extends Action
             redirectUris: explode(',', $fields->redirect_urls),
             confidential: $fields->type !== self::PUBLIC_CLIENT
         );
+
+        $client->owner_type = Auth::user()->getMorphClass();
+        $client->owner_id = Auth::user()->getKey();
+        $client->save();
 
         if ($client->confidential()) {
             return Action::modal(

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Text;
@@ -65,6 +66,10 @@ class CreateOAuth2ClientCredentialsGrantClient extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $client = $this->clientRepository->createClientCredentialsGrantClient(name: $fields->name);
+
+        $client->owner_type = Auth::user()->getMorphClass();
+        $client->owner_id = Auth::user()->getKey();
+        $client->save();
 
         return Action::modal(
             'client-id-and-secret-modal',
