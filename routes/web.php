@@ -11,6 +11,7 @@ use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\InfoController;
+use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
@@ -129,4 +130,4 @@ Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
     ->name('passport.authorizations.authorize')
     ->middleware('auth');
 
-Route::get('/.well-known/openid-configuration', [InfoController::class, 'showOpenIdConfiguration']);
+Route::get('/.well-known/openid-configuration', [OAuthController::class, 'showOpenIdConfiguration']);
