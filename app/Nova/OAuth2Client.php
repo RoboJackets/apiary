@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\AdoptKiosk;
 use App\Nova\Actions\CreateOAuth2AuthorizationCodeGrantClient;
 use App\Nova\Actions\CreateOAuth2ClientCredentialsGrantClient;
 use Illuminate\Http\Request;
@@ -156,6 +157,16 @@ class OAuth2Client extends Resource
 
             resolve(CreateOAuth2ClientCredentialsGrantClient::class)
                 ->canSee(static fn (Request $r): bool => $request->user()->hasRole('admin')),
+
+            AdoptKiosk::make()
+                ->canSee(static fn (Request $r): bool => $request->user()->hasRole('admin'))
+                ->canRun(
+                    static fn (
+                        NovaRequest $r,
+                        \App\Models\OAuth2Client $client
+                    ): bool => in_array('client_credentials', $client->grant_types, true) &&
+                        $client->permissions()->doesntExist()
+                ),
         ];
     }
 
