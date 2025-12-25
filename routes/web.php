@@ -100,9 +100,6 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('login/cas', [AuthController::class, 'forceCasAuth'])
         ->name('login.cas');
 
-    Route::view('oauth2/client', 'oauth2clientcreated')->name('oauth2.client.created');
-    Route::view('oauth2/pat', 'personalaccesstokencreated')->name('oauth2.pat.created');
-
     Route::get('stop-impersonating', [AuthController::class, 'stopImpersonating'])->name('stopImpersonating');
 });
 
