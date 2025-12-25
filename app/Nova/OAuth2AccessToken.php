@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\RevokeOAuth2Token;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -122,5 +123,29 @@ class OAuth2AccessToken extends Resource
     public static function uriKey(): string
     {
         return 'oauth-tokens';
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
+     */
+    #[\Override]
+    public function actions(NovaRequest $request): array
+    {
+        return [
+            RevokeOAuth2Token::make()
+                ->canRun(
+                    static function (NovaRequest $r, \App\Models\OAuth2AccessToken $token): bool {
+                        if ($token->revoked) {
+                            return false;
+                        }
+
+                        $user = $r->user();
+
+                        return $user->hasRole('admin') || $token->user_id === $user->id;
+                    }
+                ),
+        ];
     }
 }
