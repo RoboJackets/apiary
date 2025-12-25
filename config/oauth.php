@@ -10,4 +10,8 @@ return [
     'ios' => [
         'client_id' => env('IOS_CLIENT_ID'),
     ],
+
+    'routes' => [
+        'jwks' => true,
+    ]
 ];

@@ -132,7 +132,4 @@ Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
     ->name('passport.authorizations.authorize')
     ->middleware('auth');
 
-Route::get('oauth/jwks', JwksController::class)
-    ->name('passport.jwks');
-
 Route::get('/.well-known/openid-configuration', [InfoController::class, 'showOpenIdConfiguration']);
