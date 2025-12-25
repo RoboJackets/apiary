@@ -14,4 +14,6 @@ return [
     'routes' => [
         'jwks' => true,
     ],
+
+    'dynamic_client_registration_cidrs' => [],
 ];

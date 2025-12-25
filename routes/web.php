@@ -131,3 +131,5 @@ Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
     ->middleware('auth');
 
 Route::get('/.well-known/openid-configuration', [OAuthController::class, 'showOpenIdConfiguration']);
+
+Route::post('/oauth/register', [OAuthController::class, 'registerClient']);
