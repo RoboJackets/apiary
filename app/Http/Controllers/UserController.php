@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Guard;
 use Spatie\Permission\Models\Role;
 
 class UserController implements HasMiddleware
@@ -196,7 +197,7 @@ class UserController implements HasMiddleware
      */
     public function update(string $id, UpdateUserRequest $request): JsonResponse
     {
-        $requestingUser = $request->user();
+        $requestingUser = $request->user() ?? Guard::getPassportClient(null);
         $user = User::findByIdentifier($id)->first();
         if ($user === null) {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
