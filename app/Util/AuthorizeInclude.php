@@ -6,6 +6,7 @@ namespace App\Util;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Guard;
 
 class AuthorizeInclude
 {
@@ -25,9 +26,8 @@ class AuthorizeInclude
         }
 
         $allowedInclude = [];
-        $uid = Auth::user()->uid;
+        $uid = Auth::user()?->uid || Guard::getPassportClient(null)->getKey();
         Log::debug(__METHOD__.': Checking authorization of '.$uid.' for '.$class);
-
         // Get permission mapping from the target model class
         $model = new $class();
 
@@ -49,13 +49,11 @@ class AuthorizeInclude
                 $relationPermMap
             ) ? $relationPermMap[$include] : 'read-'.self::camelToDashed($include);
 
-            if (Auth::user()->cant($permission)) {
+            if (Auth::user()?->can($permission) || Guard::getPassportClient(null)->can($permission)) {
+                $allowedInclude[] = $include;
+            } else {
                 Log::debug('User is missing permission: '.$permission);
-
-                continue;
             }
-
-            $allowedInclude[] = $include;
         }
         Log::debug(
             __METHOD__.': Authorized of '.$uid.' completed for '.$class.' - '.json_encode($allowedInclude)
