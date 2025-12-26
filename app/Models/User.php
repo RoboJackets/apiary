@@ -343,6 +343,16 @@ class User extends Authenticatable
     protected string $guard_name = 'web';
 
     /**
+     * The "type" of the primary key ID.
+     *
+     * Required because model_has_permissions.model_id is a string column that may contain
+     * UUIDs from OAuth2Client. Without this, MySQL's implicit type conversion fails.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
