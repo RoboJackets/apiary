@@ -54,8 +54,12 @@ class User extends JsonResource
             'phone_verified' => $this->phone_verified,
             $this->mergeWhen(
                 $this->requestingSelf($request) ||
-                Auth::user()?->can('read-users-emergency_contact') ??
-                Guard::getPassportClient(null)->can('read-users-gtid'),
+                (
+                    (
+                        Auth::user()?->can('read-users-emergency_contact') ??
+                        Guard::getPassportClient(null)?->can('read-users-gtid')
+                    ) === true
+                ),
                 [
                     'emergency_contact_name' => $this->emergency_contact_name,
                     'emergency_contact_phone' => $this->emergency_contact_phone,
@@ -70,8 +74,12 @@ class User extends JsonResource
             'polo_size' => $this->polo_size,
             $this->mergeWhen(
                 $this->requestingSelf($request) ||
-                Auth::user()?->can('read-users-demographics') ??
-                Guard::getPassportClient(null)->can('read-users-gtid'),
+                (
+                    (
+                        Auth::user()?->can('read-users-demographics') ??
+                        Guard::getPassportClient(null)?->can('read-users-gtid')
+                    ) === true
+                ),
                 [
                     'gender' => $this->gender,
                     'ethnicity' => $this->ethnicity,
@@ -90,19 +98,33 @@ class User extends JsonResource
             'exists_in_sums' => $this->exists_in_sums,
             $this->mergeWhen(
                 $this->requestingSelf($request) ||
-                Auth::user()?->can('read-dues-transactions') ??
-                Guard::getPassportClient(null)->can('read-users-gtid'),
+                (
+                    (
+                        Auth::user()?->can('read-dues-transactions') ??
+                        Guard::getPassportClient(null)?->can('read-users-gtid')
+                    ) === true
+                ),
                 [
                     'has_ordered_polo' => $this->has_ordered_polo,
                 ]
             ),
             'manager' => $this->when(
-                (Auth::user()?->can('read-users') ?? Guard::getPassportClient(null)->can('read-users'))
+                (
+                    (
+                        Auth::user()?->can('read-users') ??
+                        Guard::getPassportClient(null)?->can('read-users')
+                    ) === true
+                )
                 && $this->withManager,
                 fn (): ?Manager => $this->manager === null ? null : new Manager($this->manager)
             ),
             'primary_team' => $this->when(
-                (Auth::user()?->can('read-teams') ?? Guard::getPassportClient(null)->can('read-teams'))
+                (
+                    (
+                        Auth::user()?->can('read-teams') ??
+                        Guard::getPassportClient(null)?->can('read-teams')
+                    ) === true
+                )
                 && $this->withManager,
                 fn (): ?Team => $this->primaryTeam === null ? null : new Team($this->primaryTeam)
             ),

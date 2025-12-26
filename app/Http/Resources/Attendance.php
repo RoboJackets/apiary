@@ -26,8 +26,10 @@ class Attendance extends JsonResource
             'attendable_type' => $this->attendable_type,
             'attendable_id' => $this->attendable_id,
             'gtid' => $this->when(
-                Auth::user()?->can('read-users-gtid') ??
-                    Guard::getPassportClient(null)->can('read-users-gtid'),
+                (
+                    Auth::user()?->can('read-users-gtid') ??
+                    Guard::getPassportClient(null)?->can('read-users-gtid')
+                ) === true,
                 $this->gtid
             ),
             'source' => $this->source,

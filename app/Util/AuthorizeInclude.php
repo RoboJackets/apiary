@@ -49,7 +49,7 @@ class AuthorizeInclude
                 $relationPermMap
             ) ? $relationPermMap[$include] : 'read-'.self::camelToDashed($include);
 
-            if (Auth::user()?->can($permission) || Guard::getPassportClient(null)->can($permission)) {
+            if ((Auth::user()?->can($permission) ?? Guard::getPassportClient(null)?->can($permission)) === true) {
                 $allowedInclude[] = $include;
             } else {
                 Log::debug('User is missing permission: '.$permission);
