@@ -38,7 +38,7 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Represents a user, possibly a member and possibly not.
  *
- * @property int $id
+ * @property string $id
  * @property string $uid
  * @property int $gtid
  * @property string|null $github_username
@@ -596,7 +596,7 @@ class User extends Authenticatable
     }
 
     #[\Override]
-    public function getAuthIdentifier(): int
+    public function getAuthIdentifier(): string
     {
         return $this->id;
     }

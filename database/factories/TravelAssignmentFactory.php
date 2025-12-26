@@ -18,7 +18,7 @@ class TravelAssignmentFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, int>
+     * @return array<string, int|string>
      */
     #[\Override]
     public function definition(): array

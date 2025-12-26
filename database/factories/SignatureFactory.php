@@ -18,7 +18,7 @@ class SignatureFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, int|bool>
+     * @return array<string, int|string|bool>
      */
     #[\Override]
     public function definition(): array
