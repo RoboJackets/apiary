@@ -40,7 +40,7 @@ class User extends JsonResource
             'id' => $this->id,
             'uid' => $this->uid,
             'gtid' => $this->when(
-                Auth::user()?->can('read-users-gtid') ?? Guard::getPassportClient(null)->can('read-users-gtid'),
+                Auth::user()?->can('read-users-gtid') ?? Guard::getPassportClient(null)?->can('read-users-gtid'),
                 $this->gtid
             ),
             'gt_email' => $this->gt_email,
