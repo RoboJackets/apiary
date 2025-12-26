@@ -101,8 +101,8 @@ return [
     */
 
     'middleware' => [
-        'web',
         \App\Http\Middleware\CasAuthenticate::class,
+        'web',
         HandleInertiaRequests::class,
         DispatchServingNovaEvent::class,
         BootTools::class,
