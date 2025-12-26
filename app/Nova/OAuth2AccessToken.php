@@ -86,13 +86,16 @@ class OAuth2AccessToken extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('User'),
+            BelongsTo::make('User')
+                ->filterable(),
 
-            BelongsTo::make('Client', 'client', OAuth2Client::class),
+            BelongsTo::make('Client', 'client', OAuth2Client::class)
+                ->filterable(),
 
             Text::make('Name'),
 
-            Boolean::make('Revoked'),
+            Boolean::make('Revoked')
+                ->filterable(),
 
             new Panel(
                 'Metadata',
