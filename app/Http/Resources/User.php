@@ -40,7 +40,7 @@ class User extends JsonResource
             'id' => $this->id,
             'uid' => $this->uid,
             'gtid' => $this->when(
-                Auth::user()?->can('read-users-gtid') || Guard::getPassportClient(null)->can('read-users-gtid'),
+                Auth::user()?->can('read-users-gtid') ?? Guard::getPassportClient(null)->can('read-users-gtid'),
                 $this->gtid
             ),
             'gt_email' => $this->gt_email,
@@ -54,7 +54,7 @@ class User extends JsonResource
             'phone_verified' => $this->phone_verified,
             $this->mergeWhen(
                 $this->requestingSelf($request) ||
-                Auth::user()?->can('read-users-emergency_contact') ||
+                Auth::user()?->can('read-users-emergency_contact') ??
                 Guard::getPassportClient(null)->can('read-users-gtid'),
                 [
                     'emergency_contact_name' => $this->emergency_contact_name,
@@ -70,7 +70,7 @@ class User extends JsonResource
             'polo_size' => $this->polo_size,
             $this->mergeWhen(
                 $this->requestingSelf($request) ||
-                Auth::user()?->can('read-users-demographics') ||
+                Auth::user()?->can('read-users-demographics') ??
                 Guard::getPassportClient(null)->can('read-users-gtid'),
                 [
                     'gender' => $this->gender,
@@ -90,19 +90,19 @@ class User extends JsonResource
             'exists_in_sums' => $this->exists_in_sums,
             $this->mergeWhen(
                 $this->requestingSelf($request) ||
-                Auth::user()?->can('read-dues-transactions') ||
+                Auth::user()?->can('read-dues-transactions') ??
                 Guard::getPassportClient(null)->can('read-users-gtid'),
                 [
                     'has_ordered_polo' => $this->has_ordered_polo,
                 ]
             ),
             'manager' => $this->when(
-                (Auth::user()?->can('read-users') || Guard::getPassportClient(null)->can('read-users'))
+                (Auth::user()?->can('read-users') ?? Guard::getPassportClient(null)->can('read-users'))
                 && $this->withManager,
                 fn (): ?Manager => $this->manager === null ? null : new Manager($this->manager)
             ),
             'primary_team' => $this->when(
-                (Auth::user()?->can('read-teams') || Guard::getPassportClient(null)->can('read-teams'))
+                (Auth::user()?->can('read-teams') ?? Guard::getPassportClient(null)->can('read-teams'))
                 && $this->withManager,
                 fn (): ?Team => $this->primaryTeam === null ? null : new Team($this->primaryTeam)
             ),

@@ -8,6 +8,7 @@ use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Guard;
 
 class Attendance extends JsonResource
 {
@@ -24,7 +25,11 @@ class Attendance extends JsonResource
             'id' => $this->id,
             'attendable_type' => $this->attendable_type,
             'attendable_id' => $this->attendable_id,
-            'gtid' => $this->when(Auth::user()->can('read-users-gtid'), $this->gtid),
+            'gtid' => $this->when(
+                Auth::user()?->can('read-users-gtid') ??
+                    Guard::getPassportClient(null)->can('read-users-gtid'),
+                $this->gtid
+            ),
             'source' => $this->source,
             'recorded_by' => $this->recorded_by,
             'created_at' => $this->created_at,
