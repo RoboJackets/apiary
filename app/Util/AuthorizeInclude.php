@@ -26,7 +26,7 @@ class AuthorizeInclude
         }
 
         $allowedInclude = [];
-        $uid = Auth::user()?->uid || Guard::getPassportClient(null)->getKey();
+        $uid = Auth::user()?->uid ?? Guard::getPassportClient(null)->getKey();
         Log::debug(__METHOD__.': Checking authorization of '.$uid.' for '.$class);
         // Get permission mapping from the target model class
         $model = new $class();
