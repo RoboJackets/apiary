@@ -57,7 +57,7 @@ class User extends JsonResource
                 (
                     (
                         Auth::user()?->can('read-users-emergency_contact') ??
-                        Guard::getPassportClient(null)?->can('read-users-gtid')
+                        Guard::getPassportClient(null)?->can('read-users-emergency_contact')
                     ) === true
                 ),
                 [
@@ -77,7 +77,7 @@ class User extends JsonResource
                 (
                     (
                         Auth::user()?->can('read-users-demographics') ??
-                        Guard::getPassportClient(null)?->can('read-users-gtid')
+                        Guard::getPassportClient(null)?->can('read-users-demographics')
                     ) === true
                 ),
                 [
@@ -101,7 +101,7 @@ class User extends JsonResource
                 (
                     (
                         Auth::user()?->can('read-dues-transactions') ??
-                        Guard::getPassportClient(null)?->can('read-users-gtid')
+                        Guard::getPassportClient(null)?->can('read-dues-transactions')
                     ) === true
                 ),
                 [
