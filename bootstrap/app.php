@@ -51,6 +51,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->priority([
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\CasAuthenticate::class,
             \Illuminate\Auth\Middleware\Authenticate::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class,
             \Illuminate\Session\Middleware\AuthenticateSession::class,
