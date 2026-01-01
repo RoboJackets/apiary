@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
@@ -37,6 +38,16 @@ class CreatePersonalAccessToken extends Action
      * @var string
      */
     public $confirmText = 'Enter a name to identify this token. It will be visible to the user.';
+
+    public function __construct(?User $user) {
+        if ($user?->is_service_account === true) {
+            $this->confirmText = 'Creating personal access tokens for service accounts is DEPRECATED. Use OAuth client_credentials grant instead.';
+
+            $this->meta = [
+                'destructive' => true,
+            ];
+        }
+    }
 
     /**
      * Perform the action on the given models.

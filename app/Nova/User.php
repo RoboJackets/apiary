@@ -802,7 +802,7 @@ class User extends Resource
 
             ...$refreshFromGted,
 
-            CreatePersonalAccessToken::make()
+            CreatePersonalAccessToken::make($user)
                 ->canSee(static fn (Request $r): bool => self::adminOrSelfCanSee($r))
                 ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminOrSelfCanRun($r, $u)),
 
