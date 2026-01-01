@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Actions\RevokeOAuth2Token;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -138,6 +139,10 @@ class OAuth2AccessToken extends Resource
     {
         return [
             RevokeOAuth2Token::make()
+                ->canSee(
+                    static fn (Request $request): bool => $request->user()->hasRole('admin') ||
+                        $request->user()->tokens()->where('revoked', '=', false)->exists()
+                )
                 ->canRun(
                     static function (NovaRequest $r, \App\Models\OAuth2AccessToken $token): bool {
                         if ($token->revoked) {
