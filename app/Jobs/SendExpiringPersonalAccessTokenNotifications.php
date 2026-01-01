@@ -36,7 +36,7 @@ class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
             ->get();
 
         foreach ($pats as $pat) {
-            $owner = $pat->user()->first();
+            $owner = $pat->user()->sole();
 
             $owner->notify(
                 (new ExpiringPersonalAccessTokenNotification($pat))
