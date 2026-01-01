@@ -27,7 +27,7 @@ class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
     public function handle(): void
     {
         $recently_expired = Carbon::now()->subWeek();
-        $expiring_soon = Carbon::now()->addWeek();
+        $expiring_soon = Carbon::now()->addWeeks(2);
 
         $pats = Passport::token()
             ->whereDate('expires_at', '>=', $recently_expired)
