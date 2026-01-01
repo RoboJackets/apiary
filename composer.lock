@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e673beefbcccdd3e81897c4af182762",
+    "content-hash": "848f5204f79dcb7784ab4e5c96728a54",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8586,16 +8586,16 @@
         },
         {
             "name": "spatie/laravel-webhook-client",
-            "version": "3.4.4",
+            "version": "3.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-webhook-client.git",
-                "reference": "a6555740d84598a202c4ebb56b5486a3b0f3700f"
+                "reference": "83e50b9797ad9fbbf290d79cf71ee3e5e6a076f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/a6555740d84598a202c4ebb56b5486a3b0f3700f",
-                "reference": "a6555740d84598a202c4ebb56b5486a3b0f3700f",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/83e50b9797ad9fbbf290d79cf71ee3e5e6a076f3",
+                "reference": "83e50b9797ad9fbbf290d79cf71ee3e5e6a076f3",
                 "shasum": ""
             },
             "require": {
@@ -8608,11 +8608,13 @@
             },
             "require-dev": {
                 "orchestra/testbench": "^7.0 || ^8.0 || ^9.0 || ^10.0",
-                "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^9.3 || ^10.5 || ^11.5.3 || ^12.0",
-                "spatie/laravel-ray": "^1.24"
+                "pestphp/pest": "^3.8 || ^4.0",
+                "pestphp/pest-plugin-laravel": "^3.2 || ^4.0",
+                "phpstan/extension-installer": "^1.4.3",
+                "phpstan/phpstan-deprecation-rules": "^1.2.1",
+                "phpstan/phpstan-phpunit": "^1.4.2",
+                "phpunit/phpunit": "^11.5.3 || ^12.0",
+                "spatie/laravel-ray": "^1.43.1"
             },
             "type": "library",
             "extra": {
@@ -8650,7 +8652,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-webhook-client/issues",
-                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.4.4"
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.4.5"
             },
             "funding": [
                 {
@@ -8658,7 +8660,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-06-27T16:01:51+00:00"
+            "time": "2025-11-27T09:35:16+00:00"
         },
         {
             "name": "square/square",
