@@ -42,7 +42,12 @@ Route::prefix('v1/')->middleware(
     Route::get('users/managers', [UserController::class, 'indexManagers'])->middleware('cache:86400');
 });
 
-Route::prefix('v1/')->middleware([EnsureClientIsResourceOwner::class])->group(static function (): void {
+Route::prefix('v1/')->middleware(
+    [
+        EnsureClientIsResourceOwner::class,
+        'cache:86400',
+    ]
+)->group(static function (): void {
     Route::get('majors', [MajorController::class, 'index']);
 });
 
