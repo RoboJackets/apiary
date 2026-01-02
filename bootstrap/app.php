@@ -34,7 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->throttleApi(
-            limiter: '60|api_rate_limit,1',
+            limiter: '600|api_rate_limit,1',
             redis: env('CACHE_STORE') === 'redis'
         );
         $middleware->api(\App\Http\Middleware\Sentry::class);
@@ -53,6 +53,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\CasAuthenticate::class,
             \Illuminate\Auth\Middleware\Authenticate::class,
+            \App\Http\Middleware\AuthenticateWithUserOrClientToken::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class,
             \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
