@@ -7,6 +7,7 @@ use App\Http\Controllers\DuesPackageController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InfoController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MerchandiseController;
 use App\Http\Controllers\NovaExportController;
 use App\Http\Controllers\PaymentController;
@@ -39,6 +40,10 @@ Route::prefix('v1/')->middleware(
     // The search endpoint MUST be registered before the apiResource, otherwise it will not take precedence
     Route::post('users/searchByEmail', [UserController::class, 'searchByEmail']);
     Route::get('users/managers', [UserController::class, 'indexManagers'])->middleware('cache:86400');
+});
+
+Route::prefix('v1/')->middleware([EnsureClientIsResourceOwner::class])->group(static function (): void {
+    Route::get('majors', [MajorController::class, 'index']);
 });
 
 Route::prefix('v1/')->name('api.v1.')->middleware(['auth.user_or_client_token'])->group(
