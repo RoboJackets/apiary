@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Http\Resources\User as UserResource;
+use App\Util\UserOrClient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Guard;
 
 class Attendance extends JsonResource
 {
@@ -26,10 +25,7 @@ class Attendance extends JsonResource
             'attendable_type' => $this->attendable_type,
             'attendable_id' => $this->attendable_id,
             'gtid' => $this->when(
-                (
-                    Auth::user()?->can('read-users-gtid') ??
-                    Guard::getPassportClient(null)?->can('read-users-gtid')
-                ) === true,
+                UserOrClient::can('read-users-gtid'),
                 $this->gtid
             ),
             'source' => $this->source,

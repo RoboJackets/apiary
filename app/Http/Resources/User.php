@@ -12,11 +12,10 @@ use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Permission as PermissionResource;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
+use App\Util\UserOrClient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\MissingValue;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Guard;
 
 class User extends JsonResource
 {
@@ -40,7 +39,7 @@ class User extends JsonResource
             'id' => $this->id,
             'uid' => $this->uid,
             'gtid' => $this->when(
-                Auth::user()?->can('read-users-gtid') ?? Guard::getPassportClient(null)?->can('read-users-gtid'),
+                UserOrClient::can('read-users-gtid'),
                 $this->gtid
             ),
             'gt_email' => $this->gt_email,
@@ -53,13 +52,7 @@ class User extends JsonResource
             'phone' => $this->phone,
             'phone_verified' => $this->phone_verified,
             $this->mergeWhen(
-                $this->requestingSelf($request) ||
-                (
-                    (
-                        Auth::user()?->can('read-users-emergency_contact') ??
-                        Guard::getPassportClient(null)?->can('read-users-emergency_contact')
-                    ) === true
-                ),
+                $this->requestingSelf($request) || UserOrClient::can('read-users-emergency_contact'),
                 [
                     'emergency_contact_name' => $this->emergency_contact_name,
                     'emergency_contact_phone' => $this->emergency_contact_phone,
@@ -73,13 +66,7 @@ class User extends JsonResource
             'shirt_size' => $this->shirt_size,
             'polo_size' => $this->polo_size,
             $this->mergeWhen(
-                $this->requestingSelf($request) ||
-                (
-                    (
-                        Auth::user()?->can('read-users-demographics') ??
-                        Guard::getPassportClient(null)?->can('read-users-demographics')
-                    ) === true
-                ),
+                $this->requestingSelf($request) || UserOrClient::can('read-users-demographics'),
                 [
                     'gender' => $this->gender,
                     'ethnicity' => $this->ethnicity,
@@ -97,35 +84,17 @@ class User extends JsonResource
             'clickup_invite_pending' => $this->clickup_invite_pending,
             'exists_in_sums' => $this->exists_in_sums,
             $this->mergeWhen(
-                $this->requestingSelf($request) ||
-                (
-                    (
-                        Auth::user()?->can('read-dues-transactions') ??
-                        Guard::getPassportClient(null)?->can('read-dues-transactions')
-                    ) === true
-                ),
+                $this->requestingSelf($request) || UserOrClient::can('read-dues-transactions'),
                 [
                     'has_ordered_polo' => $this->has_ordered_polo,
                 ]
             ),
             'manager' => $this->when(
-                (
-                    (
-                        Auth::user()?->can('read-users') ??
-                        Guard::getPassportClient(null)?->can('read-users')
-                    ) === true
-                )
-                && $this->withManager,
+                UserOrClient::can('read-users') && $this->withManager,
                 fn (): ?Manager => $this->manager === null ? null : new Manager($this->manager)
             ),
             'primary_team' => $this->when(
-                (
-                    (
-                        Auth::user()?->can('read-teams') ??
-                        Guard::getPassportClient(null)?->can('read-teams')
-                    ) === true
-                )
-                && $this->withManager,
+                UserOrClient::can('read-teams') && $this->withManager,
                 fn (): ?Team => $this->primaryTeam === null ? null : new Team($this->primaryTeam)
             ),
             'created_at' => $this->created_at,
