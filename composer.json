@@ -75,7 +75,7 @@
         "danog/advanced-json-rpc": "3.2.2",
         "laravel/boost": "1.8.7",
         "laravel/pail": "1.2.4",
-        "laravel/pint": "1.26.0",
+        "laravel/pint": "1.27.0",
         "mockery/mockery": "1.6.12",
         "mxl/laravel-job": "1.7.0",
         "nunomaduro/collision": "8.6.1",
