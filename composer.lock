@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca11bef40069c8dce8ce2c7c16d78dee",
+    "content-hash": "a101b1db35d0b448a39795b06c23eb1b",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3726,22 +3726,22 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v13.4.2",
+            "version": "v13.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "de00e4767b8f7207437fb8e54f17c33468074422"
+                "reference": "b3c549d519dbf50be4eae563a267dd1553736041"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/de00e4767b8f7207437fb8e54f17c33468074422",
-                "reference": "de00e4767b8f7207437fb8e54f17c33468074422",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/b3c549d519dbf50be4eae563a267dd1553736041",
+                "reference": "b3c549d519dbf50be4eae563a267dd1553736041",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-openssl": "*",
-                "firebase/php-jwt": "^6.4",
+                "firebase/php-jwt": "^6.4|^7.0",
                 "illuminate/auth": "^11.35|^12.0",
                 "illuminate/console": "^11.35|^12.0",
                 "illuminate/container": "^11.35|^12.0",
@@ -3797,7 +3797,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2025-12-15T16:11:04+00:00"
+            "time": "2025-12-22T14:58:04+00:00"
         },
         {
             "name": "laravel/prompts",
