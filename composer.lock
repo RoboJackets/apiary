@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0d436946800d647b661378b7aa694f2",
+    "content-hash": "f751ba2beecd886105b398f95d99d3a9",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -13599,16 +13599,16 @@
         },
         {
             "name": "laravel/boost",
-            "version": "v1.8.7",
+            "version": "v1.8.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/boost.git",
-                "reference": "7a5709a8134ed59d3e7f34fccbd74689830e296c"
+                "reference": "1f2c2d41b5216618170fb6730ec13bf894c5bffd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/boost/zipball/7a5709a8134ed59d3e7f34fccbd74689830e296c",
-                "reference": "7a5709a8134ed59d3e7f34fccbd74689830e296c",
+                "url": "https://api.github.com/repos/laravel/boost/zipball/1f2c2d41b5216618170fb6730ec13bf894c5bffd",
+                "reference": "1f2c2d41b5216618170fb6730ec13bf894c5bffd",
                 "shasum": ""
             },
             "require": {
@@ -13661,7 +13661,7 @@
                 "issues": "https://github.com/laravel/boost/issues",
                 "source": "https://github.com/laravel/boost"
             },
-            "time": "2025-12-19T15:04:12+00:00"
+            "time": "2026-01-07T18:43:11+00:00"
         },
         {
             "name": "laravel/mcp",
