@@ -32,7 +32,7 @@
         "calebporzio/sushi": "2.5.3",
         "chelout/laravel-relationship-events": "4.0.0",
         "docusign/esign-client": "8.5.0",
-        "eluceo/ical": "dev-php8.5",
+        "eluceo/ical": "0.20.0",
         "enlightn/security-checker": "2.0.0",
         "esi/numverify-api-client-php": "dev-master",
         "fakerphp/faker": "1.24.1",
@@ -222,10 +222,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/bobvandevijver/iCal.git"
         },
         {
             "type": "vcs",

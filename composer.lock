@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bed65569cf001316e5906f15b6393b97",
+    "content-hash": "077bff0f6007b708df6a3d86a51424f8",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -1681,33 +1681,26 @@
         },
         {
             "name": "eluceo/ical",
-            "version": "dev-php8.5",
+            "version": "0.20.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bobvandevijver/iCal.git",
-                "reference": "14af16e1bde07cb49a6624a1bd64faa1d5a1017e"
+                "url": "https://github.com/markuspoerschke/iCal.git",
+                "reference": "6e9e9fbdf94c0b213c233bb2337ea7d3387d7ae1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobvandevijver/iCal/zipball/14af16e1bde07cb49a6624a1bd64faa1d5a1017e",
-                "reference": "14af16e1bde07cb49a6624a1bd64faa1d5a1017e",
+                "url": "https://api.github.com/repos/markuspoerschke/iCal/zipball/6e9e9fbdf94c0b213c233bb2337ea7d3387d7ae1",
+                "reference": "6e9e9fbdf94c0b213c233bb2337ea7d3387d7ae1",
                 "shasum": ""
             },
             "require": {
-                "ext-mbstring": "*",
-                "php": ">=8.3",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0"
-            },
-            "conflict": {
-                "php": "7.4.6"
+                "php": ">=7.4"
             },
             "require-dev": {
-                "ergebnis/composer-normalize": "^2.23.1",
-                "friendsofphp/php-cs-fixer": "^3.75",
-                "infection/infection": "^0.27 || ^0.29",
-                "phpmd/phpmd": "^2.13",
-                "phpunit/phpunit": "^10.5",
-                "vimeo/psalm": "^5.0 || ^6.0"
+                "phpunit/phpunit": "^9.5"
+            },
+            "suggest": {
+                "ext-mbstring": "Massive performance enhancement of line folding"
             },
             "type": "library",
             "autoload": {
@@ -1715,37 +1708,31 @@
                     "Eluceo\\iCal\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Eluceo\\iCal\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
                     "name": "Markus Poerschke",
-                    "email": "markus@poerschke.nrw",
+                    "email": "markus@eluceo.de",
                     "role": "Developer"
                 }
             ],
-            "description": "The eluceo/iCal package offers an abstraction layer for creating iCalendars. You can easily create iCal files by using PHP objects instead of typing your *.ics file by hand. The output will follow RFC 5545 as best as possible.",
+            "description": "The eluceo/iCal package offers a abstraction layer for creating iCalendars. You can easily create iCal files by using PHP object instead of typing your *.ics file by hand. The output will follow RFC 5545 as best as possible.",
             "homepage": "https://github.com/markuspoerschke/iCal",
             "keywords": [
                 "calendar",
+                "iCalendar",
                 "ical",
-                "icalendar",
                 "ics",
                 "php calendar"
             ],
             "support": {
                 "issues": "https://github.com/markuspoerschke/iCal/issues",
-                "forum": "https://github.com/markuspoerschke/iCal/discussions",
-                "source": "https://github.com/markuspoerschke/iCal",
-                "docs": "https://ical.poerschke.nrw"
+                "source": "https://github.com/markuspoerschke/iCal"
             },
-            "time": "2025-12-09T19:38:12+00:00"
+            "time": "2026-01-07T21:57:22+00:00"
         },
         {
             "name": "enlightn/security-checker",
@@ -17735,7 +17722,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "barryvdh/laravel-dompdf": 20,
-        "eluceo/ical": 20,
         "esi/numverify-api-client-php": 20,
         "htmlmin/htmlmin": 20,
         "madewithlove/laravel-nova-uuid-support": 20,
