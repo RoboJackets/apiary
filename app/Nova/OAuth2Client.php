@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Nova\Actions\CreateOAuth2Client;
+use App\Nova\Actions\AdoptKiosk;
+use App\Nova\Actions\CreateOAuth2AuthorizationCodeGrantClient;
+use App\Nova\Actions\CreateOAuth2ClientCredentialsGrantClient;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Code;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
  * A Nova resource for OAuth clients.
  *
- * @extends \App\Nova\Resource<\App\Models\Oauth2Client>
+ * @extends \App\Nova\Resource<\App\Models\OAuth2Client>
  */
 class OAuth2Client extends Resource
 {
@@ -38,7 +43,7 @@ class OAuth2Client extends Resource
      *
      * @var string
      */
-    public static $group = 'OAuth2';
+    public static $group = 'OAuth';
 
     /**
      * The columns that should be searched.
@@ -88,27 +93,45 @@ class OAuth2Client extends Resource
             Text::make('Name', 'name')
                 ->sortable()
                 ->required()
-                ->rules('required'),
+                ->rules('required')
+                ->creationRules('unique:oauth_clients,name')
+                ->updateRules('unique:oauth_clients,name,{{resourceId}}'),
 
             MorphTo::make('Owner')
+                ->types([User::class])
                 ->searchable()
                 ->withoutTrashed()
-                ->help(
-                    'This should be null for the personal access client, and otherwise populated with the user '
-                    .'responsible for this client.'
-                )
                 ->nullable(),
 
             Boolean::make('Revoked', 'revoked')
                 ->sortable(),
 
-            Text::make('Redirect URL(s)', 'redirect')
+            Code::make('Redirect URIs', 'redirect_uris')
+                ->json()
+                ->required()
+                ->rules('required')
+                ->hideFromIndex(),
+
+            Code::make('Grant Types', 'grant_types')
+                ->json()
                 ->required()
                 ->rules('required')
                 ->hideFromIndex(),
 
             Boolean::make('Public (PKCE-Enabled Client)', fn (): bool => $this->secret === null)
                 ->hideFromIndex(),
+
+            HasMany::make('Tokens', 'tokens', OAuth2AccessToken::class),
+
+            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->searchable()
+                ->showOnDetail(
+                    static fn (
+                        NovaRequest $request,
+                        \App\Models\OAuth2Client $client
+                    ): bool => in_array('client_credentials', $client->grant_types, true)
+                ),
 
             self::metadataPanel(),
         ];
@@ -129,8 +152,21 @@ class OAuth2Client extends Resource
     public function actions(NovaRequest $request): array
     {
         return [
-            resolve(CreateOAuth2Client::class)
+            resolve(CreateOAuth2AuthorizationCodeGrantClient::class)
                 ->canSee(static fn (Request $r): bool => $request->user()->hasRole('admin')),
+
+            resolve(CreateOAuth2ClientCredentialsGrantClient::class)
+                ->canSee(static fn (Request $r): bool => $request->user()->hasRole('admin')),
+
+            AdoptKiosk::make()
+                ->canSee(static fn (Request $r): bool => $request->user()->hasRole('admin'))
+                ->canRun(
+                    static fn (
+                        NovaRequest $r,
+                        \App\Models\OAuth2Client $client
+                    ): bool => in_array('client_credentials', $client->grant_types, true) &&
+                        $client->permissions()->doesntExist()
+                ),
         ];
     }
 

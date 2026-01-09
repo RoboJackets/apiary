@@ -18,7 +18,7 @@ class DuesTransactionFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string,\DateTime|int|null>
+     * @return array<string,int|string>
      */
     #[\Override]
     public function definition(): array

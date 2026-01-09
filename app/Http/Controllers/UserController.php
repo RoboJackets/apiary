@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Guard;
 use Spatie\Permission\Models\Role;
 
 class UserController implements HasMiddleware
@@ -157,8 +158,9 @@ class UserController implements HasMiddleware
         $user = User::findByIdentifier($id)->with(AuthorizeInclude::authorize(User::class, $include))->first();
         if ($user !== null) {
             $requestingUser = $request->user();
+
             // Enforce users only viewing themselves (read-users-own)
-            if ($requestingUser->cant('read-users') && $requestingUser->id !== $user->id) {
+            if ($requestingUser !== null && $requestingUser->cant('read-users') && $requestingUser->id !== $user->id) {
                 return response()->json(['status' => 'error',
                     'message' => 'Forbidden - You do not have permission to view this User.',
                 ], 403);
@@ -195,7 +197,7 @@ class UserController implements HasMiddleware
      */
     public function update(string $id, UpdateUserRequest $request): JsonResponse
     {
-        $requestingUser = $request->user();
+        $requestingUser = $request->user() ?? Guard::getPassportClient(null);
         $user = User::findByIdentifier($id)->first();
         if ($user === null) {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);

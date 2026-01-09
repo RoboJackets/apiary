@@ -10,7 +10,7 @@ use App\Http\Controllers\DocuSignController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
-use App\Http\Controllers\InfoController;
+use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
@@ -22,7 +22,6 @@ use App\Http\Controllers\TravelAssignmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Http\Controllers\AuthorizationController;
-use OpenIDConnect\Laravel\JwksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,9 +100,6 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('login/cas', [AuthController::class, 'forceCasAuth'])
         ->name('login.cas');
 
-    Route::view('oauth2/client', 'oauth2clientcreated')->name('oauth2.client.created');
-    Route::view('oauth2/pat', 'personalaccesstokencreated')->name('oauth2.pat.created');
-
     Route::get('stop-impersonating', [AuthController::class, 'stopImpersonating'])->name('stopImpersonating');
 });
 
@@ -142,5 +138,6 @@ Route::prefix('sponsor')->name('sponsor.')->group(static function (): void {
 
 Route::get('oauth/jwks', JwksController::class)
     ->name('passport.jwks');
+Route::get('/.well-known/openid-configuration', [OAuthController::class, 'showOpenIdConfiguration']);
 
-Route::get('/.well-known/openid-configuration', [InfoController::class, 'showOpenIdConfiguration']);
+Route::post('/oauth/register', [OAuthController::class, 'registerClient']);

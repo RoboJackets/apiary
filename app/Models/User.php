@@ -38,7 +38,7 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Represents a user, possibly a member and possibly not.
  *
- * @property int $id
+ * @property string $id
  * @property string $uid
  * @property int $gtid
  * @property string|null $github_username
@@ -343,6 +343,16 @@ class User extends Authenticatable
     protected string $guard_name = 'web';
 
     /**
+     * The "type" of the primary key ID.
+     *
+     * Required because model_has_permissions.model_id is a string column that may contain
+     * UUIDs from OAuth2Client. Without this, MySQL's implicit type conversion fails.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -586,7 +596,7 @@ class User extends Authenticatable
     }
 
     #[\Override]
-    public function getAuthIdentifier(): int
+    public function getAuthIdentifier(): string
     {
         return $this->id;
     }

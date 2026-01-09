@@ -10,4 +10,10 @@ return [
     'ios' => [
         'client_id' => env('IOS_CLIENT_ID'),
     ],
+
+    'routes' => [
+        'jwks' => true,
+    ],
+
+    'dynamic_client_registration_cidrs' => [],
 ];

@@ -492,7 +492,14 @@ class User extends Resource
                 ->readonly(static fn (Request $request): bool => ! $request->user()->hasRole('admin'))
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            MorphMany::make('OAuth2 Clients', 'oauthApps')
+            MorphMany::make('OAuth Clients', 'oauthApps', OAuth2Client::class)
+                ->canSee(
+                    static fn (Request $request): bool => $request->user()->hasRole(
+                        'admin'
+                    ) || $request->resourceId === $request->user()->id
+                ),
+
+            HasMany::make('OAuth Tokens', 'tokens', OAuth2AccessToken::class)
                 ->canSee(
                     static fn (Request $request): bool => $request->user()->hasRole(
                         'admin'
@@ -795,7 +802,7 @@ class User extends Resource
 
             ...$refreshFromGted,
 
-            CreatePersonalAccessToken::make()
+            CreatePersonalAccessToken::make($user)
                 ->canSee(static fn (Request $r): bool => self::adminOrSelfCanSee($r))
                 ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminOrSelfCanRun($r, $u)),
 

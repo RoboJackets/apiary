@@ -605,7 +605,7 @@ class Travel extends Resource
             ),
 
             Hidden::make('Created By', 'created_by_user_id')
-                ->default(static fn (NovaRequest $request): int => $request->user()->id),
+                ->default(static fn (NovaRequest $request): string => $request->user()->id),
 
             Hidden::make('Status', 'status')
                 ->default('draft')

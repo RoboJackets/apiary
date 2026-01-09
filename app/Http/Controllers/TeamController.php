@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.PHP.UselessParentheses.UselessParentheses
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeamRequest;
@@ -12,6 +14,7 @@ use App\Http\Resources\User as UserResource;
 use App\Models\Team;
 use App\Models\User;
 use App\Util\AuthorizeInclude;
+use App\Util\UserOrClient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -38,7 +41,7 @@ class TeamController implements HasMiddleware
     {
         $include = $request->input('include');
         $teamsQ = Team::with(AuthorizeInclude::authorize(Team::class, $include));
-        $teams = $request->user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
+        $teams = UserOrClient::can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
 
         return response()->json(['status' => 'success', 'teams' => TeamResource::collection($teams)]);
     }

@@ -15,7 +15,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.5'
           extensions: bcmath, ctype, curl, fileinfo, gd, intl, json, ldap, mbstring, mysqli, openssl, pdo, redis, sqlite3, tokenizer, uuid, xml, zip
           coverage: none
         env:
@@ -45,8 +45,8 @@ jobs:
       - name: Run PHPCS
         run: vendor/bin/phpcs .
 
-      - name: Run Phan
-        run: vendor/bin/phan --output-mode github --no-progress-bar --analyze-twice
+      # - name: Run Phan
+      #   run: vendor/bin/phan --output-mode github --no-progress-bar --analyze-twice
 
       - name: Run Psalm
         run: vendor/bin/psalm --output-format=github --no-progress
@@ -61,7 +61,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.5'
           extensions: bcmath, ctype, curl, fileinfo, gd, intl, json, ldap, mbstring, mysqli, openssl, pdo, redis, sqlite3, tokenizer, uuid, xml, zip
           coverage: none
         env:

@@ -12,10 +12,10 @@ use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Permission as PermissionResource;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
+use App\Util\UserOrClient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\MissingValue;
-use Illuminate\Support\Facades\Auth;
 
 class User extends JsonResource
 {
@@ -38,7 +38,10 @@ class User extends JsonResource
             // Attributes
             'id' => $this->id,
             'uid' => $this->uid,
-            'gtid' => $this->when(Auth::user()->can('read-users-gtid'), $this->gtid),
+            'gtid' => $this->when(
+                UserOrClient::can('read-users-gtid'),
+                $this->gtid
+            ),
             'gt_email' => $this->gt_email,
             'email_suppression_reason' => $this->email_suppression_reason,
             'first_name' => $this->first_name,
@@ -48,21 +51,27 @@ class User extends JsonResource
             'name' => $this->name,
             'phone' => $this->phone,
             'phone_verified' => $this->phone_verified,
-            $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-users-emergency_contact'), [
-                'emergency_contact_name' => $this->emergency_contact_name,
-                'emergency_contact_phone' => $this->emergency_contact_phone,
-                'emergency_contact_phone_verified' => $this->emergency_contact_phone_verified,
-            ]),
+            $this->mergeWhen(
+                $this->requestingSelf($request) || UserOrClient::can('read-users-emergency_contact'),
+                [
+                    'emergency_contact_name' => $this->emergency_contact_name,
+                    'emergency_contact_phone' => $this->emergency_contact_phone,
+                    'emergency_contact_phone_verified' => $this->emergency_contact_phone_verified,
+                ]
+            ),
             'join_semester' => $this->join_semester,
             'graduation_semester' => $this->graduation_semester,
             'primary_affiliation' => $this->primary_affiliation,
             'is_student' => $this->is_student,
             'shirt_size' => $this->shirt_size,
             'polo_size' => $this->polo_size,
-            $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-users-demographics'), [
-                'gender' => $this->gender,
-                'ethnicity' => $this->ethnicity,
-            ]),
+            $this->mergeWhen(
+                $this->requestingSelf($request) || UserOrClient::can('read-users-demographics'),
+                [
+                    'gender' => $this->gender,
+                    'ethnicity' => $this->ethnicity,
+                ]
+            ),
             'resume_date' => $this->resume_date,
             'is_active' => $this->is_active,
             'is_access_active' => $this->is_access_active,
@@ -74,15 +83,18 @@ class User extends JsonResource
             'clickup_id' => $this->clickup_id,
             'clickup_invite_pending' => $this->clickup_invite_pending,
             'exists_in_sums' => $this->exists_in_sums,
-            $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-dues-transactions'), [
-                'has_ordered_polo' => $this->has_ordered_polo,
-            ]),
+            $this->mergeWhen(
+                $this->requestingSelf($request) || UserOrClient::can('read-dues-transactions'),
+                [
+                    'has_ordered_polo' => $this->has_ordered_polo,
+                ]
+            ),
             'manager' => $this->when(
-                Auth::user()->can('read-users') && $this->withManager,
+                UserOrClient::can('read-users') && $this->withManager,
                 fn (): ?Manager => $this->manager === null ? null : new Manager($this->manager)
             ),
             'primary_team' => $this->when(
-                Auth::user()->can('read-teams') && $this->withManager,
+                UserOrClient::can('read-teams') && $this->withManager,
                 fn (): ?Team => $this->primaryTeam === null ? null : new Team($this->primaryTeam)
             ),
             'created_at' => $this->created_at,
@@ -116,6 +128,6 @@ class User extends JsonResource
 
     protected function requestingSelf(Request $request): bool
     {
-        return $request->user()->id === $this->id;
+        return $request->user()?->id === $this->id;
     }
 }

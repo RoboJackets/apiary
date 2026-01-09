@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Http\Resources\User as UserResource;
+use App\Util\UserOrClient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
 
 class Attendance extends JsonResource
 {
@@ -24,7 +24,10 @@ class Attendance extends JsonResource
             'id' => $this->id,
             'attendable_type' => $this->attendable_type,
             'attendable_id' => $this->attendable_id,
-            'gtid' => $this->when(Auth::user()->can('read-users-gtid'), $this->gtid),
+            'gtid' => $this->when(
+                UserOrClient::can('read-users-gtid'),
+                $this->gtid
+            ),
             'source' => $this->source,
             'recorded_by' => $this->recorded_by,
             'created_at' => $this->created_at,

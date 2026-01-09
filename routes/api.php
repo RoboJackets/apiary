@@ -7,6 +7,7 @@ use App\Http\Controllers\DuesPackageController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InfoController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MerchandiseController;
 use App\Http\Controllers\NovaExportController;
 use App\Http\Controllers\PaymentController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\RsvpController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Http\Middleware\EnsureClientIsResourceOwner;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +31,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
+Route::prefix('v1/')->middleware(
+    [
+        EnsureClientIsResourceOwner::class,
+        'permission:read-users',
+    ]
+)->group(static function (): void {
+    // The search endpoint MUST be registered before the apiResource, otherwise it will not take precedence
+    Route::post('users/searchByEmail', [UserController::class, 'searchByEmail']);
+    Route::get('users/managers', [UserController::class, 'indexManagers'])->middleware('cache:86400');
+});
+
+Route::prefix('v1/')->middleware(
+    [
+        EnsureClientIsResourceOwner::class,
+        'cache:86400',
+    ]
+)->group(static function (): void {
+    Route::get('majors', [MajorController::class, 'index']);
+});
+
+Route::prefix('v1/')->name('api.v1.')->middleware(['auth.user_or_client_token'])->group(
     static function (): void {
         // Attendance
         Route::apiResource('attendance', AttendanceController::class);
@@ -39,8 +61,6 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         // Users
         // The search endpoint MUST be registered before the apiResource, otherwise it will not take precedence
         Route::get('users/search', [UserController::class, 'search']);
-        Route::post('users/searchByEmail', [UserController::class, 'searchByEmail']);
-        Route::get('users/managers', [UserController::class, 'indexManagers'])->middleware('cache:86400');
         Route::apiResource('users', UserController::class)->middleware('cache:86400');
         Route::post('users/{id}/resume', [ResumeController::class, 'store']);
         Route::get('user', [UserController::class, 'showSelf']);

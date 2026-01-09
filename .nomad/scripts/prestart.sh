@@ -12,8 +12,8 @@ php artisan config:cache --no-interaction --verbose
 php artisan view:cache --no-interaction --verbose
 php artisan event:cache --no-interaction --verbose
 php artisan route:cache --no-interaction --verbose
-php artisan cache:clear --no-interaction --verbose
-php artisan responsecache:clear --no-interaction --verbose
+php artisan cache:clear --no-interaction --verbose || true
+php artisan responsecache:clear --no-interaction --verbose || true
 php artisan migrate --no-interaction --force --verbose
 
 if [ ${APP_ENV} != "sandbox" ]

@@ -8,7 +8,6 @@ use App\Notifications\ExpiringPersonalAccessTokenNotification;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -27,19 +26,17 @@ class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
     public function handle(): void
     {
         $recently_expired = Carbon::now()->subWeek();
-        $expiring_soon = Carbon::now()->addWeek();
+        $expiring_soon = Carbon::now()->addWeeks(2);
 
         $pats = Passport::token()
             ->whereDate('expires_at', '>=', $recently_expired)
             ->whereDate('expires_at', '<', $expiring_soon)
             ->whereRevoked(false)
-            ->whereHas('client', static function (Builder $clientQuery): void {
-                $clientQuery->where('user_id', '=', null); // PATs are created with a Personal Access Client that
-                // isn't associated with any user
-            })->get();
+            ->whereHas('user')
+            ->get();
 
         foreach ($pats as $pat) {
-            $owner = $pat->user()->first();
+            $owner = $pat->user()->sole();
 
             $owner->notify(
                 (new ExpiringPersonalAccessTokenNotification($pat))

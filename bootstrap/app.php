@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->validateCsrfTokens(except: [
             'apiv3/*',
+            'oauth/*',
         ]);
 
         $middleware->web([
@@ -33,7 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->throttleApi(
-            limiter: '60|api_rate_limit,1',
+            limiter: '600|api_rate_limit,1',
             redis: env('CACHE_STORE') === 'redis'
         );
         $middleware->api(\App\Http\Middleware\Sentry::class);
@@ -41,6 +42,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.cas.check' => \App\Http\Middleware\CasCheck::class,
             'auth.cas.force' => \App\Http\Middleware\CasAuthenticate::class,
+            'auth.user_or_client_token' => \App\Http\Middleware\AuthenticateWithUserOrClientToken::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'cache' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
@@ -49,7 +51,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->priority([
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\CasAuthenticate::class,
             \Illuminate\Auth\Middleware\Authenticate::class,
+            \App\Http\Middleware\AuthenticateWithUserOrClientToken::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class,
             \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,

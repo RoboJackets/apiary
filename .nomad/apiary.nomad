@@ -174,7 +174,7 @@ EOF
         mount {
           type   = "bind"
           source = "local/"
-          target = "/etc/php/8.3/fpm/pool.d/"
+          target = "/etc/php/8.5/fpm/pool.d/"
         }
 
         mount {
