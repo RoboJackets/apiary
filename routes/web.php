@@ -136,8 +136,6 @@ Route::prefix('sponsor')->name('sponsor.')->group(static function (): void {
     Route::post('/verify-otp', [SponsorLoginController::class, 'verifyOneTimePassword'])->name('verify-otp');
 });
 
-Route::get('oauth/jwks', JwksController::class)
-    ->name('passport.jwks');
 Route::get('/.well-known/openid-configuration', [OAuthController::class, 'showOpenIdConfiguration']);
 
 Route::post('/oauth/register', [OAuthController::class, 'registerClient']);
