@@ -18,9 +18,13 @@ class SponsorLoginController
         return view('sponsors.login');
     }
 
+    /**
+     * Ensures that an email given for sponsor login belongs to a sponsoring company.
+     *
+     * @return JsonResponse depending on whether the email is valid and belongs to a sponsor
+     */
     public function validateEmail(Request $request): JsonResponse
     {
-        // Validate input request using Laravel's in-built validator
         $request->validate([
             'email' => [
                 'required',
@@ -30,10 +34,8 @@ class SponsorLoginController
             ],
         ]);
 
-        // Read value - cast to string since validation guarantees it
         $email = (string) $request->input('email');
 
-        // Check if domain is valid and sponsor is active; if not, return JSON error
         if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
                 'Authentication Error',
@@ -55,10 +57,8 @@ class SponsorLoginController
             $sponsorUser->save();
         }
 
-        // Generate and dispatch OTP using Spatie
         $sponsorUser->sendOneTimePassword();
 
-        // Cache minimal state for OTP verification
         session([
             'sponsor_email_pending' => $email,
         ]);
@@ -69,14 +69,19 @@ class SponsorLoginController
         ], 200);
     }
 
+    /**
+     * Verifies that the one-time password is a six-digit code.
+     * The code must have been sent within the time limit in config/one-time-passwords.php.
+     * Redirects to sponsor home page if the code is correct for the user.
+     *
+     * @return JsonResponse contents depend on whether or not the code was valid.
+     */
     public function verifyOneTimePassword(Request $request): JsonResponse
     {
-        // Laravel will automatically throw an error if OTP is invalid
         $request->validate([
             'otp' => ['required', 'string', 'digits:6'],
         ]);
 
-        // Validate session and retrieve user
         $email = session('sponsor_email_pending');
         if (! is_string($email) || $email === '') {
             return $this->errorResponse(
@@ -85,11 +90,8 @@ class SponsorLoginController
             );
         }
 
-        // Retrieve existing user for OTP verification
-        // sole() ensures exactly one user exists (throws exception if 0 or >1 found)
         $sponsorUser = SponsorUser::where('email', $email)->sole();
 
-        // Verify sponsor domain is still valid and active BEFORE verifying OTP
         if (! $this->isValidSponsorDomain($email)) {
             return $this->errorResponse(
                 'Authentication Error',
@@ -98,7 +100,6 @@ class SponsorLoginController
             );
         }
 
-        // Verify OTP using Spatie
         $otp = (string) $request->input('otp');
         $result = $sponsorUser->attemptLoginUsingOneTimePassword($otp);
         if (! $result->isOk()) {
