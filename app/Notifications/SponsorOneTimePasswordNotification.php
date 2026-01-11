@@ -17,7 +17,6 @@ class SponsorOneTimePasswordNotification extends Notification
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -41,17 +40,5 @@ class SponsorOneTimePasswordNotification extends Notification
                 'otp' => $notifiable->currentAccessToken,
                 'user' => $notifiable,
             ]);
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
-    {
-        return [
-            //
-        ];
     }
 }
