@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92c6621979f1b9569c42cacaba122df1",
+    "content-hash": "d056df3d87f5d5349255709e310d7535",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -4130,16 +4130,16 @@
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.10.2",
+            "version": "v2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "3bcb5f62d6f837e0f093a601e26badafb127bd4c"
+                "reference": "3d34b97c9a1747a81a3fde90482c092bd8b66468"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/3bcb5f62d6f837e0f093a601e26badafb127bd4c",
-                "reference": "3bcb5f62d6f837e0f093a601e26badafb127bd4c",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/3d34b97c9a1747a81a3fde90482c092bd8b66468",
+                "reference": "3d34b97c9a1747a81a3fde90482c092bd8b66468",
                 "shasum": ""
             },
             "require": {
@@ -4148,7 +4148,7 @@
                 "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
                 "php": "^7.2.5|^8.0",
                 "psy/psysh": "^0.11.1|^0.12.0",
-                "symfony/var-dumper": "^4.3.4|^5.0|^6.0|^7.0"
+                "symfony/var-dumper": "^4.3.4|^5.0|^6.0|^7.0|^8.0"
             },
             "require-dev": {
                 "mockery/mockery": "~1.3.3|^1.4.2",
@@ -4190,9 +4190,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
-                "source": "https://github.com/laravel/tinker/tree/v2.10.2"
+                "source": "https://github.com/laravel/tinker/tree/v2.11.0"
             },
-            "time": "2025-11-20T16:29:12+00:00"
+            "time": "2025-12-19T19:16:45+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -8210,16 +8210,16 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "4.3.4",
+            "version": "4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "932bd9d01f9971a4d154bd508266efd33f637e92"
+                "reference": "618718aa094015bf07b4825785f31ca24005e921"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/932bd9d01f9971a4d154bd508266efd33f637e92",
-                "reference": "932bd9d01f9971a4d154bd508266efd33f637e92",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/618718aa094015bf07b4825785f31ca24005e921",
+                "reference": "618718aa094015bf07b4825785f31ca24005e921",
                 "shasum": ""
             },
             "require": {
@@ -8273,7 +8273,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.3.4"
+                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.3.5"
             },
             "funding": [
                 {
@@ -8281,7 +8281,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-19T07:00:54+00:00"
+            "time": "2026-01-05T16:29:18+00:00"
         },
         {
             "name": "spatie/laravel-one-time-passwords",
