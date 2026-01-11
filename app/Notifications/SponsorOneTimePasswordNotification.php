@@ -13,13 +13,6 @@ class SponsorOneTimePasswordNotification extends Notification
     use Queueable;
 
     /**
-     * Create a new notification instance.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Get the notification's delivery channels.
      *
      * @return array<int, string>
