@@ -50,7 +50,7 @@ services:
       touch /app/database/database.sqlite &&
       php artisan migrate --no-interaction &&
       php artisan tinker --no-interaction --verbose --execute \"(\\Laravel\\Passport\\Passport::client()->truncate())\" &&
-      export PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=$$(php artisan tinker --no-interaction --verbose --execute \"echo ((new \\Laravel\\Passport\\ClientRepository())->createPersonalAccessClient(null, 'Personal Access Client', 'http://localhost'))->plainSecret\") &&
+      export PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=$$(php artisan tinker --no-interaction --verbose --execute \"echo ((new \\Laravel\\Passport\\ClientRepository())->createPersonalAccessGrantClient('Personal Access Client', 'users'))->plainSecret\") &&
       export PASSPORT_PERSONAL_ACCESS_CLIENT_ID=$$(php artisan tinker --no-interaction --verbose --execute \"echo \\Laravel\\Passport\\Passport::client()->sole()->getKey()\") &&
       php artisan config:validate --no-interaction &&
       exec php artisan serve --host=0.0.0.0"
