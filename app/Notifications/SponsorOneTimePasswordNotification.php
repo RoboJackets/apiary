@@ -7,8 +7,9 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Spatie\OneTimePasswords\Notifications\OneTimePasswordNotification;
 
-class SponsorOneTimePasswordNotification extends Notification
+class SponsorOneTimePasswordNotification extends OneTimePasswordNotification
 {
     use Queueable;
 
@@ -30,7 +31,7 @@ class SponsorOneTimePasswordNotification extends Notification
         return (new MailMessage())
             ->subject('RoboJackets One-Time Password')
             ->view('mail.sponsor-otp', [
-                'otp' => $notifiable->currentAccessToken,
+                'otp' => $this->oneTimePassword,
                 'user' => $notifiable,
             ]);
     }
