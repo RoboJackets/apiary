@@ -17,6 +17,7 @@ class SponsorOneTimePasswordNotification extends OneTimePasswordNotification
      *
      * @return array<int, string>
      */
+    #[\Override]
     public function via(object $notifiable): array
     {
         return ['mail'];
@@ -25,6 +26,7 @@ class SponsorOneTimePasswordNotification extends OneTimePasswordNotification
     /**
      * Get the mail representation of the notification.
      */
+    #[\Override]
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage())
