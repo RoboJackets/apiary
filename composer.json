@@ -27,7 +27,7 @@
         "ext-zip": "*",
         "ans-group/laravel-health-check": "2.1.1",
         "apereo/phpcas": "1.6.1",
-        "ashallendesign/laravel-config-validator": "2.9.0",
+        "ashallendesign/laravel-config-validator": "2.9.1",
         "barryvdh/laravel-dompdf": "dev-master",
         "calebporzio/sushi": "2.5.3",
         "chelout/laravel-relationship-events": "4.0.0",
