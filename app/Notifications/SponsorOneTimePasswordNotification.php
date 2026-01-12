@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
+use App\Mail\Sponsors\SponsorOneTimePassword as SponsorOneTimePasswordMailable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Messages\MailMessage;
 use Spatie\OneTimePasswords\Notifications\OneTimePasswordNotification;
 
 class SponsorOneTimePasswordNotification extends OneTimePasswordNotification
@@ -27,13 +27,8 @@ class SponsorOneTimePasswordNotification extends OneTimePasswordNotification
      * Get the mail representation of the notification.
      */
     #[\Override]
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object $notifiable): SponsorOneTimePasswordMailable
     {
-        return (new MailMessage())
-            ->subject('RoboJackets One-Time Password')
-            ->view('mail.sponsor-otp', [
-                'otp' => $this->oneTimePassword,
-                'user' => $notifiable,
-            ]);
+        return new SponsorOneTimePasswordMailable($this->oneTimePassword);
     }
 }
