@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d056df3d87f5d5349255709e310d7535",
+    "content-hash": "7c328f3b1025aa53ea2f9890730e90a1",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -390,16 +390,16 @@
         },
         {
             "name": "ashallendesign/laravel-config-validator",
-            "version": "v2.9.0",
+            "version": "v2.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ash-jc-allen/laravel-config-validator.git",
-                "reference": "ab11ba1bc19f8a2e3dbc308c6db42747ab072382"
+                "reference": "d0847a6d43022eda5b908ed7b0ddccfbd0a222a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/ab11ba1bc19f8a2e3dbc308c6db42747ab072382",
-                "reference": "ab11ba1bc19f8a2e3dbc308c6db42747ab072382",
+                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/d0847a6d43022eda5b908ed7b0ddccfbd0a222a2",
+                "reference": "d0847a6d43022eda5b908ed7b0ddccfbd0a222a2",
                 "shasum": ""
             },
             "require": {
@@ -453,7 +453,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ash-jc-allen/laravel-config-validator/issues",
-                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.9.0"
+                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.9.1"
             },
             "funding": [
                 {
@@ -461,7 +461,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-17T19:41:36+00:00"
+            "time": "2025-11-26T12:13:42+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
