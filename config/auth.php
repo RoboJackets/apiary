@@ -8,5 +8,17 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+        'sponsor' => [
+            'driver' => 'session',
+            'provider' => 'sponsor_users',
+        ],
+
+    ],
+
+    'providers' => [
+        'sponsor_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\SponsorUser::class,
+        ],
     ],
 ];

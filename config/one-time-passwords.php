@@ -63,7 +63,7 @@ return [
     /*
      * The notification used to send a one-time password to a user
      */
-    'notification' => Spatie\OneTimePasswords\Notifications\OneTimePasswordNotification::class,
+    'notification' => App\Notifications\SponsorOneTimePasswordNotification::class,
 
     /*
      * These class are responsible for performing core tasks regarding one-time passwords.
