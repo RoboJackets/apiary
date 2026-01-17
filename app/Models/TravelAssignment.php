@@ -222,10 +222,8 @@ class TravelAssignment extends Model implements Payable
         }
 
         foreach ($travel as $key => $val) {
-            $array['travel_'.$key] = $val;
+            $array['trip_'.$key] = $val;
         }
-
-        $array['payable_type'] = $this->getMorphClass();
 
         $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
 
