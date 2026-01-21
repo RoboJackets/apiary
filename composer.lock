@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22f8eee304df40ea1f8c5b7f4bc4030a",
+    "content-hash": "5cf8c2e41a5101311c59e83fe7bed98c",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -1336,16 +1336,16 @@
         },
         {
             "name": "docusign/esign-client",
-            "version": "v8.5.0",
+            "version": "v8.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/docusign/docusign-esign-php-client.git",
-                "reference": "cfdc51f4d4535226aad150639127128a53306ac2"
+                "reference": "6d29ae20e99a7b4a3811ac966659878016a33707"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/cfdc51f4d4535226aad150639127128a53306ac2",
-                "reference": "cfdc51f4d4535226aad150639127128a53306ac2",
+                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/6d29ae20e99a7b4a3811ac966659878016a33707",
+                "reference": "6d29ae20e99a7b4a3811ac966659878016a33707",
                 "shasum": ""
             },
             "require": {
@@ -1389,9 +1389,9 @@
             ],
             "support": {
                 "issues": "https://github.com/docusign/docusign-esign-php-client/issues",
-                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v8.5.0"
+                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v8.6.0"
             },
-            "time": "2025-10-22T20:42:00+00:00"
+            "time": "2025-12-04T04:26:14+00:00"
         },
         {
             "name": "dompdf/dompdf",
