@@ -7,12 +7,15 @@ declare(strict_types=1);
 use App\Mail\DocuSign\Agreement\MemberNotification;
 use App\Mail\DocuSign\Agreement\ParentNotification;
 use App\Mail\DocuSign\Travel as TravelMail;
+use App\Mail\Sponsors\SponsorOneTimePassword;
 use App\Models\DocuSignEnvelope;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Payment;
 use App\Models\Signature;
+use App\Models\Sponsor;
+use App\Models\SponsorUser;
 use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
@@ -32,6 +35,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Laravel\Passport\ClientRepository;
+use Spatie\OneTimePasswords\Models\OneTimePassword;
 use Xammie\Mailbook\Facades\Mailbook;
 
 Config::set('app.name', 'MyRoboJackets');
@@ -3818,4 +3822,41 @@ Mailbook::category('Dues Packages')->group(static function () use ($user): void 
 
             return new PackageExpirationReminder();
         });
+});
+
+Mailbook::category('Sponsors')->group(static function (): void {
+    Mailbook::to(null)
+        ->add(static function (): SponsorOneTimePassword {
+            $sponsor = Sponsor::withoutEvents(static function (): Sponsor {
+                $sponsor = new Sponsor();
+                $sponsor->name = 'Sponsor Company';
+                $sponsor->end_date = now()->addYear();
+                $sponsor->save();
+
+                return $sponsor;
+            });
+
+            $sponsorUser = SponsorUser::withoutEvents(static function () use ($sponsor): SponsorUser {
+                $sponsorUser = new SponsorUser();
+                $sponsorUser->email = 'person@sponsorcompany.com';
+                $sponsorUser->sponsor_id = $sponsor->id;
+                $sponsorUser->save();
+
+                return $sponsorUser;
+            });
+
+            $otp = OneTimePassword::withoutEvents(static function () use ($sponsorUser): OneTimePassword {
+                $otp = new OneTimePassword();
+                $otp->authenticatable_type = $sponsorUser->getMorphClass();
+                $otp->authenticatable_id = $sponsorUser->id;
+                $otp->password = '123456';
+                $otp->expires_at = now()->addMinutes(10);
+                $otp->save();
+
+                return $otp;
+            });
+
+            return new SponsorOneTimePassword($otp);
+        })
+        ->label('Sponsor One-Time Password');
 });
