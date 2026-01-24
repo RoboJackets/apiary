@@ -49,6 +49,7 @@ This role grants access to almost all functions and should only be assigned to s
 ~~~~~~~~~~~~~~~~~~~
 
 - View :doc:`users </officers/users>`, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
+- Create and update :doc:`events </officers/events>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Record cash or check payments <Recording an Offline Payment>`
 - :ref:`Distribute merchandise <Recording merchandise distribution on web>`
@@ -60,6 +61,7 @@ This role grants access to almost all functions and should only be assigned to s
 ~~~~~~~~~~~~~
 
 - View :doc:`users </officers/users>` and :ref:`dues transactions <Dues Transaction>`
+- Create and update :doc:`events </officers/events>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Distribute merchandise <Recording merchandise distribution on web>`
 

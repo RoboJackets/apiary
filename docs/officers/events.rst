@@ -20,7 +20,7 @@ Creating an event
 .. vale Google.Passive = NO
 
 .. hint::
-   To create an event, you must have the :ref:`officer` role.
+   To create an event, you must have the :ref:`officer`, :ref:`project-manager`, or :ref:`team-lead` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
