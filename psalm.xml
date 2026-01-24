@@ -290,6 +290,7 @@
                 <file name="app/Util/DocuSign.php"/>
                 <referencedFunction name="App\Nova\Metrics\TotalAttendance::count"/>
                 <referencedFunction name="App\Nova\Resource::scoutQuery"/>
+                <referencedFunction name="Illuminate\Support\Collection::merge"/>
                 <referencedFunction name="Illuminate\Support\Facades\Route::get"/>
                 <referencedFunction name="Illuminate\Support\Facades\Route::post"/>
                 <referencedFunction name="Laravel\Nova\Actions\ActionEvent::prune"/>

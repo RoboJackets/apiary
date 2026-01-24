@@ -8,6 +8,7 @@ use App\Notifications\ExpiringPersonalAccessTokenNotification;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -32,6 +33,9 @@ class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
             ->whereDate('expires_at', '>=', $recently_expired)
             ->whereDate('expires_at', '<', $expiring_soon)
             ->whereRevoked(false)
+            ->whereHas('client', static function (Builder $query): void {
+                $query->whereJsonContains('grant_types', 'personal_access');
+            })
             ->whereHas('user')
             ->get();
 

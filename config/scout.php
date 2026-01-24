@@ -343,11 +343,10 @@ return [
                     'user_gmail_address',
                     'user_clickup_email',
                     'user_github_username',
-                    'travel_name',
-                    'travel_destination',
-                    'travel_departure_date',
-                    'travel_return_date',
-                    'payable_type',
+                    'trip_name',
+                    'trip_destination',
+                    'trip_departure_date',
+                    'trip_return_date',
                 ],
                 'rankingRules' => [
                     'words',
@@ -364,7 +363,7 @@ return [
                 ],
                 'filterableAttributes' => [
                     'user_id',
-                    'travel_id',
+                    'trip_id',
                 ],
                 'typoTolerance' => [
                     'disableOnNumbers' => true,
