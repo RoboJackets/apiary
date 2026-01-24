@@ -7,6 +7,7 @@ namespace App\Jobs;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Models\Signature;
+use App\Models\SponsorUser;
 use App\Models\User;
 use Laravel\Passport\Token;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
@@ -69,7 +70,13 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
 
         $user = $query->first();
 
+        $sponsorUser = null;
+
         if ($user === null) {
+            $sponsorUser = SponsorUser::where('email', '=', $email)->first();
+        }
+
+        if ($user === null && $sponsorUser === null) {
             if (array_key_exists('Metadata', $payload)) {
                 if (array_key_exists('transaction-id', $payload['Metadata'])) {
                     $user = DuesTransaction::where('id', '=', $payload['Metadata']['transaction-id'])->sole()->user;
@@ -83,11 +90,16 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
             }
         }
 
-        if ($user === null) {
-            throw new \Exception('Could not match event to user. Manual match required.');
+        if ($user === null && $sponsorUser === null) {
+            throw new \Exception('Could not match event to user or sponsor user. Manual match required.');
         }
 
-        $user->email_suppression_reason = $reason;
-        $user->save();
+        if ($user !== null) {
+            $user->email_suppression_reason = $reason;
+            $user->save();
+        } else {
+            $sponsorUser->email_suppression_reason = $reason;
+            $sponsorUser->save();
+        }
     }
 }

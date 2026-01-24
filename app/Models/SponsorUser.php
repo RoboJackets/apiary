@@ -18,9 +18,11 @@ use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
  * @property int $id
  * @property string $email
  * @property int|null $sponsor_id
+ * @property string|null $email_suppression_reason
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read bool $should_receive_email
  */
 class SponsorUser extends Authenticatable
 {
@@ -57,5 +59,10 @@ class SponsorUser extends Authenticatable
     public function getUidAttribute(): string
     {
         return $this->email;
+    }
+
+    public function getShouldReceiveEmailAttribute(): bool
+    {
+        return $this->email_suppression_reason === null;
     }
 }
