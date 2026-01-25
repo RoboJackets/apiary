@@ -57,6 +57,14 @@ class SponsorLoginController
             $sponsorUser->save();
         }
 
+        if (! $sponsorUser->should_receive_email) {
+            return $this->errorResponse(
+                'Email Delivery Error',
+                'We are unable to send emails to this address. '.
+                'Please contact hello@robojackets.org for assistance.'
+            );
+        }
+
         $sponsorUser->sendOneTimePassword();
 
         session([
