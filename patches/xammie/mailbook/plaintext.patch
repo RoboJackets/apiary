@@ -1,0 +1,13 @@
+diff --git a/src/Data/ResolvedMail.php b/src/Data/ResolvedMail.php
+index 559ca4f..2b5eed0 100644
+--- a/src/Data/ResolvedMail.php
++++ b/src/Data/ResolvedMail.php
+@@ -61,7 +61,7 @@ class ResolvedMail
+ 
+     public function content(): string
+     {
+-        $html = $this->message->getHtmlBody();
++        return '<pre>'.$this->message->getTextBody().'</pre>';
+ 
+         if (is_resource($html)) {
+             $html = stream_get_contents($html) ?: '';

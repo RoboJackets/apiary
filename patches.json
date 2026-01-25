@@ -1,0 +1,10 @@
+{
+    "patches": {
+        "xammie/mailbook": [
+            {
+                "description": "Render plain-text emails instead of HTML",
+                "url": "patches/xammie/mailbook/plaintext.patch"
+            }
+        ]
+    }
+}

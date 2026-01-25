@@ -31,6 +31,7 @@
         "barryvdh/laravel-dompdf": "dev-master",
         "calebporzio/sushi": "2.5.3",
         "chelout/laravel-relationship-events": "4.0.0",
+        "cweagans/composer-patches": "*",
         "docusign/esign-client": "8.6.0",
         "eluceo/ical": "2.16.0",
         "enlightn/security-checker": "2.0.0",
@@ -138,9 +139,7 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "sed -i 's/getHtmlBody/getTextBody/' vendor/xammie/mailbook/src/Data/ResolvedMail.php",
-            "sed -i \"s/\\$html = \\$this->message->getTextBody();/return \\'<pre>\\'.\\$this->message->getTextBody().\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php"
+            "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
@@ -172,6 +171,7 @@
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
+            "cweagans/composer-patches": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "php-http/discovery": true
         },

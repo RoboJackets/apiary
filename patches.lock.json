@@ -1,0 +1,17 @@
+{
+    "_hash": "38f89f8bb5e1a2c35b660c13abe8d3df4ef7cfd377b31e62de248dced57170f1",
+    "patches": {
+        "xammie/mailbook": [
+            {
+                "package": "xammie/mailbook",
+                "description": "Render plain-text emails instead of HTML",
+                "url": "patches/xammie/mailbook/plaintext.patch",
+                "sha256": "1c58157b1c2a7f470b401025c8123da9f94bcd57beecf5595907e0654c633c51",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            }
+        ]
+    }
+}
