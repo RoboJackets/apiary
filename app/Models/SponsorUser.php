@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
 use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
 
@@ -16,14 +17,18 @@ use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
  *
  * @property int $id
  * @property string $email
+ * @property int|null $sponsor_id
+ * @property string|null $email_suppression_reason
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read bool $should_receive_email
  */
-class SponsorUser extends Model
+class SponsorUser extends Authenticatable
 {
     use HasFactory;
     use HasOneTimePasswords;
+    use Notifiable;
     use Searchable;
     use SoftDeletes;
 
@@ -46,5 +51,18 @@ class SponsorUser extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Sponsor::class, 'sponsor_id');
+    }
+
+    /**
+     * If user ID requested for this SponsorUser, returns email instead.
+     */
+    public function getUidAttribute(): string
+    {
+        return $this->email;
+    }
+
+    public function getShouldReceiveEmailAttribute(): bool
+    {
+        return $this->email_suppression_reason === null;
     }
 }

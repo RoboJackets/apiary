@@ -37,11 +37,6 @@
                 <directory name="app" />
             </errorLevel>
         </LessSpecificImplementedReturnType>
-        <ImplementedReturnTypeMismatch>
-            <errorLevel type="suppress">
-                <directory name="app" />
-            </errorLevel>
-        </ImplementedReturnTypeMismatch>
         <InvalidReturnStatement>
             <errorLevel type="suppress">
                 <directory name="app" />

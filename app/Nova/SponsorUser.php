@@ -79,6 +79,11 @@ class SponsorUser extends Resource
                 ->creationRules('unique:sponsor_users,email')
                 ->updateRules('unique:sponsor_users,email,{{resourceId}}')
                 ->sortable(),
+            Text::make('Email Suppression Reason', 'email_suppression_reason')
+                ->nullable()
+                ->readonly()
+                ->hideWhenCreating()
+                ->hideFromIndex(),
         ];
     }
 }
