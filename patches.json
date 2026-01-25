@@ -5,6 +5,12 @@
                 "description": "Render plain-text emails instead of HTML",
                 "url": "patches/xammie/mailbook/plaintext.patch"
             }
+        ],
+        "mrclay/minify": [
+            {
+                "description": "Don't insert extra newlines in HTML",
+                "url": "patches/mrclay/minify/newlines.patch"
+            }
         ]
     }
 }

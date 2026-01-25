@@ -1,5 +1,5 @@
 {
-    "_hash": "38f89f8bb5e1a2c35b660c13abe8d3df4ef7cfd377b31e62de248dced57170f1",
+    "_hash": "de237fa4841305dd51842c533fd92d2291caf0bd45f32b4fd65afa2bdbfeadef",
     "patches": {
         "xammie/mailbook": [
             {
@@ -7,6 +7,18 @@
                 "description": "Render plain-text emails instead of HTML",
                 "url": "patches/xammie/mailbook/plaintext.patch",
                 "sha256": "1c58157b1c2a7f470b401025c8123da9f94bcd57beecf5595907e0654c633c51",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            }
+        ],
+        "mrclay/minify": [
+            {
+                "package": "mrclay/minify",
+                "description": "Don't insert extra newlines in HTML",
+                "url": "patches/mrclay/minify/newlines.patch",
+                "sha256": "71cfda1ade40aff482476b09956ec4b9e22890e026e56841f6a01fa06f0cfd4e",
                 "depth": 1,
                 "extra": {
                     "provenance": "patches-file:patches.json"

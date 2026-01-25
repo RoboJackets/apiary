@@ -137,7 +137,6 @@ RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33,requir
     composer check-platform-reqs --lock --no-dev && \
     composer install --no-interaction --no-progress --no-dev --optimize-autoloader --classmap-authoritative --no-cache && \
     php artisan nova:publish && \
-    sed -i '/"\$1\\n\$2"/c\\' /app/vendor/mrclay/minify/lib/Minify/HTML.php && \
     chmod 664 /app/bootstrap/app.php /app/public/index.php && \
     chmod 775 /app/bootstrap/cache/
 
