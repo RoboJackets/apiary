@@ -45,7 +45,7 @@ Config::set('passport.storage.database.connection', 'sqlite');
 Config::set('database.connections.sqlite.database', ':memory:');
 Artisan::call('migrate');
 
-$client = (new ClientRepository())->createPersonalAccessClient(null, 'test', 'http://localhost');
+$client = (new ClientRepository())->createPersonalAccessGrantClient('Personal Access Client', 'users');
 
 Config::set('passport.personal_access_client.id', $client->id);
 Config::set('passport.personal_access_client.secret', $client->plain_secret);
