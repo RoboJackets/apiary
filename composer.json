@@ -81,7 +81,7 @@
         "mxl/laravel-job": "1.7.0",
         "nunomaduro/collision": "8.6.1",
         "phan/phan": "6.0.0-beta",
-        "phpunit/phpunit": "11.5.32",
+        "phpunit/phpunit": "11.5.50",
         "psalm/plugin-laravel": "3.0.4",
         "slevomat/coding-standard": "8.16.0",
         "spatie/laravel-ignition": "2.10.0",
