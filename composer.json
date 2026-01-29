@@ -32,7 +32,7 @@
         "calebporzio/sushi": "2.5.3",
         "chelout/laravel-relationship-events": "4.0.0",
         "cweagans/composer-patches": "2.0.0",
-        "docusign/esign-client": "8.6.0",
+        "docusign/esign-client": "8.7.0",
         "eluceo/ical": "2.16.0",
         "enlightn/security-checker": "2.0.0",
         "esi/numverify-api-client-php": "dev-master",

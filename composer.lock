@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15aba16c7453aec6c9ab84b2e3397aaa",
+    "content-hash": "d9e4deba48f0bd48fc6252e48dcfd544",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -1461,16 +1461,16 @@
         },
         {
             "name": "docusign/esign-client",
-            "version": "v8.6.0",
+            "version": "v8.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/docusign/docusign-esign-php-client.git",
-                "reference": "6d29ae20e99a7b4a3811ac966659878016a33707"
+                "reference": "819bba23337e4573970af090144f6cbcf6f11cf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/6d29ae20e99a7b4a3811ac966659878016a33707",
-                "reference": "6d29ae20e99a7b4a3811ac966659878016a33707",
+                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/819bba23337e4573970af090144f6cbcf6f11cf7",
+                "reference": "819bba23337e4573970af090144f6cbcf6f11cf7",
                 "shasum": ""
             },
             "require": {
@@ -1514,9 +1514,9 @@
             ],
             "support": {
                 "issues": "https://github.com/docusign/docusign-esign-php-client/issues",
-                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v8.6.0"
+                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v8.7.0"
             },
-            "time": "2025-12-04T04:26:14+00:00"
+            "time": "2026-01-28T12:32:47+00:00"
         },
         {
             "name": "dompdf/dompdf",
@@ -18037,5 +18037,5 @@
     "platform-overrides": {
         "php": "8.5.1"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
