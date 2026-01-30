@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('access_cards', static function (Blueprint $table): void {
-            $table->unsignedBigInteger('access_card_number')->nullable(false)->primary()->change();
+            $table->unsignedBigInteger('access_card_number')->nullable(false)->change();
         });
     }
 
