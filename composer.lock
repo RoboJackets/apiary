@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "734a36f6d493d7703a4bcbb28f627b79",
+    "content-hash": "e5d8fc1212caac370dd2e70d388290c3",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -9717,16 +9717,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v7.3.4",
+            "version": "v7.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "4b62871a01c49457cf2a8e560af7ee8a94b87a62"
+                "reference": "84bb634857a893cc146cceb467e31b3f02c5fe9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/4b62871a01c49457cf2a8e560af7ee8a94b87a62",
-                "reference": "4b62871a01c49457cf2a8e560af7ee8a94b87a62",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/84bb634857a893cc146cceb467e31b3f02c5fe9f",
+                "reference": "84bb634857a893cc146cceb467e31b3f02c5fe9f",
                 "shasum": ""
             },
             "require": {
@@ -9757,12 +9757,13 @@
                 "php-http/httplug": "^1.0|^2.0",
                 "psr/http-client": "^1.0",
                 "symfony/amphp-http-client-meta": "^1.0|^2.0",
-                "symfony/dependency-injection": "^6.4|^7.0",
-                "symfony/http-kernel": "^6.4|^7.0",
-                "symfony/messenger": "^6.4|^7.0",
-                "symfony/process": "^6.4|^7.0",
-                "symfony/rate-limiter": "^6.4|^7.0",
-                "symfony/stopwatch": "^6.4|^7.0"
+                "symfony/cache": "^6.4|^7.0|^8.0",
+                "symfony/dependency-injection": "^6.4|^7.0|^8.0",
+                "symfony/http-kernel": "^6.4|^7.0|^8.0",
+                "symfony/messenger": "^6.4|^7.0|^8.0",
+                "symfony/process": "^6.4|^7.0|^8.0",
+                "symfony/rate-limiter": "^6.4|^7.0|^8.0",
+                "symfony/stopwatch": "^6.4|^7.0|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -9793,7 +9794,7 @@
                 "http"
             ],
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v7.3.4"
+                "source": "https://github.com/symfony/http-client/tree/v7.4.5"
             },
             "funding": [
                 {
@@ -9813,7 +9814,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-11T10:12:26+00:00"
+            "time": "2026-01-27T16:16:02+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -10588,29 +10589,29 @@
         },
         {
             "name": "symfony/postmark-mailer",
-            "version": "v7.3.0",
+            "version": "v7.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/postmark-mailer.git",
-                "reference": "71ac001f8bc2ac36cc0bbea3fd6f4a4087d0cec0"
+                "reference": "8b573474e89368f1ddb25b43fd86a6dd51343e9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/postmark-mailer/zipball/71ac001f8bc2ac36cc0bbea3fd6f4a4087d0cec0",
-                "reference": "71ac001f8bc2ac36cc0bbea3fd6f4a4087d0cec0",
+                "url": "https://api.github.com/repos/symfony/postmark-mailer/zipball/8b573474e89368f1ddb25b43fd86a6dd51343e9b",
+                "reference": "8b573474e89368f1ddb25b43fd86a6dd51343e9b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
                 "psr/event-dispatcher": "^1",
-                "symfony/mailer": "^7.2"
+                "symfony/mailer": "^7.2|^8.0"
             },
             "conflict": {
                 "symfony/http-foundation": "<6.4"
             },
             "require-dev": {
-                "symfony/http-client": "^6.4|^7.0",
-                "symfony/webhook": "^6.4|^7.0"
+                "symfony/http-client": "^6.4|^7.0|^8.0",
+                "symfony/webhook": "^6.4|^7.0|^8.0"
             },
             "type": "symfony-mailer-bridge",
             "autoload": {
@@ -10638,7 +10639,7 @@
             "description": "Symfony Postmark Mailer Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/postmark-mailer/tree/v7.3.0"
+                "source": "https://github.com/symfony/postmark-mailer/tree/v7.4.4"
             },
             "funding": [
                 {
@@ -10650,11 +10651,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-04-30T07:52:47+00:00"
+            "time": "2026-01-08T08:25:11+00:00"
         },
         {
             "name": "symfony/process",
