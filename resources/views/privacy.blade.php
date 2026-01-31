@@ -75,6 +75,7 @@
                 <li>Your Georgia Tech username and information about your device, as reported by your web browser or RoboJackets Android application, may be shared with Sentry, a product of Functional Software, Inc, to help us troubleshoot issues you may experience while using RoboJackets services.</li>
                 <li>Your name and Georgia Tech email address may be shared with Postmark, a product of ActiveCampaign, LLC, to deliver emails, including, but not limited to, reminders and payment receipts.</li>
                 <li>Your name, Georgia Tech email address, Georgia Tech employee ID, Georgia Tech employment home department, phone number, parent or legal guardian name, and parent or legal guardian email address may be shared with DocuSign, a product of DocuSign, Inc, to enable you to sign documents electronically.</li>
+                <li>Your phone number and emergency contact phone number may be shared with Numverify, a product of Apilayer Data Products GmbH, to help us validate your phone number.</li>
                 <li>Your legal name, legal gender, date of birth, and Delta SkyMiles number may be shared with Georgia Tech and Travel Incorporated to book air travel for you to attend competitions.</li>
                 <li>All other information will be released only to RoboJackets officers and officer-designated RoboJackets members in the course of conducting business.</li>
             </ul>
@@ -87,7 +88,7 @@
             <p>This application contains links and redirects to other websites. This privacy policy applies only to this website, as the other websites are governed by their own privacy policies.</p>
 
             <h2>Changes to this privacy policy</h2>
-            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on September 19th, 2024.</p>
+            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on January 31st, 2026.</p>
 
             <h2>How to contact us</h2>
             <p>If you have a question regarding any RoboJackets computing systems, including this website, contact RoboJackets IT by emailing <a href="support@robojackets.org">support@robojackets.org</a>.</p>
