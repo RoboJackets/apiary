@@ -31,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
             \App\Http\Middleware\Sentry::class,
             \Spatie\Csp\AddCspHeaders::class,
+            \HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware::class,
         ]);
 
         $middleware->throttleApi(
