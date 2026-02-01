@@ -21,6 +21,7 @@ use App\Nova\Actions\SyncInactiveAccess;
 use App\Nova\Metrics\CreateReasonBreakdown;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
+use App\Nova\Metrics\VerifiedPhoneNumbers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
@@ -642,6 +643,8 @@ class User extends Resource
             (new ResumesSubmitted())
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-resume')),
             new CreateReasonBreakdown(),
+            (new VerifiedPhoneNumbers())
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
         ];
     }
 
