@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5d8fc1212caac370dd2e70d388290c3",
+    "content-hash": "80d4111529c2884a980265c18d98266f",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8409,16 +8409,16 @@
         },
         {
             "name": "spatie/laravel-one-time-passwords",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-one-time-passwords.git",
-                "reference": "299b0e489559564b785ede1cfb1783716fec02dd"
+                "reference": "bac02f5bcf38da3df4892163c9eca4029f802192"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/299b0e489559564b785ede1cfb1783716fec02dd",
-                "reference": "299b0e489559564b785ede1cfb1783716fec02dd",
+                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/bac02f5bcf38da3df4892163c9eca4029f802192",
+                "reference": "bac02f5bcf38da3df4892163c9eca4029f802192",
                 "shasum": ""
             },
             "require": {
@@ -8473,7 +8473,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-one-time-passwords/issues",
-                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.8"
+                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.9"
             },
             "funding": [
                 {
@@ -8481,7 +8481,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-27T09:14:55+00:00"
+            "time": "2026-02-01T08:21:18+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -18042,5 +18042,5 @@
     "platform-overrides": {
         "php": "8.5.1"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
