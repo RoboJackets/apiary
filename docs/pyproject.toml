@@ -12,7 +12,7 @@ sphinx = "9.1.0"
 sphinx-autobuild = "2025.8.25"
 sphinxext-opengraph = "0.13.0"
 sphinxcontrib-httpdomain = "1.8.1"
-furo = {git = "https://github.com/pradyunsg/furo"}
+furo = "2025.12.19"
 
 [build-system]
 requires = ["poetry-core"]
