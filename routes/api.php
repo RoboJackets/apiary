@@ -39,6 +39,7 @@ Route::prefix('v1/')->middleware(
 )->group(static function (): void {
     // The search endpoint MUST be registered before the apiResource, otherwise it will not take precedence
     Route::post('users/searchByEmail', [UserController::class, 'searchByEmail']);
+    Route::post('users/fuzzySearch', [UserController::class, 'fuzzySearch']);
     Route::get('users/managers', [UserController::class, 'indexManagers'])->middleware('cache:86400');
 });
 

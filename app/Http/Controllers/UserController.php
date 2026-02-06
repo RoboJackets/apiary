@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FuzzySearchUserRequest;
 use App\Http\Requests\SearchByEmailRequest;
 use App\Http\Requests\SelfServiceAccessOverrideRequest;
 use App\Http\Requests\StoreUserRequest;
@@ -31,7 +32,16 @@ class UserController implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:read-users', only: ['index', 'indexManagers', 'search', 'searchByEmail']),
+            new Middleware(
+                'permission:read-users',
+                only: [
+                    'index',
+                    'indexManagers',
+                    'search',
+                    'searchByEmail',
+                    'fuzzySearch',
+                ]
+            ),
             new Middleware('permission:create-users', only: ['store']),
             new Middleware('permission:read-users|read-users-own', only: ['show']),
             new Middleware('permission:update-users|update-users-own', only: ['update', 'applySelfOverride']),
@@ -122,6 +132,13 @@ class UserController implements HasMiddleware
                 ),
             ]
         );
+    }
+
+    public function fuzzySearch(FuzzySearchUserRequest $request): JsonResponse
+    {
+        $users = User::search($request->input('query'))->get();
+
+        return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
     }
 
     /**
