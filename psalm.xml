@@ -173,12 +173,6 @@
                 <directory name="app/Nova/" />
             </errorLevel>
         </MethodSignatureMismatch>
-        <InvalidScalarArgument>
-            <errorLevel type="suppress">
-                <file name="app/Nova/Actions/CreateDuesPackages.php" />
-                <referencedFunction name="array_filter"/>
-            </errorLevel>
-        </InvalidScalarArgument>
         <PossiblyNullPropertyAssignment>
             <errorLevel type="suppress">
                 <directory name="app/Nova/Actions" />
@@ -233,6 +227,7 @@
                 <directory name="app/Nova" />
                 <file name="app/Http/Middleware/Sentry.php" />
                 <file name="app/Jobs/ProcessPostmarkInboundWebhook.php" />
+                <file name="app/Models/SelfServiceAccessOverrideEligibility.php"/>
                 <file name="app/Providers/NovaServiceProvider.php" />
             </errorLevel>
         </UnusedClosureParam>
