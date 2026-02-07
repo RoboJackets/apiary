@@ -5,9 +5,4 @@
       <code><![CDATA[$key]]></code>
     </UnusedClosureParam>
   </file>
-  <file src="app/Util/JobFailureNotification.php">
-    <InvalidOperand>
-      <code><![CDATA[config('app.url')]]></code>
-    </InvalidOperand>
-  </file>
 </files>
