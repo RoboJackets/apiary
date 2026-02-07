@@ -51,7 +51,10 @@ final class ApiAuthTest extends TestCase
             $json->where('status', 'success')
                 ->has('user', static function (AssertableJson $json) use ($testId, $memberPerms): void {
                     $json->where('id', $testId)
-                        ->where('allPermissions', fn ($perms) => collect($perms)->sort()->values()->all() === $memberPerms->all())
+                        ->where(
+                            'allPermissions',
+                            static fn ($perms) => collect($perms)->sort()->values()->all() === $memberPerms->all()
+                        )
                         ->has('roles')
                         ->has('permissions')
                         ->missing('teams')
@@ -70,7 +73,10 @@ final class ApiAuthTest extends TestCase
             $json->where('status', 'success')
                 ->has('user', static function (AssertableJson $json) use ($testId, $adminPerms): void {
                     $json->where('id', $testId)
-                        ->where('allPermissions', fn ($perms) => collect($perms)->sort()->values()->all() === $adminPerms->all())
+                        ->where(
+                            'allPermissions',
+                            static fn ($perms) => collect($perms)->sort()->values()->all() === $adminPerms->all()
+                        )
                         ->has('roles')
                         ->has('permissions')
                         ->etc();
@@ -92,7 +98,10 @@ final class ApiAuthTest extends TestCase
             $json->where('status', 'success')
                 ->has('user', static function (AssertableJson $json) use ($alternateId, $memberPerms): void {
                     $json->where('id', $alternateId)
-                        ->where('allPermissions', fn ($perms) => collect($perms)->sort()->values()->all() === $memberPerms->all())
+                        ->where(
+                            'allPermissions',
+                            static fn ($perms) => collect($perms)->sort()->values()->all() === $memberPerms->all()
+                        )
                         ->has('roles')
                         ->has('permissions')
                         ->etc();
