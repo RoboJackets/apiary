@@ -6,6 +6,7 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     findUnusedVariablesAndParams="true"
     findUnusedPsalmSuppress="true"
+    errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
         <directory name="app" />
@@ -227,7 +228,6 @@
                 <directory name="app/Nova" />
                 <file name="app/Http/Middleware/Sentry.php" />
                 <file name="app/Jobs/ProcessPostmarkInboundWebhook.php" />
-                <file name="app/Models/SelfServiceAccessOverrideEligibility.php"/>
                 <file name="app/Providers/NovaServiceProvider.php" />
             </errorLevel>
         </UnusedClosureParam>

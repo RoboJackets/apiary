@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="7.0.0-beta13@e66308f7b3f539704639aca7c8e80aa699ff8afe">
+  <file src="app/Models/SelfServiceAccessOverrideEligibility.php">
+    <UnusedClosureParam>
+      <code><![CDATA[$key]]></code>
+    </UnusedClosureParam>
+  </file>
+  <file src="app/Util/JobFailureNotification.php">
+    <InvalidOperand>
+      <code><![CDATA[config('app.url')]]></code>
+    </InvalidOperand>
+  </file>
+</files>
