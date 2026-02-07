@@ -21,6 +21,7 @@
     <env name="APP_PACKAGES_CACHE" value="bootstrap/cache/packages.phpunit.php"/>
     <env name="APP_ROUTES_CACHE" value="bootstrap/cache/routes.phpunit.php"/>
     <env name="APP_EVENTS_CACHE" value="bootstrap/cache/events.phpunit.php"/>
+    <env name="RESPONSE_CACHE_ENABLED" value="false"/>
   </php>
   <source>
     <include>

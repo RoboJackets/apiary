@@ -6,7 +6,6 @@ namespace Tests\Unit;
 
 use App\Mail\ExpiringPersonalAccessToken;
 use App\Models\User;
-use Illuminate\Support\Facades\Config;
 use Laravel\Passport\ClientRepository;
 use Tests\TestCase;
 
@@ -18,10 +17,7 @@ final class ExpiringPersonalAccessTokenEmailTest extends TestCase
 
         $clientRepository = new ClientRepository();
 
-        $client = $clientRepository->createPersonalAccessClient(null, 'test', 'http://localhost');
-
-        Config::set('passport.personal_access_client.id', $client->id);
-        Config::set('passport.personal_access_client.secret', $client->plain_secret);
+        $clientRepository->createPersonalAccessGrantClient('test');
     }
 
     public function test_generate_email_for_already_expired_token(): void

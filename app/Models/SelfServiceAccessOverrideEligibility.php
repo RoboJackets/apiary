@@ -153,9 +153,7 @@ class SelfServiceAccessOverrideEligibility
      */
     private function removeFalsyAssocArrayValues(array $arr): array
     {
-        $falsy_vals = array_map(static fn ($k, $v) => ! $v ? $k : null, array_keys($arr), array_values($arr));
-
-        return array_filter($falsy_vals, static fn (bool $value): bool => $value);
+        return array_filter($arr, static fn (bool $value, string $key): bool => ! $value, ARRAY_FILTER_USE_BOTH);
     }
 
     /**
@@ -166,7 +164,7 @@ class SelfServiceAccessOverrideEligibility
      */
     public function getRemainingTasks(): array
     {
-        $remainingTasks = $this->removeFalsyAssocArrayValues($this->required_tasks);
+        $remainingTasks = array_keys($this->removeFalsyAssocArrayValues($this->required_tasks));
         if (count($remainingTasks) === 0) {
             return ['None'];
         }
@@ -182,7 +180,7 @@ class SelfServiceAccessOverrideEligibility
      */
     public function getUnmetConditions(): array
     {
-        $remainingConditions = $this->removeFalsyAssocArrayValues($this->required_conditions);
+        $remainingConditions = array_keys($this->removeFalsyAssocArrayValues($this->required_conditions));
         if (count($remainingConditions) === 0) {
             return ['None'];
         }

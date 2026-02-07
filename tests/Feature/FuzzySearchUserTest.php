@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use Illuminate\Testing\Fluent\AssertableJson;
+use Laravel\Passport\ClientRepository;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 final class FuzzySearchUserTest extends TestCase
@@ -13,7 +15,13 @@ final class FuzzySearchUserTest extends TestCase
     {
         $user = $this->getTestUser(['admin']);
 
-        $response = $this->actingAs($user, 'api')
+        $clientRepository = new ClientRepository();
+        $client = $clientRepository->createClientCredentialsGrantClient(name: 'test');
+        $client->givePermissionTo('read-users');
+
+        Passport::actingAsClient($client);
+
+        $response = $this->withToken('test')
             ->postJson('/api/v1/users/fuzzySearch', ['query' => $user->first_name]);
 
         $response->assertStatus(200);
@@ -29,9 +37,13 @@ final class FuzzySearchUserTest extends TestCase
 
     public function test_fuzzy_search_returns_empty_for_no_match(): void
     {
-        $user = $this->getTestUser(['admin']);
+        $clientRepository = new ClientRepository();
+        $client = $clientRepository->createClientCredentialsGrantClient(name: 'test');
+        $client->givePermissionTo('read-users');
 
-        $response = $this->actingAs($user, 'api')
+        Passport::actingAsClient($client);
+
+        $response = $this->withToken('test')
             ->postJson('/api/v1/users/fuzzySearch', ['query' => 'zzzznonexistentuserzzz']);
 
         $response->assertStatus(200);
@@ -43,9 +55,13 @@ final class FuzzySearchUserTest extends TestCase
 
     public function test_fuzzy_search_fails_validation_when_query_missing(): void
     {
-        $user = $this->getTestUser(['admin']);
+        $clientRepository = new ClientRepository();
+        $client = $clientRepository->createClientCredentialsGrantClient(name: 'test');
+        $client->givePermissionTo('read-users');
 
-        $response = $this->actingAs($user, 'api')
+        Passport::actingAsClient($client);
+
+        $response = $this->withToken('test')
             ->postJson('/api/v1/users/fuzzySearch', []);
 
         $response->assertStatus(422);
@@ -61,9 +77,12 @@ final class FuzzySearchUserTest extends TestCase
 
     public function test_fuzzy_search_requires_read_users_permission(): void
     {
-        $user = $this->getTestUser(['non-member']);
+        $clientRepository = new ClientRepository();
+        $client = $clientRepository->createClientCredentialsGrantClient(name: 'test-no-perms');
 
-        $response = $this->actingAs($user, 'api')
+        Passport::actingAsClient($client);
+
+        $response = $this->withToken('test')
             ->postJson('/api/v1/users/fuzzySearch', ['query' => 'test']);
 
         $response->assertStatus(403);

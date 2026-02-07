@@ -60,12 +60,12 @@ class PaymentTest extends TestCase
 
             if ($isDuesTransactionPayable) {
                 $base->where('dues_transaction.package.name', $expectedPayableName)
-                    ->where('dues_transaction.user_id', $user->id);
+                    ->where('dues_transaction.user_id', (int) $user->id);
             }
 
             if ($isTravelAssignmentPayable) {
                 $base->where('travel_assignment.travel.name', $expectedPayableName)
-                    ->where('travel_assignment.user_id', $user->id);
+                    ->where('travel_assignment.user_id', (int) $user->id);
             }
 
             if ($expectPrivilegedRecordedByUserInfo) {

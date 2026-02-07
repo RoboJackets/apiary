@@ -82,7 +82,7 @@ class RemoteAttendanceLink extends Model
      * @phan-suppress PhanReadOnlyPublicProperty
      */
     public static string $redirectRegex = '/^(https?:\/\/)?(meet\.google\.com\/[-a-z]+|teams\.microsoft\.com\/l\/'
-        .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+|gatech\.zoom\.us\/j\/[0-9]+|forms\.gle\/[a-zA-Z0-9])(\?[^@]*)?$/';
+        .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+|gatech\.zoom\.us\/j\/[0-9]+|forms\.gle\/[a-zA-Z0-9]+)(\?[^@]*)?$/';
 
     /**
      * Get the attributes that should be cast.
