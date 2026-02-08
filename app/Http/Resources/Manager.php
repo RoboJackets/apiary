@@ -20,6 +20,9 @@ class Manager extends JsonResource
         return [
             'id' => $this->id,
             'full_name' => $this->full_name,
+            'uid' => $this->uid,
+            'gtPersonDirectoryId' => $this->gtDirGUID,
+            'is_service_account' => $this->is_service_account,
         ];
     }
 }

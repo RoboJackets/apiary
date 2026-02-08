@@ -24,12 +24,15 @@ class Attendance extends JsonResource
             'id' => $this->id,
             'attendable_type' => $this->attendable_type,
             'attendable_id' => $this->attendable_id,
+            'attendable' => $this->attendable_type === \App\Models\Team::getMorphClassStatic() ?
+                    new Team($this->whenLoaded('attendable')) :
+                    new Event($this->whenLoaded('attendable')),
             'gtid' => $this->when(
                 UserOrClient::can('read-users-gtid'),
                 $this->gtid
             ),
             'source' => $this->source,
-            'recorded_by' => $this->recorded_by,
+            'recorded_by' => new Manager($this->whenLoaded('recorded')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,

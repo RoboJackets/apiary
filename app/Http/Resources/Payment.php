@@ -7,9 +7,9 @@ namespace App\Http\Resources;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Http\Resources\TravelAssignment as TravelAssignmentResource;
 use App\Http\Resources\User as UserResource;
+use App\Util\UserOrClient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
 
 class Payment extends JsonResource
 {
@@ -45,7 +45,7 @@ class Payment extends JsonResource
             'deleted_at' => $this->deleted_at,
 
             // relationships
-            'recorded_by_user' => Auth::user()->can('read-users') ?
+            'recorded_by_user' => UserOrClient::can('read-users') ?
                 new UserResource($this->whenLoaded('recordedBy')) :
                 $this->when($this->recordedBy, [
                     'name' => $this->recordedBy?->name,

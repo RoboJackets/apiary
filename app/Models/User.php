@@ -387,6 +387,8 @@ class User extends Authenticatable
         'assignments.travel' => 'manage-travel',
         'merchandise.merchandise' => 'read-merchandise',
         'merchandise.providedBy' => 'read-users',
+        'attendance.recorded' => 'read-attendance',
+        'attendance.attendable' => 'read-attendance',
     ];
 
     /**
@@ -1260,7 +1262,7 @@ class User extends Authenticatable
     {
         return ActionEvent::query()
             ->with('user', 'actionable', 'target')
-            ->whereNotIn('actionable_type', ['App\NotificationTemplate', 'App\AttendanceExport'])
+            ->whereNotIn('actionable_type', ['App\NotificationTemplate', 'App\AttendanceExport', 'App\RecruitingVisit'])
             ->where(function (Builder $query): void {
                 $query
                     ->where('user_id', $this->id)
