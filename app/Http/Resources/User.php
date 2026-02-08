@@ -21,7 +21,8 @@ class User extends JsonResource
 {
     public function __construct(
         \App\Models\User|MissingValue|null $resource,
-        private readonly bool $withManager = false
+        private readonly bool $withManager = false,
+        private readonly bool $withActions = false
     ) {
         parent::__construct($resource);
     }
@@ -122,6 +123,9 @@ class User extends JsonResource
                 'legal_gender' => $this->legal_gender,
                 'date_of_birth' => $this->date_of_birth?->format('Y-m-d'),
                 'delta_skymiles_number' => $this->delta_skymiles_number,
+            ]),
+            $this->mergeWhen(UserOrClient::can('read-users') && $this->withActions, [
+                'actions' => ActionEvent::collection($this->allActions()->get()),
             ]),
         ];
     }

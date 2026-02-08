@@ -1255,4 +1255,27 @@ class User extends Authenticatable
     {
         return $this->is_service_account ? 600 : 60;
     }
+
+    public function allActions(): Builder
+    {
+        return ActionEvent::query()
+            ->with('user', 'actionable', 'target')
+            ->whereNotIn('actionable_type', ['App\NotificationTemplate', 'App\AttendanceExport'])
+            ->where(function (Builder $query): void {
+                $query
+                    ->where('user_id', $this->id)
+                    ->orWhere(function (Builder $query): void {
+                        $query->where('actionable_type', $this->getMorphClass())
+                            ->where('actionable_id', $this->id);
+                    })
+                    ->orWhere(function (Builder $query): void {
+                        $query->where('target_type', $this->getMorphClass())
+                            ->where('target_id', $this->id);
+                    })
+                    ->orWhere(function (Builder $query): void {
+                        $query->where('model_type', $this->getMorphClass())
+                            ->where('model_id', $this->id);
+                    });
+            });
+    }
 }

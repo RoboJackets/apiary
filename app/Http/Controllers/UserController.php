@@ -183,7 +183,12 @@ class UserController implements HasMiddleware
                 ], 403);
             }
 
-            return response()->json(['status' => 'success', 'user' => new UserResource($user, true)]);
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'user' => new UserResource($user, true, str_contains($request->input('include') ?? '', 'actions')),
+                ]
+            );
         }
 
         return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
