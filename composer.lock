@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fea0e7f9dff76e136f6f0e155e712f5a",
+    "content-hash": "c47e863e111dbb7aadf5112720ceaf45",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8409,16 +8409,16 @@
         },
         {
             "name": "spatie/laravel-one-time-passwords",
-            "version": "1.0.9",
+            "version": "1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-one-time-passwords.git",
-                "reference": "bac02f5bcf38da3df4892163c9eca4029f802192"
+                "reference": "8d94e33d2e34c56381deacb2ca9a3d290120dcd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/bac02f5bcf38da3df4892163c9eca4029f802192",
-                "reference": "bac02f5bcf38da3df4892163c9eca4029f802192",
+                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/8d94e33d2e34c56381deacb2ca9a3d290120dcd9",
+                "reference": "8d94e33d2e34c56381deacb2ca9a3d290120dcd9",
                 "shasum": ""
             },
             "require": {
@@ -8428,7 +8428,7 @@
             },
             "require-dev": {
                 "laravel/pint": "^1.25.1",
-                "livewire/livewire": "^3.7",
+                "livewire/livewire": "^3.7|^4.0",
                 "nunomaduro/collision": "^8.8.3",
                 "orchestra/testbench": "^10.0.0",
                 "pestphp/pest": "^3.0|^4.1.5",
@@ -8473,7 +8473,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-one-time-passwords/issues",
-                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.9"
+                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.10"
             },
             "funding": [
                 {
@@ -8481,7 +8481,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-01T08:21:18+00:00"
+            "time": "2026-02-09T15:17:17+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
