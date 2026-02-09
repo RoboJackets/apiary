@@ -53,22 +53,4 @@ class ActionEvent extends BaseActionEvent
                     ->all()
             )->when(true, static fn ($query) => $query->hasMacro('withTrashed') ? $queryWithTrashed($query) : $query);
     }
-
-    /**
-     * Get the model of the action.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function model()
-    {
-        $queryWithTrashed = static fn ($query) => $query->withTrashed();
-
-        return $this->morphTo('model', 'model_type', 'model_id')
-            ->constrain(
-                collect(Nova::$resources)
-                    ->filter(static fn ($resource) => $resource::softDeletes())
-                    ->mapWithKeys(static fn ($resource) => [$resource::$model => $queryWithTrashed])
-                    ->all()
-            )->when(true, static fn ($query) => $query->hasMacro('withTrashed') ? $queryWithTrashed($query) : $query);
-    }
 }
