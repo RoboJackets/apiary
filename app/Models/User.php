@@ -1265,7 +1265,6 @@ class User extends Authenticatable
             ->whereNotIn('actionable_type', ['App\NotificationTemplate', 'App\AttendanceExport', 'App\RecruitingVisit'])
             ->where(function (Builder $query): void {
                 $query
-                    ->where('user_id', $this->id)
                     ->orWhere(function (Builder $query): void {
                         $query->where('actionable_type', $this->getMorphClass())
                             ->where('actionable_id', $this->id);
