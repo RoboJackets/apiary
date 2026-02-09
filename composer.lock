@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c47e863e111dbb7aadf5112720ceaf45",
+    "content-hash": "04878d43314006ea43a5cbe67af84675",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8790,16 +8790,16 @@
         },
         {
             "name": "square/square",
-            "version": "43.2.0.20251016",
+            "version": "44.0.0.20260122",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "b5ec427123861b00bcb20044516d149c1b9f2a26"
+                "reference": "4e578e805fc7953b52f86913910653b393b25a04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/b5ec427123861b00bcb20044516d149c1b9f2a26",
-                "reference": "b5ec427123861b00bcb20044516d149c1b9f2a26",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/4e578e805fc7953b52f86913910653b393b25a04",
+                "reference": "4e578e805fc7953b52f86913910653b393b25a04",
                 "shasum": ""
             },
             "require": {
@@ -8834,9 +8834,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/43.2.0.20251016"
+                "source": "https://github.com/square/square-php-sdk/tree/44.0.0.20260122"
             },
-            "time": "2025-10-16T16:17:20+00:00"
+            "time": "2026-01-22T21:31:59+00:00"
         },
         {
             "name": "subfission/cas",
