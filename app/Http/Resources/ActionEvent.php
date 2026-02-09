@@ -59,6 +59,9 @@ class ActionEvent extends JsonResource
             \App\Models\MembershipAgreementTemplate::class => [
                 $relationshipType => $this->{$relationshipType},
             ],
+            \Laravel\Passport\Client::class => [
+                $relationshipType => $this->{$relationshipType},
+            ],
             \App\Models\OAuth2Client::class => [
                 $relationshipType => $this->{$relationshipType},
             ],
