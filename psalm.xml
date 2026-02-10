@@ -88,12 +88,6 @@
                 <directory name="app" />
             </errorLevel>
         </InvalidTemplateParam>
-        <PossiblyInvalidMethodCall>
-            <errorLevel type="suppress">
-                <directory name="app" />
-                <directory name="routes" />
-            </errorLevel>
-        </PossiblyInvalidMethodCall>
         <PossiblyUndefinedMethod>
             <errorLevel type="suppress">
                 <directory name="app" />
@@ -133,6 +127,7 @@
         <PropertyTypeCoercion>
             <errorLevel type="suppress">
                 <directory name="app" />
+                <directory name="routes"/>
             </errorLevel>
         </PropertyTypeCoercion>
         <InvalidPropertyAssignmentValue>
