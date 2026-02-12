@@ -75,7 +75,7 @@
         "beyondcode/laravel-dump-server": "2.1.0",
         "danog/advanced-json-rpc": "3.2.2",
         "laravel/boost": "1.8.10",
-        "laravel/pail": "1.2.5",
+        "laravel/pail": "1.2.6",
         "laravel/pint": "1.27.0",
         "mockery/mockery": "1.6.12",
         "mxl/laravel-job": "1.7.0",
