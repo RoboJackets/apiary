@@ -18,6 +18,11 @@ variable "web_shutdown_delay" {
   description = "How long to delay shutting down the web task after the allocation is stopped"
 }
 
+variable "priority" {
+  type = number
+  description = "The priority for this job"
+}
+
 locals {
   # compressed in this context refers to the config string itself, not the assets
   compressed_nginx_configuration = trimspace(
@@ -73,6 +78,8 @@ job "apiary" {
   datacenters = ["bcdc"]
 
   type = "service"
+
+  priority = var.priority
 
   group "apiary" {
     network {
