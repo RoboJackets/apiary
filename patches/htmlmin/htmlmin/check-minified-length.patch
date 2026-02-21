@@ -1,0 +1,16 @@
+diff --git a/src/Http/Middleware/MinifyMiddleware.php b/src/Http/Middleware/MinifyMiddleware.php
+index 3f03bb0..c83429b 100644
+--- a/src/Http/Middleware/MinifyMiddleware.php
++++ b/src/Http/Middleware/MinifyMiddleware.php
+@@ -57,7 +57,10 @@ class MinifyMiddleware
+         if ($this->isAResponseObject($response) && $this->isAnHtmlResponse($response)) {
+             $output = $response->getContent();
+             $minified = $this->html->render($output);
+-            $response->setContent($minified);
++
++            if (strlen($minified) > 0) {
++                $response->setContent($minified);
++            }
+         }
+ 
+         return $response;

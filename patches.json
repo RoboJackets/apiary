@@ -11,6 +11,12 @@
                 "description": "Don't insert extra newlines in HTML",
                 "url": "patches/mrclay/minify/newlines.patch"
             }
+        ],
+        "htmlmin/htmlmin": [
+            {
+                "description": "Check length of minified HTML before returning",
+                "url": "patches/htmlmin/htmlmin/check-minified-length.patch"
+            }
         ]
     }
 }

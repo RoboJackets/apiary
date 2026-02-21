@@ -1,5 +1,5 @@
 {
-    "_hash": "de237fa4841305dd51842c533fd92d2291caf0bd45f32b4fd65afa2bdbfeadef",
+    "_hash": "a55cd8201f99b7b3e72ed8ab2167d1aba488761941a1fac3cd7ad48ae9d5b38f",
     "patches": {
         "xammie/mailbook": [
             {
@@ -19,6 +19,18 @@
                 "description": "Don't insert extra newlines in HTML",
                 "url": "patches/mrclay/minify/newlines.patch",
                 "sha256": "71cfda1ade40aff482476b09956ec4b9e22890e026e56841f6a01fa06f0cfd4e",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            }
+        ],
+        "htmlmin/htmlmin": [
+            {
+                "package": "htmlmin/htmlmin",
+                "description": "Check length of minified HTML before returning",
+                "url": "patches/htmlmin/htmlmin/check-minified-length.patch",
+                "sha256": "0a26e3c720870828ccc133f134c3117e4079c4a5c1236ab8107b6a0d2af656af",
                 "depth": 1,
                 "extra": {
                     "provenance": "patches-file:patches.json"
