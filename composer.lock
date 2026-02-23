@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a95e2c2d55b51f3d5f0508775b26745",
+    "content-hash": "2ee52a8e00ad917be9065ac44bebe973",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8335,27 +8335,27 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "4.3.5",
+            "version": "4.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "618718aa094015bf07b4825785f31ca24005e921"
+                "reference": "8a3ff6192e2332f2a4f8d3bcbbd27c19df55828d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/618718aa094015bf07b4825785f31ca24005e921",
-                "reference": "618718aa094015bf07b4825785f31ca24005e921",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/8a3ff6192e2332f2a4f8d3bcbbd27c19df55828d",
+                "reference": "8a3ff6192e2332f2a4f8d3bcbbd27c19df55828d",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+                "laravel/framework": "^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "php": "^8.0",
                 "spatie/laravel-package-tools": "^1.6"
             },
             "require-dev": {
                 "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
-                "pestphp/pest": "^1.22|^2.34|^3.7"
+                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "pestphp/pest": "^1.22|^2.34|^3.7|^4.0"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "Allows notifications to be sent to Slack",
@@ -8398,7 +8398,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.3.5"
+                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.3.6"
             },
             "funding": [
                 {
@@ -8406,7 +8406,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-05T16:29:18+00:00"
+            "time": "2026-02-21T21:16:57+00:00"
         },
         {
             "name": "spatie/laravel-one-time-passwords",
