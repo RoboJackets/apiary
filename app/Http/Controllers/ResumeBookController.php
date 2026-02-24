@@ -28,7 +28,7 @@ class ResumeBookController extends Controller
         }
         $ids = array_values(array_unique($ids));
 
-        $users = User::whereIn('uid', $ids)->get();
+        $users = User::whereIn('uid', $ids)->get(['id', 'name', 'major', 'graduation_year'])->toArray();
 
         return view('sponsors.resume-book', ['users' => $users]);
     }
