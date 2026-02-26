@@ -177,6 +177,11 @@
         },
         "platform": {
             "php": "8.5.1"
+        },
+        "audit": {
+            "ignore": {
+                "CVE-2025-45769": "disputed"
+            }
         }
     },
     "extra": {
