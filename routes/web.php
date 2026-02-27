@@ -12,6 +12,7 @@ use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\RemoteAttendanceController;
+use App\Http\Controllers\ResumeBookController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
 use App\Http\Controllers\SponsorLoginController;

@@ -6,6 +6,6 @@ Resume Book | {{ config('app.name') }}
 
 @section('content')
 
-<resume-book-index :users="{{ $users }}"></resume-book-index>
+<resume-book-index :users="{{ json_encode($users) }}"></resume-book-index>
 
 @endsection
