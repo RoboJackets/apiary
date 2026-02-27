@@ -12,7 +12,7 @@
           <th class="d-none">User ID</th>
           <th>Name</th>
           <th>Major</th>
-          <th>Graduation Year</th>
+          <th>Graduation Semester</th>
         </tr>
       </thead>
       <tbody>
@@ -20,7 +20,7 @@
           <td class="d-none">{{ user.id }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.major }}</td>
-          <td>{{ user.graduation_year }}</td>
+          <td>{{ user.graduation_semester }}</td>
         </tr>
       </tbody>
     </table>
@@ -32,7 +32,7 @@ export default {
   name: 'ResumeBookIndex',
   props: {
     // Expect an array of user objects to be passed in when the page loads.
-    // Each user object can contain: name, uid, major, graduation_year
+    // Each user object can contain: name, uid, major, graduation_semester
     users: {
       type: Array,
       default: () => []
