@@ -30,12 +30,32 @@
 <script>
 export default {
   name: 'ResumeBookIndex',
-  props: {
-    // Expect an array of user objects to be passed in when the page loads.
-    // Each user object can contain: name, uid, major, graduation_semester
-    users: {
-      type: Array,
-      default: () => []
+  data() {
+    return {
+      users: [],
+      loading: true,
+      error: null
+    }
+  },
+  mounted() {
+    this.fetchUsers();
+  },
+  methods: {
+    async fetchUsers() {
+      try {
+        this.loading = true;
+        const response = await fetch('/sponsors/list');
+        if (!response.ok) {
+          this.users = [];
+          throw new Error(response.statusText);
+        }
+        this.users = await response.json();
+      } catch (err) {
+        this.error = err.message;
+        console.error('Error fetching users:', err);
+      } finally {
+        this.loading = false;
+      }
     }
   }
 }
