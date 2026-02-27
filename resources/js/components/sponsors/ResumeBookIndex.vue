@@ -2,11 +2,11 @@
   <div class="container">
     <h1>Resume Book</h1>
 
-    <!-- <div v-if="!users || users.length === 0" class="empty">
+    <div v-if="!users || users.length === 0" class="empty">
       No resumes found.
-    </div> -->
+    </div>
 
-    <!-- <table v-else class="table table-striped table-hover">
+    <table v-else class="table table-striped table-hover">
       <thead>
         <tr>
           <th class="d-none">User ID</th>
@@ -23,7 +23,7 @@
           <td>{{ user.graduation_semester }}</td>
         </tr>
       </tbody>
-    </table> -->
+    </table>
   </div>
 </template>
 

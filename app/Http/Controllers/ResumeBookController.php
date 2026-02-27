@@ -17,7 +17,7 @@ class ResumeBookController extends Controller
     public function index()
     {
         // Should be replaced with DB calls when Resume model created.
-        /*$files = Storage::disk('local')->files('resumes');
+        $files = Storage::disk('local')->files('resumes');
         $ids = [];
         foreach ($files as $file) {
             $filename = basename($file);
@@ -28,9 +28,9 @@ class ResumeBookController extends Controller
         }
         $ids = array_values(array_unique($ids));
 
-        $users = User::whereIn('uid', $ids)->get(['id', 'name', 'major', 'graduation_semester'])->toArray();*/
+        $users = User::whereIn('uid', $ids)->get(['id', 'name', 'major', 'graduation_semester'])->toArray();
 
-        return view('sponsors.resume-book', ['users' => [] /*$users*/]);
+        return view('sponsors.resume-book', ['users' => $users]);
     } // Currently producing unterminated string error. TODO: Find cause
 
     //Unfinished
