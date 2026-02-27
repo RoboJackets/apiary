@@ -21,7 +21,7 @@ class ResumeBookController
             ->map(fn ($path) => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
 
-        $users = User::whereIn('uid', $usernames)->get(['id', 'first_name', 'graduation_semester'])->toArray();
+        $users = User::whereIn('uid', $usernames)->get()->toArray();
 
         return view('sponsors.resume-book', ['users' => $users]);
     } // Currently producing unterminated string error. TODO: Find cause
