@@ -23,7 +23,7 @@ class ResumeBookController
 
         $users = User::whereIn('uid', $usernames)->get()->toArray();
 
-        return view('sponsors.resume-book', ['users' => $users]);
+        return view('sponsors.home', ['users' => $users]);
     } // Currently producing unterminated string error. TODO: Find cause
 
     //Unfinished
