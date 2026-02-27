@@ -30,14 +30,14 @@
 <script>
 export default {
   name: 'ResumeBookIndex',
-  /*props: {
+  props: {
     // Expect an array of user objects to be passed in when the page loads.
     // Each user object can contain: name, uid, major, graduation_semester
     users: {
       type: Array,
       default: () => []
     }
-  }*/
+  }
 }
 </script>
 
