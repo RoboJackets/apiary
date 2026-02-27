@@ -11,7 +11,7 @@
         <tr>
           <th class="d-none">User ID</th>
           <th>Name</th>
-          <th>Major</th>
+          <!-- <th>Major</th> -->
           <th>Graduation Semester</th>
         </tr>
       </thead>
@@ -19,7 +19,7 @@
         <tr v-for="user in users" :key="user.id">
           <td class="d-none">{{ user.id }}</td>
           <td>{{ user.first_name }}</td>
-          <td>{{ user.major }}</td>
+          <!-- <td>{{ user.major }}</td> -->
           <td>{{ user.graduation_semester }}</td>
         </tr>
       </tbody>
