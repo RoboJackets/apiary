@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
-class ResumeBookController extends Controller
+class ResumeBookController
 {
     /**
      * Displays resume book index page, which serves as the home page of the resume book.
