@@ -16,18 +16,15 @@ class ResumeBookController
      */
     public function index()
     {
-        return view('sponsors.resume-book');
-    }
-
-    public function list() {
         // Should be replaced with DB calls when Resume model created.
         $usernames = collect(Storage::disk('local')->files('resumes'))
             ->map(fn ($path) => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
 
-        $users = User::whereIn('uid', $usernames)->get(['id', 'name', 'major', 'graduation_semester'])->toArray();
-        return response()->json($users);
-    }
+        $users = User::whereIn('uid', $usernames)->get(['id', 'first_name', 'major', 'graduation_semester'])->toArray();
+
+        return view('sponsors.resume-book', ['users' => $users]);
+    } // Currently producing unterminated string error. TODO: Find cause
 
     //Unfinished
     // TODO: fix response

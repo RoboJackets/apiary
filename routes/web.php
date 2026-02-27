@@ -132,7 +132,6 @@ Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
 
 Route::prefix('sponsor')->name('sponsor.')->group(static function (): void {
     Route::get('/', [ResumeBookController::class, 'index'])->name('home')->middleware('auth.sponsor');
-    Route::get('/list', [ResumeBookController::class, 'list'])->name('resumes.list')->middleware('auth.sponsor');
     Route::get('/login', [SponsorLoginController::class, 'showLoginForm'])->name('login');
     Route::post('/validate-email', [SponsorLoginController::class, 'validateEmail'])->name('validate-email');
     Route::post('/verify-otp', [SponsorLoginController::class, 'verifyOneTimePassword'])->name('verify-otp');
