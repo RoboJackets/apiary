@@ -2,11 +2,11 @@
   <div class="container">
     <h1>Resume Book</h1>
 
-    <div v-if="!users || users.length === 0" class="empty">
+    <!-- <div v-if="!users || users.length === 0" class="empty">
       No resumes found.
-    </div>
+    </div> -->
 
-    <table v-else class="table table-striped table-hover">
+    <!-- <table v-else class="table table-striped table-hover">
       <thead>
         <tr>
           <th class="d-none">User ID</th>
@@ -23,21 +23,21 @@
           <td>{{ user.graduation_semester }}</td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
   </div>
 </template>
 
 <script>
 export default {
   name: 'ResumeBookIndex',
-  props: {
+  /*props: {
     // Expect an array of user objects to be passed in when the page loads.
     // Each user object can contain: name, uid, major, graduation_semester
     users: {
       type: Array,
       default: () => []
     }
-  }
+  }*/
 }
 </script>
 
