@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0fac7f29eb7f29eebcce005c16bc8394",
+    "content-hash": "0dc739983adb6e2d1c0a5f6d45202c5e",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8474,20 +8474,20 @@
         },
         {
             "name": "spatie/laravel-one-time-passwords",
-            "version": "1.0.10",
+            "version": "1.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-one-time-passwords.git",
-                "reference": "8d94e33d2e34c56381deacb2ca9a3d290120dcd9"
+                "reference": "5e31f2ff5c247a31d918fa21f371c6c9a810705e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/8d94e33d2e34c56381deacb2ca9a3d290120dcd9",
-                "reference": "8d94e33d2e34c56381deacb2ca9a3d290120dcd9",
+                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/5e31f2ff5c247a31d918fa21f371c6c9a810705e",
+                "reference": "5e31f2ff5c247a31d918fa21f371c6c9a810705e",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^12.0",
+                "illuminate/contracts": "^12.0|^13.0",
                 "php": "^8.4",
                 "spatie/laravel-package-tools": "^1.92.7"
             },
@@ -8495,7 +8495,7 @@
                 "laravel/pint": "^1.25.1",
                 "livewire/livewire": "^3.7|^4.0",
                 "nunomaduro/collision": "^8.8.3",
-                "orchestra/testbench": "^10.0.0",
+                "orchestra/testbench": "^10.0.0|^11.0",
                 "pestphp/pest": "^3.0|^4.1.5",
                 "pestphp/pest-plugin-laravel": "^3.0|^4.0",
                 "phpstan/phpstan": "^2.1.32",
@@ -8538,7 +8538,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-one-time-passwords/issues",
-                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.10"
+                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.11"
             },
             "funding": [
                 {
@@ -8546,7 +8546,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-09T15:17:17+00:00"
+            "time": "2026-02-27T14:56:19+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -8777,28 +8777,28 @@
         },
         {
             "name": "spatie/laravel-webhook-client",
-            "version": "3.4.5",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-webhook-client.git",
-                "reference": "83e50b9797ad9fbbf290d79cf71ee3e5e6a076f3"
+                "reference": "b282e08fc625fab6e685b14f45c192926ce648cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/83e50b9797ad9fbbf290d79cf71ee3e5e6a076f3",
-                "reference": "83e50b9797ad9fbbf290d79cf71ee3e5e6a076f3",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/b282e08fc625fab6e685b14f45c192926ce648cf",
+                "reference": "b282e08fc625fab6e685b14f45c192926ce648cf",
                 "shasum": ""
             },
             "require": {
-                "illuminate/bus": "^9.0 || ^10.0 || ^11.0 || ^12.0",
-                "illuminate/database": "^9.0 || ^10.0 || ^11.0 || ^12.0",
-                "illuminate/http": "^9.0 || ^10.0 || ^11.0 || ^12.0",
-                "illuminate/support": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "illuminate/bus": "^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
+                "illuminate/database": "^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
+                "illuminate/http": "^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
+                "illuminate/support": "^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
                 "php": "^8.1 || ^8.2",
                 "spatie/laravel-package-tools": "^1.11"
             },
             "require-dev": {
-                "orchestra/testbench": "^7.0 || ^8.0 || ^9.0 || ^10.0",
+                "orchestra/testbench": "^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
                 "pestphp/pest": "^3.8 || ^4.0",
                 "pestphp/pest-plugin-laravel": "^3.2 || ^4.0",
                 "phpstan/extension-installer": "^1.4.3",
@@ -8843,7 +8843,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-webhook-client/issues",
-                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.4.5"
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.5.0"
             },
             "funding": [
                 {
@@ -8851,7 +8851,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-11-27T09:35:16+00:00"
+            "time": "2026-02-21T14:39:13+00:00"
         },
         {
             "name": "square/square",
