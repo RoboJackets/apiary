@@ -24,6 +24,7 @@
         </tr>
       </tbody>
     </table>
+    <major-filter @update-majors="majors => console.log('Selected majors:', majors)"></major-filter>
   </div>
 </template>
 
