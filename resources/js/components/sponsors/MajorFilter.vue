@@ -1,6 +1,6 @@
 <template>
   <div class="major-filter">
-    <h3>Filter by Major</h3>
+    <h3>Majors</h3>
     <div class="checkbox-group">
       <div v-for="major in majors" :key="major.id" class="form-check">
         <input
@@ -65,7 +65,7 @@ export default {
 .checkbox-group {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 </style>
