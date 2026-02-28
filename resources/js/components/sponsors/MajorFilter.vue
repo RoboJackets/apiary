@@ -36,7 +36,10 @@ export default {
     async fetchMajors() {
       try {
         const response = await fetch('/sponsor/majors');
-        this.majors = await response.json();
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        this.majors = await response.json().majors;
       } catch (error) {
         console.error('Error fetching majors:', error);
       }
