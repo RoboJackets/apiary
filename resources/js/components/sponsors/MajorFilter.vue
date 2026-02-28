@@ -39,7 +39,9 @@ export default {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        this.majors = await response.json().majors;
+        const data = await response.json();
+        this.majors = data.majors;
+        console.log(data);
       } catch (error) {
         console.error('Error fetching majors:', error);
       }
