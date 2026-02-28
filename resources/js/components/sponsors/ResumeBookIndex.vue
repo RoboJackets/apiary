@@ -1,10 +1,10 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <h1>Resume Book</h1>
 
     <div class="row">
       <!-- Sidebar -->
-      <div class="col-md-3 col-lg-2 vh-100">
+      <div class="col-auto vh-100 overflow-auto">
         <div class="h-100">
           <major-filter
             @update-majors="majors => console.log('Selected majors:', majors)">
@@ -13,29 +13,31 @@
       </div>
 
       <!-- Main Content -->
-      <div class="col-md-9 col-lg-10">
-        <div v-if="!users || users.length === 0" class="empty">
-          No resumes found.
-        </div>
+      <div class="col-auto overflow-auto">
+        <div class="container-fluid">
+          <div v-if="!users || users.length === 0" class="empty">
+            No resumes found.
+          </div>
 
-        <table v-else class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th class="d-none">User ID</th>
-              <th>Name</th>
-              <!-- <th>Major</th> -->
-              <th>Graduation Semester</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="user in users" :key="user.id">
-              <td class="d-none">{{ user.id }}</td>
-              <td>{{ user.first_name }}</td>
-              <!-- <td>{{ user.major }}</td> -->
-              <td>{{ user.graduation_semester }}</td>
-            </tr>
-          </tbody>
-        </table>
+          <table v-else class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="d-none">User ID</th>
+                <th>Name</th>
+                <!-- <th>Major</th> -->
+                <th>Graduation Semester</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="user in users" :key="user.id">
+                <td class="d-none">{{ user.id }}</td>
+                <td>{{ user.first_name }}</td>
+                <!-- <td>{{ user.major }}</td> -->
+                <td>{{ user.graduation_semester }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

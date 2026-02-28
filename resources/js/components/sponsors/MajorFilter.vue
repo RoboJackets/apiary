@@ -1,5 +1,5 @@
 <template>
-  <div class="major-filter">
+  <div class="container">
     <h3>Majors</h3>
     <div class="checkbox-group">
       <div v-for="major in majors" :key="major.id" class="form-check">
@@ -51,21 +51,11 @@ export default {
 </script>
 
 <style scoped>
-.major-filter {
-  margin-bottom: 1.5rem;
-}
-
-.major-filter h3 {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #212529;
-}
 
 .checkbox-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 </style>
