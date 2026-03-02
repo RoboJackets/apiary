@@ -1,25 +1,23 @@
 <template>
-  <div class="container-fluid">
-    <h1>Resume Book</h1>
+  <div class="container-fluid flex-grow-1 overflow-hidden d-flex flex-column">
+    <h1 class="flex-shrink-0">Resume Book</h1>
 
-    <div class="row">
+    <div class="row flex-grow-1 overflow-hidden" style="min-height: 0;">
       <!-- Sidebar -->
-      <div class="col-auto vh-100 overflow-auto">
-        <div class="h-100">
+      <div class="col-auto border-end overflow-auto h-100" style="min-height: 0;">
           <major-filter
             @update-majors="majors => console.log('Selected majors:', majors)">
           </major-filter>
-        </div>
       </div>
 
       <!-- Main Content -->
-      <div class="col-auto overflow-auto">
+      <div class="col overflow-auto h-100">
         <div class="d-flex flex-column gap-3">
           <div v-if="!users || users.length === 0" class="empty">
             No resumes found.
           </div>
-
-          <table v-else class="table table-striped table-hover">
+          <div v-else class="table-responsive">
+          <table class="table table-striped table-hover">
             <thead>
               <tr>
                 <th class="d-none">User ID</th>
@@ -37,6 +35,7 @@
               </tr>
             </tbody>
           </table>
+        </div>
         </div>
       </div>
     </div>
@@ -71,7 +70,47 @@ export default {
         { id: 17, first_name: 'Quinn', graduation_semester: 'Spring 2026' },
         { id: 18, first_name: 'Rachel', graduation_semester: 'Spring 2025' },
         { id: 19, first_name: 'Sam', graduation_semester: 'Fall 2024' },
-        { id: 20, first_name: 'Tina', graduation_semester: 'Fall 2025' }
+        { id: 20, first_name: 'Tina', graduation_semester: 'Fall 2025' },
+        { id: 1, first_name: 'Alice', graduation_semester: 'Fall 2024' },
+        { id: 2, first_name: 'Bob', graduation_semester: 'Spring 2025' },
+        { id: 3, first_name: 'Charlie', graduation_semester: 'Fall 2024' },
+        { id: 4, first_name: 'Diana', graduation_semester: 'Spring 2025' },
+        { id: 5, first_name: 'Eve', graduation_semester: 'Fall 2025' },
+        { id: 6, first_name: 'Frank', graduation_semester: 'Spring 2025' },
+        { id: 7, first_name: 'Grace', graduation_semester: 'Fall 2024' },
+        { id: 8, first_name: 'Henry', graduation_semester: 'Spring 2026' },
+        { id: 9, first_name: 'Iris', graduation_semester: 'Fall 2025' },
+        { id: 10, first_name: 'Jack', graduation_semester: 'Spring 2025' },
+        { id: 11, first_name: 'Kate', graduation_semester: 'Fall 2024' },
+        { id: 12, first_name: 'Leo', graduation_semester: 'Fall 2025' },
+        { id: 13, first_name: 'Mia', graduation_semester: 'Spring 2026' },
+        { id: 14, first_name: 'Noah', graduation_semester: 'Spring 2025' },
+        { id: 15, first_name: 'Olivia', graduation_semester: 'Fall 2024' },
+        { id: 16, first_name: 'Paul', graduation_semester: 'Fall 2025' },
+        { id: 17, first_name: 'Quinn', graduation_semester: 'Spring 2026' },
+        { id: 18, first_name: 'Rachel', graduation_semester: 'Spring 2025' },
+        { id: 19, first_name: 'Sam', graduation_semester: 'Fall 2024' },
+        { id: 20, first_name: 'Tina', graduation_semester: 'Fall 2025' },
+        { id: 1, first_name: 'Alice', graduation_semester: 'Fall 2024' },
+        { id: 2, first_name: 'Bob', graduation_semester: 'Spring 2025' },
+        { id: 3, first_name: 'Charlie', graduation_semester: 'Fall 2024' },
+        { id: 4, first_name: 'Diana', graduation_semester: 'Spring 2025' },
+        { id: 5, first_name: 'Eve', graduation_semester: 'Fall 2025' },
+        { id: 6, first_name: 'Frank', graduation_semester: 'Spring 2025' },
+        { id: 7, first_name: 'Grace', graduation_semester: 'Fall 2024' },
+        { id: 8, first_name: 'Henry', graduation_semester: 'Spring 2026' },
+        { id: 9, first_name: 'Iris', graduation_semester: 'Fall 2025' },
+        { id: 10, first_name: 'Jack', graduation_semester: 'Spring 2025' },
+        { id: 11, first_name: 'Kate', graduation_semester: 'Fall 2024' },
+        { id: 12, first_name: 'Leo', graduation_semester: 'Fall 2025' },
+        { id: 13, first_name: 'Mia', graduation_semester: 'Spring 2026' },
+        { id: 14, first_name: 'Noah', graduation_semester: 'Spring 2025' },
+        { id: 15, first_name: 'Olivia', graduation_semester: 'Fall 2024' },
+        { id: 16, first_name: 'Paul', graduation_semester: 'Fall 2025' },
+        { id: 17, first_name: 'Quinn', graduation_semester: 'Spring 2026' },
+        { id: 18, first_name: 'Rachel', graduation_semester: 'Spring 2025' },
+        { id: 19, first_name: 'Sam', graduation_semester: 'Fall 2024' },
+        { id: 20, first_name: 'Tina', graduation_semester: 'Fall 2025' },
       ]
     }
   }
