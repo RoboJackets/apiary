@@ -206,7 +206,7 @@ export default {
         if (!response.ok) {
             throw new Error(`Failed to load PDF.`)
         }
-        url = URL.createObjectURL(response.data);
+        url = response.data;
       } catch (error) {
         console.log(`Error retrieving PDF to view: ${error}`);
       } finally {
