@@ -21,6 +21,7 @@ class ResumeBookController
             ->map(fn ($path) => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
 
+        
         $users = User::whereIn('uid', $usernames)
             ->with('majors')
             ->get()
