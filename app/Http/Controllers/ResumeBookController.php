@@ -21,7 +21,7 @@ class ResumeBookController
             ->map(fn ($path) => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
 
-        
+
         $users = User::whereIn('uid', $usernames)
             ->with('majors')
             ->get()
@@ -46,7 +46,7 @@ class ResumeBookController
     public function show(string $uid)
     {
         try {
-            return response()->file(Storage::disk('local')->path('resumes/'.$id.'.pdf'));
+            return response()->file(Storage::disk('local')->path('resumes/'.$uid.'.pdf'));
         } catch (FileNotFoundException $e) {
             return response()->json(
                 [
