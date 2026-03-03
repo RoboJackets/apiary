@@ -202,7 +202,7 @@ export default {
       var url = '';
       const uid = user.uid;
       try {
-        const response = await fetch(`/sponsor/resumes/${user}`);
+        const response = await fetch(`/sponsor/resumes/${uid}`);
         if (!response.ok) {
             throw new Error(`Failed to load PDF.`)
         }
