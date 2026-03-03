@@ -134,9 +134,24 @@ jobs:
     outputs:
       image-digest: ${{ steps.build.outputs.digest }}
 
-  deploy-test:
+  deploy-sandbox:
     name: Deploy
     needs: [lint, test, docker]
+    uses: ./.github/workflows/deploy.yml
+    concurrency:
+      group: deploy-sandbox
+      cancel-in-progress: true
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      image-digest: ${{ needs.docker.outputs.image-digest }}
+      environment: sandbox
+      precompressed-assets: true
+
+  deploy-test:
+    name: Deploy
+    needs: [lint, test, docker, deploy-sandbox]
     uses: ./.github/workflows/deploy.yml
     if: ${{ github.ref == 'refs/heads/main' }}
     concurrency:
@@ -148,22 +163,6 @@ jobs:
     with:
       image-digest: ${{ needs.docker.outputs.image-digest }}
       environment: test
-      precompressed-assets: true
-
-  deploy-sandbox:
-    name: Deploy
-    needs: [lint, test, docker, deploy-test]
-    uses: ./.github/workflows/deploy.yml
-    if: ${{ github.ref == 'refs/heads/main' }}
-    concurrency:
-      group: deploy-sandbox
-      cancel-in-progress: true
-    permissions:
-      id-token: write
-      contents: read
-    with:
-      image-digest: ${{ needs.docker.outputs.image-digest }}
-      environment: sandbox
       precompressed-assets: true
 
   deploy-production:
