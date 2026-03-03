@@ -28,7 +28,7 @@
         <div class="rj-collapsible-header" @click="expanded.major = !expanded.major">
           <p class="rj-filter-label mb-0">Major</p>
           <span class="rj-chevron" :class="{ open: expanded.major }">&#9654;</span>
-        </div>
+        </div> <!-- TODO: pass in majors to the page -->
         <div v-show="expanded.major" class="mb-3 mt-1">
           <div v-for="m in majors" :key="m" class="form-check mb-1">
             <input class="form-check-input" type="checkbox" :id="'m-'+m"/>
@@ -90,13 +90,13 @@
                 <span class="fw-medium">{{ user.name }}</span>
                 <span v-if="user.saved" class="rj-saved-star ms-1">★</span>
               </td>
-              <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.major }}</td>
-              <td v-if="!selectedUser" class="align-middle small">{{ user.term }}</td>
+              <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.majors.map(m => m.name).join(', ') }}</td>
+              <td v-if="!selectedUser" class="align-middle small">{{ user.graduation_semester }}</td>
               <td v-if="!selectedUser" class="align-middle">
-                <div class="d-flex flex-wrap gap-1">
+                <!-- <div class="d-flex flex-wrap gap-1">
                   <span v-for="tag in user.tags.slice(0, 3)" :key="tag" class="badge rj-skill-badge">{{ tag }}</span>
                   <span v-if="user.tags.length > 3" class="text-muted small">+{{ user.tags.length - 3 }}</span>
-                </div>
+                </div> --> <!-- TODO: Add tags to user objects -->
               </td>
               <td class="rj-action-cell" @click.stop>
                 <div class="rj-dd-wrap">
@@ -118,13 +118,13 @@
           <div class="d-flex justify-content-between align-items-start">
             <div>
               <h2 class="h5 mb-0 fw-semibold">{{ selectedUser.full_name }}</h2>
-              <div class="text-muted small">{{ selectedUser.majors.map(m => m.name).join(', ') }} · {{ selectedUser.term }} · {{ selectedUser.email }}</div>
+              <div class="text-muted small">{{ selectedUser.majors.map(m => m.name).join(', ') }} · {{ selectedUser.graduation_semester }} · {{ selectedUser.email }}</div>
             </div>
             <button class="btn btn-sm btn-primary">Download</button>
           </div>
-          <div class="d-flex flex-wrap gap-1 mt-2">
+          <!-- <div class="d-flex flex-wrap gap-1 mt-2">
             <span v-for="tag in selectedUser.tags" :key="tag" class="badge rj-skill-badge">{{ tag }}</span>
-          </div>
+          </div> --> <!-- TODO: Add user tags -->
         </div>
         <div class="rj-pdf-frame d-flex align-items-center justify-content-center text-muted">
           <object v-if="resume_url" :data="resume_url" type="application/pdf" width="100%" height="100%" >
