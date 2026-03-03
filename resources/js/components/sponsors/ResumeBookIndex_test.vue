@@ -206,7 +206,11 @@ export default {
         if (!response.ok) {
             throw new Error(`Failed to load PDF.`)
         }
-        url = response.data;
+        if (this.resume_url) {
+          URL.revokeObjectURL(this.resume_url);
+        }
+        const blob = await response.blob();
+        url = URL.createObjectURL(blob);
       } catch (error) {
         console.log(`Error retrieving PDF to view: ${error}`);
       } finally {
