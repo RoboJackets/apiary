@@ -199,24 +199,12 @@ export default {
       this.$set(this.expandedCats, cat, !this.expandedCats[cat]);
     },
     async selectUser(user) {
-      var url = '';
-      const uid = user.uid;
-      try {
-        const response = await fetch(`/sponsor/resumes/${uid}`);
-        if (!response.ok) {
-            throw new Error(`Failed to load PDF.`)
-        }
-        if (this.resume_url) {
-          URL.revokeObjectURL(this.resume_url);
-        }
-        const blob = await response.blob();
-        url = URL.createObjectURL(blob);
-      } catch (error) {
-        console.log(`Error retrieving PDF to view: ${error}`);
-      } finally {
-        this.resume_url = url;
-        this.selectedUser = user;
+      if (this.resume_url) {
+        URL.revokeObjectURL(this.resume_url);
       }
+      const blob = await response.blob();
+      this.resume_url = `/sponsor/resumes/${user.uid}`
+      this.selectedUser = user;
     },
   },
 };
