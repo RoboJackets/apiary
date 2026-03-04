@@ -27,6 +27,7 @@ class StoreAttendanceRequest extends FormRequest
             'attendable_type' => [
                 'required',
                 'string',
+                'in:event,team',
             ],
             'attendable_id' => [
                 'required',

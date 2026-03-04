@@ -9,7 +9,7 @@ return [
         ->rules([
             'required',
             'string',
-            'in:sso.gatech.edu,sso-test.gatech.edu',
+            'in:sso.gatech.edu,sso-test.gatech.edu,sso-upgrade.a.iam.gatech.edu',
         ]),
 
     Rule::make('cas_hostname')
