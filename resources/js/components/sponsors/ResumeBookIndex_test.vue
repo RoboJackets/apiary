@@ -202,7 +202,6 @@ export default {
       if (this.resume_url) {
         URL.revokeObjectURL(this.resume_url);
       }
-      const blob = await response.blob();
       this.resume_url = `/sponsor/resumes/${user.uid}`
       this.selectedUser = user;
     },
