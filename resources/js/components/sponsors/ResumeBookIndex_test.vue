@@ -229,17 +229,19 @@ export default {
 
     toggleMajor(major) {
       const index = this.filters.majors.findIndex(m => m.id === major.id);
-      if (index === -1 && document.getElementById('m-'+major.id).checked) {
-        this.filters.majors.push(major);
+      if (index === -1) {
+        this.filters.majors.push(major.id);
       } else {
         this.filters.majors.splice(index, 1);
       }
     },
 
     toggleGraduationSemester(semester) {
+      console.log(semester);
       const index = this.filters.graduation_semesters.findIndex(s => s.code === semester.code);
+      console.log(document.getElementById('t-'+semester.code));
       if (index === -1 && document.getElementById('t-'+semester.code).checked) {
-        this.filters.graduation_semesters.push(semester);
+        this.filters.graduation_semesters.push(semester.code);
       } else {
         this.filters.graduation_semesters.splice(index, 1);
       }
