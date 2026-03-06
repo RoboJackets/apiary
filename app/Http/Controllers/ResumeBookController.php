@@ -96,5 +96,6 @@ class ResumeBookController
                 'graduation_semester' => $this->formatGradSemester($user->graduation_semester),
             ]))
             ->toArray();
+        return $users;
     }
 }
