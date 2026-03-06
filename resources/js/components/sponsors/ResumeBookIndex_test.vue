@@ -177,6 +177,7 @@ export default {
     await this.search();
     this.terms = await this.getGraduationSemesters();
     this.majors = await this.getMajors();
+    this.graduation_semesters = await this.getGraduationSemesters();
   },
 
   watch: {
