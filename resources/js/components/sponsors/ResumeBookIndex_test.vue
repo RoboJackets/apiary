@@ -196,20 +196,12 @@ export default {
     },
 
     async search() {
-        try {
-          const response = await fetch('/sponsor/search', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.filters),
-          });
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const data = await response.json();
-          this.users = data.users;
-        } catch (error) {
-          console.error('Error fetching users:', error);
-        }
+      try {
+        const response = await axios.post('/sponsor/search', this.filters);
+        this.users = response.data.users;
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     }
   },
 };
