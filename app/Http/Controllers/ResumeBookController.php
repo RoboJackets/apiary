@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Major;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -54,7 +55,21 @@ class ResumeBookController
         ]);
     }
 
-    private function formatGradSemester(?string $code): ?string
+    public function getGraduationSemesters()
+    {
+        $semesters = User::select('graduation_semester')
+            ->distinct()
+            ->pluck('graduation_semester')
+            ->filter()
+            ->mapWithKeys(fn ($code) => [$code => $this->formatGradSemester($code)]);
+
+        return response()->json([
+            'status' => 'success',
+            'graduation_semesters' => $semesters,
+        ]);
+    }
+
+    private function formatGradSemester(?string $code): array
     {
         if (!$code || strlen($code) !== 6) return $code;
 
@@ -68,7 +83,7 @@ class ResumeBookController
         $year  = substr($code, 0, 4);
         $month = substr($code, 4, 2);
 
-        return ($months[$month] ?? $month) . ' ' . $year;
+        return [ 'code' => $code, 'name' => ($months[$month] ?? $month) . ' ' . $year];
     }
 
     private function filterUsers(array $majors, array $graduation_semesters): array

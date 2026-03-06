@@ -31,8 +31,10 @@
         </div> <!-- TODO: pass in majors to the page -->
         <div v-show="expanded.major" class="mb-3 mt-1">
           <div v-for="m in majors" :key="m" class="form-check mb-1">
-            <input class="form-check-input" type="checkbox" :id="'m-'+m"/>
-            <label class="form-check-label small" :for="'m-'+m">{{ m }}</label>
+            <input class="form-check-input" type="checkbox" @click="() => {
+              toggleMajor(m);
+            }" :id="'m-'+m.id"/>
+            <label class="form-check-label small" :for="'m-'+m.id">{{ m.display_name ?? m.gtad_majorgroup_name }}</label>
           </div>
         </div>
 
@@ -43,8 +45,10 @@
         </div>
         <div v-show="expanded.term" class="mb-3 mt-1">
           <div v-for="t in terms" :key="t" class="form-check mb-1">
-            <input class="form-check-input" type="checkbox" :id="'t-'+t"/>
-            <label class="form-check-label small" :for="'t-'+t">{{ t }}</label>
+            <input class="form-check-input" type="checkbox" @click="(t) => {
+              toggleGraduationSemester(t);
+            }" :id="'t-'+t.code"/>
+            <label class="form-check-label small" :for="'t-'+t.code">{{ t.name }}</label>
           </div>
         </div>
 
@@ -118,7 +122,7 @@
           <div class="d-flex justify-content-between align-items-start">
             <div>
               <h2 class="h5 mb-0 fw-semibold">{{ selectedUser.full_name }}</h2>
-              <div class="text-muted small">{{ selectedUser.majors.map(m => m.name).join(', ') }} · {{ selectedUser.graduation_semester }} · {{ selectedUser.email }}</div>
+              <div class="text-muted small">{{ selectedUser.majors.map(m => m.name).join(', ') }} · {{ selectedUser.graduation_semester.name }} · {{ selectedUser.email }}</div>
             </div>
             <button class="btn btn-sm btn-primary">Download</button>
           </div>
@@ -153,9 +157,8 @@ export default {
       openDd: null,
       expanded: { major: true, term: true },
       expandedCats: {},
-      // TODO: majors and should be grabbed from database
-      majors: ['Computer Engineering', 'Computer Science', 'Electrical Engineering', 'Mechanical Engineering', 'Industrial Engineering'],
-      terms:  ['Spring 2025', 'Fall 2025', 'Spring 2026', 'Fall 2026'],
+      majors: [],
+      terms:  [],
       
       // TODO: Should be a model instead of hardcoded
       keywordCategories: {
@@ -171,7 +174,9 @@ export default {
 
   // TODO: produce toast or something when error occurs
   async mounted() {
-    this.search();
+    await this.search();
+    this.terms = await this.getGraduationSemesters();
+    this.majors = await this.getMajors();
   },
 
   watch: {
@@ -202,7 +207,43 @@ export default {
       } catch (error) {
         console.error('Error fetching users:', error);
       }
-    }
+    },
+
+    async getGraduationSemesters() {
+      try {
+        const response = await axios.get('/sponsor/graduation-semesters');
+        this.terms = response.graduation_semesters;
+      } catch (error) {
+        console.error('Error fetching graduation semesters:', error);
+      }
+    },
+
+    async getMajors() {
+      try {
+        const response = await axios.get('/sponsor/majors');
+        this.majors = response.majors;
+      } catch (error) {
+        console.error('Error fetching majors:', error);
+      }
+    },
+
+    toggleMajor(major) {
+      const index = this.filters.majors.findIndex(m => m.id === major.id);
+      if (index === -1 && document.getElementById('m-'+major.id).checked) {
+        this.filters.majors.push(major);
+      } else {
+        this.filters.majors.splice(index, 1);
+      }
+    },
+
+    toggleGraduationSemester(semester) {
+      const index = this.filters.graduation_semesters.findIndex(s => s.code === semester.code);
+      if (index === -1 && document.getElementById('t-'+semester.code).checked) {
+        this.filters.graduation_semesters.push(semester);
+      } else {
+        this.filters.graduation_semesters.splice(index, 1);
+      }
+    },
   },
 };
 </script>
