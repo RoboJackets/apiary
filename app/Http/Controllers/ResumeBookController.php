@@ -16,25 +16,7 @@ class ResumeBookController
      */
     public function index()
     {
-        // Should be replaced with DB calls when Resume model created.
-        $usernames = collect(Storage::disk('local')->files('resumes'))
-            ->map(fn ($path) => pathinfo($path, PATHINFO_FILENAME))
-            ->toArray();
-
-
-        $users = User::whereIn('uid', $usernames)
-            ->with('majors')
-            ->get()
-            ->map(fn ($user) => array_merge($user->toArray(), [
-                'majors' => $user->majors->map(fn ($major) => [
-                    'id'   => $major->id,
-                    'name' => $major->display_name ?? $major->gtad_majorgroup_name,
-                ])->toArray(),
-                'graduation_semester' => $this->formatGradSemester($user->graduation_semester),
-            ]))
-            ->toArray();
-
-        return view('sponsors.home', ['users' => $users]);
+        return view('sponsors.home');
     } // Currently producing unterminated string error. TODO: Find cause
 
     /**
@@ -61,6 +43,15 @@ class ResumeBookController
 
     public function search(Request $request)
     {
+        $majors = $request->input('majors', []);
+        $graduation_semesters = $request->input('graduation_semesters', []);
+
+        $users = $this->filterUsers($majors, $graduation_semesters);
+
+        return response()->json([
+            'status' => 'success',
+            'users' => $users,
+        ]);
     }
 
     private function formatGradSemester(?string $code): ?string
@@ -78,5 +69,32 @@ class ResumeBookController
         $month = substr($code, 4, 2);
 
         return ($months[$month] ?? $month) . ' ' . $year;
+    }
+
+    private function filterUsers(array $majors, array $graduation_semesters): array
+    {
+        $usernames = collect(Storage::disk('local')->files('resumes'))
+            ->map(fn ($path) => pathinfo($path, PATHINFO_FILENAME))
+            ->toArray();
+        $users = User::whereIn('uid', $usernames);
+        if (! empty($majors)) {
+            $users = $users->whereHas('majors', function ($query) use ($majors) {
+                $query->whereIn('id', $majors);
+            });
+        }
+        if (! empty($graduation_semesters)) {
+            $users = $users->whereIn('graduation_semester', $graduation_semesters);
+        }
+
+        $users = $users->with('majors')
+            ->get()
+            ->map(fn ($user) => array_merge($user->toArray(), [
+                'majors' => $user->majors->map(fn ($major) => [
+                    'id' => $major->id,
+                    'name' => $major->display_name ?? $major->gtad_majorgroup_name,
+                ])->toArray(),
+                'graduation_semester' => $this->formatGradSemester($user->graduation_semester),
+            ]))
+            ->toArray();
     }
 }

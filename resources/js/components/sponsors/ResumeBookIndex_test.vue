@@ -141,16 +141,14 @@
 <script>
 export default {
   name: 'ResumeBookIndex',
-  props: {
-    // Expect an array of user objects to be passed in when the page loads.
-    // Each user object can contain: name, uid, major, graduation_semester
-    users: {
-      type: Array,
-      default: () => []
-    }
-  },
   data() {
     return {
+      users: [],
+      filters: {
+        majors: [],
+        graduation_semesters: [],
+        majors: [],
+      },
       selectedUser: null,
       openDd: null,
       expanded: { major: true, term: true },
@@ -167,31 +165,22 @@ export default {
         'AI / ML':               ['Machine Learning', 'Computer Vision', 'PyTorch', 'TensorFlow', 'SLAM'],
         'Software & DevOps':     ['Git', 'Linux', 'Docker', 'CI/CD', 'REST API'],
       },
-      // TODO: Fetch users
-      users: [
-        // { id:  1, name: 'Alex Chen',       major: 'Computer Engineering',    term: 'Fall 2025',   email: 'alex.chen@gatech.edu',       saved: true,  tags: ['Python', 'ROS2', 'C++', 'Linux', 'Git'] },
-        // { id:  2, name: 'Jordan Lee',       major: 'Mechanical Engineering',  term: 'Fall 2025',   email: 'jordan.lee@gatech.edu',      saved: false, tags: ['SolidWorks', 'Python', 'CAD', 'FEA'] },
-        // { id:  3, name: 'Priya Sharma',     major: 'Computer Science',        term: 'Fall 2025',   email: 'priya.sharma@gatech.edu',    saved: true,  tags: ['Machine Learning', 'PyTorch', 'ROS2', 'Python'] },
-        // { id:  4, name: 'Marcus Webb',      major: 'Electrical Engineering',  term: 'Spring 2026', email: 'marcus.webb@gatech.edu',     saved: false, tags: ['Embedded Systems', 'C++', 'RTOS', 'FPGA'] },
-        // { id:  5, name: 'Sofia Reyes',      major: 'Computer Engineering',    term: 'Spring 2026', email: 'sofia.reyes@gatech.edu',     saved: false, tags: ['ROS', 'Python', 'SLAM', 'Computer Vision'] },
-        // { id:  6, name: 'Daniel Park',      major: 'Computer Science',        term: 'Fall 2025',   email: 'daniel.park@gatech.edu',     saved: true,  tags: ['Docker', 'CI/CD', 'Python', 'REST API', 'Linux'] },
-        // { id:  7, name: 'Aisha Okafor',     major: 'Mechanical Engineering',  term: 'Spring 2025', email: 'aisha.okafor@gatech.edu',    saved: false, tags: ['SolidWorks', 'MATLAB', 'FEA', '3D Printing'] },
-        // { id:  8, name: 'Tyler Nguyen',     major: 'Computer Engineering',    term: 'Fall 2026',   email: 'tyler.nguyen@gatech.edu',    saved: false, tags: ['C++', 'Firmware', 'Arduino', 'Embedded Systems'] },
-        // { id:  9, name: 'Rachel Kim',       major: 'Computer Science',        term: 'Spring 2026', email: 'rachel.kim@gatech.edu',      saved: true,  tags: ['TensorFlow', 'Python', 'SQL', 'Machine Learning'] },
-        // { id: 10, name: 'Ben Torres',       major: 'Electrical Engineering',  term: 'Fall 2025',   email: 'ben.torres@gatech.edu',      saved: false, tags: ['Circuit Design', 'MATLAB', 'Python', 'Signal Processing'] },
-        // { id: 11, name: 'Mia Johnson',      major: 'Industrial Engineering',  term: 'Spring 2026', email: 'mia.johnson@gatech.edu',     saved: false, tags: ['Python', 'SQL', 'Tableau', 'Excel'] },
-        // { id: 12, name: 'Ethan Brooks',     major: 'Computer Engineering',    term: 'Fall 2025',   email: 'ethan.brooks@gatech.edu',    saved: false, tags: ['ROS2', 'C++', 'Linux', 'Git', 'Docker'] },
-        // { id: 13, name: 'Leila Nasser',     major: 'Mechanical Engineering',  term: 'Fall 2026',   email: 'leila.nasser@gatech.edu',    saved: false, tags: ['CAD', 'Fusion 360', 'GD&T', 'SolidWorks'] },
-        // { id: 14, name: 'James Osei',       major: 'Computer Science',        term: 'Spring 2025', email: 'james.osei@gatech.edu',      saved: true,  tags: ['JavaScript', 'REST API', 'Docker', 'Linux'] },
-        // { id: 15, name: 'Hannah Cole',      major: 'Electrical Engineering',  term: 'Fall 2025',   email: 'hannah.cole@gatech.edu',     saved: false, tags: ['Embedded Systems', 'RTOS', 'C++', 'Firmware', 'Arduino'] },
-        // { id: 16, name: 'Owen Martinez',    major: 'Computer Engineering',    term: 'Spring 2026', email: 'owen.martinez@gatech.edu',   saved: false, tags: ['SLAM', 'ROS2', 'Python', 'Computer Vision'] },
-        // { id: 17, name: 'Zara Patel',       major: 'Computer Science',        term: 'Fall 2026',   email: 'zara.patel@gatech.edu',      saved: false, tags: ['Machine Learning', 'Python', 'PyTorch', 'SQL'] },
-        // { id: 18, name: 'Noah Griffin',     major: 'Mechanical Engineering',  term: 'Fall 2025',   email: 'noah.griffin@gatech.edu',    saved: false, tags: ['SolidWorks', 'FEA', 'MATLAB', '3D Printing', 'CAD'] },
-        // { id: 19, name: 'Camille Dubois',   major: 'Industrial Engineering',  term: 'Spring 2025', email: 'camille.dubois@gatech.edu',  saved: false, tags: ['Python', 'Excel', 'Tableau', 'SQL'] },
-        // { id: 20, name: 'Liam Fitzgerald',  major: 'Electrical Engineering',  term: 'Spring 2026', email: 'liam.fitzgerald@gatech.edu', saved: true,  tags: ['FPGA', 'VHDL', 'C++', 'Signal Processing'] },
-      ],
       resume_url: '',
     };
+  },
+
+  // TODO: produce toast or something when error occurs
+  async mounted() {
+    this.search();
+  },
+
+  watch: {
+    filters: {
+      handler() {
+        this.search();
+      },
+      deep: true,
+    },
   },
 
   methods: {
@@ -205,6 +194,23 @@ export default {
       this.resume_url = `/sponsor/resumes/${user.uid}`
       this.selectedUser = user;
     },
+
+    async search() {
+        try {
+          const response = await fetch('/sponsor/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.filters),
+          });
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
+          this.users = data.users;
+        } catch (error) {
+          console.error('Error fetching users:', error);
+        }
+    }
   },
 };
 </script>

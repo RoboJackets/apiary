@@ -133,6 +133,7 @@ Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
 
 Route::prefix('sponsor')->name('sponsor.')->group(static function (): void {
     Route::get('/', [ResumeBookController::class, 'index'])->name('home')->middleware('auth.sponsor');
+    Route::post('/search', [ResumeBookController::class, 'search'])->name('search')->middleware('auth.sponsor');
     Route::get('/majors', [MajorController::class, 'index'])->middleware('auth.sponsor');
     Route::get('/resumes/{uid}', [ResumeBookController::class, 'show'])->middleware('auth.sponsor');
     Route::get('/login', [SponsorLoginController::class, 'showLoginForm'])->name('login');
