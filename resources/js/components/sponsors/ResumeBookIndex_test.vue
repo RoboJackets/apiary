@@ -175,9 +175,8 @@ export default {
   // TODO: produce toast or something when error occurs
   async mounted() {
     await this.search();
-    this.terms = await this.getGraduationSemesters();
-    this.majors = await this.getMajors();
-    this.graduation_semesters = await this.getGraduationSemesters();
+    await this.getGraduationSemesters();
+    await this.getMajors();
   },
 
   watch: {
@@ -213,7 +212,7 @@ export default {
     async getGraduationSemesters() {
       try {
         const response = await axios.get('/sponsor/graduation-semesters');
-        this.terms = response.graduation_semesters;
+        this.terms = response.data.graduation_semesters;
       } catch (error) {
         console.error('Error fetching graduation semesters:', error);
       }
@@ -222,7 +221,7 @@ export default {
     async getMajors() {
       try {
         const response = await axios.get('/sponsor/majors');
-        this.majors = response.majors;
+        this.majors = response.data.majors;
       } catch (error) {
         console.error('Error fetching majors:', error);
       }
