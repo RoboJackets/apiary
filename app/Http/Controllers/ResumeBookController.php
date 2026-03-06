@@ -69,9 +69,12 @@ class ResumeBookController
         ]);
     }
 
-    private function formatGradSemester(?string $code): array
+    private function formatGradSemester(?string $code): array|null
     {
-        if (!$code || strlen($code) !== 6) return $code;
+        if (is_null($code)) {
+            return ['code' => null, 'name' => 'Unspecified'];
+        }
+        if (strlen($code) !== 6) return ['code' => $code, 'name' => $code];
 
         $months = [
             '01' => 'January',  '02' => 'February', '03' => 'March',

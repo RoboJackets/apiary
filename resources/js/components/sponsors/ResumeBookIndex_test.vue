@@ -30,7 +30,7 @@
           <span class="rj-chevron" :class="{ open: expanded.major }">&#9654;</span>
         </div> <!-- TODO: pass in majors to the page -->
         <div v-show="expanded.major" class="mb-3 mt-1">
-          <div v-for="m in majors" :key="m" class="form-check mb-1">
+          <div v-for="m in majors" :key="m.id" class="form-check mb-1">
             <input class="form-check-input" type="checkbox" @click="() => {
               toggleMajor(m);
             }" :id="'m-'+m.id"/>
@@ -44,7 +44,7 @@
           <span class="rj-chevron" :class="{ open: expanded.term }">&#9654;</span>
         </div>
         <div v-show="expanded.term" class="mb-3 mt-1">
-          <div v-for="t in terms" :key="t" class="form-check mb-1">
+          <div v-for="t in terms" :key="t.code" class="form-check mb-1">
             <input class="form-check-input" type="checkbox" @click="(t) => {
               toggleGraduationSemester(t);
             }" :id="'t-'+t.code"/>
@@ -95,7 +95,7 @@
                 <span v-if="user.saved" class="rj-saved-star ms-1">★</span>
               </td>
               <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.majors.map(m => m.name).join(', ') }}</td>
-              <td v-if="!selectedUser" class="align-middle small">{{ user.graduation_semester }}</td>
+              <td v-if="!selectedUser" class="align-middle small">{{ user.graduation_semester.name }}</td>
               <td v-if="!selectedUser" class="align-middle">
                 <!-- <div class="d-flex flex-wrap gap-1">
                   <span v-for="tag in user.tags.slice(0, 3)" :key="tag" class="badge rj-skill-badge">{{ tag }}</span>
