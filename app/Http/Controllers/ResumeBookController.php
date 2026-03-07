@@ -97,7 +97,7 @@ class ResumeBookController
         $users = User::whereIn('uid', $usernames);
         if (! empty($majors)) {
             $users = $users->whereHas('majors', function ($query) use ($majors) {
-                $query->whereIn('major.id', $majors);
+                $query->whereIn('majors.id', $majors);
             });
         }
         if (! empty($graduation_semesters)) {
