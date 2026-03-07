@@ -11,7 +11,7 @@
     </div>
 
     <!-- Folder tab bar -->
-    <div class="rj-tabs flex-shrink-0 px-3 pt-2 border-bottom d-flex align-items-end gap-1 overflow-x-auto">
+    <div class="rj-tabs flex-shrink-0 px-3 pt-2 pb-1 border-bottom d-flex align-items-end gap-1 overflow-x-auto">
       <button class="btn btn-sm rj-tab rj-tab--active">All Students</button>
       <!-- TODO: Implement folders -->
       <!-- <button class="btn btn-sm rj-tab rj-tab--inactive">Robotics Leads <span class="badge bg-secondary ms-1">3</span></button>
