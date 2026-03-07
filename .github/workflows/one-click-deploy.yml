@@ -45,6 +45,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      packages: read
     with:
       image-digest: ${{ needs.find-image-digest.outputs.image_digest }}
       environment: ${{ inputs.environment }}
