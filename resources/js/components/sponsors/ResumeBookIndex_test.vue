@@ -5,16 +5,18 @@
     <div class="rj-page-header px-4 py-3 flex-shrink-0 d-flex align-items-center justify-content-between border-bottom">
       <h1 class="h4 mb-0 fw-semibold">Resume Book</h1>
       <button class="btn btn-sm btn-outline-secondary">
-        Export CSV <span class="badge bg-secondary ms-1">{{ users.length }}</span>
+        <!-- TODO: Implement CSV Exports -->
+        <!-- Export CSV <span class="badge bg-secondary ms-1">{{ users.length }}</span> -->
       </button>
     </div>
 
     <!-- Folder tab bar -->
     <div class="rj-tabs flex-shrink-0 px-3 pt-2 border-bottom d-flex align-items-end gap-1 overflow-x-auto">
       <button class="btn btn-sm rj-tab rj-tab--active">All Students</button>
-      <button class="btn btn-sm rj-tab rj-tab--inactive">Robotics Leads <span class="badge bg-secondary ms-1">3</span></button>
+      <!-- TODO: Implement folders -->
+      <!-- <button class="btn btn-sm rj-tab rj-tab--inactive">Robotics Leads <span class="badge bg-secondary ms-1">3</span></button>
       <button class="btn btn-sm rj-tab rj-tab--inactive">Summer Hires <span class="badge bg-secondary ms-1">2</span></button>
-      <button class="btn btn-sm rj-tab rj-tab--new ms-1">+ New Folder</button>
+      <button class="btn btn-sm rj-tab rj-tab--new ms-1">+ New Folder</button> -->
     </div>
 
     <!-- Body -->
@@ -53,7 +55,8 @@
         </div>
 
         <!-- Skills & Keywords -->
-        <p class="rj-filter-label">Skills &amp; Keywords</p>
+         <!-- TODO: Implement skills and keywords filter -->
+        <!-- <p class="rj-filter-label">Skills &amp; Keywords</p>
         <input class="form-control form-control-sm mb-2" placeholder="Filter keywords…" type="search"/>
         <div v-for="(kws, cat) in keywordCategories" :key="cat" class="mb-2">
           <button class="btn btn-link btn-sm p-0 rj-link d-flex justify-content-between w-100 text-start"
@@ -64,7 +67,7 @@
           <div v-if="expandedCats[cat]" class="d-flex flex-wrap gap-1 pt-1 pb-2">
             <span v-for="kw in kws" :key="kw" class="badge rj-filter-badge" style="cursor:pointer;">{{ kw }}</span>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- Student list -->
@@ -96,13 +99,15 @@
               </td>
               <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.majors.map(m => m.name).join(', ') }}</td>
               <td v-if="!selectedUser" class="align-middle small">{{ user.graduation_semester.name }}</td>
-              <td v-if="!selectedUser" class="align-middle">
-                <!-- <div class="d-flex flex-wrap gap-1">
+              <!-- TODO: Add tags -->
+              <!--<td v-if="!selectedUser" class="align-middle">
+                 <div class="d-flex flex-wrap gap-1">
                   <span v-for="tag in user.tags.slice(0, 3)" :key="tag" class="badge rj-skill-badge">{{ tag }}</span>
                   <span v-if="user.tags.length > 3" class="text-muted small">+{{ user.tags.length - 3 }}</span>
-                </div> --> <!-- TODO: Add tags to user objects -->
-              </td>
-              <td class="rj-action-cell" @click.stop>
+                </div>
+              </td> -->
+              <!-- TODO: Add dropdown actions -->
+              <!--<td class="rj-action-cell" @click.stop>
                 <div class="rj-dd-wrap">
                   <button class="rj-dot-btn" @click.stop="openDd = openDd === user.id ? null : user.id">•••</button>
                   <div class="rj-dropdown" :class="{ open: openDd === user.id }">
@@ -110,7 +115,7 @@
                     <button>Email</button>
                   </div>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -124,7 +129,6 @@
               <h2 class="h5 mb-0 fw-semibold">{{ selectedUser.full_name }}</h2>
               <div class="text-muted small">{{ selectedUser.majors.map(m => m.name).join(', ') }} · {{ selectedUser.graduation_semester.name }} · {{ selectedUser.email }}</div>
             </div>
-            <button class="btn btn-sm btn-primary">Download</button>
           </div>
           <!-- <div class="d-flex flex-wrap gap-1 mt-2">
             <span v-for="tag in selectedUser.tags" :key="tag" class="badge rj-skill-badge">{{ tag }}</span>
