@@ -228,24 +228,25 @@ export default {
     },
 
     toggleMajor(major) {
-      console.log(major);
-      const index = this.filters.majors.findIndex(m => m.id === major.id);
+      console.log(this.filters.majors);
+      const index = this.filters.majors.findIndex(m => m === major.id);
       if (document.getElementById('m-'+major.id).checked) {
         this.filters.majors.push(major.id);
       } else {
         this.filters.majors.splice(index, 1);
       }
+      console.log(this.filters.majors);
     },
 
     toggleGraduationSemester(semester) {
-      console.log(semester);
-      const index = this.filters.graduation_semesters.findIndex(s => s.code === semester.code);
-      console.log(document.getElementById('t-'+semester.code));
+      console.log(this.filters.graduation_semesters);
+      const index = this.filters.graduation_semesters.findIndex(s => s === semester.code);
       if (document.getElementById('t-'+semester.code).checked) {
         this.filters.graduation_semesters.push(semester.code);
       } else {
         this.filters.graduation_semesters.splice(index, 1);
       }
+      console.log(this.filters.graduation_semesters);
     },
   },
 };
