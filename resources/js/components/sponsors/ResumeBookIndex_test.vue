@@ -131,9 +131,11 @@
           </div> --> <!-- TODO: Add user tags -->
         </div>
         <div class="rj-pdf-frame d-flex align-items-center justify-content-center text-muted">
-          <iframe v-if="resume_url" :src="resume_url" type="application/pdf" class="w-100 h-100 border-0" >
-            <!-- <small>Your browser does not support PDFs. <a :href="resume_url">Download</a></small> -->
-          </iframe>
+          <object v-if="resume_url" :data="resume_url" type="application/pdf" class="w-100 h-100 border-0" >
+            <small class="d-flex align-items-center justify-content-center h-100">
+              Your browser does not support PDFs. <a :href="resume_url">Download</a>
+            </small>
+          </object>
           <small v-else>No resume PDF found.</small>
         </div>
       </div>
