@@ -4,10 +4,10 @@
     <!-- Page heading -->
     <div class="rj-page-header px-4 py-3 flex-shrink-0 d-flex align-items-center justify-content-between border-bottom">
       <h1 class="h4 mb-0 fw-semibold">Resume Book</h1>
-      <button class="btn btn-sm btn-outline-secondary">
-        <!-- TODO: Implement CSV Exports -->
-        <!-- Export CSV <span class="badge bg-secondary ms-1">{{ users.length }}</span> -->
-      </button>
+      <!-- TODO: Implement CSV Exports -->
+      <!--<button class="btn btn-sm btn-outline-secondary">
+        Export CSV <span class="badge bg-secondary ms-1">{{ users.length }}</span> 
+      </button>-->
     </div>
 
     <!-- Folder tab bar -->
@@ -24,7 +24,8 @@
 
       <!-- Sidebar -->
       <div class="col-auto border-end overflow-auto h-100 rj-sidebar py-3 px-3" style="min-height:0;">
-        <input class="form-control form-control-sm mb-3" placeholder="Search by name…" type="search"/>
+        <!-- TODO: Implement search -->
+        <!--<input class="form-control form-control-sm mb-3" placeholder="Search by name…" type="search"/>-->
 
         <!-- Major -->
         <div class="rj-collapsible-header" @click="expanded.major = !expanded.major">
@@ -84,8 +85,9 @@
               <th>Name</th>
               <th v-if="!selectedUser">Major</th>
               <th v-if="!selectedUser">Grad Term</th>
-              <th v-if="!selectedUser">Skills</th>
-              <th class="rj-action-th"></th>
+              <!-- TODO: Implement skills and keywords filter -->
+              <!--<th v-if="!selectedUser">Skills</th>
+              <th class="rj-action-th"></th>-->
             </tr>
           </thead>
           <tbody>
