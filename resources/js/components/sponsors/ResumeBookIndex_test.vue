@@ -45,7 +45,7 @@
         </div>
         <div v-show="expanded.term" class="mb-3 mt-1">
           <div v-for="t in terms" :key="t.code" class="form-check mb-1">
-            <input class="form-check-input" type="checkbox" @click="(t) => {
+            <input class="form-check-input" type="checkbox" @click="() => {
               toggleGraduationSemester(t);
             }" :id="'t-'+t.code"/>
             <label class="form-check-label small" :for="'t-'+t.code">{{ t.name }}</label>
