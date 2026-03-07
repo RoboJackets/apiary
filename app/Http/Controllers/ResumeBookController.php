@@ -69,9 +69,9 @@ class ResumeBookController
         ]);
     }
 
-    private function formatGradSemester(?string $code): array|null
+    private function formatGradSemester(?string $code): array
     {
-        if (is_null($code)) {
+        if (is_null($code) || $code === '') {
             return ['code' => null, 'name' => 'Unspecified'];
         }
         if (strlen($code) !== 6) return ['code' => $code, 'name' => $code];
