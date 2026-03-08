@@ -30,7 +30,7 @@ class ResumeBookController
         try {
             return response()
                 ->file(Storage::disk('local')
-                ->path('resumes/'.$uid.'.pdf'), ['Content-Type' => 'application/pdf']);
+                    ->path('resumes/'.$uid.'.pdf'), ['Content-Type' => 'application/pdf']);
         } catch (FileNotFoundException) {
             return response()->json(
                 [
