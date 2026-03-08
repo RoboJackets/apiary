@@ -42,6 +42,11 @@ class ResumeBookController
         }
     }
 
+    /**
+     * Searches for resumes matching a query defined in a POST request.
+     *
+     * @param  $request  Request object containing arrays of parameters to search.
+     */
     public function search(Request $request)
     {
         $majors = $request->input('majors', []);
@@ -55,6 +60,9 @@ class ResumeBookController
         ]);
     }
 
+    /**
+     * Gets all graduation semesters for RoboJackets members.
+     */
     public function getGraduationSemesters()
     {
         $semesters = User::select('graduation_semester')
