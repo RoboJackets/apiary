@@ -34,9 +34,10 @@ body {
 // Sticky Footer Styles
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  // position: absolute;
+  // bottom: 0;
+  // width: 100%;
+  flex-shrink: 0;
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
@@ -116,4 +117,170 @@ input.form-control.is-invalid ~ .invalid-feedback {
     to {
         width: 150px;
     }
+}
+
+
+$rj-accent:        $primary;
+$rj-accent-subtle: rgba($rj-accent, 0.10);
+$rj-accent-text:   darken($rj-accent, 8%);
+$rj-badge-bg:      $gray-600;
+$rj-badge-text:    $gray-200;
+$rj-body-bg:       #e9ecef;
+$rj-sidebar-bg:    $gray-100;
+$rj-header-bg:     #fff;
+$rj-tabs-bg:       $gray-200;
+
+.rj-resume-book {
+  background-color: $rj-body-bg;
+
+  .rj-page-header  { background: $rj-header-bg; }
+  .rj-sidebar      { width: 250px; background: $rj-sidebar-bg; }
+  .rj-list-narrow  { width: 340px; }
+  .rj-detail-panel { min-width: 0; background: $rj-header-bg; }
+  .rj-pdf-frame    { height: calc(100% - 110px); }
+
+  .rj-collapsible-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: .2rem 0;
+    user-select: none;
+    &:hover .rj-filter-label { color: $gray-700; }
+  }
+
+  .rj-chevron {
+    font-size: .65rem;
+    color: $gray-400;
+    transition: transform .15s;
+    &.open { transform: rotate(90deg); }
+  }
+
+  .rj-filter-label {
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: $gray-600;
+    margin-bottom: .35rem;
+  }
+
+  .rj-tabs { background: $rj-tabs-bg; }
+
+  .rj-tab {
+    border-radius: .375rem .375rem 0 0;
+    border: 1px solid transparent;
+    margin-bottom: -1px;
+    font-size: .8125rem;
+
+    &--active {
+      background: $rj-header-bg;
+      border-color: $gray-300 $gray-300 $rj-header-bg;
+      color: $rj-accent-text;
+      font-weight: 500;
+    }
+    &--inactive {
+      color: $gray-600;
+      &:hover { color: $gray-800; background: rgba(0,0,0,.04); }
+    }
+    &--new {
+      color: $rj-accent;
+      border: 1px dashed $rj-accent !important;
+      align-self: center;
+      margin-bottom: 4px;
+      &:hover { background: $rj-accent-subtle; }
+    }
+  }
+
+  .rj-row--active {
+    background-color: $rj-accent-subtle !important;
+    border-left: 3px solid $rj-accent;
+  }
+
+  .rj-skill-badge {
+    background-color: $rj-badge-bg;
+    color: $rj-badge-text;
+    font-weight: 400;
+    font-size: .7rem;
+  }
+
+  .rj-filter-badge {
+    background-color: $gray-300;
+    color: $gray-700;
+    font-weight: 400;
+    font-size: .7rem;
+    transition: background-color .15s, color .15s;
+    user-select: none;
+    &--active { background-color: $rj-accent; color: #fff; }
+    &:hover:not(&--active) { background-color: $gray-400; }
+  }
+
+  .rj-saved-star { color: $yellow; font-size: .8rem; }
+
+  .rj-action-th   { width: 1%; white-space: nowrap; }
+  .rj-action-cell {
+    width: 1%;
+    white-space: nowrap;
+    text-align: right;
+    vertical-align: middle;
+    padding-right: .65rem !important;
+  }
+
+  .rj-dd-wrap  { position: relative; display: inline-block; }
+
+  .rj-dot-btn {
+    background: none;
+    border: none;
+    padding: .25rem .4rem;
+    border-radius: .3rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    color: $gray-500;
+    letter-spacing: .05em;
+    &:hover { background: $gray-200; color: $gray-800; }
+  }
+
+  .rj-dropdown {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 999;
+    background: #fff;
+    border: 1px solid $gray-300;
+    border-radius: .375rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,.1);
+    min-width: 150px;
+    padding: .3rem 0;
+    display: none;
+    &.open { display: block; }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: .35rem .85rem;
+      background: none;
+      border: none;
+      text-align: left;
+      font-size: .82rem;
+      color: $gray-800;
+      cursor: pointer;
+      white-space: nowrap;
+      &:hover { background: $gray-100; }
+    }
+  }
+
+  .rj-link {
+    color: $rj-accent-text;
+    text-decoration: none;
+    font-size: .8125rem;
+    &:hover { color: darken($rj-accent-text, 10%); text-decoration: underline; }
+  }
+
+  .rj-modal-backdrop { background: rgba(0,0,0,.5); }
+
+  .table > thead.table-light > tr > th {
+    background-color: $gray-200;
+    border-bottom-color: $gray-300;
+  }
 }

@@ -4,7 +4,7 @@
     @include('layouts/head')
   </head>
 
-  <body>
+  <body class="vh-100 d-flex flex-column overflow-hidden">
     @inject('request', 'Illuminate\Http\Request')
     @if (app(\Laravel\Nova\Contracts\ImpersonatesUsers::class)->impersonating($request))
     <div style="text-align: center; height: 3em; padding: 0.7em; background-color: #eed202;">
@@ -82,7 +82,7 @@
       </div>
     </nav>
 
-    <div class="container" id="app">
+    <div class="container d-flex flex-column flex-grow-1 overflow-auto" id="app">
       @yield('content')
     </div>
 

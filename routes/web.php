@@ -10,8 +10,10 @@ use App\Http\Controllers\DocuSignController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\RemoteAttendanceController;
+use App\Http\Controllers\ResumeBookController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
 use App\Http\Controllers\SponsorLoginController;
@@ -130,7 +132,12 @@ Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
     ->middleware('auth');
 
 Route::prefix('sponsor')->name('sponsor.')->group(static function (): void {
-    Route::get('/', static fn () => view('sponsors.home'))->name('home')->middleware('auth.sponsor');
+    Route::get('/', [ResumeBookController::class, 'index'])->name('home')->middleware('auth.sponsor');
+    Route::post('/search', [ResumeBookController::class, 'search'])->name('search')->middleware('auth.sponsor');
+    Route::get('/majors', [MajorController::class, 'index'])->middleware('auth.sponsor');
+    Route::get('/graduation-semesters', [ResumeBookController::class, 'getGraduationSemesters'])
+        ->middleware('auth.sponsor');
+    Route::get('/resumes/{uid}', [ResumeBookController::class, 'show'])->middleware('auth.sponsor');
     Route::get('/login', [SponsorLoginController::class, 'showLoginForm'])->name('login');
     Route::post('/validate-email', [SponsorLoginController::class, 'validateEmail'])->name('validate-email');
     Route::post('/verify-otp', [SponsorLoginController::class, 'verifyOneTimePassword'])->name('verify-otp');
