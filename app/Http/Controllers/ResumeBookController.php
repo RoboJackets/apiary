@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\Major;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +23,7 @@ class ResumeBookController
      * Shows a resume given a user ID.
      * Will later be adapted to use Resume model when developed.
      *
-     * @param $uid string representing username for user we are getting the resume from.
+     * @param  $uid  string representing username for user we are getting the resume from.
      */
     public function show(string $uid)
     {
@@ -74,7 +73,9 @@ class ResumeBookController
         if (is_null($code) || $code === '') {
             return ['code' => null, 'name' => 'Unspecified'];
         }
-        if (strlen($code) !== 6) return ['code' => $code, 'name' => $code];
+        if (strlen($code) !== 6) {
+            return ['code' => $code, 'name' => $code];
+        }
 
         $months = [
             '01' => 'January',  '02' => 'February', '03' => 'March',
@@ -83,10 +84,10 @@ class ResumeBookController
             '10' => 'October',  '11' => 'November',  '12' => 'December',
         ];
 
-        $year  = substr($code, 0, 4);
+        $year = substr($code, 0, 4);
         $month = substr($code, 4, 2);
 
-        return [ 'code' => $code, 'name' => ($months[$month] ?? $month) . ' ' . $year];
+        return ['code' => $code, 'name' => ($months[$month] ?? $month).' '.$year];
     }
 
     private function filterUsers(array $majors, array $graduation_semesters): array
@@ -114,6 +115,7 @@ class ResumeBookController
                 'graduation_semester' => $this->formatGradSemester($user->graduation_semester),
             ]))
             ->toArray();
+
         return $users;
     }
 }
