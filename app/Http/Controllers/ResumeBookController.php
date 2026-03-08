@@ -17,7 +17,7 @@ class ResumeBookController
     public function index()
     {
         return view('sponsors.home');
-    } // Currently producing unterminated string error. TODO: Find cause
+    }
 
     /**
      * Shows a resume given a user ID.
@@ -28,8 +28,10 @@ class ResumeBookController
     public function show(string $uid)
     {
         try {
-            return response()->file(Storage::disk('local')->path('resumes/'.$uid.'.pdf'), ['Content-Type' => 'application/pdf']);
-        } catch (FileNotFoundException $e) {
+            return response()
+                ->file(Storage::disk('local')
+                ->path('resumes/'.$uid.'.pdf'), ['Content-Type' => 'application/pdf']);
+        } catch (FileNotFoundException) {
             return response()->json(
                 [
                     'status' => 'error',
@@ -38,7 +40,6 @@ class ResumeBookController
                 404
             );
         }
-
     }
 
     public function search(Request $request)
@@ -70,7 +71,7 @@ class ResumeBookController
 
     private function formatGradSemester(?string $code): array
     {
-        if (is_null($code) || $code === '') {
+        if ($code === null || $code === '') {
             return ['code' => null, 'name' => 'Unspecified'];
         }
         if (strlen($code) !== 6) {
@@ -93,22 +94,22 @@ class ResumeBookController
     private function filterUsers(array $majors, array $graduation_semesters): array
     {
         $usernames = collect(Storage::disk('local')->files('resumes'))
-            ->map(fn ($path) => pathinfo($path, PATHINFO_FILENAME))
+            ->map(static fn ($path) => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
         $users = User::whereIn('uid', $usernames);
-        if (! empty($majors)) {
+        if (! ($majors === [])) {
             $users = $users->whereHas('majors', function ($query) use ($majors) {
                 $query->whereIn('majors.id', $majors);
             });
         }
-        if (! empty($graduation_semesters)) {
+        if (! ($graduation_semesters === [])) {
             $users = $users->whereIn('graduation_semester', $graduation_semesters);
         }
 
         $users = $users->with('majors')
             ->get()
-            ->map(fn ($user) => array_merge($user->toArray(), [
-                'majors' => $user->majors->map(fn ($major) => [
+            ->map(static fn ($user) => array_merge($user->toArray(), [
+                'majors' => $user->majors->map(static fn ($major) => [
                     'id' => $major->id,
                     'name' => $major->display_name ?? $major->gtad_majorgroup_name,
                 ])->toArray(),
