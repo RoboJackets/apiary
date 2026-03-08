@@ -98,7 +98,7 @@ class ResumeBookController
             ->toArray();
         $users = User::whereIn('uid', $usernames);
         if (! ($majors === [])) {
-            $users = $users->whereHas('majors', function ($query) use ($majors) {
+            $users = $users->whereHas('majors', static function ($query) use ($majors) {
                 $query->whereIn('majors.id', $majors);
             });
         }
