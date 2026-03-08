@@ -151,7 +151,6 @@ Vue.component('loading-spinner', require('./components/LoadingSpinner').default)
 // Sponsors
 Vue.component('sponsor-login', require('./components/sponsors/SponsorLogin.vue').default);
 Vue.component('resume-book-index', require('./components/sponsors/ResumeBookIndex.vue').default);
-Vue.component('major-filter', require('./components/sponsors/MajorFilter.vue').default);
 
 const app = new Vue({
     el: '#app',
