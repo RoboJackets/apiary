@@ -37,6 +37,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      packages: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -62,4 +63,4 @@ jobs:
           NOMAD_ADDR: https://nomad.bcdc.robojackets.net
         working-directory: ./.nomad/
         run: |
-          nomad run -var image=registry.bcdc.robojackets.net/apiary@${{ inputs.image-digest }} -var precompressed_assets=${{ inputs.precompressed-assets }} -var-file var-files/${{ inputs.environment }}.hcl apiary.nomad
+          nomad run -var image=ghcr.io/robojackets/apiary@${{ inputs.image-digest }} -var registry_username=${{ github.actor }} -var registry_password=${{ secrets.GITHUB_TOKEN }} -var precompressed_assets=${{ inputs.precompressed-assets }} -var-file var-files/${{ inputs.environment }}.hcl apiary.nomad
