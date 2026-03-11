@@ -35,6 +35,7 @@ class AuthenticateSponsorOrClientToken
         try {
             return $this->ensureClientIsResourceOwner->handle($request, $next);
         } catch (AuthenticationException) {
+            Auth::forgetGuards();
             return $this->sponsorAuthenticate->handle($request, $next, false);
         }
     }
