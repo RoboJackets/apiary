@@ -45,7 +45,7 @@ Route::prefix('v1/')->middleware(
 
 Route::prefix('v1/')->middleware(
     [
-        AuthenticateSponsorOrClientToken::class,
+        'auth.sponsor_or_client_token',
         'cache:86400',
     ]
 )->group(static function (): void {
