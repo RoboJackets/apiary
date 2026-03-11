@@ -45,7 +45,7 @@ Route::prefix('v1/')->middleware(
 
 Route::prefix('v1/')->middleware(
     [
-        EnsureClientIsResourceOwner::class,
+        AuthenticateSponsorOrClientToken::class,
         'cache:86400',
     ]
 )->group(static function (): void {
