@@ -228,7 +228,7 @@ export default {
 
     async getMajors() {
       try {
-        const response = await axios.get('/sponsor/majors');
+        const response = await axios.get('/api/v1/majors');
         this.majors = response.data.majors;
       } catch (error) {
         console.error('Error fetching majors:', error);
