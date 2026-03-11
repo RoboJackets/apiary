@@ -17,7 +17,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RsvpController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\AuthenticateSponsorOrClientToken;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Http\Middleware\EnsureClientIsResourceOwner;
 
@@ -46,7 +45,7 @@ Route::prefix('v1/')->middleware(
 
 Route::prefix('v1/')->middleware(
     [
-        AuthenticateSponsorOrClientToken::class,
+        EnsureClientIsResourceOwner::class,
         'cache:86400',
     ]
 )->group(static function (): void {

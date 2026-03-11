@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -106,7 +107,7 @@ class ResumeBookController
             ->toArray();
         $users = User::whereIn('uid', $usernames);
         if (! ($majors === [])) {
-            $users = $users->whereHas('majors', static function ($query) use ($majors) {
+            $users = $users->whereHas('majors', static function ($query) use ($majors): Builder {
                 $query->whereIn('majors.id', $majors);
             });
         }
