@@ -77,7 +77,7 @@ class ResumeBookController
         ]);
     }
 
-    private function formatGradSemester(?string $code): array
+    private static function formatGradSemester(?string $code): array
     {
         if ($code === null || $code === '') {
             return ['code' => null, 'name' => 'Unspecified'];
