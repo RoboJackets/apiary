@@ -117,7 +117,7 @@ class ResumeBookController
         $users = $users->with('majors')
             ->get()
             ->map(fn ($user) => array_merge($user->toArray(), [
-                'majors' => $user->majors->map(static fn ($major) => [
+                'majors' => $user->majors->map(static fn ($major): array => [
                     'id' => $major->id,
                     'name' => $major->display_name ?? $major->gtad_majorgroup_name,
                 ])->toArray(),
