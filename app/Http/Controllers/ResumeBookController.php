@@ -69,7 +69,7 @@ class ResumeBookController
             ->distinct()
             ->pluck('graduation_semester')
             ->filter()
-            ->mapWithKeys(fn ($code) => [$code => $this->formatGradSemester($code)]);
+            ->mapWithKeys(static fn ($code): array => [$code => self::formatGradSemester($code)]);
 
         return response()->json([
             'status' => 'success',
@@ -77,7 +77,7 @@ class ResumeBookController
         ]);
     }
 
-    private function formatGradSemester(?string $code): array
+    private static function formatGradSemester(?string $code): array
     {
         if ($code === null || $code === '') {
             return ['code' => null, 'name' => 'Unspecified'];

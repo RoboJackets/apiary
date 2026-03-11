@@ -84,7 +84,7 @@
             <tr>
               <th>Name</th>
               <th v-if="!selectedUser">Major</th>
-              <th v-if="!selectedUser">Grad Term</th>
+              <th v-if="!selectedUser">Graduation Term</th>
               <!-- TODO: Implement skills and keywords filter -->
               <!--<th v-if="!selectedUser">Skills</th>
               <th class="rj-action-th"></th>-->
