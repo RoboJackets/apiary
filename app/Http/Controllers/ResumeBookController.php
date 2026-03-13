@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResumeSearchRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -48,10 +49,12 @@ class ResumeBookController
      *
      * @param  $request  Request object containing arrays of parameters to search.
      */
-    public function search(Request $request)
+    public function search(ResumeSearchRequest $request)
     {
-        $majors = $request->input('majors', []);
-        $graduation_semesters = $request->input('graduation_semesters', []);
+        $validated = $request->validated();
+
+        $majors = $validated['majors'] ?? [];
+        $graduation_semesters = $validated['graduation_semesters'] ?? [];
 
         $users = $this->filterUsers($majors, $graduation_semesters);
 
