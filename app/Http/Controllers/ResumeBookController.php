@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\FiscalYear;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -103,19 +102,11 @@ class ResumeBookController
 
     private function filterUsers(array $majors, array $graduation_semesters): array
     {
-        $fiscal_year_id = FiscalYear::where('ending_year', '=', $fields->fiscal_year)->sole()->id;
-
         $usernames = collect(Storage::disk('local')->files('resumes'))
             ->map(static fn ($path) => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
-        $users = User::whereIn('uid', $usernames)
-            ->whereHas('dues', static function (Builder $q) use ($fiscal_year_id): void {
-            $q->whereHas('for', static function (Builder $q) use ($fiscal_year_id): void {
-                $q->where('fiscal_year_id', '=', $fiscal_year_id);
-            })
-                ->paid();
-        });
-
+        $users = User::active()->whereIn('uid', $usernames);
+        
         if (! ($majors === [])) {
             $users = $users->whereHas('majors', static function ($query) use ($majors): Builder {
                 $query->whereIn('majors.id', $majors);
