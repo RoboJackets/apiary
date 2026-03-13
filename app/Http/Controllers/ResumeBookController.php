@@ -106,10 +106,10 @@ class ResumeBookController
             ->map(static fn ($path) => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
         $users = User::active()->whereIn('uid', $usernames);
-        
+
         if (! ($majors === [])) {
             $users = $users->whereHas('majors', static function ($query) use ($majors): Builder {
-                $query->whereIn('majors.id', $majors);
+                return $query->whereIn('majors.id', $majors);
             });
         }
 
