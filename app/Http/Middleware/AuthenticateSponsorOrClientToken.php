@@ -33,16 +33,9 @@ class AuthenticateSponsorOrClientToken
     public function handle(Request $request, Closure $next): Response
     {
         try {
-            $response = $this->ensureClientIsResourceOwner->handle($request, $next);
-
-            if ($response->getStatusCode() === Response::HTTP_UNAUTHORIZED) {
-                throw new AuthenticationException;
-            }
-
-            return $response;
-        } catch (AuthenticationException) {
-            Auth::forgetGuards();
             return $this->sponsorAuthenticate->handle($request, $next, false);
+        } catch (AuthenticationException) {
+            return $this->ensureClientIsResourceOwner->handle($request, $next);
         }
     }
 }
