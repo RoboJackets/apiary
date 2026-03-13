@@ -112,11 +112,13 @@ class ResumeBookController
             })
                 ->paid();
         });
+
         if (! ($majors === [])) {
             $users = $users->whereHas('majors', static function ($query) use ($majors): Builder {
                 $query->whereIn('majors.id', $majors);
             });
         }
+        
         if (! ($graduation_semesters === [])) {
             $users = $users->whereIn('graduation_semester', $graduation_semesters);
         }
