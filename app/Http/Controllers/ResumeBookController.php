@@ -102,6 +102,8 @@ class ResumeBookController
 
     private function filterUsers(array $majors, array $graduation_semesters): array
     {
+        $fiscal_year_id = FiscalYear::where('ending_year', '=', $fields->fiscal_year)->sole()->id;
+        
         $usernames = collect(Storage::disk('local')->files('resumes'))
             ->map(static fn ($path) => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
@@ -118,7 +120,7 @@ class ResumeBookController
                 $query->whereIn('majors.id', $majors);
             });
         }
-        
+
         if (! ($graduation_semesters === [])) {
             $users = $users->whereIn('graduation_semester', $graduation_semesters);
         }
