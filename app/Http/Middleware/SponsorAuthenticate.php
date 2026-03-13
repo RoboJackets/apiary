@@ -21,9 +21,7 @@ class SponsorAuthenticate
     {
         if (Auth::guard('sponsor')->check()) {
             return $next($request);
-        }
-
-        if ($redirectOnFail) {
+        } else if ($redirectOnFail) {
             return redirect()->route('sponsor.login');
         } else {
             throw new AuthenticationException;
