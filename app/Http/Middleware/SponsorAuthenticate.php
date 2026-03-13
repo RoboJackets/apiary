@@ -17,14 +17,11 @@ class SponsorAuthenticate
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, bool $redirectOnFail = true): Response
+    public function handle(Request $request, Closure $next): Response
     {
         if (Auth::guard('sponsor')->check()) {
             return $next($request);
-        } else if ($redirectOnFail) {
-            return redirect()->route('sponsor.login');
-        } else {
-            throw new AuthenticationException;
         }
+        return redirect()->route('sponsor.login');
     }
 }

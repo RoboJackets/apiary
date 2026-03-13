@@ -43,12 +43,7 @@ Route::prefix('v1/')->middleware(
     Route::get('users/managers', [UserController::class, 'indexManagers'])->middleware('cache:86400');
 });
 
-Route::prefix('v1/')->middleware(
-    [
-        'auth.sponsor_or_client_token',
-        'cache:86400',
-    ]
-)->group(static function (): void {
+Route::prefix('v1/')->middleware('cache:86400')->group(static function (): void {
     Route::get('majors', [MajorController::class, 'index']);
 });
 

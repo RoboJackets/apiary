@@ -44,7 +44,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth.cas.check' => \App\Http\Middleware\CasCheck::class,
             'auth.cas.force' => \App\Http\Middleware\CasAuthenticate::class,
             'auth.sponsor' => \App\Http\Middleware\SponsorAuthenticate::class,
-            'auth.sponsor_or_client_token' => \App\Http\Middleware\AuthenticateSponsorOrClientToken::class,
             'auth.user_or_client_token' => \App\Http\Middleware\AuthenticateWithUserOrClientToken::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
