@@ -105,7 +105,13 @@ class ResumeBookController
         $usernames = collect(Storage::disk('local')->files('resumes'))
             ->map(static fn ($path) => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
-        $users = User::whereIn('uid', $usernames)->where('is_active', true);
+        $users = User::whereIn('uid', $usernames)
+            ->whereHas('dues', static function (Builder $q) use ($fiscal_year_id): void {
+            $q->whereHas('for', static function (Builder $q) use ($fiscal_year_id): void {
+                $q->where('fiscal_year_id', '=', $fiscal_year_id);
+            })
+                ->paid();
+        });
         if (! ($majors === [])) {
             $users = $users->whereHas('majors', static function ($query) use ($majors): Builder {
                 $query->whereIn('majors.id', $majors);
