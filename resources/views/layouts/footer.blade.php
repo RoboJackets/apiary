@@ -5,7 +5,7 @@
         <p class="text-footer text-end"><a class="text-footer" href="https://github.com/RoboJackets/apiary">Made with ♥ by RoboJackets</a> • <a class="text-footer" href="/privacy">Privacy Policy</a></p>
       </div>
       <div class="text-footer">
-@if(\Sentry\SentrySdk::getCurrentHub()->getSpan() !== null && \Sentry\SentrySdk::getCurrentHub()->getSpan()->getSampled())
+@if(class_exists('\Sentry\SentrySdk') && \Sentry\SentrySdk::getCurrentHub()->getSpan() !== null && \Sentry\SentrySdk::getCurrentHub()->getSpan()->getSampled())
 @if(auth()->user() && auth()->user()->hasRole('admin'))
 <a class="text-footer" href="https://sentry.io/organizations/robojackets/performance/trace/{{ \Sentry\SentrySdk::getCurrentHub()->getSpan()->getTraceId() }}">Trace ID: {{ \Sentry\SentrySdk::getCurrentHub()->getSpan()->getTraceId() }}</a>
 @else
