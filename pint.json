@@ -6,6 +6,7 @@
             "anonymous_class": false,
             "named_class": true
         },
-        "declare_strict_types": true
+        "declare_strict_types": true,
+        "fully_qualified_strict_types": false
     }
 }
