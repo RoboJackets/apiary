@@ -118,13 +118,16 @@ class ResumeBookController
 
         $users = $users->with('majors')
             ->get()
-            ->map(fn ($user) => array_merge($user->toArray(), [
-                'majors' => $user->majors->map(static fn ($major): array => [
-                    'id' => $major->id,
-                    'name' => $major->display_name ?? $major->gtad_majorgroup_name,
-                ])->toArray(),
-                'graduation_semester' => $this->formatGradSemester($user->graduation_semester),
-            ]))
+            ->map(fn ($user) => array_merge(
+                $user->get(['id', 'full_name', 'graduation_semester', 'majors', 'gt_email'])
+                    ->toArray(), [
+                        'majors' => $user->majors->map(static fn ($major): array => [
+                            'id' => $major->id,
+                            'name' => $major->display_name ?? $major->gtad_majorgroup_name,
+                        ])
+                            ->toArray(),
+                        'graduation_semester' => $this->formatGradSemester($user->graduation_semester),
+                    ]))
             ->toArray();
 
         return $users;

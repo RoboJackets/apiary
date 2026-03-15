@@ -129,7 +129,7 @@
           <div class="d-flex justify-content-between align-items-start">
             <div>
               <h2 class="h5 mb-0 fw-semibold">{{ selectedUser.full_name }}</h2>
-              <div class="text-muted small">{{ selectedUser.majors.map(m => m.name).join(', ') }} · {{ selectedUser.graduation_semester.name }} · {{ selectedUser.email }}</div>
+              <div class="text-muted small">{{ selectedUser.majors.map(m => m.name).join(', ') }} · {{ selectedUser.graduation_semester.name }} · {{ selectedUser.gt_email }}</div>
             </div>
           </div>
           <!-- <div class="d-flex flex-wrap gap-1 mt-2">
