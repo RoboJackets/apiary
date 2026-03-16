@@ -69,9 +69,8 @@ class ResumeBookController
     {
         $semesters = User::select('graduation_semester')
             ->distinct()
+            ->orderByDesc('graduation_semester')
             ->pluck('graduation_semester')
-            ->sort()
-            ->reverse()
             ->mapWithKeys(static fn ($code): array => [$code => self::formatGradSemester($code)]);
 
         return response()->json([
