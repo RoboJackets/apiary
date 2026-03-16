@@ -77,7 +77,7 @@
            style="min-height:0;">
         <div class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
           <small class="text-muted">{{ users.length }} students</small>
-          <button v-if="selectedUser" class="btn btn-link btn-sm p-0 rj-link" @click="selectedUser = null">← Collapse</button>
+          <button v-if="selectedUser" class="btn btn-link btn-sm p-0 rj-link" @click="selectedUser = null">→ Collapse</button>
         </div>
         <table class="table table-hover table-sm mb-0">
           <thead class="table-light sticky-top">

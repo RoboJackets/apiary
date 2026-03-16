@@ -70,7 +70,7 @@ class ResumeBookController
         $semesters = User::select('graduation_semester')
             ->distinct()
             ->pluck('graduation_semester')
-            ->filter()
+            ->orderby('graduation_semester', 'desc')
             ->mapWithKeys(static fn ($code): array => [$code => self::formatGradSemester($code)]);
 
         return response()->json([
@@ -89,10 +89,9 @@ class ResumeBookController
         }
 
         $months = [
-            '01' => 'January',  '02' => 'February', '03' => 'March',
-            '04' => 'April',    '05' => 'May',       '06' => 'June',
-            '07' => 'July',     '08' => 'August',    '09' => 'September',
-            '10' => 'October',  '11' => 'November',  '12' => 'December',
+            '02' => 'Spring',
+            '05' => 'Summer',
+            '08' => 'Fall',
         ];
 
         $year = substr($code, 0, 4);
