@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class ResumeSearchRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): true
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string,string|list<string>>
+     */
+    public function rules(): array
+    {
+        return [
+            'majors' => 'nullable|array',
+            'majors.*' => 'sometimes|integer|exists:majors,id',
+            'graduation_semesters' => 'nullable|array',
+            'graduation_semesters.*' => 'sometimes|integer|digits:6',
+        ];
+    }
+}
