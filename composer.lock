@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87ab1a98015f154110d45fa7986d17c0",
+    "content-hash": "056c12a0b098972587cc97b88a05946a",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3977,16 +3977,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v10.24.0",
+            "version": "v10.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "f9864d9a727a0c0d6b95e08ed92df8c301ae6d2c"
+                "reference": "f28630dca44a63d80c15e596bedc5af42c8985d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/f9864d9a727a0c0d6b95e08ed92df8c301ae6d2c",
-                "reference": "f9864d9a727a0c0d6b95e08ed92df8c301ae6d2c",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/f28630dca44a63d80c15e596bedc5af42c8985d5",
+                "reference": "f28630dca44a63d80c15e596bedc5af42c8985d5",
                 "shasum": ""
             },
             "require": {
@@ -4053,7 +4053,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2026-02-10T18:44:39+00:00"
+            "time": "2026-03-10T16:16:46+00:00"
         },
         {
             "name": "laravel/sentinel",
