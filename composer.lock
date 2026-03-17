@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f291fafff96750f12fb8b3f1efb67020",
+    "content-hash": "8f50bdf4009e3b2d1365c82b347c9f82",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -17200,37 +17200,40 @@
         },
         {
             "name": "spatie/ignition",
-            "version": "1.15.1",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ignition.git",
-                "reference": "31f314153020aee5af3537e507fef892ffbf8c85"
+                "reference": "b59385bb7aa24dae81bcc15850ebecfda7b40838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ignition/zipball/31f314153020aee5af3537e507fef892ffbf8c85",
-                "reference": "31f314153020aee5af3537e507fef892ffbf8c85",
+                "url": "https://api.github.com/repos/spatie/ignition/zipball/b59385bb7aa24dae81bcc15850ebecfda7b40838",
+                "reference": "b59385bb7aa24dae81bcc15850ebecfda7b40838",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "php": "^8.0",
-                "spatie/error-solutions": "^1.0",
-                "spatie/flare-client-php": "^1.7",
-                "symfony/console": "^5.4|^6.0|^7.0",
-                "symfony/var-dumper": "^5.4|^6.0|^7.0"
+                "spatie/backtrace": "^1.7.1",
+                "spatie/error-solutions": "^1.1.2",
+                "spatie/flare-client-php": "^1.9",
+                "symfony/console": "^5.4.42|^6.0|^7.0|^8.0",
+                "symfony/http-foundation": "^5.4.42|^6.0|^7.0|^8.0",
+                "symfony/mime": "^5.4.42|^6.0|^7.0|^8.0",
+                "symfony/var-dumper": "^5.4.42|^6.0|^7.0|^8.0"
             },
             "require-dev": {
-                "illuminate/cache": "^9.52|^10.0|^11.0|^12.0",
+                "illuminate/cache": "^9.52|^10.0|^11.0|^12.0|^13.0",
                 "mockery/mockery": "^1.4",
-                "pestphp/pest": "^1.20|^2.0",
+                "pestphp/pest": "^1.20|^2.0|^3.0",
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
                 "psr/simple-cache-implementation": "*",
-                "symfony/cache": "^5.4|^6.0|^7.0",
-                "symfony/process": "^5.4|^6.0|^7.0",
+                "symfony/cache": "^5.4.38|^6.0|^7.0|^8.0",
+                "symfony/process": "^5.4.35|^6.0|^7.0|^8.0",
                 "vlucas/phpdotenv": "^5.5"
             },
             "suggest": {
@@ -17279,20 +17282,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-21T14:31:39+00:00"
+            "time": "2026-03-17T10:51:08+00:00"
         },
         {
             "name": "spatie/laravel-ignition",
-            "version": "2.11.0",
+            "version": "2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ignition.git",
-                "reference": "11f38d1ff7abc583a61c96bf3c1b03610a69cccd"
+                "reference": "45b3b6e1e73fc161cba2149972698644b99594ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/11f38d1ff7abc583a61c96bf3c1b03610a69cccd",
-                "reference": "11f38d1ff7abc583a61c96bf3c1b03610a69cccd",
+                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/45b3b6e1e73fc161cba2149972698644b99594ee",
+                "reference": "45b3b6e1e73fc161cba2149972698644b99594ee",
                 "shasum": ""
             },
             "require": {
@@ -17302,7 +17305,7 @@
                 "illuminate/support": "^11.0|^12.0|^13.0",
                 "nesbot/carbon": "^2.72|^3.0",
                 "php": "^8.2",
-                "spatie/ignition": "^1.15.1",
+                "spatie/ignition": "^1.16",
                 "symfony/console": "^7.4|^8.0",
                 "symfony/var-dumper": "^7.4|^8.0"
             },
@@ -17371,7 +17374,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-22T19:14:05+00:00"
+            "time": "2026-03-17T12:20:04+00:00"
         },
         {
             "name": "spatie/macroable",
