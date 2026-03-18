@@ -37,13 +37,13 @@ class CasAuthenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('sponsor')->check()) {
-            Auth::guard('sponsor')->logout();
-        }
+        // if (Auth::guard('sponsor')->check()) {
+        //     Auth::guard('sponsor')->logout();
+        // }
         // Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
             // Run the user update only if they don't have an active session
-            if (Cas::isAuthenticated() && $request->user() === null) {
+            if (Cas::isAuthenticated() && ($request->user() === null || $request->user() instanceof \App\Models\SponsorUser)) {
                 if (Cas::isMasquerading()) {
                     $masq_attrs = [];
                     foreach (self::$attrs as $attr) {
