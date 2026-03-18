@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 return [
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',
@@ -20,10 +16,6 @@ return [
     ],
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
         'sponsor_users' => [
             'driver' => 'eloquent',
             'model' => App\Models\SponsorUser::class,

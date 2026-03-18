@@ -19,8 +19,11 @@ class CasCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Remove existing sponsor session if exists to prevent session conflict
         if (Auth::guard('sponsor')->check()) {
             Auth::guard('sponsor')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
         }
         Cas::checkAuthentication();
         if ($request->user() === null) {

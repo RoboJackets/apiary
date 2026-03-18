@@ -37,11 +37,11 @@ class CasAuthenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Remove existing sponsor session if exists to prevent session conflict
         if (Auth::guard('sponsor')->check()) {
             Auth::guard('sponsor')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            //Auth::logout();
         }
         // Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
