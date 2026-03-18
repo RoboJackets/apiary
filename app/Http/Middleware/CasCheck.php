@@ -21,10 +21,10 @@ class CasCheck
     {
         Cas::checkAuthentication();
         if ($request->user() === null) {
-            if (Cas::isAuthenticated()) {
+            if (Cas::isAuthenticated() && $request->user('web') === null) {
                 $user = CasUser::createOrUpdate();
 
-                Auth::login($user);
+                Auth::guard('web')->login($user);
 
                 SendReminders::dispatch($user);
 

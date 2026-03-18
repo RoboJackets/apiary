@@ -40,7 +40,7 @@ class CasAuthenticate
         // Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
             // Run the user update only if they don't have an active session
-            if (Cas::isAuthenticated() && $request->user() === null) {
+            if (Cas::isAuthenticated() && $request->user('web') === null) {
                 if (Cas::isMasquerading()) {
                     $masq_attrs = [];
                     foreach (self::$attrs as $attr) {
@@ -65,14 +65,14 @@ class CasAuthenticate
                     $user->syncRoles(['admin']);
                 }
 
-                Auth::login($user);
+                Auth::guard('web')->login($user);
 
                 SendReminders::dispatch($user);
 
                 $request->session()->put('authenticationInstant', Cas::getAttribute('authenticationDate'));
             }
 
-            if (Cas::isAuthenticated() && $request->user() !== null) {
+            if (Cas::isAuthenticated() && $request->user('web') !== null) {
                 // User is authenticated and already has an existing session
                 return $next($request);
             }
