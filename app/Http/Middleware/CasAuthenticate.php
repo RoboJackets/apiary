@@ -43,7 +43,7 @@ class CasAuthenticate
         // Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
             // Run the user update only if they don't have an active session
-            if (Cas::isAuthenticated() && ($request->user() === null || $request->user() instanceof \App\Models\SponsorUser)) {
+            if (Cas::isAuthenticated() && $request->user() === null) {
                 if (Cas::isMasquerading()) {
                     $masq_attrs = [];
                     foreach (self::$attrs as $attr) {
@@ -85,6 +85,10 @@ class CasAuthenticate
                 return response('Unauthorized', 401);
             }
             Cas::authenticate();
+            if (Cas::isAuthenticated() && $request->user() instanceof \App\Models\SponsorUser) {
+                $user = CasUser::createOrUpdate();
+                Auth::login($user);
+            }
         }
 
         // User is authenticated through the API guard (I guess? Moving this into an else() broke sessions)
