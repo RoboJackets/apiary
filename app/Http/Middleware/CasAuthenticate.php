@@ -41,7 +41,7 @@ class CasAuthenticate
             Auth::guard('sponsor')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            Auth::logout();
+            //Auth::logout();
         }
         // Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
