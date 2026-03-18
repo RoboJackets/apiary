@@ -37,7 +37,7 @@
             <input class="form-check-input" type="checkbox" @click="() => {
               toggleMajor(m);
             }" :id="'m-'+m.id"/>
-            <label class="form-check-label small" :for="'m-'+m.id">{{ m.display_name ?? m.gtad_majorgroup_name }}</label>
+            <label class="form-check-label small" :for="'m-'+m.id">{{ m.display_name }}</label>
           </div>
         </div>
 
@@ -227,9 +227,18 @@ export default {
     },
 
     async getMajors() {
+      let majors = [];
       try {
         const response = await axios.get('/api/v1/majors');
-        this.majors = response.data.majors;
+        for (const m of response.data.majors) {
+          if (!m.display_name) {
+            continue;
+          }
+          if (!majors.includes(m.display_name)) {
+            majors.push({id: m.id, name: m.display_name});
+          }
+        }
+        this.majors = majors;
       } catch (error) {
         console.error('Error fetching majors:', error);
       }
@@ -239,7 +248,7 @@ export default {
       console.log(this.filters.majors);
       const index = this.filters.majors.findIndex(m => m === major.id);
       if (document.getElementById('m-'+major.id).checked) {
-        this.filters.majors.push(major.id);
+        this.filters.majors.push(major.display_name);
       } else {
         this.filters.majors.splice(index, 1);
       }
