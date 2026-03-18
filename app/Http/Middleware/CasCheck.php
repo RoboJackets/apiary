@@ -19,9 +19,12 @@ class CasCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (Auth::guard('sponsor')->check()) {
+            Auth::guard('sponsor')->logout();
+        }
         Cas::checkAuthentication();
         if ($request->user() === null) {
-            if (Cas::isAuthenticated() && ! ($request->user('web') instanceof \App\Models\User)) {
+            if (Cas::isAuthenticated() && $request->user() === null) {
                 $user = CasUser::createOrUpdate();
 
                 Auth::login($user);
