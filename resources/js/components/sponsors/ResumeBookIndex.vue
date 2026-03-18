@@ -235,7 +235,7 @@ export default {
             continue;
           }
           if (!majors.includes(m.display_name)) {
-            majors.push({id: m.id, name: m.display_name});
+            majors.push({id: m.id, display_name: m.display_name});
           }
         }
         this.majors = majors;
