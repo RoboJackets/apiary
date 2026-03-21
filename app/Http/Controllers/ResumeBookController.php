@@ -123,7 +123,7 @@ class ResumeBookController
                     'id' => $major->id,
                     'name' => $major->display_name ?? $major->gtad_majorgroup_name,
                 ])->toArray(),
-                'graduation_semester' => $this->formatGradSemester($user->graduation_semester),
+                'graduation_semester' => self::formatGradSemester($user->graduation_semester),
             ]))
             ->toArray();
 
