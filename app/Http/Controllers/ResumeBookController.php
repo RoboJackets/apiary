@@ -108,7 +108,10 @@ class ResumeBookController
         $users = User::active()->whereIn('uid', $usernames);
 
         if ($majors !== []) {
-            $users = $users->whereHas('majors', static fn (Builder $query): Builder => $query->whereIn('majors.display_name', $majors));
+            $users = $users->whereHas(
+                'majors',
+                static fn (Builder $query): Builder => $query->whereIn('majors.display_name', $majors)
+            );
         }
 
         if ($graduation_semesters !== []) {
