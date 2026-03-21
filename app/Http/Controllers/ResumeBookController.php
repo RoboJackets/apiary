@@ -71,7 +71,7 @@ class ResumeBookController
             ->distinct()
             ->orderByDesc('graduation_semester')
             ->pluck('graduation_semester')
-            ->mapWithKeys(static fn ($code): array => [$code => self::formatGradSemester($code)]);
+            ->mapWithKeys(static fn (?string $code): array => [$code => self::formatGradSemester($code)]);
 
         return response()->json([
             'status' => 'success',
