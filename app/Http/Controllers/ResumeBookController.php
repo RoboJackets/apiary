@@ -119,7 +119,7 @@ class ResumeBookController
             ->get(['id', 'uid', 'first_name', 'last_name', 'graduation_semester', 'gt_email'])
             ->map(static fn (User $user): array => array_merge($user->toArray(), [
                 'full_name' => $user->first_name.' '.$user->last_name,
-                'majors' => $user->majors->map(static fn ($major): array => [
+                'majors' => $user->majors->map(static fn (Major $major): array => [
                     'id' => $major->id,
                     'name' => $major->display_name ?? $major->gtad_majorgroup_name,
                 ])->toArray(),
