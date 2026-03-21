@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use BadMethodCallException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -69,6 +70,6 @@ class SponsorUser extends Authenticatable
     #[\Override]
     public function getRememberTokenName(): string
     {
-        return '';
+        throw new BadMethodCallException('Not implemented');
     }
 }
