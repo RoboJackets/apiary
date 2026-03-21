@@ -227,10 +227,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/RoboJackets/numverify-api-client-php.git"
         }
     ]
 }

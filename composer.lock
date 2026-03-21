@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6bd17f87ee861c298520b38f0346ccc9",
+    "content-hash": "2b09608588b978a0e7e86189d44d3ceb",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -1935,37 +1935,34 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RoboJackets/numverify-api-client-php.git",
-                "reference": "f4166d0740bf096d551665cbb4636daa31f421ae"
+                "url": "https://github.com/ericsizemore/numverify-api-client-php.git",
+                "reference": "b2f470067d7e8dbfbecb672a9b4cf7bf2622aecd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RoboJackets/numverify-api-client-php/zipball/f4166d0740bf096d551665cbb4636daa31f421ae",
-                "reference": "f4166d0740bf096d551665cbb4636daa31f421ae",
+                "url": "https://api.github.com/repos/ericsizemore/numverify-api-client-php/zipball/b2f470067d7e8dbfbecb672a9b4cf7bf2622aecd",
+                "reference": "b2f470067d7e8dbfbecb672a9b4cf7bf2622aecd",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/guzzle": "^7.9",
+                "guzzlehttp/guzzle": "^7.10",
                 "kevinrob/guzzle-cache-middleware": "^7.0",
-                "php": "^8.2",
-                "symfony/cache": "^7.2"
-            },
-            "replace": {
-                "markrogoyski/numverify-api-client-php": "^2.1"
+                "php": ">=8.2",
+                "symfony/cache": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "esi/phpunit-coverage-check": "^2.0",
-                "friendsofphp/php-cs-fixer": "^3.68",
+                "esi/phpunit-coverage-check": "^2.0 || ^3.1",
+                "friendsofphp/php-cs-fixer": "^3.94",
                 "phpstan/extension-installer": "^1.4",
                 "phpstan/phpstan": "^2.1",
                 "phpstan/phpstan-deprecation-rules": "^2.0",
                 "phpstan/phpstan-phpunit": "^2.0",
                 "phpstan/phpstan-strict-rules": "^2.0",
-                "phpunit/phpunit": "^11.5 || ^12.0",
+                "phpunit/phpunit": "^11.5 || ^12.5 || ^13.0",
                 "psalm/plugin-phpunit": "^0.19.0",
-                "rector/rector": "^2.0",
-                "vimeo/psalm": "^6.1"
+                "rector/rector": "^2.3",
+                "vimeo/psalm": "^6.15"
             },
             "default-branch": true,
             "type": "library",
@@ -1979,61 +1976,7 @@
                     "Numverify\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Numverify\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "analyze": [
-                    "@clear-build",
-                    "@composer validate",
-                    "@phpunit",
-                    "@code-coverage",
-                    "@psalm:shepherd",
-                    "@psalm:security",
-                    "@phpstan"
-                ],
-                "clear-build": [
-                    "rm -rf ./build/*"
-                ],
-                "code-coverage": [
-                    "vendor/bin/coverage-check build/logs/clover.xml 100"
-                ],
-                "phpcs:check": [
-                    "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff"
-                ],
-                "phpcs:fix": [
-                    "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php"
-                ],
-                "phpstan": [
-                    "vendor/bin/phpstan analyse -c phpstan.neon -vvv"
-                ],
-                "phpunit": [
-                    "vendor/bin/phpunit"
-                ],
-                "phpunit:migrate": [
-                    "@phpunit --migrate-configuration"
-                ],
-                "psalm": [
-                    "vendor/bin/psalm -c psalm.xml --no-cache --no-diff --use-baseline=psalm-baseline.xml"
-                ],
-                "psalm:baseline": [
-                    "vendor/bin/psalm -c psalm.xml --no-cache --no-diff --set-baseline=psalm-baseline.xml"
-                ],
-                "psalm:security": [
-                    "vendor/bin/psalm -c psalm.xml --no-cache --no-diff --taint-analysis"
-                ],
-                "psalm:shepherd": [
-                    "@psalm --shepherd --stats"
-                ],
-                "refactor:check": [
-                    "@refactor:fix --dry-run"
-                ],
-                "refactor:fix": [
-                    "vendor/bin/rector process"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2063,24 +2006,24 @@
                 "validate phone number"
             ],
             "support": {
-                "issues": "https://github.com/ericsizemore/numverify-api-client-php/issues",
-                "forum": "https://github.com/ericsizemore/numverify-api-client-php/discussions",
-                "source": "https://github.com/ericsizemore/numverify-api-client-php/tree/master",
                 "docs": "https://github.com/ericsizemore/numverify-api-client-php",
+                "forum": "https://github.com/ericsizemore/numverify-api-client-php/discussions",
+                "issues": "https://github.com/ericsizemore/numverify-api-client-php/issues",
                 "rss": "https://github.com/ericsizemore/numverify-api-client-php/releases.atom",
-                "security": "https://github.com/ericsizemore/numverify-api-client-php/security/policy"
+                "security": "https://github.com/ericsizemore/numverify-api-client-php/security/policy",
+                "source": "https://github.com/ericsizemore/numverify-api-client-php/tree/master"
             },
             "funding": [
                 {
-                    "type": "custom",
-                    "url": "https://ko-fi.com/ericsizemore"
+                    "url": "https://ko-fi.com/ericsizemore",
+                    "type": "custom"
                 },
                 {
-                    "type": "github",
-                    "url": "https://github.com/ericsizemore"
+                    "url": "https://github.com/ericsizemore",
+                    "type": "github"
                 }
             ],
-            "time": "2025-12-24T17:10:28+00:00"
+            "time": "2026-03-18T03:36:16+00:00"
         },
         {
             "name": "fakerphp/faker",
