@@ -103,7 +103,7 @@ class ResumeBookController
     private function filterUsers(array $majors, array $graduation_semesters): array
     {
         $usernames = collect(Storage::disk('local')->files('resumes'))
-            ->map(static fn ($path) => pathinfo($path, PATHINFO_FILENAME))
+            ->map(static fn (string $path): string => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
         $users = User::active()->whereIn('uid', $usernames);
 
