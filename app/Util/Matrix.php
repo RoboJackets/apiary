@@ -124,7 +124,7 @@ class Matrix
     }
 
     /**
-     * Get the departure flight carrier and number, if there is an unambiguous departure flight
+     * Get the departure flight carrier and number, if there is an unambiguous departure flight.
      *
      * @psalm-pure
      */
@@ -143,7 +143,7 @@ class Matrix
     }
 
     /**
-     * Get the return flight carrier and number, if there is an unambiguous return flight
+     * Get the return flight carrier and number, if there is an unambiguous return flight.
      *
      * @psalm-pure
      */
@@ -162,7 +162,7 @@ class Matrix
     }
 
     /**
-     * Get the number of slices for the itinerary
+     * Get the number of slices for the itinerary.
      *
      * @psalm-pure
      */
