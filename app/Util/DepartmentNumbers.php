@@ -7,6 +7,8 @@ namespace App\Util;
 /**
  * Georgia Tech department list.
  * Sourced from https://www.budgets.gatech.edu/mReference/RefDepTable.
+ *
+ * @psalm-pure
  */
 class DepartmentNumbers
 {

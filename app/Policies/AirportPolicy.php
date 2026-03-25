@@ -7,6 +7,9 @@ namespace App\Policies;
 use App\Models\Airport;
 use App\Models\User;
 
+/**
+ * @psalm-pure
+ */
 class AirportPolicy
 {
     /**

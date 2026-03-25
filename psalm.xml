@@ -33,11 +33,6 @@
                 <directory name="database" />
             </errorLevel>
         </PropertyNotSetInConstructor>
-        <LessSpecificImplementedReturnType>
-            <errorLevel type="suppress">
-                <directory name="app" />
-            </errorLevel>
-        </LessSpecificImplementedReturnType>
         <InvalidReturnStatement>
             <errorLevel type="suppress">
                 <directory name="app" />
@@ -261,6 +256,10 @@
                 <referencedProperty name="Illuminate\Database\Eloquent\Model::$resume_date"/>
                 <referencedProperty name="Laravel\Passport\Client::$owner_id"/>
                 <referencedProperty name="Laravel\Passport\Client::$owner_type"/>
+                <referencedProperty name="Spatie\OneTimePasswords\Models\OneTimePassword::$authenticatable_id"/>
+                <referencedProperty name="Spatie\OneTimePasswords\Models\OneTimePassword::$authenticatable_type"/>
+                <referencedProperty name="Spatie\OneTimePasswords\Models\OneTimePassword::$expires_at"/>
+                <referencedProperty name="Spatie\OneTimePasswords\Models\OneTimePassword::$password"/>
                 <referencedProperty name="Spatie\Permission\Models\Permission::$name"/>
                 <referencedProperty name="Spatie\Permission\Models\Role::$name"/>
             </errorLevel>
@@ -467,12 +466,6 @@
                 <directory name="app/"/>
             </errorLevel>
         </MissingClassConstType>
-        <MissingImmutableAnnotation>
-            <errorLevel type="info">
-                <directory name="app/"/>
-                <directory name="database/"/>
-            </errorLevel>
-        </MissingImmutableAnnotation>
         <MissingInterfaceImmutableAnnotation>
             <errorLevel type="info">
                 <directory name="app/"/>
