@@ -467,5 +467,34 @@
                 <directory name="app/"/>
             </errorLevel>
         </MissingClassConstType>
+        <MissingOverrideAttribute>
+            <errorLevel type="info">
+                <directory name="app/"/>
+                <directory name="database/"/>
+                <directory name="routes/"/>
+            </errorLevel>
+        </MissingOverrideAttribute>
+        <MissingPureAnnotation>
+            <errorLevel type="info">
+                <directory name="app/"/>
+                <directory name="database/"/>
+            </errorLevel>
+        </MissingPureAnnotation>
+        <MissingAbstractPureAnnotation>
+            <errorLevel type="info">
+                <directory name="app/"/>
+            </errorLevel>
+        </MissingAbstractPureAnnotation>
+        <MissingImmutableAnnotation>
+            <errorLevel type="info">
+                <directory name="app/"/>
+                <directory name="database/"/>
+            </errorLevel>
+        </MissingImmutableAnnotation>
+        <MissingInterfaceImmutableAnnotation>
+            <errorLevel type="info">
+                <directory name="app/"/>
+            </errorLevel>
+        </MissingInterfaceImmutableAnnotation>
     </issueHandlers>
 </psalm>
