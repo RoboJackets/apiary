@@ -466,10 +466,5 @@
                 <directory name="app/"/>
             </errorLevel>
         </MissingClassConstType>
-        <MissingInterfaceImmutableAnnotation>
-            <errorLevel type="info">
-                <directory name="app/"/>
-            </errorLevel>
-        </MissingInterfaceImmutableAnnotation>
     </issueHandlers>
 </psalm>

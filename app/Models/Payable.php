@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * A model that can have payments associated.
+ *
+ * @psalm-mutable
  */
 interface Payable
 {
