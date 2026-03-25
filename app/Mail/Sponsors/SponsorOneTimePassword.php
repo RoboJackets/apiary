@@ -18,6 +18,8 @@ class SponsorOneTimePassword extends Mailable implements ShouldQueue
 
     /**
      * Create a new message instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(public readonly OneTimePassword $oneTimePassword)
     {

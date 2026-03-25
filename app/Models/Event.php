@@ -87,6 +87,8 @@ class Event extends Model
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected function casts(): array
@@ -146,6 +148,8 @@ class Event extends Model
 
     /**
      * Get the organizer_name attribute for the model.
+     *
+     * @psalm-mutation-free
      */
     public function getOrganizerNameAttribute(): string
     {

@@ -86,6 +86,8 @@ class TravelAssignment extends Model implements Payable
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected function casts(): array
@@ -138,12 +140,18 @@ class TravelAssignment extends Model implements Payable
         return $this->morphMany(DocuSignEnvelope::class, 'signable');
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     #[\Override]
     public function getIsPaidAttribute(): bool
     {
         return self::where('travel_assignments.id', $this->id)->paid()->count() !== 0;
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     #[\Override]
     public function getPayableAmountAttribute(): int
     {
@@ -200,6 +208,9 @@ class TravelAssignment extends Model implements Payable
             ->where('tar_received', false);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function getNeedsDocusignAttribute(): bool
     {
         return self::where('travel_assignments.id', $this->id)->needDocuSign()->count() !== 0;

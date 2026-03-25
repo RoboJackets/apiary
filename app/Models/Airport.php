@@ -82,6 +82,9 @@ class Airport extends Model
         return $rows;
     }
 
+    /**
+     * @psalm-pure
+     */
     protected function sushiShouldCache(): true
     {
         return true;

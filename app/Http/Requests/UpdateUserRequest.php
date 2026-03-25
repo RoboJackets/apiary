@@ -11,6 +11,8 @@ class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @psalm-pure
      */
     public function authorize(): bool
     {
@@ -21,6 +23,8 @@ class UpdateUserRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array<string,array<string>>
+     *
+     * @psalm-external-mutation-free
      */
     public function rules(): array
     {

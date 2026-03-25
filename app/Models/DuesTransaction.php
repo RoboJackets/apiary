@@ -196,8 +196,11 @@ class DuesTransaction extends Model implements Payable
      * Pending defined as no payments, or payments that do not sum to payable amount
      * for a currently active DuesPackage.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
+     *
+     * @psalm-pure
      */
     public function scopePending(Builder $query): Builder
     {
@@ -224,6 +227,8 @@ class DuesTransaction extends Model implements Payable
 
     /**
      * Get the is_paid flag for the DuesTransaction.
+     *
+     * @psalm-mutation-free
      */
     #[\Override]
     public function getIsPaidAttribute(): bool
@@ -279,6 +284,8 @@ class DuesTransaction extends Model implements Payable
 
     /**
      * Get the Payable amount.
+     *
+     * @psalm-mutation-free
      */
     #[\Override]
     public function getPayableAmountAttribute(): int

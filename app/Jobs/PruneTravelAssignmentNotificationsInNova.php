@@ -23,6 +23,8 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldBeUnique, Should
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(private readonly User $user)
     {
@@ -47,6 +49,8 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldBeUnique, Should
 
     /**
      * The unique ID of the job.
+     *
+     * @psalm-mutation-free
      */
     public function uniqueId(): string
     {
@@ -57,6 +61,8 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldBeUnique, Should
      * Get the tags that should be assigned to the job.
      *
      * @return array<string>
+     *
+     * @psalm-mutation-free
      */
     public function tags(): array
     {

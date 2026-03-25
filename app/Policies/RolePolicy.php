@@ -62,12 +62,17 @@ class RolePolicy
 
     /**
      * Determine whether the user can permanently delete the role.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, Role $role): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, Role $role): bool
     {
         return false;

@@ -16,6 +16,8 @@ class SponsorOneTimePasswordNotification extends OneTimePasswordNotification
      * Get the notification's delivery channels.
      *
      * @return array<int, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function via(object $notifiable): array
@@ -25,6 +27,8 @@ class SponsorOneTimePasswordNotification extends OneTimePasswordNotification
 
     /**
      * Get the mail representation of the notification.
+     *
+     * @psalm-mutation-free
      */
     #[\Override]
     public function toMail(object $notifiable): SponsorOneTimePasswordMailable

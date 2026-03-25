@@ -55,7 +55,9 @@ class SelfServiceAccessOverrideEligibility
     /**
      * Replace the value of the required conditions array.
      *
-     * @param  array<string, bool>  $required_conditions
+     * @param array<string, bool>  $required_conditions
+     *
+     * @psalm-external-mutation-free
      */
     public function setRequiredConditions(array $required_conditions): SelfServiceAccessOverrideEligibility
     {
@@ -67,7 +69,9 @@ class SelfServiceAccessOverrideEligibility
     /**
      * Replace the value of the required tasks array.
      *
-     * @param  array<string, bool>  $required_tasks
+     * @param array<string, bool>  $required_tasks
+     *
+     * @psalm-external-mutation-free
      */
     public function setRequiredTasks(array $required_tasks): SelfServiceAccessOverrideEligibility
     {
@@ -86,6 +90,8 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Set whether the user can become eligible for a self-service override.
+     *
+     * @psalm-external-mutation-free
      */
     public function setUserRectifiable(bool $user_rectifiable): SelfServiceAccessOverrideEligibility
     {
@@ -104,6 +110,8 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Set the date on which the self-service override would/will expire.
+     *
+     * @psalm-external-mutation-free
      */
     public function setOverrideUntil(?CarbonImmutable $override_until): SelfServiceAccessOverrideEligibility
     {
@@ -122,6 +130,8 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Set whether the user is eligible for a self-service override right now.
+     *
+     * @psalm-external-mutation-free
      */
     public function setEligibility(bool $is_eligible): SelfServiceAccessOverrideEligibility
     {
@@ -140,6 +150,8 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Set a simple explanation of why the user is currently ineligible for a self-service override.
+     *
+     * @psalm-external-mutation-free
      */
     public function setIneligibleReason(string $ineligible_reason): SelfServiceAccessOverrideEligibility
     {
@@ -151,8 +163,11 @@ class SelfServiceAccessOverrideEligibility
     /**
      * Remove each element of an associative array whose value is falsy.
      *
-     * @param  array  $arr  An associative array to filter
+     * @param array  $arr  An associative array to filter
+     *
      * @return array A 1D array of the truthy values in the input array
+     *
+     * @psalm-pure
      */
     private function removeFalsyAssocArrayValues(array $arr): array
     {
@@ -164,6 +179,8 @@ class SelfServiceAccessOverrideEligibility
      * satisfied) become eligible for a self-service override.
      *
      * @return array<string>
+     *
+     * @psalm-mutation-free
      */
     public function getRemainingTasks(): array
     {
@@ -180,6 +197,8 @@ class SelfServiceAccessOverrideEligibility
      * also completed) become eligible for a self-service override.
      *
      * @return array<string>
+     *
+     * @psalm-mutation-free
      */
     public function getUnmetConditions(): array
     {
@@ -193,6 +212,8 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Returns a string representation of the current status of this user's eligibility for a self-service override.
+     *
+     * @psalm-mutation-free
      */
     public function __toString(): string
     {

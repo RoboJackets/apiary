@@ -14,6 +14,8 @@ class ClassStandingPolicy
 
     /**
      * Determine whether the user can view any class standings.
+     *
+     * @psalm-pure
      */
     public function viewAny(User $user): bool
     {
@@ -22,6 +24,8 @@ class ClassStandingPolicy
 
     /**
      * Determine whether the user can view the class standing.
+     *
+     * @psalm-pure
      */
     public function view(User $user, ClassStanding $classStanding): bool
     {
@@ -46,6 +50,8 @@ class ClassStandingPolicy
 
     /**
      * Determine whether the user can delete the class standing.
+     *
+     * @psalm-pure
      */
     public function delete(User $user, ClassStanding $classStanding): bool
     {
@@ -54,6 +60,8 @@ class ClassStandingPolicy
 
     /**
      * Determine whether the user can restore the class standing.
+     *
+     * @psalm-pure
      */
     public function restore(User $user, ClassStanding $classStanding): bool
     {
@@ -62,6 +70,8 @@ class ClassStandingPolicy
 
     /**
      * Determine whether the user can permanently delete the class standing.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, ClassStanding $classStanding): bool
     {
@@ -92,6 +102,9 @@ class ClassStandingPolicy
         return $user->hasRole('admin');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, ClassStanding $classStanding): bool
     {
         return false;

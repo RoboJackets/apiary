@@ -125,6 +125,9 @@ class SponsorLoginController
         ]);
     }
 
+    /**
+     * @psalm-pure
+     */
     private function isValidSponsorDomain(string $email): bool
     {
         $domain = substr(strrchr($email, '@'), 1);

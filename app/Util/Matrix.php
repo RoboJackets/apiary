@@ -12,6 +12,8 @@ class Matrix
 {
     /**
      * Returns the highest possible display price for a single passenger on this itinerary.
+     *
+     * @psalm-pure
      */
     public static function getHighestDisplayPrice(string|array|null $itinerary): ?float
     {
@@ -121,6 +123,9 @@ class Matrix
         return CarbonImmutable::parse($latest_slice['departure']);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function getDepartureFlightNumber(array $decoded_itinerary): ?string
     {
         if (
@@ -135,6 +140,9 @@ class Matrix
         return $segment['carrier']['shortName'].' '.$segment['flight']['number'];
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function getReturnFlightNumber(array $decoded_itinerary): ?string
     {
         if (
@@ -149,6 +157,9 @@ class Matrix
         return $segment['carrier']['shortName'].' '.$segment['flight']['number'];
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function getSliceCount(array $decoded_itinerary): int
     {
         return count($decoded_itinerary['itinerary']['slices']);

@@ -63,12 +63,17 @@ class EventPolicy
 
     /**
      * Determine whether the user can permanently delete the event.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, Event $event): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, Event $event): bool
     {
         return false;

@@ -66,8 +66,11 @@ class AuthorizeInclude
      * Converts a string in camelCase to dashed-format
      * Ex. duesTransactions -> dues-transactions.
      *
-     * @param  string  $string  string to convert
+     * @param string  $string  string to convert
+     *
      * @return string result
+     *
+     * @psalm-pure
      */
     private static function camelToDashed(string $string): string
     {

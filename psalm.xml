@@ -467,12 +467,6 @@
                 <directory name="app/"/>
             </errorLevel>
         </MissingClassConstType>
-        <MissingPureAnnotation>
-            <errorLevel type="info">
-                <directory name="app/"/>
-                <directory name="database/"/>
-            </errorLevel>
-        </MissingPureAnnotation>
         <MissingAbstractPureAnnotation>
             <errorLevel type="info">
                 <directory name="app/"/>

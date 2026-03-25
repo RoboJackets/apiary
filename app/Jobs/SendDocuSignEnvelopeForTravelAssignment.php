@@ -30,6 +30,8 @@ class SendDocuSignEnvelopeForTravelAssignment implements ShouldBeUnique, ShouldQ
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(
         public readonly TravelAssignment $assignment,
@@ -141,6 +143,8 @@ class SendDocuSignEnvelopeForTravelAssignment implements ShouldBeUnique, ShouldQ
 
     /**
      * The unique ID of the job.
+     *
+     * @psalm-mutation-free
      */
     public function uniqueId(): string
     {

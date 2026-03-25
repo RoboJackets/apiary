@@ -108,6 +108,8 @@ class ShirtSizeBreakdown extends Partition
 
     /**
      * Get the URI key for the metric.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function uriKey(): string

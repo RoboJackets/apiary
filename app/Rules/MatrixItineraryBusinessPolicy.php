@@ -110,7 +110,9 @@ class MatrixItineraryBusinessPolicy implements ValidationRule
     /**
      * Construct a business policy validator for a specific trip.
      *
-     * @param  array<string,bool>  $policyToggles  policies enabled for a specific trip
+     * @param array<string,bool>  $policyToggles  policies enabled for a specific trip
+     *
+     * @psalm-mutation-free
      */
     public function __construct(array $policyToggles)
     {

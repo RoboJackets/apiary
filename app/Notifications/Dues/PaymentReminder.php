@@ -15,6 +15,9 @@ class PaymentReminder extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * @psalm-mutation-free
+     */
     public function __construct(private readonly DuesTransaction $transaction)
     {
     }
@@ -23,6 +26,8 @@ class PaymentReminder extends Notification implements ShouldQueue
      * Get the notification's delivery channels.
      *
      * @return array<string>
+     *
+     * @psalm-pure
      */
     public function via(User $user): array
     {
@@ -31,6 +36,8 @@ class PaymentReminder extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
+     *
+     * @psalm-mutation-free
      */
     public function toMail(User $user): DuesPaymentReminderMailable
     {
@@ -39,6 +46,8 @@ class PaymentReminder extends Notification implements ShouldQueue
 
     /**
      * Determine if the notification should be sent.
+     *
+     * @psalm-pure
      */
     public function shouldSend(User $user, string $channel): bool
     {
@@ -49,6 +58,8 @@ class PaymentReminder extends Notification implements ShouldQueue
      * Determine which queues should be used for each notification channel.
      *
      * @return array<string,string>
+     *
+     * @psalm-pure
      */
     public function viaQueues(): array
     {
