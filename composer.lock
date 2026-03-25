@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ae402339f2046db0a8549307970a3fc",
+    "content-hash": "e1590d6c2c664d1f676acf4063a3c41f",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3787,16 +3787,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v13.6.0",
+            "version": "v13.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "d97be1147f3dc2857e5a5cc4be0842c3ed46c5d8"
+                "reference": "1894e49bb26b3ede0d6c03bf88e23ddda7d520ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/d97be1147f3dc2857e5a5cc4be0842c3ed46c5d8",
-                "reference": "d97be1147f3dc2857e5a5cc4be0842c3ed46c5d8",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/1894e49bb26b3ede0d6c03bf88e23ddda7d520ce",
+                "reference": "1894e49bb26b3ede0d6c03bf88e23ddda7d520ce",
                 "shasum": ""
             },
             "require": {
@@ -3858,7 +3858,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2026-03-05T16:26:09+00:00"
+            "time": "2026-03-21T11:46:03+00:00"
         },
         {
             "name": "laravel/prompts",
