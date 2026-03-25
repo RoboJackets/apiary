@@ -14,11 +14,15 @@ interface Payable
 {
     /**
      * Whether the payable is fully paid.
+     *
+     * @psalm-mutation-free
      */
     public function getIsPaidAttribute(): bool;
 
     /**
      * The total amount due, if not paid, in whole US Dollars.
+     *
+     * @psalm-mutation-free
      */
     public function getPayableAmountAttribute(): int;
 
@@ -26,6 +30,8 @@ interface Payable
      * The User associated with this Payable.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, self>
+     *
+     * @psalm-mutation-free
      */
     public function user(): BelongsTo;
 
@@ -33,6 +39,8 @@ interface Payable
      * The Payment(s) associated with this Payable.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment, self>
+     *
+     * @psalm-mutation-free
      */
     public function payment(): MorphMany;
 
@@ -40,6 +48,8 @@ interface Payable
      * Get the class name for polymorphic relations.
      *
      * @return string
+     *
+     * @psalm-mutation-free
      */
     public function getMorphClass();
 }

@@ -131,6 +131,8 @@ abstract class RecordPayment extends Action
 
     /**
      * The note to add to the payment.
+     *
+     * @psalm-pure
      */
     abstract protected static function note(ActionFields $fields): string;
 }
