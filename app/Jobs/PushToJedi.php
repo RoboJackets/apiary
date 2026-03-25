@@ -31,6 +31,8 @@ class PushToJedi implements ShouldBeUnique, ShouldQueue
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(
         private readonly User $user,
@@ -112,6 +114,8 @@ class PushToJedi implements ShouldBeUnique, ShouldQueue
 
     /**
      * The unique ID of the job.
+     *
+     * @psalm-mutation-free
      */
     public function uniqueId(): string
     {
@@ -122,6 +126,8 @@ class PushToJedi implements ShouldBeUnique, ShouldQueue
      * Get the tags that should be assigned to the job.
      *
      * @return array<string>
+     *
+     * @psalm-mutation-free
      */
     public function tags(): array
     {

@@ -63,6 +63,8 @@ class OAuth2Client extends Client implements AuthorizableContract
 
     /**
      * Determine if the client should skip the authorization prompt.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function skipsAuthorization(Authenticatable $user, array $scopes): bool

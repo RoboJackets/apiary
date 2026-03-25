@@ -71,6 +71,8 @@ class OAuth2AccessToken extends Resource
 
     /**
      * Get the displayable label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function label(): string
@@ -114,6 +116,9 @@ class OAuth2AccessToken extends Resource
         ];
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public static function searchable(): bool
     {
@@ -122,6 +127,8 @@ class OAuth2AccessToken extends Resource
 
     /**
      * Get the URI key for the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function uriKey(): string

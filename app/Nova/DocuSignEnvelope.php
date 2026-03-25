@@ -34,6 +34,8 @@ class DocuSignEnvelope extends Resource
 
     /**
      * Get the displayable label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function label(): string
@@ -43,6 +45,8 @@ class DocuSignEnvelope extends Resource
 
     /**
      * Get the displayable singular label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function singularLabel(): string
@@ -52,6 +56,8 @@ class DocuSignEnvelope extends Resource
 
     /**
      * Get the URI key for the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function uriKey(): string
@@ -225,6 +231,9 @@ class DocuSignEnvelope extends Resource
         ];
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public static function searchable(): bool
     {

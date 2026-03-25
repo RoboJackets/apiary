@@ -68,6 +68,8 @@ class AuthorizeInclude
      *
      * @param  string  $string  string to convert
      * @return string result
+     *
+     * @psalm-pure
      */
     private static function camelToDashed(string $string): string
     {

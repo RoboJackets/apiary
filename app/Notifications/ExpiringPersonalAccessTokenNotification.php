@@ -17,6 +17,8 @@ class ExpiringPersonalAccessTokenNotification extends Notification implements Sh
 
     /**
      * Create a new notification instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(private readonly Token $token)
     {
@@ -26,6 +28,8 @@ class ExpiringPersonalAccessTokenNotification extends Notification implements Sh
      * Get the notification's delivery channels.
      *
      * @return array<string>
+     *
+     * @psalm-pure
      */
     public function via(User $notifiable): array
     {
@@ -42,6 +46,8 @@ class ExpiringPersonalAccessTokenNotification extends Notification implements Sh
 
     /**
      * Determine if the notification should be sent.
+     *
+     * @psalm-pure
      */
     public function shouldSend(User $user, string $channel): bool
     {
@@ -52,6 +58,8 @@ class ExpiringPersonalAccessTokenNotification extends Notification implements Sh
      * Determine which queues should be used for each notification channel.
      *
      * @return array<string,string>
+     *
+     * @psalm-pure
      */
     public function viaQueues(): array
     {

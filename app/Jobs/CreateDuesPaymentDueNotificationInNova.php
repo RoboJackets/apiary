@@ -22,6 +22,8 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldBeUnique, ShouldQu
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(private readonly User $user)
     {
@@ -45,6 +47,8 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldBeUnique, ShouldQu
 
     /**
      * The unique ID of the job.
+     *
+     * @psalm-mutation-free
      */
     public function uniqueId(): string
     {
@@ -55,6 +59,8 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldBeUnique, ShouldQu
      * Get the tags that should be assigned to the job.
      *
      * @return array<string>
+     *
+     * @psalm-mutation-free
      */
     public function tags(): array
     {

@@ -53,6 +53,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(
         private string $identifier,
@@ -214,6 +216,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
      * Get the tags that should be assigned to the job.
      *
      * @return array<string>
+     *
+     * @psalm-mutation-free
      */
     public function tags(): array
     {

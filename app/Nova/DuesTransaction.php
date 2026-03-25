@@ -44,6 +44,8 @@ class DuesTransaction extends Resource
 
     /**
      * Get the displayable label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function label(): string
@@ -53,6 +55,8 @@ class DuesTransaction extends Resource
 
     /**
      * Get the displayable singular label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function singularLabel(): string
@@ -151,6 +155,8 @@ class DuesTransaction extends Resource
 
     /**
      * Hide the edit button from indexes, in particular on merchandise pivots.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool

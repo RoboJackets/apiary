@@ -31,6 +31,8 @@ class PaymentsPerDay extends Trend
      * Get the ranges available for the metric.
      *
      * @return array<int|string,string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function ranges(): array
@@ -45,6 +47,8 @@ class PaymentsPerDay extends Trend
 
     /**
      * Get the URI key for the metric.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function uriKey(): string

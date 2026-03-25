@@ -115,6 +115,9 @@ abstract class RecordPayment extends Action
         throw new Exception('Unexpected resource class '.$this->resource::class);
     }
 
+    /**
+     * @psalm-pure
+     */
     private static function prettyPayableName(Payable $payable): string
     {
         if (is_a($payable, DuesTransaction::class)) {
@@ -128,6 +131,8 @@ abstract class RecordPayment extends Action
 
     /**
      * The note to add to the payment.
+     *
+     * @psalm-pure
      */
     abstract protected static function note(ActionFields $fields): string;
 }

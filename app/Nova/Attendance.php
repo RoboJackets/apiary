@@ -37,6 +37,8 @@ class Attendance extends Resource
 
     /**
      * Get the displayable label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function label(): string
@@ -46,6 +48,8 @@ class Attendance extends Resource
 
     /**
      * Get the displayable singular label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function singularLabel(): string
@@ -55,6 +59,8 @@ class Attendance extends Resource
 
     /**
      * Get the URI key for the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function uriKey(): string
@@ -157,6 +163,8 @@ class Attendance extends Resource
      * Get the filters available for the resource.
      *
      * @return array<\Laravel\Nova\Filters\Filter>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function filters(Request $request): array

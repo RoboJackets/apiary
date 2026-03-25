@@ -10,6 +10,9 @@ use Laravel\Passport\ClientRepository;
 
 class OAuthController
 {
+    /**
+     * @psalm-mutation-free
+     */
     public function __construct(private ClientRepository $clientRepository)
     {
     }

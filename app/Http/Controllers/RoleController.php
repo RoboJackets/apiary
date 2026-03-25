@@ -14,6 +14,9 @@ use Spatie\Permission\Models\Role;
 
 class RoleController implements HasMiddleware
 {
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public static function middleware(): array
     {

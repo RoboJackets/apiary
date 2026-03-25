@@ -39,6 +39,9 @@ class CreatePersonalAccessToken extends Action
      */
     public $confirmText = 'Enter a name to identify this token. It will be visible to the user.';
 
+    /**
+     * @psalm-mutation-free
+     */
     public function __construct(?User $user)
     {
         if ($user?->is_service_account === true) {

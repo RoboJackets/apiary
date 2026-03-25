@@ -24,6 +24,8 @@ class DynamicClientRegistrationRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array<string, array<string>>
+     *
+     * @psalm-pure
      */
     public function rules(): array
     {

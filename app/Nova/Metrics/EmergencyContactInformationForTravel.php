@@ -21,6 +21,8 @@ class EmergencyContactInformationForTravel extends Partition
 
     /**
      * Get the displayable name of the metric.
+     *
+     * @psalm-mutation-free
      */
     #[\Override]
     public function name(): string
@@ -60,6 +62,8 @@ class EmergencyContactInformationForTravel extends Partition
 
     /**
      * Get the URI key for the metric.
+     *
+     * @psalm-mutation-free
      */
     #[\Override]
     public function uriKey(): string

@@ -29,6 +29,8 @@ class Attendable extends Filter
 
     /**
      * Create new Attendable filter.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(bool $includeEvents = true)
     {

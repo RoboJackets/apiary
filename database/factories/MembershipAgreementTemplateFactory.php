@@ -17,6 +17,8 @@ class MembershipAgreementTemplateFactory extends Factory
      * Define the model's default state.
      *
      * @return array<string,string|int|\DateTime|bool|null>
+     *
+     * @psalm-mutation-free
      */
     #[\Override]
     public function definition(): array

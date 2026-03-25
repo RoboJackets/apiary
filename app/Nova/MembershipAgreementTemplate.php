@@ -55,6 +55,8 @@ class MembershipAgreementTemplate extends Resource
 
     /**
      * Get the displayable label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function label(): string
@@ -64,6 +66,8 @@ class MembershipAgreementTemplate extends Resource
 
     /**
      * Get the displayable singular label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function singularLabel(): string
@@ -92,6 +96,9 @@ class MembershipAgreementTemplate extends Resource
         ];
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public static function searchable(): bool
     {

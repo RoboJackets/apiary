@@ -17,6 +17,8 @@ class PaymentReceived
 
     /**
      * Create a new event instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(public readonly Payment $payment)
     {

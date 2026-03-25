@@ -30,6 +30,8 @@ class AttendancePolicy
 
     /**
      * Determine whether the user can create attendances.
+     *
+     * @psalm-pure
      */
     public function create(User $user): bool
     {
@@ -39,6 +41,8 @@ class AttendancePolicy
 
     /**
      * Determine whether the user can update the attendance.
+     *
+     * @psalm-pure
      */
     public function update(User $user, Attendance $attendance): bool
     {
@@ -63,12 +67,17 @@ class AttendancePolicy
 
     /**
      * Determine whether the user can permanently delete the attendance.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, Attendance $attendance): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, Attendance $attendance): bool
     {
         return false;

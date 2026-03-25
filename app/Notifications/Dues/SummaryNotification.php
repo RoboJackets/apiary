@@ -97,6 +97,8 @@ class SummaryNotification extends Notification
      * Get the array representation of the notification.
      *
      * @return array<string,string>
+     *
+     * @psalm-pure
      */
     public function toArray(TreasurerNotifiable $notifiable): array
     {

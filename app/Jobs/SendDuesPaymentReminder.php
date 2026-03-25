@@ -47,6 +47,8 @@ class SendDuesPaymentReminder implements ShouldBeUnique, ShouldQueue
 
     /**
      * The unique ID of the job.
+     *
+     * @psalm-mutation-free
      */
     public function uniqueId(): string
     {
@@ -57,6 +59,8 @@ class SendDuesPaymentReminder implements ShouldBeUnique, ShouldQueue
      * Get the tags that should be assigned to the job.
      *
      * @return array<string>
+     *
+     * @psalm-mutation-free
      */
     public function tags(): array
     {

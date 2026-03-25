@@ -44,6 +44,8 @@ class Sponsor extends Model
      * The attributes that should be cast to native types.
      *
      * @return array<string, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected function casts(): array
