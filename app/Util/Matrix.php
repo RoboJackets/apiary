@@ -124,6 +124,8 @@ class Matrix
     }
 
     /**
+     * Get the departure flight carrier and number, if there is an unambiguous departure flight
+     *
      * @psalm-pure
      */
     public static function getDepartureFlightNumber(array $decoded_itinerary): ?string
@@ -141,6 +143,8 @@ class Matrix
     }
 
     /**
+     * Get the return flight carrier and number, if there is an unambiguous return flight
+     *
      * @psalm-pure
      */
     public static function getReturnFlightNumber(array $decoded_itinerary): ?string
@@ -158,6 +162,8 @@ class Matrix
     }
 
     /**
+     * Get the number of slices for the itinerary
+     *
      * @psalm-pure
      */
     public static function getSliceCount(array $decoded_itinerary): int

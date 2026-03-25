@@ -238,8 +238,7 @@ class Payment extends Model
      *
      * Fees are listed at https://squareup.com/us/en/payments/our-fees.
      *
-     * @param int  $amount  desired net amount, in cents
-     *
+     * @param  int  $amount  desired net amount, in cents
      * @return int surcharge amount, in cents
      *
      * @psalm-pure
@@ -258,8 +257,7 @@ class Payment extends Model
      *
      * Fees are listed at https://squareup.com/us/en/payments/our-fees.
      *
-     * @param int  $amount  charge amount, in cents
-     *
+     * @param  int  $amount  charge amount, in cents
      * @return int processing fee, in cents
      *
      * @psalm-pure

@@ -21,9 +21,8 @@ class UserAccessActive extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
-     * @param string  $value
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      *
      * @psalm-pure

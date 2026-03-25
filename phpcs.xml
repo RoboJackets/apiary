@@ -61,6 +61,8 @@
     <rule ref="Generic.CodeAnalysis"/>
 
     <rule ref="Generic.Commenting.DocComment.MissingShort">
+        <exclude-pattern>/app/</exclude-pattern>
+        <exclude-pattern>/database/</exclude-pattern>
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 

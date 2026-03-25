@@ -196,8 +196,7 @@ class DuesTransaction extends Model implements Payable
      * Pending defined as no payments, or payments that do not sum to payable amount
      * for a currently active DuesPackage.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      *
      * @psalm-pure

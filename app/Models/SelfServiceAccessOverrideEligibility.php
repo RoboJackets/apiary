@@ -55,7 +55,7 @@ class SelfServiceAccessOverrideEligibility
     /**
      * Replace the value of the required conditions array.
      *
-     * @param array<string, bool>  $required_conditions
+     * @param  array<string, bool>  $required_conditions
      *
      * @psalm-external-mutation-free
      */
@@ -69,7 +69,7 @@ class SelfServiceAccessOverrideEligibility
     /**
      * Replace the value of the required tasks array.
      *
-     * @param array<string, bool>  $required_tasks
+     * @param  array<string, bool>  $required_tasks
      *
      * @psalm-external-mutation-free
      */
@@ -163,8 +163,7 @@ class SelfServiceAccessOverrideEligibility
     /**
      * Remove each element of an associative array whose value is falsy.
      *
-     * @param array  $arr  An associative array to filter
-     *
+     * @param  array  $arr  An associative array to filter
      * @return array A 1D array of the truthy values in the input array
      *
      * @psalm-pure

@@ -126,6 +126,8 @@ class SponsorLoginController
     }
 
     /**
+     * Check if the given email address is associated with an active sponsor.
+     *
      * @psalm-pure
      */
     private function isValidSponsorDomain(string $email): bool
