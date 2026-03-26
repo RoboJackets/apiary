@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8955f1ec25bbb431d3322df8005abf13",
+    "content-hash": "323f87722458355b15fdb84ce87fce27",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3302,16 +3302,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.55.1",
+            "version": "v12.56.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "6d9185a248d101b07eecaf8fd60b18129545fd33"
+                "reference": "dac16d424b59debb2273910dde88eb7050a2a709"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/6d9185a248d101b07eecaf8fd60b18129545fd33",
-                "reference": "6d9185a248d101b07eecaf8fd60b18129545fd33",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/dac16d424b59debb2273910dde88eb7050a2a709",
+                "reference": "dac16d424b59debb2273910dde88eb7050a2a709",
                 "shasum": ""
             },
             "require": {
@@ -3520,7 +3520,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-03-18T14:28:59+00:00"
+            "time": "2026-03-26T14:51:54+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -7868,7 +7868,7 @@
         },
         {
             "name": "robojackets/client-id-and-secret-modal",
-            "version": "dev-psalm-7-upgrade",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ClientIdAndSecretModal",
@@ -7904,7 +7904,7 @@
         },
         {
             "name": "robojackets/personal-access-token-modal",
-            "version": "dev-psalm-7-upgrade",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/PersonalAccessTokenModal",
