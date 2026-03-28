@@ -38,12 +38,7 @@ class MajorController
                 $join->on('users.id', '=', 'major_user.user_id')
                     ->whereNull('major_user.deleted_at');
             })
-            ->leftJoin(
-                'majors',
-                'major_user.major_id',
-                '=',
-                'majors.id'
-            )
+            ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
             ->orderBy('distinct_display_names')
             ->pluck('distinct_display_names')
             ->mapWithKeys(
