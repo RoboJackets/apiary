@@ -70,6 +70,13 @@ class ResumeBookController
     public function getGraduationSemesters()
     {
         $semesters = User::select('graduation_semester')
+            ->active()
+            ->whereNotNull('resume_date')
+            ->where('primary_affiliation', 'student')
+            ->where('is_service_account', '=', false)
+            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                $q->where('restricted_to_students', false);
+            })
             ->distinct()
             ->orderByDesc('graduation_semester')
             ->pluck('graduation_semester')
