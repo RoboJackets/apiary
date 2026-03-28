@@ -126,7 +126,7 @@ class ResumeBookController
                 'full_name' => $user->first_name.' '.$user->last_name,
                 'majors' => $user->majors->map(static fn (Major $major): array => [
                     'id' => $major->id,
-                    'name' => $major->display_name ?? $major->gtad_majorgroup_name,
+                    'display_name' => $major->display_name ?? $major->gtad_majorgroup_name,
                 ])->toArray(),
                 'graduation_semester' => self::formatGradSemester($user->graduation_semester),
             ]))

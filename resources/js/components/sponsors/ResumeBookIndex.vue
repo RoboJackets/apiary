@@ -33,11 +33,11 @@
           <span class="rj-chevron" :class="{ open: expanded.major }">&#9654;</span>
         </div> <!-- TODO: pass in majors to the page -->
         <div v-show="expanded.major" class="mb-3 mt-1">
-          <div v-for="m in majors" :key="m.id" class="form-check mb-1">
+          <div v-for="m in majors" :key="m.display_name" class="form-check mb-1">
             <input class="form-check-input" type="checkbox" @click="() => {
               toggleMajor(m);
-            }" :id="'m-'+m.id"/>
-            <label class="form-check-label small" :for="'m-'+m.id">{{ m.display_name }}</label>
+            }" :id="'m-'+m.display_name"/>
+            <label class="form-check-label small" :for="'m-'+m.display_name">{{ m.display_name }}</label>
           </div>
         </div>
 
@@ -96,10 +96,10 @@
                 style="cursor:pointer;"
                 @click="selectUser(user)">
               <td class="align-middle">
-                <span class="fw-medium">{{ user.name }}</span>
+                <span class="fw-medium">{{ user.full_name }}</span>
                 <span v-if="user.saved" class="rj-saved-star ms-1">★</span>
               </td>
-              <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.majors.map(m => m.name).join(', ') }}</td>
+              <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.majors.map(m => m.display_name).join(', ') }}</td>
               <td v-if="!selectedUser" class="align-middle small">{{ user.graduation_semester.name }}</td>
               <!-- TODO: Add tags -->
               <!--<td v-if="!selectedUser" class="align-middle">
@@ -129,7 +129,7 @@
           <div class="d-flex justify-content-between align-items-start">
             <div>
               <h2 class="h5 mb-0 fw-semibold">{{ selectedUser.full_name }}</h2>
-              <div class="text-muted small">{{ selectedUser.majors.map(m => m.name).join(', ') }} · {{ selectedUser.graduation_semester.name }} · {{ selectedUser.gt_email }}</div>
+              <div class="text-muted small">{{ selectedUser.majors.map(m => m.display_name).join(', ') }} · {{ selectedUser.graduation_semester.name }} · {{ selectedUser.gt_email }}</div>
             </div>
           </div>
           <!-- <div class="d-flex flex-wrap gap-1 mt-2">
@@ -227,18 +227,20 @@ export default {
     },
 
     async getMajors() {
-      let majors = [];
+      let majors = {};
       try {
         const response = await axios.get('/api/v1/majors');
         for (const m of response.data.majors) {
           if (!m.display_name) {
             continue;
           }
-          if (!majors.includes(m.display_name)) {
-            majors.push({id: m.id, display_name: m.display_name});
+          if (!majors.hasOwnProperty(m.display_name)) {
+            majors[m.display_name] = {ids: [m.id], display_name: m.display_name};
+          } else {
+            majors[m.display_name].ids.push(m.id);
           }
         }
-        this.majors = majors;
+        this.majors = Object.values(majors);
       } catch (error) {
         console.error('Error fetching majors:', error);
       }
