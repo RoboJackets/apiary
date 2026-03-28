@@ -80,8 +80,7 @@ class ResumeBookController
             ->distinct()
             ->orderByDesc('graduation_semester')
             ->pluck('graduation_semester')
-            ->filter(static fn (?string $code): bool =>
-                $code !== null &&
+            ->filter(static fn (?string $code): bool => $code !== null &&
                 $code !== '' &&
                 strlen($code) === 6 &&
                 in_array(substr($code, 4, 2), ['02', '05', '08'], true)
