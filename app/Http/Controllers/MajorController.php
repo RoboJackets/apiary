@@ -50,7 +50,7 @@ class MajorController
                 static fn (?string $name): array => $name === null ? [] : [$name => $name]
             )
             ->toArray();
-        
+
         return response()->json([
             'status' => 'success',
             'majors' => $majors,
