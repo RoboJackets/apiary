@@ -6,6 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Major as MajorResource;
 use App\Models\Major;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\JoinClause;
 use Illuminate\Http\JsonResponse;
 
 class MajorController
