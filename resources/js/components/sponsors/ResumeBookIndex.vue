@@ -230,17 +230,6 @@ export default {
       try {
         const response = await axios.get('/api/v1/majors/resumes');
         this.majors = response.data.majors;
-        // for (const m of response.data.majors) {
-        //   if (!m.display_name) {
-        //     continue;
-        //   }
-        //   if (!majors.hasOwnProperty(m.display_name)) {
-        //     majors[m.display_name] = {ids: [m.id], display_name: m.display_name};
-        //   } else {
-        //     majors[m.display_name].ids.push(m.id);
-        //   }
-        // }
-        // this.majors = Object.values(majors);
       } catch (error) {
         console.error('Error fetching majors:', error);
       }
