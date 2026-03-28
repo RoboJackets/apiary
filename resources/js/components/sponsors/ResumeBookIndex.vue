@@ -248,8 +248,8 @@ export default {
 
     toggleMajor(major) {
       console.log(this.filters.majors);
-      const index = this.filters.majors.findIndex(m => m === major.id);
-      if (document.getElementById('m-'+major.id).checked) {
+      const index = this.filters.majors.findIndex(m => m === major.display_name);
+      if (document.getElementById('m-'+major.display_name).checked) {
         this.filters.majors.push(major.display_name);
       } else {
         this.filters.majors.splice(index, 1);
