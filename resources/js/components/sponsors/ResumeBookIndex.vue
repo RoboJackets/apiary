@@ -100,7 +100,7 @@
                 <span v-if="user.saved" class="rj-saved-star ms-1">★</span>
               </td>
               <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.majors.map(m => m.display_name).join(', ') }}</td>
-              <td v-if="!selectedUser" class="align-middle small">{{ user.graduation_semester.name }}</td>
+              <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.graduation_semester.name }}</td>
               <!-- TODO: Add tags -->
               <!--<td v-if="!selectedUser" class="align-middle">
                  <div class="d-flex flex-wrap gap-1">
