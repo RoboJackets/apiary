@@ -33,11 +33,11 @@
           <span class="rj-chevron" :class="{ open: expanded.major }">&#9654;</span>
         </div> <!-- TODO: pass in majors to the page -->
         <div v-show="expanded.major" class="mb-3 mt-1">
-          <div v-for="m in majors" :key="m.display_name" class="form-check mb-1">
+          <div v-for="m in majors" :key="m" class="form-check mb-1">
             <input class="form-check-input" type="checkbox" @click="() => {
               toggleMajor(m);
-            }" :id="'m-'+m.display_name"/>
-            <label class="form-check-label small" :for="'m-'+m.display_name">{{ m.display_name }}</label>
+            }" :id="'m-'+m"/>
+            <label class="form-check-label small" :for="'m-'+m">{{ m }}</label>
           </div>
         </div>
 
@@ -227,20 +227,20 @@ export default {
     },
 
     async getMajors() {
-      let majors = {};
       try {
-        const response = await axios.get('/api/v1/majors');
-        for (const m of response.data.majors) {
-          if (!m.display_name) {
-            continue;
-          }
-          if (!majors.hasOwnProperty(m.display_name)) {
-            majors[m.display_name] = {ids: [m.id], display_name: m.display_name};
-          } else {
-            majors[m.display_name].ids.push(m.id);
-          }
-        }
-        this.majors = Object.values(majors);
+        const response = await axios.get('/api/v1/majors/resumes');
+        this.majors = response.data.majors;
+        // for (const m of response.data.majors) {
+        //   if (!m.display_name) {
+        //     continue;
+        //   }
+        //   if (!majors.hasOwnProperty(m.display_name)) {
+        //     majors[m.display_name] = {ids: [m.id], display_name: m.display_name};
+        //   } else {
+        //     majors[m.display_name].ids.push(m.id);
+        //   }
+        // }
+        // this.majors = Object.values(majors);
       } catch (error) {
         console.error('Error fetching majors:', error);
       }
@@ -248,9 +248,9 @@ export default {
 
     toggleMajor(major) {
       console.log(this.filters.majors);
-      const index = this.filters.majors.findIndex(m => m === major.display_name);
-      if (document.getElementById('m-'+major.display_name).checked) {
-        this.filters.majors.push(major.display_name);
+      const index = this.filters.majors.findIndex(m => m === major);
+      if (document.getElementById('m-'+major).checked) {
+        this.filters.majors.push(major);
       } else {
         this.filters.majors.splice(index, 1);
       }
