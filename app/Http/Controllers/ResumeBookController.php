@@ -83,8 +83,7 @@ class ResumeBookController
             ->filter(static fn (?string $code): bool => $code !== null &&
                 $code !== '' &&
                 strlen($code) === 6 &&
-                in_array(substr($code, 4, 2), ['02', '05', '08'], true)
-            )
+                in_array(substr($code, 4, 2), ['02', '05', '08'], true))
             ->mapWithKeys(static fn (?string $code): array => [$code => self::formatGradSemester($code)]);
 
         return response()->json([
