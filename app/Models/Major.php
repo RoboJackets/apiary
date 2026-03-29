@@ -76,8 +76,10 @@ class Major extends Model
 
     /**
      * Returns a list of majors (display names only) for active users who have uploaded resumes.
+     *
+     * @return array<int, string>
      */
-    public static function getResumeMajors()
+    public static function getResumeMajors(): array
     {
         $majors = User::selectRaw('distinct(majors.display_name) as distinct_display_names')
             ->active()
@@ -95,10 +97,5 @@ class Major extends Model
             ->orderBy('distinct_display_names')
             ->pluck('distinct_display_names')
             ->toArray();
-
-        return response()->json([
-            'status' => 'success',
-            'majors' => $majors,
-        ]);
     }
 }
