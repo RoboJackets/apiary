@@ -196,10 +196,11 @@ class ExportFilteredResumes extends Action
         $majors = Cache::remember(
             'majors_with_resumes',
             30,
-            static fn (): array => array_combine(
-                $majors = Major::getResumeMajors(),
-                $majors
-            )
+            static function (): array {
+                $majors = Major::getResumeMajors();
+
+                return array_combine($majors, $majors);
+            }
         );
 
         $classStandings = Cache::remember('class_standings_with_resumes', 30, static fn (): array => User::selectRaw(
