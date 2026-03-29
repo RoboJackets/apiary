@@ -135,6 +135,7 @@ Route::prefix('sponsor')->name('sponsor.')->group(static function (): void {
     Route::post('/search', [ResumeBookController::class, 'search'])->name('search')->middleware('auth.sponsor');
     Route::get('/graduation-semesters', [ResumeBookController::class, 'getGraduationSemesters'])
         ->middleware(['auth.sponsor', 'cache:86400']);
+    Route::get('/majors', [ResumeBookController::class, 'getMajors'])->middleware('auth.sponsor');
     Route::get('/resumes/{uid}', [ResumeBookController::class, 'show'])->middleware('auth.sponsor');
     Route::get('/login', [SponsorLoginController::class, 'showLoginForm'])->name('login');
     Route::post('/validate-email', [SponsorLoginController::class, 'validateEmail'])->name('validate-email');

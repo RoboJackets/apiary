@@ -196,30 +196,10 @@ class ExportFilteredResumes extends Action
         $majors = Cache::remember(
             'majors_with_resumes',
             30,
-            static fn (): array => User::selectRaw('distinct(majors.display_name) as distinct_display_names')
-                ->active()
-                ->whereNotNull('resume_date')
-                ->where('primary_affiliation', 'student')
-                ->where('is_service_account', '=', false)
-                ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-                    $q->where('restricted_to_students', false);
-                })
-                ->leftJoin('major_user', static function (JoinClause $join): void {
-                    $join->on('users.id', '=', 'major_user.user_id')
-                        ->whereNull('major_user.deleted_at');
-                })
-                ->leftJoin(
-                    'majors',
-                    'major_user.major_id',
-                    '=',
-                    'majors.id'
-                )
-                ->orderBy('distinct_display_names')
-                ->pluck('distinct_display_names')
-                ->mapWithKeys(
-                    static fn (?string $name): array => $name === null ? [] : [$name => $name]
-                )
-                ->toArray()
+            static fn (): array => array_combine(
+                $majors = Major::getResumeMajors(),
+                $majors
+            )
         );
 
         $classStandings = Cache::remember('class_standings_with_resumes', 30, static fn (): array => User::selectRaw(

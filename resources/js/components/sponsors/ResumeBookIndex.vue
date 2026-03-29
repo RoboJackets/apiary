@@ -11,13 +11,13 @@
     </div>
 
     <!-- Folder tab bar -->
-    <div class="rj-tabs flex-shrink-0 px-3 pt-2 pb-1 border-bottom d-flex align-items-end gap-1 overflow-x-auto">
-      <button class="btn btn-sm rj-tab rj-tab--active">All Students</button>
+    <!-- <div class="rj-tabs flex-shrink-0 px-3 pt-2 pb-1 border-bottom d-flex align-items-end gap-1 overflow-x-auto"> -->
+      <!-- <button class="btn btn-sm rj-tab rj-tab--active">All Students</button> -->
       <!-- TODO: Implement folders -->
       <!-- <button class="btn btn-sm rj-tab rj-tab--inactive">Robotics Leads <span class="badge bg-secondary ms-1">3</span></button>
       <button class="btn btn-sm rj-tab rj-tab--inactive">Summer Hires <span class="badge bg-secondary ms-1">2</span></button>
       <button class="btn btn-sm rj-tab rj-tab--new ms-1">+ New Folder</button> -->
-    </div>
+    <!-- </div> -->
 
     <!-- Body -->
     <div class="row flex-grow-1 overflow-hidden g-0" style="min-height:0;">
@@ -228,7 +228,7 @@ export default {
 
     async getMajors() {
       try {
-        const response = await axios.get('/api/v1/majors/resumes');
+        const response = await axios.get('/sponsor/majors');
         this.majors = response.data.majors;
       } catch (error) {
         console.error('Error fetching majors:', error);

@@ -45,7 +45,6 @@ Route::prefix('v1/')->middleware(
 
 Route::prefix('v1/')->middleware('cache:86400')->group(static function (): void {
     Route::get('majors', [MajorController::class, 'index']);
-    Route::get('majors/resumes', [MajorController::class, 'getResumeMajors']);
 });
 
 Route::prefix('v1/')->name('api.v1.')->middleware(['auth.user_or_client_token'])->group(

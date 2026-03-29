@@ -73,4 +73,32 @@ class Major extends Model
 
         return $major;
     }
+
+    /**
+     * Returns a list of majors (display names only) for active users who have uploaded resumes.
+     */
+    public static function getResumeMajors()
+    {
+        $majors = User::selectRaw('distinct(majors.display_name) as distinct_display_names')
+            ->active()
+            ->whereNotNull('resume_date')
+            ->where('primary_affiliation', 'student')
+            ->where('is_service_account', '=', false)
+            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                $q->where('restricted_to_students', false);
+            })
+            ->leftJoin('major_user', static function (JoinClause $join): void {
+                $join->on('users.id', '=', 'major_user.user_id')
+                    ->whereNull('major_user.deleted_at');
+            })
+            ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
+            ->orderBy('distinct_display_names')
+            ->pluck('distinct_display_names')
+            ->toArray();
+
+        return response()->json([
+            'status' => 'success',
+            'majors' => $majors,
+        ]);
+    }
 }

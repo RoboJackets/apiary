@@ -92,6 +92,16 @@ class ResumeBookController
         ]);
     }
 
+    public function getMajors()
+    {
+        $majors = Major::getResumeMajors();
+
+        return response()->json([
+            'status' => 'success',
+            'majors' => $majors,
+        ]);
+    }
+
     private static function formatGradSemester(?string $code): array
     {
         if ($code === null || $code === '') {
