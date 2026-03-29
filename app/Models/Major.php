@@ -81,7 +81,7 @@ class Major extends Model
      */
     public static function getResumeMajors(): array
     {
-        $majors = User::selectRaw('distinct(majors.display_name) as distinct_display_names')
+        return User::selectRaw('distinct(majors.display_name) as distinct_display_names')
             ->active()
             ->whereNotNull('resume_date')
             ->where('primary_affiliation', 'student')
