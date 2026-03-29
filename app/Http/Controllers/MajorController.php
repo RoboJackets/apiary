@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Major as MajorResource;
+use App\Models\Major;
 use Illuminate\Http\JsonResponse;
 
 class MajorController
