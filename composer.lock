@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6bfb15a6c6b0cb3b879767757700a546",
+    "content-hash": "1a299490b3f5792be1170931bfab7b3c",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3604,24 +3604,24 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.8.0",
+            "version": "5.8.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "930e5fafe878dc2992413026a4467e4e24853706"
+                "reference": "609a5f94cbd7629a877c8339439742e114ff95bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-930e5fafe878dc2992413026a4467e4e24853706-zip-4e2e16.zip",
-                "reference": "930e5fafe878dc2992413026a4467e4e24853706",
-                "shasum": "24e46b2a03c8259b031fa6bd7b675720d0986f57"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-609a5f94cbd7629a877c8339439742e114ff95bb-zip-3dd8d5.zip",
+                "reference": "609a5f94cbd7629a877c8339439742e114ff95bb",
+                "shasum": "0d98b5a676074d975015d793d2d5cf36e458231f"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10|^0.11|^0.12",
                 "ext-json": "*",
                 "illuminate/filesystem": "^10.48.29|^11.44.1|^12.1.1|^13.0.0",
                 "illuminate/support": "^10.48.29|^11.44.1|^12.1.1|^13.0.0",
-                "inertiajs/inertia-laravel": "^1.3.2|^2.0",
+                "inertiajs/inertia-laravel": "^1.3.2|^2.0|^3.0.0",
                 "laravel/fortify": "^1.26.0",
                 "laravel/sentinel": "^1.0.0",
                 "nesbot/carbon": "^2.62.1|^3.4",
@@ -3781,10 +3781,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.8.0",
+                "source": "https://github.com/laravel/nova/tree/v5.8.1",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2026-03-19T04:05:24+00:00"
+            "time": "2026-03-28T11:29:02+00:00"
         },
         {
             "name": "laravel/passport",
