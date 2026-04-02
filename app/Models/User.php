@@ -356,6 +356,8 @@ class User extends Authenticatable
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected function casts(): array
@@ -444,6 +446,8 @@ class User extends Authenticatable
 
     /**
      * Get the name associated with the User.
+     *
+     * @psalm-mutation-free
      */
     public function getNameAttribute(): string
     {
@@ -454,6 +458,8 @@ class User extends Authenticatable
 
     /**
      * Get the preferred first name associated with the User.
+     *
+     * @psalm-mutation-free
      */
     public function getPreferredFirstNameAttribute(): ?string
     {
@@ -462,6 +468,8 @@ class User extends Authenticatable
 
     /**
      * Set the preferred first name associated with the User. Stores null if preferred name matches legal name.
+     *
+     * @psalm-external-mutation-free
      */
     public function setPreferredFirstNameAttribute(?string $preferred_name): void
     {
@@ -470,6 +478,8 @@ class User extends Authenticatable
 
     /**
      * Get the full name associated with the User.
+     *
+     * @psalm-mutation-free
      */
     public function getFullNameAttribute(): string
     {
@@ -586,41 +596,62 @@ class User extends Authenticatable
         )->withTimestamps();
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function routeNotificationForMail(): string
     {
         return $this->gt_email;
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public function getAuthIdentifierName(): string
     {
         return 'id';
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     #[\Override]
     public function getAuthIdentifier(): string
     {
         return $this->id;
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public function getAuthPassword(): string
     {
         throw new BadMethodCallException('Not implemented');
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public function getRememberToken(): string
     {
         throw new BadMethodCallException('Not implemented');
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public function setRememberToken($value): void
     {
         throw new BadMethodCallException('Not implemented');
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public function getRememberTokenName(): string
     {
@@ -631,6 +662,8 @@ class User extends Authenticatable
      * Graduation Semester is a 6-digit code by default.
      * To retrieve a more readable form, this method obtains the
      * code for this User and translates it to the format "[season] yyyy".
+     *
+     * @psalm-mutation-free
      */
     public function getHumanReadableGraduationSemesterAttribute(): string
     {
@@ -661,6 +694,8 @@ class User extends Authenticatable
 
     /**
      * Get the is_active flag for the User.
+     *
+     * @psalm-mutation-free
      */
     public function getIsActiveAttribute(): bool
     {
@@ -669,6 +704,8 @@ class User extends Authenticatable
 
     /**
      * Get the access_active flag for the User.
+     *
+     * @psalm-mutation-free
      */
     public function getIsAccessActiveAttribute(): bool
     {
@@ -947,6 +984,9 @@ class User extends Authenticatable
         return $this->hasMany(TravelAssignment::class);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function getShouldReceiveEmailAttribute(): bool
     {
         return $this->email_suppression_reason === null;
@@ -962,6 +1002,8 @@ class User extends Authenticatable
 
     /**
      * Determine if the user can be impersonated.
+     *
+     * @psalm-mutation-free
      */
     public function canBeImpersonated(): bool
     {
@@ -1221,6 +1263,9 @@ class User extends Authenticatable
         return count($teams) === 0 ? null : Team::whereId($teams[0])->sole()->projectManager;
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function getHasEmergencyContactInformationAttribute(): bool
     {
         return $this->emergency_contact_name !== null &&
@@ -1228,6 +1273,9 @@ class User extends Authenticatable
             $this->phone !== $this->emergency_contact_phone;
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function getNeedsParentOrGuardianSignatureAttribute(): bool
     {
         return $this->parent_guardian_name !== null && $this->parent_guardian_email !== null;
@@ -1252,6 +1300,8 @@ class User extends Authenticatable
 
     /**
      * Get the API rate limit for this user.
+     *
+     * @psalm-mutation-free
      */
     public function getApiRateLimitAttribute(): int
     {

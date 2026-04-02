@@ -42,6 +42,8 @@ class DuesPackage extends Resource
 
     /**
      * Get the displayable label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function label(): string
@@ -51,6 +53,8 @@ class DuesPackage extends Resource
 
     /**
      * Get the displayable singular label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function singularLabel(): string

@@ -22,6 +22,8 @@ class PruneAccessFromAccessInactiveUsers implements ShouldQueue
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct()
     {

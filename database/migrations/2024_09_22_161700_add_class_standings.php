@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * @psalm-mutation-free
+     */
     public function up(): void
     {
         ClassStanding::firstOrCreate(

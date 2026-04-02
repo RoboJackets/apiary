@@ -24,6 +24,8 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @param  array<string,bool>  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function apply(NovaRequest $request, $query, $value): Builder
@@ -35,6 +37,8 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      * Get the filter's available options.
      *
      * @return array<string,string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function options(Request $request): array

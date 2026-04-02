@@ -16,6 +16,8 @@ class DocuSign implements SignatureValidator
      * Verifies a signature on a request from DocuSign.
      *
      * Since we're just using the signed routes middleware, this is a no-op.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function isValid(Request $request, WebhookConfig $config): bool

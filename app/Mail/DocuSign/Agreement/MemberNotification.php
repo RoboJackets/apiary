@@ -12,6 +12,9 @@ use Illuminate\Mail\Mailable;
  */
 class MemberNotification extends Mailable
 {
+    /**
+     * @psalm-mutation-free
+     */
     public function __construct(public readonly User $user)
     {
     }

@@ -79,6 +79,8 @@ class TravelAssignment extends Resource
 
     /**
      * Get the displayable label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function label(): string
@@ -88,6 +90,8 @@ class TravelAssignment extends Resource
 
     /**
      * Get the URI key for the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function uriKey(): string
@@ -249,6 +253,9 @@ class TravelAssignment extends Resource
         return $this->user->full_name.' | '.$this->travel->name.' | '.($this->is_paid ? 'Paid' : 'Unpaid');
     }
 
+    /**
+     * @psalm-pure
+     */
     private static function showItineraryOnForms(string|int|null $trip_id): bool
     {
         if ($trip_id === null) {

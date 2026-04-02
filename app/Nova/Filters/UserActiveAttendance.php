@@ -43,6 +43,8 @@ class UserActiveAttendance extends Filter
      * Get the filter's available options.
      *
      * @return array<string,string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function options(Request $request): array

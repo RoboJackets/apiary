@@ -3846,7 +3846,6 @@ Mailbook::category('Sponsors')->group(static function (): void {
             });
 
             // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-            /** @psalm-suppress UndefinedMagicPropertyAssignment */
             $otp = OneTimePassword::withoutEvents(static function () use ($sponsorUser): OneTimePassword {
                 $otp = new OneTimePassword();
                 $otp->authenticatable_type = $sponsorUser->getMorphClass();

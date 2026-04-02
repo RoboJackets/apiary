@@ -55,12 +55,17 @@ class SponsorUser extends Authenticatable
 
     /**
      * If user ID requested for this SponsorUser, returns email instead.
+     *
+     * @psalm-mutation-free
      */
     public function getUidAttribute(): string
     {
         return $this->email;
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function getShouldReceiveEmailAttribute(): bool
     {
         return $this->email_suppression_reason === null;

@@ -72,12 +72,17 @@ class RemoteAttendanceLinkPolicy
 
     /**
      * Determine whether the user can permanently delete the remote attendance link.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, RemoteAttendanceLink $link): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, RemoteAttendanceLink $link): bool
     {
         return false;

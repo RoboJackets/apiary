@@ -140,6 +140,8 @@ class Travel extends Model
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected function casts(): array
@@ -206,21 +208,33 @@ class Travel extends Model
         return $this->assignments()->needDocuSign()->exists();
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function getNeedsDocusignAttribute(): bool
     {
         return $this->needs_travel_information_form || $this->needs_airfare_form;
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function getNeedsTravelInformationFormAttribute(): bool
     {
         return $this->getNeedsFormAttribute(self::TRAVEL_INFORMATION_FORM_KEY);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function getNeedsAirfareFormAttribute(): bool
     {
         return $this->getNeedsFormAttribute(self::AIRFARE_REQUEST_FORM_KEY);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     private function getNeedsFormAttribute(string $form): bool
     {
         // @phan-suppress-next-line PhanTypeArraySuspiciousNullable

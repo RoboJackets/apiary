@@ -56,6 +56,9 @@ class CreateOAuth2ClientCredentialsGrantClient extends Action
      */
     public $name = 'Create Client Credentials Grant Client';
 
+    /**
+     * @psalm-mutation-free
+     */
     public function __construct(private ClientRepository $clientRepository)
     {
     }

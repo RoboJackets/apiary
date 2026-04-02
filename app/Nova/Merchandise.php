@@ -72,6 +72,8 @@ class Merchandise extends Resource
 
     /**
      * Get the displayable label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function label(): string
@@ -81,6 +83,8 @@ class Merchandise extends Resource
 
     /**
      * Get the displayable singular label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function singularLabel(): string
@@ -164,6 +168,8 @@ class Merchandise extends Resource
 
     /**
      * Get the URI key for the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function uriKey(): string
@@ -222,6 +228,9 @@ class Merchandise extends Resource
         return $defaults;
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public static function searchable(): bool
     {

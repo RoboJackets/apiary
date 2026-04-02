@@ -12,6 +12,8 @@ class StorePaymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @psalm-pure
      */
     public function authorize(): bool
     {

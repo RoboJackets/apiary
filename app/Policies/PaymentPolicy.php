@@ -22,11 +22,17 @@ class PaymentPolicy
         return $user->can('read-payments');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function create(User $user): bool
     {
         return false; // not manually
     }
 
+    /**
+     * @psalm-pure
+     */
     public function update(User $user, Payment $payment): bool
     {
         return false; // not manually
@@ -42,11 +48,17 @@ class PaymentPolicy
         return $user->can('delete-payments');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function forceDelete(User $user, Payment $payment): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, Payment $payment): bool
     {
         return false;

@@ -64,6 +64,9 @@ class CreateOAuth2AuthorizationCodeGrantClient extends Action
 
     private const string PUBLIC_CLIENT = 'public';
 
+    /**
+     * @psalm-mutation-free
+     */
     public function __construct(private ClientRepository $clientRepository)
     {
     }

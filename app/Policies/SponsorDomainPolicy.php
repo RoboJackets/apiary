@@ -62,12 +62,17 @@ class SponsorDomainPolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, SponsorDomain $sponsorDomain): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, SponsorDomain $sponsorDomain): bool
     {
         return false;

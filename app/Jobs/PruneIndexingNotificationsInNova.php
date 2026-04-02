@@ -20,6 +20,8 @@ class PruneIndexingNotificationsInNova implements ShouldBeUnique, ShouldQueue
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct()
     {
@@ -28,6 +30,8 @@ class PruneIndexingNotificationsInNova implements ShouldBeUnique, ShouldQueue
 
     /**
      * Execute the job.
+     *
+     * @psalm-mutation-free
      */
     public function handle(): void
     {

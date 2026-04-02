@@ -14,6 +14,8 @@ class MajorPolicy
 
     /**
      * Determine whether the user can view any majors.
+     *
+     * @psalm-pure
      */
     public function viewAny(User $user): bool
     {
@@ -22,6 +24,8 @@ class MajorPolicy
 
     /**
      * Determine whether the user can view the major.
+     *
+     * @psalm-pure
      */
     public function view(User $user, Major $major): bool
     {
@@ -46,6 +50,8 @@ class MajorPolicy
 
     /**
      * Determine whether the user can delete the major.
+     *
+     * @psalm-pure
      */
     public function delete(User $user, Major $major): bool
     {
@@ -54,6 +60,8 @@ class MajorPolicy
 
     /**
      * Determine whether the user can restore the major.
+     *
+     * @psalm-pure
      */
     public function restore(User $user, Major $major): bool
     {
@@ -62,6 +70,8 @@ class MajorPolicy
 
     /**
      * Determine whether the user can permanently delete the major.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, Major $major): bool
     {
@@ -92,6 +102,9 @@ class MajorPolicy
         return $user->hasRole('admin');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, Major $major): bool
     {
         return false;

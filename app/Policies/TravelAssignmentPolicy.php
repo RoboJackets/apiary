@@ -15,6 +15,8 @@ class TravelAssignmentPolicy
 
     /**
      * Determine whether the user can view any models.
+     *
+     * @psalm-pure
      */
     public function viewAny(User $user): bool
     {
@@ -23,6 +25,8 @@ class TravelAssignmentPolicy
 
     /**
      * Determine whether the user can view the model.
+     *
+     * @psalm-pure
      */
     public function view(User $user, TravelAssignment $assignment): bool
     {
@@ -91,12 +95,17 @@ class TravelAssignmentPolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, TravelAssignment $assignment): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, TravelAssignment $assignment): bool
     {
         return false;

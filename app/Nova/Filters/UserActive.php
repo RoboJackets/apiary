@@ -24,6 +24,8 @@ class UserActive extends Filter
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function apply(NovaRequest $request, $query, $value): Builder
@@ -35,6 +37,8 @@ class UserActive extends Filter
      * Get the filter's available options.
      *
      * @return array<string,string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function options(Request $request): array

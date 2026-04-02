@@ -22,6 +22,8 @@ class RsvpPolicy
 
     /**
      * Determine whether the user can create rsvps.
+     *
+     * @psalm-pure
      */
     public function create(User $user): bool
     {
@@ -30,6 +32,8 @@ class RsvpPolicy
 
     /**
      * Determine whether the user can update the rsvp.
+     *
+     * @psalm-pure
      */
     public function update(User $user, Rsvp $rsvp): bool
     {
@@ -54,12 +58,17 @@ class RsvpPolicy
 
     /**
      * Determine whether the user can permanently delete the rsvp.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, Rsvp $rsvp): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, Rsvp $rsvp): bool
     {
         return false;

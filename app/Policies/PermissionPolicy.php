@@ -62,12 +62,17 @@ class PermissionPolicy
 
     /**
      * Determine whether the user can permanently delete the permission.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, Permission $permission): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, Permission $permission): bool
     {
         return false;

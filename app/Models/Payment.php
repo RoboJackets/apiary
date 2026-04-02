@@ -144,6 +144,8 @@ class Payment extends Model
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected function casts(): array
@@ -213,6 +215,8 @@ class Payment extends Model
 
     /**
      * Get the presentation-ready format of a Payment Method.
+     *
+     * @psalm-external-mutation-free
      */
     public function getMethodPresentationAttribute(): string
     {
@@ -221,6 +225,8 @@ class Payment extends Model
 
     /**
      * Generates a cryptographically safe unique string. Currently used for idempotency keys for the Square API.
+     *
+     * @psalm-pure
      */
     public static function generateUniqueId(): string
     {
@@ -234,6 +240,8 @@ class Payment extends Model
      *
      * @param  int  $amount  desired net amount, in cents
      * @return int surcharge amount, in cents
+     *
+     * @psalm-pure
      */
     public static function calculateSurcharge(int $amount): int
     {
@@ -251,6 +259,8 @@ class Payment extends Model
      *
      * @param  int  $amount  charge amount, in cents
      * @return int processing fee, in cents
+     *
+     * @psalm-pure
      */
     public static function calculateProcessingFee(int $amount): int
     {

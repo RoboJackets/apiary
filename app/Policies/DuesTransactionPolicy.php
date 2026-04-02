@@ -27,21 +27,33 @@ class DuesTransactionPolicy
         return $user->can('create-dues-transactions');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function update(User $user, DuesTransaction $transaction): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function delete(User $user, DuesTransaction $transaction): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function restore(User $user, DuesTransaction $transaction): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function forceDelete(User $user, DuesTransaction $transaction): bool
     {
         return false;
@@ -62,6 +74,9 @@ class DuesTransactionPolicy
         return $user->hasRole('admin');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, DuesTransaction $transaction): bool
     {
         return false;
