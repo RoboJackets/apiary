@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f02c3e8c30f8f12f1cd7d5476ec3a34",
+    "content-hash": "6f684173c79792a540e3b5a47b8b9dc1",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3030,16 +3030,16 @@
         },
         {
             "name": "jeremy379/laravel-openid-connect",
-            "version": "3.2.1",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeremy379/laravel-openid-connect.git",
-                "reference": "8868648df3bfdcef5c9eb82b25e90630284ddecf"
+                "reference": "deb836033abdfe8167e0f122f0bc42c959d91631"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeremy379/laravel-openid-connect/zipball/8868648df3bfdcef5c9eb82b25e90630284ddecf",
-                "reference": "8868648df3bfdcef5c9eb82b25e90630284ddecf",
+                "url": "https://api.github.com/repos/jeremy379/laravel-openid-connect/zipball/deb836033abdfe8167e0f122f0bc42c959d91631",
+                "reference": "deb836033abdfe8167e0f122f0bc42c959d91631",
                 "shasum": ""
             },
             "require": {
@@ -3100,9 +3100,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jeremy379/laravel-openid-connect/issues",
-                "source": "https://github.com/jeremy379/laravel-openid-connect/tree/3.2.1"
+                "source": "https://github.com/jeremy379/laravel-openid-connect/tree/3.2.2"
             },
-            "time": "2026-03-25T16:44:04+00:00"
+            "time": "2026-03-31T08:21:42+00:00"
         },
         {
             "name": "kevinrob/guzzle-cache-middleware",
