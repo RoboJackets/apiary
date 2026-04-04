@@ -66,6 +66,7 @@ class SponsorUser extends Authenticatable
         return $this->email_suppression_reason === null;
     }
 
+    /** @psalm-pure */
     #[\Override]
     public function getRememberTokenName(): string
     {

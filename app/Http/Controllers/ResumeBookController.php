@@ -102,6 +102,7 @@ class ResumeBookController
         ]);
     }
 
+    /** @psalm-pure */
     private static function formatGradSemester(?string $code): array
     {
         if ($code === null || $code === '') {
