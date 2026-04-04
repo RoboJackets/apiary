@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AuthenticateWithUserOrClientToken
 {
+    /**
+     * @psalm-mutation-free
+     */
     public function __construct(
         private readonly Authenticate $authenticate,
         private readonly EnsureClientIsResourceOwner $ensureClientIsResourceOwner

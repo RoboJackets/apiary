@@ -50,6 +50,8 @@ class SponsorDomain extends Model
 
     /**
      * Checks whether a given email is associated with a Sponsor.
+     *
+     * @psalm-pure
      */
     public static function sponsorEmail(string $email): bool
     {

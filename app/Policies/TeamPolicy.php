@@ -66,6 +66,8 @@ class TeamPolicy
 
     /**
      * Determine whether the user can permanently delete the team.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, Team $team): bool
     {
@@ -139,6 +141,9 @@ class TeamPolicy
         return $user->can('update-teams-membership');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, Team $team): bool
     {
         return false;

@@ -22,6 +22,9 @@ class HorizonHealthCheck extends HealthCheck
      */
     protected string $name = 'horizon';
 
+    /**
+     * @psalm-mutation-free
+     */
     public function __construct(private readonly MasterSupervisorRepository $supervisorRepository)
     {
     }

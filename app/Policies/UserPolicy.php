@@ -64,6 +64,8 @@ class UserPolicy
 
     /**
      * Determine whether the user can permanently delete the user.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, User $userResource): bool
     {
@@ -169,11 +171,17 @@ class UserPolicy
         return $user->hasRole('admin');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function addClient(User $user, User $userResource): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, User $userResource): bool
     {
         return false;

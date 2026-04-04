@@ -31,6 +31,8 @@ class Main extends Dashboard
 {
     /**
      * Get the displayable name of the dashboard.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function name(): string

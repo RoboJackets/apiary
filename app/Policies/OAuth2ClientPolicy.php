@@ -22,6 +22,8 @@ class OAuth2ClientPolicy
 
     /**
      * Determine whether the user can view the OAuth2 client.
+     *
+     * @psalm-pure
      */
     public function view(User $user, OAuth2Client $client): bool
     {
@@ -30,6 +32,8 @@ class OAuth2ClientPolicy
 
     /**
      * Determine whether the user can create OAuth2 clients.
+     *
+     * @psalm-pure
      */
     public function create(User $user): bool
     {
@@ -46,6 +50,8 @@ class OAuth2ClientPolicy
 
     /**
      * Determine whether the user can delete the OAuth2 client.
+     *
+     * @psalm-pure
      */
     public function delete(User $user, OAuth2Client $client): bool
     {
@@ -54,6 +60,8 @@ class OAuth2ClientPolicy
 
     /**
      * Determine whether the user can restore the OAuth2 client.
+     *
+     * @psalm-pure
      */
     public function restore(User $user, OAuth2Client $client): bool
     {
@@ -62,12 +70,17 @@ class OAuth2ClientPolicy
 
     /**
      * Determine whether the user can permanently delete the OAuth2 client.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, OAuth2Client $client): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, OAuth2Client $client): bool
     {
         return false;

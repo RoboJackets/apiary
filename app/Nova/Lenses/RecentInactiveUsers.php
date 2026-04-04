@@ -90,6 +90,8 @@ class RecentInactiveUsers extends Lens
      * Get the filters available for the lens.
      *
      * @return array<\Laravel\Nova\Filters\Filter>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function filters(NovaRequest $request): array
@@ -108,6 +110,8 @@ class RecentInactiveUsers extends Lens
 
     /**
      * Get the URI key for the lens.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function uriKey(): string

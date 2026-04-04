@@ -15,6 +15,8 @@ class RsvpSourceBreakdown extends Partition
 {
     /**
      * The displayable name of the metric.
+     *
+     * @psalm-mutation-free
      */
     #[\Override]
     public function name(): string
@@ -63,6 +65,8 @@ class RsvpSourceBreakdown extends Partition
 
     /**
      * Get the URI key for the metric.
+     *
+     * @psalm-mutation-free
      */
     #[\Override]
     public function uriKey(): string

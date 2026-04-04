@@ -62,6 +62,8 @@ class MerchandisePolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, Merchandise $merchandise): bool
     {
@@ -98,6 +100,9 @@ class MerchandisePolicy
         return $user->can('create-merchandise');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, Merchandise $merchandise): bool
     {
         return false;

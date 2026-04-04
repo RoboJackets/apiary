@@ -64,12 +64,17 @@ class MembershipAgreementTemplatePolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, MembershipAgreementTemplate $template): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, MembershipAgreementTemplate $template): bool
     {
         return false;

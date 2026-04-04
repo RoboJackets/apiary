@@ -24,6 +24,8 @@ class SendTravelAssignmentCreatedNotification implements ShouldBeUnique, ShouldQ
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(private readonly TravelAssignment $assignment)
     {
@@ -40,6 +42,8 @@ class SendTravelAssignmentCreatedNotification implements ShouldBeUnique, ShouldQ
 
     /**
      * The unique ID of the job.
+     *
+     * @psalm-mutation-free
      */
     public function uniqueId(): string
     {

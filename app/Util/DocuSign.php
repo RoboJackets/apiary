@@ -192,6 +192,9 @@ class DocuSign
         ];
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function getState(): string
     {
         return bin2hex(openssl_random_pseudo_bytes(128));

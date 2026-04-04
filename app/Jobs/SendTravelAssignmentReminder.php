@@ -41,6 +41,8 @@ class SendTravelAssignmentReminder implements ShouldBeUnique, ShouldQueue
 
     /**
      * The unique ID of the job.
+     *
+     * @psalm-mutation-free
      */
     public function uniqueId(): string
     {

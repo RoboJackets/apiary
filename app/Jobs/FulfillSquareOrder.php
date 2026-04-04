@@ -36,6 +36,8 @@ class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(private readonly string $order_id)
     {
@@ -100,6 +102,8 @@ class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
      * Get the tags that should be assigned to the job.
      *
      * @return array<string>
+     *
+     * @psalm-mutation-free
      */
     public function tags(): array
     {

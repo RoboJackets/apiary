@@ -63,6 +63,8 @@ class DuesPackagePolicy
 
     /**
      * Determine whether the user can permanently delete the dues package.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, DuesPackage $package): bool
     {
@@ -84,6 +86,9 @@ class DuesPackagePolicy
         return $user->can('create-merchandise');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, DuesPackage $package): bool
     {
         return false;

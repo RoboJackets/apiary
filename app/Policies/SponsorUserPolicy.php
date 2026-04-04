@@ -30,6 +30,8 @@ class SponsorUserPolicy
 
     /**
      * Determine whether the user can create models.
+     *
+     * @psalm-pure
      */
     public function create(User $user): bool
     {
@@ -38,6 +40,8 @@ class SponsorUserPolicy
 
     /**
      * Determine whether the user can update the model.
+     *
+     * @psalm-pure
      */
     public function update(User $user, SponsorUser $sponsorUser): bool
     {
@@ -62,12 +66,17 @@ class SponsorUserPolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, SponsorUser $sponsorUser): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, SponsorUser $sponsorUser): bool
     {
         return false;

@@ -40,6 +40,9 @@ class DisallowedRefund extends Action
         'destructive' => true,
     ];
 
+    /**
+     * @psalm-mutation-free
+     */
     public function __construct(private readonly string $reason)
     {
     }

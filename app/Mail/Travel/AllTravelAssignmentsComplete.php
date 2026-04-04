@@ -20,6 +20,8 @@ class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
 
     /**
      * Create a new message instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(public readonly Travel $travel)
     {
@@ -47,6 +49,9 @@ class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
             ->metadata('travel-id', strval($this->travel->id));
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     private function renderSubjectLine(): string
     {
         if (

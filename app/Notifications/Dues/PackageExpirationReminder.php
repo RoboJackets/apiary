@@ -16,6 +16,8 @@ class PackageExpirationReminder extends Notification
      * Get the notification's delivery channels.
      *
      * @return array<int, string>
+     *
+     * @psalm-pure
      */
     public function via(object $notifiable): array
     {
@@ -24,6 +26,8 @@ class PackageExpirationReminder extends Notification
 
     /**
      * Get the mail representation of the notification.
+     *
+     * @psalm-pure
      */
     public function toMail(object $notifiable): PackageExpirationReminderMailable
     {
@@ -34,6 +38,8 @@ class PackageExpirationReminder extends Notification
      * Determine which queues should be used for each notification channel.
      *
      * @return array<string,string>
+     *
+     * @psalm-pure
      */
     public function viaQueues(): array
     {

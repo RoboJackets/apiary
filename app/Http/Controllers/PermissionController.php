@@ -13,6 +13,9 @@ use Spatie\Permission\Models\Role;
 
 class PermissionController implements HasMiddleware
 {
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public static function middleware(): array
     {

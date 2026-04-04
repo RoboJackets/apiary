@@ -86,6 +86,9 @@ class Notification extends Resource
         ];
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public static function searchable(): bool
     {

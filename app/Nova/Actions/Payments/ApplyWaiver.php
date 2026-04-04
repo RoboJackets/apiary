@@ -51,6 +51,8 @@ class ApplyWaiver extends RecordPayment
      * The note to add to the payment.
      *
      * @phan-suppress PhanUnusedProtectedMethodParameter
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected static function note(ActionFields $fields): string

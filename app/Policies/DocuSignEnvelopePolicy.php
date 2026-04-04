@@ -41,6 +41,8 @@ class DocuSignEnvelopePolicy
 
     /**
      * Determine whether the user can create models.
+     *
+     * @psalm-pure
      */
     public function create(User $user): bool
     {
@@ -49,6 +51,8 @@ class DocuSignEnvelopePolicy
 
     /**
      * Determine whether the user can update the model.
+     *
+     * @psalm-pure
      */
     public function update(User $user, DocuSignEnvelope $docuSignEnvelope): bool
     {
@@ -78,12 +82,17 @@ class DocuSignEnvelopePolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, DocuSignEnvelope $docuSignEnvelope): bool
     {
         return false;
     }
 
+    /**
+     * @psalm-pure
+     */
     public function replicate(User $user, DocuSignEnvelope $docuSignEnvelope): bool
     {
         return false;
