@@ -10,6 +10,7 @@ class ResumeSearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @psalm-pure
      */
     public function authorize(): true
@@ -19,6 +20,7 @@ class ResumeSearchRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     *
      * @psalm-pure
      *
      * @return array<string,string|list<string>>
