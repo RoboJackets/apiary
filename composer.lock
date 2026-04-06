@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f684173c79792a540e3b5a47b8b9dc1",
+    "content-hash": "046ffe1acf7609b9801810a6c1eeebfd",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -7778,23 +7778,24 @@
         },
         {
             "name": "realrashid/sweet-alert",
-            "version": "v7.3.0",
+            "version": "v7.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/realrashid/sweet-alert.git",
-                "reference": "d54b1663970da8d416eb09e8719a8561a45fb2d9"
+                "reference": "72754d27de400e5b177c4e066aca8484b9f8bbbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/d54b1663970da8d416eb09e8719a8561a45fb2d9",
-                "reference": "d54b1663970da8d416eb09e8719a8561a45fb2d9",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/72754d27de400e5b177c4e066aca8484b9f8bbbe",
+                "reference": "72754d27de400e5b177c4e066aca8484b9f8bbbe",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^5.6|^6.0|^7.0|^8.0|^9.0|^9.11|9.14.*|^10.0|^11.0|^12.0",
+                "laravel/framework": "^5.6|^6.0|^7.0|^8.0|^9.0|^9.11|9.14.*|^10.0|^11.0|^12.0|^13.0",
                 "php": "^7.2|^8.0|^8.1|^8.2|^8.3"
             },
             "require-dev": {
+                "phpunit/phpunit": "^12.5",
                 "symfony/thanks": "^1.0"
             },
             "type": "library",
@@ -7864,7 +7865,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-25T21:11:49+00:00"
+            "time": "2026-03-29T14:20:34+00:00"
         },
         {
             "name": "robojackets/client-id-and-secret-modal",
