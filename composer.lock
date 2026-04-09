@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f684173c79792a540e3b5a47b8b9dc1",
+    "content-hash": "a35df8000410e529d482f1647d03e2aa",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3788,16 +3788,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v13.7.2",
+            "version": "v13.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "0c016c9e27db700d1a51b73c7582e5235f9c43d2"
+                "reference": "f4f85e3122c7c6ef375f8bd5395bc7c88801fcc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/0c016c9e27db700d1a51b73c7582e5235f9c43d2",
-                "reference": "0c016c9e27db700d1a51b73c7582e5235f9c43d2",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/f4f85e3122c7c6ef375f8bd5395bc7c88801fcc5",
+                "reference": "f4f85e3122c7c6ef375f8bd5395bc7c88801fcc5",
                 "shasum": ""
             },
             "require": {
@@ -3859,7 +3859,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2026-04-02T17:11:22+00:00"
+            "time": "2026-04-07T13:08:13+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -7778,23 +7778,24 @@
         },
         {
             "name": "realrashid/sweet-alert",
-            "version": "v7.3.0",
+            "version": "v7.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/realrashid/sweet-alert.git",
-                "reference": "d54b1663970da8d416eb09e8719a8561a45fb2d9"
+                "reference": "72754d27de400e5b177c4e066aca8484b9f8bbbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/d54b1663970da8d416eb09e8719a8561a45fb2d9",
-                "reference": "d54b1663970da8d416eb09e8719a8561a45fb2d9",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/72754d27de400e5b177c4e066aca8484b9f8bbbe",
+                "reference": "72754d27de400e5b177c4e066aca8484b9f8bbbe",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^5.6|^6.0|^7.0|^8.0|^9.0|^9.11|9.14.*|^10.0|^11.0|^12.0",
+                "laravel/framework": "^5.6|^6.0|^7.0|^8.0|^9.0|^9.11|9.14.*|^10.0|^11.0|^12.0|^13.0",
                 "php": "^7.2|^8.0|^8.1|^8.2|^8.3"
             },
             "require-dev": {
+                "phpunit/phpunit": "^12.5",
                 "symfony/thanks": "^1.0"
             },
             "type": "library",
@@ -7864,7 +7865,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-25T21:11:49+00:00"
+            "time": "2026-03-29T14:20:34+00:00"
         },
         {
             "name": "robojackets/client-id-and-secret-modal",
@@ -8355,16 +8356,16 @@
         },
         {
             "name": "spatie/laravel-one-time-passwords",
-            "version": "1.0.11",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-one-time-passwords.git",
-                "reference": "5e31f2ff5c247a31d918fa21f371c6c9a810705e"
+                "reference": "e67430d9cfabcedda67ec8d276c9145c8db1e08a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/5e31f2ff5c247a31d918fa21f371c6c9a810705e",
-                "reference": "5e31f2ff5c247a31d918fa21f371c6c9a810705e",
+                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/e67430d9cfabcedda67ec8d276c9145c8db1e08a",
+                "reference": "e67430d9cfabcedda67ec8d276c9145c8db1e08a",
                 "shasum": ""
             },
             "require": {
@@ -8419,7 +8420,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-one-time-passwords/issues",
-                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.0.11"
+                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.1.0"
             },
             "funding": [
                 {
@@ -8427,7 +8428,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-27T14:56:19+00:00"
+            "time": "2026-04-08T07:34:03+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -9664,16 +9665,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v7.4.7",
+            "version": "v7.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "1010624285470eb60e88ed10035102c75b4ea6af"
+                "reference": "01933e626c3de76bea1e22641e205e78f6a34342"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/1010624285470eb60e88ed10035102c75b4ea6af",
-                "reference": "1010624285470eb60e88ed10035102c75b4ea6af",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/01933e626c3de76bea1e22641e205e78f6a34342",
+                "reference": "01933e626c3de76bea1e22641e205e78f6a34342",
                 "shasum": ""
             },
             "require": {
@@ -9741,7 +9742,7 @@
                 "http"
             ],
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v7.4.7"
+                "source": "https://github.com/symfony/http-client/tree/v7.4.8"
             },
             "funding": [
                 {
@@ -9761,7 +9762,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-05T11:16:58+00:00"
+            "time": "2026-03-30T12:55:43+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
