@@ -70,4 +70,13 @@ class SponsorUser extends Authenticatable
     {
         return $this->email_suppression_reason === null;
     }
+
+    /** @psalm-pure */
+    #[\Override]
+    public function getRememberTokenName(): string
+    {
+        // Needs to return empty string instead of BadMethodCallException.
+        // Fails to invalidate session when switching to regular user otherwise.
+        return '';
+    }
 }

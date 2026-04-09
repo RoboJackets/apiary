@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer flex-shrink-0">
   <div class="container" style="overflow: hidden; height: 100%">
     <div class="d-flex justify-content-between">
       <div>

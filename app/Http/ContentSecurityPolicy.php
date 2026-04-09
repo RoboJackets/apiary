@@ -62,7 +62,7 @@ class ContentSecurityPolicy extends Policy
             '*.googleusercontent.com',
             'data: w3.org/svg/2000',
         ]);
-        $this->addDirective(Directive::OBJECT, Keyword::NONE);
+        $this->addDirective(Directive::OBJECT, Keyword::SELF);
         $this->addDirective(Directive::WORKER, Keyword::NONE);
         $this->addDirective(Directive::FRAME_ANCESTORS, Keyword::SELF);
         $this->addDirective(Directive::FRAME, Keyword::SELF);
