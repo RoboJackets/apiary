@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a35df8000410e529d482f1647d03e2aa",
+    "content-hash": "6337e70339d60c67ad078d58644f1d75",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8108,16 +8108,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "4.24.0",
+            "version": "4.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "f823bd85e38e06cb4f1b7a82d48a2fc95320b31d"
+                "reference": "6699c9465df6bee07d82279f7a209db941913456"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/f823bd85e38e06cb4f1b7a82d48a2fc95320b31d",
-                "reference": "f823bd85e38e06cb4f1b7a82d48a2fc95320b31d",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/6699c9465df6bee07d82279f7a209db941913456",
+                "reference": "6699c9465df6bee07d82279f7a209db941913456",
                 "shasum": ""
             },
             "require": {
@@ -8183,7 +8183,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/4.24.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/4.25.0"
             },
             "funding": [
                 {
@@ -8195,7 +8195,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-03-24T10:33:54+00:00"
+            "time": "2026-04-07T12:55:27+00:00"
         },
         {
             "name": "spatie/laravel-csp",
