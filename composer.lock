@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6337e70339d60c67ad078d58644f1d75",
+    "content-hash": "3b7cb523d832cbad1355a12746e086dc",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -11932,35 +11932,35 @@
         },
         {
             "name": "xammie/mailbook",
-            "version": "1.10.1",
+            "version": "1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Xammie/mailbook.git",
-                "reference": "d011761c4db6e7bf276822974f2ca01f843c528a"
+                "reference": "d98244ef1b081bf3d45f43b3d7631fa4a8d432f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/d011761c4db6e7bf276822974f2ca01f843c528a",
-                "reference": "d011761c4db6e7bf276822974f2ca01f843c528a",
+                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/d98244ef1b081bf3d45f43b3d7631fa4a8d432f5",
+                "reference": "d98244ef1b081bf3d45f43b3d7631fa4a8d432f5",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "illuminate/contracts": "^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
                 "php": "^8.0",
                 "spatie/laravel-package-tools": "^1.9.2"
             },
             "require-dev": {
-                "larastan/larastan": "^3.0",
+                "infection/infection": "^0.32.6",
+                "larastan/larastan": "^3.0 || dev-l13",
                 "laravel/pint": "^v1.4.1",
                 "nunomaduro/collision": "^6.0 || ^7.0 || ^8.0",
                 "nunomaduro/phpinsights": "^2.6",
-                "orchestra/testbench": "^9.0 || ^10.0",
-                "pestphp/pest": "^3.7 || ^4.0",
-                "pestphp/pest-plugin-laravel": "^3.0 || ^4.0",
+                "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
                 "phpstan/extension-installer": "^1.4",
                 "phpstan/phpstan": "^2.1",
                 "phpstan/phpstan-deprecation-rules": "^2.0",
                 "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "11.*",
                 "rector/rector": "^2.0",
                 "spatie/invade": "^1.1 || ^2.1",
                 "tomasvotruba/bladestan": "^0.10.0"
@@ -11995,13 +11995,12 @@
             "description": "Laravel Mail Explorer",
             "homepage": "https://github.com/xammie/mailbook",
             "keywords": [
-                "Xammie",
                 "laravel",
                 "mailbook"
             ],
             "support": {
                 "issues": "https://github.com/Xammie/mailbook/issues",
-                "source": "https://github.com/Xammie/mailbook/tree/1.10.1"
+                "source": "https://github.com/Xammie/mailbook/tree/1.11.1"
             },
             "funding": [
                 {
@@ -12009,7 +12008,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-20T12:08:33+00:00"
+            "time": "2026-04-07T17:34:35+00:00"
         }
     ],
     "packages-dev": [
