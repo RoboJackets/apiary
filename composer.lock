@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b7cb523d832cbad1355a12746e086dc",
+    "content-hash": "1a18659281b105f8c83a029ea4943f57",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -6580,6 +6580,62 @@
             "time": "2024-10-02T11:20:13+00:00"
         },
         {
+            "name": "php-http/multipart-stream-builder",
+            "version": "1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/multipart-stream-builder.git",
+                "reference": "10086e6de6f53489cca5ecc45b6f468604d3460e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/multipart-stream-builder/zipball/10086e6de6f53489cca5ecc45b6f468604d3460e",
+                "reference": "10086e6de6f53489cca5ecc45b6f468604d3460e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "php-http/discovery": "^1.15",
+                "psr/http-factory-implementation": "^1.0"
+            },
+            "require-dev": {
+                "nyholm/psr7": "^1.0",
+                "php-http/message": "^1.5",
+                "php-http/message-factory": "^1.0.2",
+                "phpunit/phpunit": "^7.5.15 || ^8.5 || ^9.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Http\\Message\\MultipartStream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "A builder class that help you create a multipart stream",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "factory",
+                "http",
+                "message",
+                "multipart stream",
+                "stream"
+            ],
+            "support": {
+                "issues": "https://github.com/php-http/multipart-stream-builder/issues",
+                "source": "https://github.com/php-http/multipart-stream-builder/tree/1.4.2"
+            },
+            "time": "2024-09-04T13:22:54+00:00"
+        },
+        {
             "name": "php-jsonpointer/php-jsonpointer",
             "version": "v3.0.2",
             "source": {
@@ -8738,16 +8794,16 @@
         },
         {
             "name": "square/square",
-            "version": "44.0.0.20260122",
+            "version": "45.0.0.20260122",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "4e578e805fc7953b52f86913910653b393b25a04"
+                "reference": "d62b84d994b80d7a4e31128be4970c153b102e7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/4e578e805fc7953b52f86913910653b393b25a04",
-                "reference": "4e578e805fc7953b52f86913910653b393b25a04",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/d62b84d994b80d7a4e31128be4970c153b102e7c",
+                "reference": "d62b84d994b80d7a4e31128be4970c153b102e7c",
                 "shasum": ""
             },
             "require": {
@@ -8755,11 +8811,18 @@
                 "apimatic/core-interfaces": "~0.1.5",
                 "apimatic/unirest-php": "^4.0.0",
                 "ext-json": "*",
-                "guzzlehttp/guzzle": "^7.4",
-                "php": "^8.1"
+                "php": "^8.1",
+                "php-http/discovery": "^1.0",
+                "php-http/multipart-stream-builder": "^1.0",
+                "psr/http-client": "^1.0",
+                "psr/http-client-implementation": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-factory-implementation": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "3.5.0",
+                "guzzlehttp/guzzle": "^7.4",
                 "phpstan/phpstan": "^1.12",
                 "phpunit/phpunit": "^9.0"
             },
@@ -8782,9 +8845,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/44.0.0.20260122"
+                "source": "https://github.com/square/square-php-sdk/tree/45.0.0.20260122"
             },
-            "time": "2026-01-22T21:31:59+00:00"
+            "time": "2026-03-02T21:34:08+00:00"
         },
         {
             "name": "subfission/cas",
