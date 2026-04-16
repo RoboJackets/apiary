@@ -127,6 +127,8 @@ class User extends JsonResource
             $this->mergeWhen(UserOrClient::can('read-users') && $this->withActions, [
                 'actions' => ActionEvent::collection($this->allActions()->get()),
             ]),
+            'gtPersonDirectoryId' => $this->gtDirGUID,
+            'is_service_account' => $this->is_service_account,
         ];
     }
 
