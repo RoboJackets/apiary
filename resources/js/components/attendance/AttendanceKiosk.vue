@@ -24,6 +24,7 @@
             return {
                 attendance: {
                     gtid: '',
+                    access_card_number: '',
                     attendable_id: '',
                     attendable_type: 'team',
                     source: 'kiosk',
@@ -144,7 +145,6 @@
                             buffer += e.key;
                         } else {
                             //Enter was pressed
-                            this.cardType = 'magstripe';
                             this.cardPresented(buffer);
                             buffer = '';
                         }
@@ -218,51 +218,60 @@
                 // Card is presented, process the data
                 let self = this;
                 this.attendance.source = 'kiosk';
-                console.log('first cardData: ' + cardData);
 
-                let pattTrackRaw = new RegExp('=(9[0-9]+)=');
-                let pattError = new RegExp('[%;+][eE]\\?');
-                let pattTrackNFC = new RegExp('NFC-(9[0-9]+)');
+                const mrd5Regex = /\|?(\d*)\|(\d+)\|(\w+)\|/;
+                const tsRawRegex = /^1570=(\d+)=\d+=(\d+)$/;
 
                 if (this.isNumeric(cardData) && cardData.length == 9 && cardData[0] == '9') {
-                    // Numeric nine-digit number starting with a nine
+                    // GTID only: no specific credential type discernible (e.g. 902900001)
                     this.attendance.gtid = cardData;
+                    cardData = null;
+                    this.submit();
+                } else if (this.isNumeric(cardData) && cardData.length == 16 && cardData.startsWith('601770')) {
+                    // Mobile credential: sixteen-digit number starting with 601770 (e.g. 6017700010000123)
+                    this.cardType = 'mobile';
+                    this.attendance.access_card_number = cardData;
                     this.attendance.source += '-' + this.cardType;
-                    console.log('numeric cardData: ' + cardData);
                     cardData = null;
                     this.submit();
-                } else if (pattTrackRaw.test(cardData)) {
-                    // Raw (unformatted) data from track 2 of the magnetic stripe
-                    let data = pattTrackRaw.exec(cardData)[1];
-                    console.log('raw cardData: ' + data);
-                    cardData = null;
-                    this.attendance.gtid = data;
+                } else if (this.isNumeric(cardData) && (cardData.length == 6 || cardData.length == 7 ||
+                  (cardData.length == 9 && cardData.startsWith('0')))) {
+                    // Plastic credential: 6-digit, 7-digit or 9-digit zero-padded
+                    // e.g. 800001, 1000003, 000800001, 001000003
+                    this.cardType = 'plastic';
+                    this.attendance.access_card_number = String(parseInt(cardData, 10));
                     this.attendance.source += '-' + this.cardType;
-                    this.submit();
-                } else if (pattTrackNFC.test(cardData)) {
-                    // Raw (unformatted) data from track 2 of the magnetic stripe
-                    let data = pattTrackNFC.exec(cardData)[1];
-                    console.log('NFC-prefixed cardData: ' + data);
                     cardData = null;
-                    this.attendance.gtid = data;
-                    this.attendance.source += '-contactless';
                     this.submit();
-                } else if (pattError.test(cardData)) {
-                    // Error message sent from card reader
-                    new Audio(this.sounds.error).play()
-                    console.log('error cardData: ' + pattError.exec(cardData));
+                } else if (mrd5Regex.test(cardData)) {
+                    // Transact MRD5 custom format for RoboJackets: GTID|CardNumber|CardType|
+                    // Mobile Credential: |6017700010000123|MobileA|
+                    // Plastic Credential: 902900001|800001|DESFire|
+                    const [, gtid, cardNumber, cardType] = cardData.match(mrd5Regex);
+
+                    if (gtid) {
+                      this.attendance.gtid = gtid;
+                    } else {
+                      this.attendance.access_card_number = cardNumber;
+                    }
+
+                    this.cardType = cardType;
+                    this.attendance.source += '-' + this.cardType;
                     cardData = null;
-                    Swal.fire({
-                        title: 'Hmm...',
-                        text: 'There was an error reading your card. Try again.',
-                        showConfirmButton: false,
-                        icon: 'warning',
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didDestroy: () => {
-                            self.clearFields();
-                        }
-                    })
+                    this.submit();
+                } else if (tsRawRegex.test(cardData)) {
+                    // Transact Reader (MRD5, PS4101, maybe TWN4?) Raw (Non-Customized) Plastic Card Format
+                    // 1570=GTID=00=RawCardNumber (e.g. 1570=902900001=00=6017700008000010)
+                    const [, gtid, rawCardNumber] = cardData.match(bbRawRegex);
+                    const cardNumber = rawCardNumber.slice(6, 15); // drop '601770' prefix and trailing digit
+
+                    this.attendance.gtid = gtid;
+                    this.attendance.access_card_number = String(parseInt(cardNumber, 10)); // strip leading zeros
+
+                    this.cardType = 'plastic';
+                    this.attendance.source += '-' + this.cardType;
+                    cardData = null;
+                    this.submit();
                 } else {
                     Swal.close();
                     new Audio(this.sounds.error).play()
