@@ -298,7 +298,7 @@
                 // Check for lack of team selection
                 if (this.attendance.attendable_id === '') {
                     // We have a valid card read with and no team picked, check if user is an admin for hidden menu access
-                    if (this.attendance.gtid !== '') {
+                    if (this.attendance.gtid === '') {
                         // If there's no GTID, we can't query admin status, so assume they're not.
                         this.hasError = true;
                         this.feedback = '';
