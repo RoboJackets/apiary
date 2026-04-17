@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e5f790ce6c3c0de12bcc033142c47c7",
+    "content-hash": "4cfd0f6a635b01aef80a0792c89c52d1",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2093,12 +2093,12 @@
             "version": "v6.11.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/firebase/php-jwt.git",
+                "url": "https://github.com/googleapis/php-jwt.git",
                 "reference": "d1e91ecf8c598d073d0995afa8cd5c75c6e19e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/d1e91ecf8c598d073d0995afa8cd5c75c6e19e66",
+                "url": "https://api.github.com/repos/googleapis/php-jwt/zipball/d1e91ecf8c598d073d0995afa8cd5c75c6e19e66",
                 "reference": "d1e91ecf8c598d073d0995afa8cd5c75c6e19e66",
                 "shasum": ""
             },
@@ -2146,8 +2146,8 @@
                 "php"
             ],
             "support": {
-                "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v6.11.1"
+                "issues": "https://github.com/googleapis/php-jwt/issues",
+                "source": "https://github.com/googleapis/php-jwt/tree/v6.11.1"
             },
             "time": "2025-04-09T20:32:01+00:00"
         },
@@ -3788,16 +3788,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v13.7.3",
+            "version": "v13.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "f4f85e3122c7c6ef375f8bd5395bc7c88801fcc5"
+                "reference": "16c45794c6a6176792fdf555f986aa1b944d9081"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/f4f85e3122c7c6ef375f8bd5395bc7c88801fcc5",
-                "reference": "f4f85e3122c7c6ef375f8bd5395bc7c88801fcc5",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/16c45794c6a6176792fdf555f986aa1b944d9081",
+                "reference": "16c45794c6a6176792fdf555f986aa1b944d9081",
                 "shasum": ""
             },
             "require": {
@@ -3859,7 +3859,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2026-04-07T13:08:13+00:00"
+            "time": "2026-04-09T13:39:45+00:00"
         },
         {
             "name": "laravel/prompts",

@@ -12,6 +12,9 @@ jobs:
       - name: Register problem matchers
         run: echo "::add-matcher::.github/matchers.json"
 
+      - name: Install libuuid
+        run: sudo apt-get update && sudo apt-get install --assume-yes uuid-dev
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -58,6 +61,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Install exiftool and libuuid
+        run: sudo apt-get update && sudo apt-get install --assume-yes libimage-exiftool-perl uuid-dev
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -67,9 +73,6 @@ jobs:
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ github.token }}
-
-      - name: Install exiftool
-        run: sudo apt-get update && sudo apt-get install --assume-yes libimage-exiftool-perl
 
       - name: Prepare the environment
         run: cp .env.example .env
