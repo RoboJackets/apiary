@@ -66,16 +66,29 @@ class AttendanceController implements HasMiddleware
                 $card = AccessCard::where('access_card_number', '=', $request->input('access_card_number'))->sole();
 
                 $gtid = $card->user->gtid;
+            } else {
+                Log::debug(self::class.': Could not resolve GTID for access card '.
+                    $request->input('access_card_number'));
             }
         }
 
-        $user = User::where('gtid', '=', $gtid)->first();
+        if ($gtid !== null) {
+            $user = User::where('gtid', '=', $gtid)->first();
+            $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id']))
+                ->where('gtid', '=', $gtid)->whereDate('created_at', $date);
+            $identifier = ['key' => 'gtid', 'value' => $gtid];
+        } else {
+            $user = null;
+            $attExistingQ = Attendance::where(
+                $request->only(['attendable_type', 'attendable_id', 'access_card_number'])
+            )
+                ->whereDate('created_at', $date);
+            $identifier = ['key' => 'access_card_number', 'value' => $request->input('access_card_number')];
+        }
 
-        $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))
-            ->whereDate('created_at', $date);
         $attExistingCount = $attExistingQ->count();
         if ($attExistingCount > 0) {
-            Log::debug(self::class.': Found a swipe on '.$date.' for '.$gtid.' - ignoring.');
+            Log::debug(self::class.': Found attendance on '.$date.' for '.$identifier['value'].' - ignoring.');
             $att = $attExistingQ->first();
             $code = 200;
 
@@ -83,13 +96,13 @@ class AttendanceController implements HasMiddleware
                 PushToJedi::dispatch($user, self::class, -1, 'duplicate-attendance');
             }
         } else {
-            Log::debug(self::class.': No swipe yet on '.$date.' for '.$gtid.' - saving.');
+            Log::debug(self::class.': No attendance yet on '.$date.' for '.$identifier['value'].' - saving.');
             $att = Attendance::create(
                 array_merge(
                     $request->validated(),
                     [
                         'recorded_by' => $request->user()->id,
-                        'gtid' => $gtid,
+                        $identifier['key'] => $identifier['value'],
                     ]
                 )
             );
