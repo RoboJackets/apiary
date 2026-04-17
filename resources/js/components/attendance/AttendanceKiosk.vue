@@ -404,7 +404,10 @@
                     let self = this;
                     Swal.showLoading();
                     axios
-                        .post(this.attendanceBaseUrl, this.attendance)
+                        .post(this.attendanceBaseUrl, Object.fromEntries(
+                          // Filter out keys with empty values to avoid server-side validation issues
+                          Object.entries(this.attendance).filter(([, v]) => v !== '' && v !== null)
+                        ))
                         .then(response => {
                             this.hasError = false;
                             let attendeeName = (response.data.attendance.attendee ? response.data.attendance.attendee.name : "Non-Member");
