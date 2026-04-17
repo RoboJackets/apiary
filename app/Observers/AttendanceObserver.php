@@ -13,6 +13,20 @@ class AttendanceObserver
 {
     public function saved(Attendance $attendance): void
     {
+        if (
+            $attendance->gtid === null
+            && $attendance->access_card_number !== null
+            && $attendance->accessCard === null
+        ) {
+            CreateOrUpdateUserFromBuzzAPI::dispatch(
+                CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_GTBUZZCARDNUMBER,
+                $attendance->access_card_number,
+                'attendance'
+            );
+
+            return;
+        }
+
         if ($attendance->attendee === null && $attendance->gtid !== null) {
             // I know this will not cause a PushToJedi run, but if the user is being created from attendance they will
             // not have access to anything with Jedi anyway.
