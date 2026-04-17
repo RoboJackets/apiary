@@ -32,6 +32,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
     public const string IDENTIFIER_GTDIRGUID = 'gtPersonDirectoryID';
 
+    public const string IDENTIFIER_GTBUZZCARDNUMBER = 'gtBuzzcardNumber';
+
     public const array EXPECTED_ATTRIBUTES = [
         'uid',
         'gtGTID',
@@ -91,6 +93,15 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             $searchValue = $this->value;
         }
 
+        if ($this->identifier === self::IDENTIFIER_GTBUZZCARDNUMBER) {
+            // Plastic card numbers are stored as bigint and lose leading zeros, but LDAP holds them as 9-digit
+            // zero-padded strings. Mobile credentials are 16 digits and pass through unchanged.
+            $searchValue = (string) $searchValue;
+            if (strlen($searchValue) <= 9) {
+                $searchValue = str_pad($searchValue, 9, '0', STR_PAD_LEFT);
+            }
+        }
+
         $client = new Client([
             'base_uri' => 'https://'.config('buzzapi.host').'/apiv3/',
             'allow_redirects' => false,
@@ -98,30 +109,38 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             'timeout' => config('buzzapi.timeout'),
         ]);
 
+        $requestBody = [
+            'api_app_id' => config('buzzapi.app_id'),
+            'api_app_password' => config('buzzapi.app_password'),
+            'api_request_mode' => 'sync',
+            'api_log_level' => config('buzzapi.default_log_level'),
+            'requested_attributes' => [
+                'gtGTID',
+                'mail',
+                'sn',
+                'givenName',
+                'eduPersonPrimaryAffiliation',
+                'gtPrimaryGTAccountUsername',
+                'uid',
+                'gtEmplId',
+                'gtEmployeeHomeDepartmentName',
+                'eduPersonScopedAffiliation',
+                'gtCurriculum',
+                'gtAccessCardNumber',
+            ],
+        ];
+
+        if ($this->identifier === self::IDENTIFIER_GTBUZZCARDNUMBER) {
+            // gtBuzzcardNumber is not exposed as a top-level BuzzAPI filter; it must go through the LDAP filter string.
+            $requestBody['filter'] = $this->identifier.'='.$searchValue;
+        } else {
+            $requestBody[$this->identifier] = $searchValue;
+        }
+
         $response = $client->post(
             'central.iam.gted.accounts/search',
             [
-                'json' => [
-                    'api_app_id' => config('buzzapi.app_id'),
-                    'api_app_password' => config('buzzapi.app_password'),
-                    'api_request_mode' => 'sync',
-                    'api_log_level' => config('buzzapi.default_log_level'),
-                    $this->identifier => $searchValue,
-                    'requested_attributes' => [
-                        'gtGTID',
-                        'mail',
-                        'sn',
-                        'givenName',
-                        'eduPersonPrimaryAffiliation',
-                        'gtPrimaryGTAccountUsername',
-                        'uid',
-                        'gtEmplId',
-                        'gtEmployeeHomeDepartmentName',
-                        'eduPersonScopedAffiliation',
-                        'gtCurriculum',
-                        'gtAccessCardNumber',
-                    ],
-                ],
+                'json' => $requestBody,
             ]
         );
 
@@ -209,6 +228,19 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
                 $card->user_id = $user->id;
                 $card->save();
             }
+        }
+
+        // When this job was dispatched to resolve a swiped card, link that specific card to the user. The account's
+        // primary gtAccessCardNumber may not match the swiped value (e.g. mobile credential vs. plastic), and BuzzAPI
+        // does not yet return gtBuzzcardNumber as an attribute.
+        if (
+            $this->identifier === self::IDENTIFIER_GTBUZZCARDNUMBER
+            && AccessCard::where('access_card_number', '=', $this->value)->doesntExist()
+        ) {
+            $card = new AccessCard();
+            $card->access_card_number = $this->value;
+            $card->user_id = $user->id;
+            $card->save();
         }
     }
 

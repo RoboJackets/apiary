@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\AccessCard;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -45,6 +46,12 @@ class BuzzApiMockController
         $results = [];
         $gtid = $request->input('gtid');
         $uid = $request->input('uid');
+
+        $gtBuzzcardNumber = null;
+        $filter = $request->input('filter');
+        if (is_string($filter) && str_starts_with($filter, 'gtBuzzcardNumber=')) {
+            $gtBuzzcardNumber = substr($filter, strlen('gtBuzzcardNumber='));
+        }
 
         if ($gtid !== null) {
             if (User::where('gtid', '=', $gtid)->exists()) {
@@ -91,6 +98,28 @@ class BuzzApiMockController
                 'uid' => $user->uid,
                 'eduPersonScopedAffiliation' => [],
             ];
+        } elseif ($gtBuzzcardNumber !== null) {
+            // Real BuzzAPI stores plastic cards zero-padded to 9 digits; the AccessCard primary key is a bigint, so
+            // strip the padding before matching.
+            $card = AccessCard::where('access_card_number', '=', ltrim(strval($gtBuzzcardNumber), '0'))->first();
+
+            if ($card?->user !== null) {
+                $user = $card->user;
+
+                $results[] = [
+                    'eduPersonPrimaryAffiliation' => $user->primary_affiliation,
+                    'givenName' => $user->first_name,
+                    'gtAccessCardNumber' => strval($card->access_card_number),
+                    'gtAccountEntitlement' => [],
+                    'gtGTID' => $user->gtid,
+                    'gtPersonDirectoryId' => $user->gtDirGUID,
+                    'gtPrimaryGTAccountUsername' => $user->uid,
+                    'mail' => $user->gt_email,
+                    'sn' => $user->last_name,
+                    'uid' => $user->uid,
+                    'eduPersonScopedAffiliation' => [],
+                ];
+            }
         }
 
         return response()->json([
