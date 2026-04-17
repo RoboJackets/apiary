@@ -80,7 +80,8 @@ class AttendanceController implements HasMiddleware
         } else {
             $user = null;
             $attExistingQ = Attendance::where(
-                $request->only(['attendable_type', 'attendable_id', 'access_card_number']))
+                $request->only(['attendable_type', 'attendable_id', 'access_card_number'])
+            )
                 ->whereDate('created_at', $date);
             $identifier = ['key' => 'access_card_number', 'value' => $request->input('access_card_number')];
         }
