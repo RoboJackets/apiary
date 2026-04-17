@@ -296,8 +296,25 @@
             },
             submit() {
                 // Check for lack of team selection
-                if (this.attendance.attendable_id === '' && this.attendance.gtid !== '') {
-                    // We have a valid card read with GTID and no team picked, check if user is an admin for hidden menu access
+                if (this.attendance.attendable_id === '') {
+                    // We have a valid card read with and no team picked, check if user is an admin for hidden menu access
+                    if (this.attendance.gtid !== '') {
+                        // If there's no GTID, we can't query admin status, so assume they're not.
+                        this.hasError = true;
+                        this.feedback = '';
+                        this.clearFields();
+                        new Audio(this.sounds.error).play()
+                        Swal.fire({
+                          title: 'Whoops!',
+                          text: 'Select a team before tapping your BuzzCard',
+                          icon: 'warning',
+                          timer: 2500,
+                          timerProgressBar: true,
+                          showConfirmButton: false
+                        });
+                        return false;
+                    }
+
                     axios
                         .get(this.usersBaseUrl + "/search", {
                             params: {
