@@ -67,7 +67,8 @@ class AttendanceController implements HasMiddleware
 
                 $gtid = $card->user->gtid;
             } else {
-                Log::debug(self::class.': Could not resolve GTID for access card '.$request->input('access_card_number'));
+                Log::debug(self::class.': Could not resolve GTID for access card '.
+                    $request->input('access_card_number'));
             }
         }
 
@@ -78,7 +79,8 @@ class AttendanceController implements HasMiddleware
             $identifier = ['key' => 'gtid', 'value' => $gtid];
         } else {
             $user = null;
-            $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'access_card_number']))
+            $attExistingQ = Attendance::where(
+                $request->only(['attendable_type', 'attendable_id', 'access_card_number']))
                 ->whereDate('created_at', $date);
             $identifier = ['key' => 'access_card_number', 'value' => $request->input('access_card_number')];
         }
