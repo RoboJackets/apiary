@@ -322,8 +322,8 @@
                             }
                         })
                         .then(response => {
-                            if (response.data.users.length == 1 && typeof response.data.users[0].roles === "undefined") {
-                                // Unable to read roles? That's an error.
+                            if (response.data.status === 'error' && response.data.message !== 'User not found.') {
+                                // Got an error other than user not found (which is mildly expected for new folks)
                                 new Audio(this.sounds.error).play()
                                 console.log('Error checking permissions via API');
                                 Swal.fire(
@@ -332,7 +332,7 @@
                                     'error'
                                 );
                                 return false;
-                            } else if (response.data.users.length == 1 && response.data.users[0].roles.filter(role => role.name.toString() === "admin").length === 1) {
+                            } else if (response.data.status === 'success' && response.data.user.roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
                                 let self = this;
                                 new Audio(this.sounds.notice).play()
@@ -376,8 +376,7 @@
                                 });
                                 return false;
                             } else {
-                                // Roles retried and the user is not an admin
-                                console.log('User is not an admin');
+                                // Roles retrieved and the user is not an admin
                                 new Audio(this.sounds.dohs[this.randomIntFromInterval(0, this.sounds.dohs.length - 1)]).play()
                                 Swal.fire({
                                     title: "D'oh!",
