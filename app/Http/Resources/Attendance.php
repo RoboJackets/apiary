@@ -31,6 +31,7 @@ class Attendance extends JsonResource
                 UserOrClient::can('read-users-gtid'),
                 $this->gtid
             ),
+            'access_card_number' => $this->access_card_number,
             'source' => $this->source,
             'recorded_by' => new Manager($this->whenLoaded('recorded')),
             'created_at' => $this->created_at,
