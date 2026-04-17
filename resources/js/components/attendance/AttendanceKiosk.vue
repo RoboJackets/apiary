@@ -296,8 +296,8 @@
             },
             submit() {
                 // Check for lack of team selection
-                if (this.attendance.attendable_id === '') {
-                    // We have a valid card read and no team picked, check if user is an admin for hidden menu access
+                if (this.attendance.attendable_id === '' && this.attendance.gtid !== '') {
+                    // We have a valid card read with GTID and no team picked, check if user is an admin for hidden menu access
                     axios
                         .get(this.usersBaseUrl + "/search", {
                             params: {
@@ -475,6 +475,7 @@
                 //Remove focus from button
                 document.activeElement.blur();
                 this.attendance.attendable_id = '';
+                this.attendance.access_card_number = '';
                 this.attendance.gtid = '';
                 this.stickToTeam = false;
                 this.cardType = null;
@@ -484,6 +485,7 @@
             clearGTID() {
                 document.activeElement.blur();
                 this.attendance.gtid = '';
+                this.attendance.access_card_number = '';
             },
             isNumeric(n) {
                 return !isNaN(parseFloat(n)) && isFinite(n);
