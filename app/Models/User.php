@@ -738,7 +738,7 @@ class User extends Authenticatable
             return $query->where('id', $id);
         }
 
-        return $query->where('uid', $id);
+        return $query->where('uid', $id)->orWhere('gtDirGUID', $id);
     }
 
     /**
