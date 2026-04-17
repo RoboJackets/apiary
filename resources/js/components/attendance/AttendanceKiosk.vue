@@ -316,10 +316,9 @@
                     }
 
                     axios
-                        .get(this.usersBaseUrl + "/search", {
+                        .get(this.usersBaseUrl + "/" + this.attendance.gtid, {
                             params: {
-                                include: 'roles',
-                                keyword: this.attendance.gtid,
+                                include: 'roles'
                             }
                         })
                         .then(response => {
