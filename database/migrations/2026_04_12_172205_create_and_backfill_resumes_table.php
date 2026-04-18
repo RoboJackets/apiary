@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -21,12 +22,18 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        User::whereNotNull('resume_date')->each(static function (User $user): void {
-            $user->resume()->create([
-                'filepath' => 'resumes/'.$user->uid.'.pdf',
-                'last_uploaded_at' => $user->resume_date ?? now(),
-            ]);
-        });
+        DB::table('users')
+            ->whereNotNull('resume_date')
+            ->orderBy('id')
+            ->each(function ($user) {
+                DB::table('resumes')->insert([
+                    'user_id' => $user->id,
+                    'filepath' => 'resumes/'.$user->uid.'.pdf',
+                    'last_uploaded_at' => $user->resume_date ?? now(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            });
     }
 
     /**
