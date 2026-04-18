@@ -97,6 +97,7 @@ class Resume extends Model
 
     /**
      * Get the indexable data array for the model.
+     * Will likely require Apache Tika.
      *
      * @psalm-mutation-free
      *
