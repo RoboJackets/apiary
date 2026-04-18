@@ -31,9 +31,9 @@ class Resume extends Model
     use HasFactory;
     use Searchable;
 
-    public const STORAGE_DISK = 'local';
+    public const string STORAGE_DISK = 'local';
 
-    public const STORAGE_DIRECTORY = 'resumes';
+    public const string STORAGE_DIRECTORY = 'resumes';
 
     /**
      * The attributes that are not mass assignable.
