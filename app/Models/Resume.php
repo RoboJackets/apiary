@@ -78,11 +78,13 @@ class Resume extends Model
         return self::STORAGE_DIRECTORY;
     }
 
+    /** @psalm-pure */
     public static function storagePathForUser(User $user): string
     {
         return self::storageDirectory().'/'.$user->uid.'.pdf';
     }
 
+    /** @psalm-mutation-free */
     public function storagePath(): string
     {
         return self::storageDirectory().'/'.$this->file_name;
