@@ -16,7 +16,8 @@ return new class extends Migration
     {
         Schema::create('resumes', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
+            $table->string('user_id')->unique();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('filepath');
             $table->timestamp('last_uploaded_at')->nullable();
             $table->timestamps();
