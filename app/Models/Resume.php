@@ -66,11 +66,13 @@ class Resume extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /** @psalm-pure */
     public static function storageDisk(): string
     {
         return self::STORAGE_DISK;
     }
 
+    /** @psalm-pure */
     public static function storageDirectory(): string
     {
         return self::STORAGE_DIRECTORY;
@@ -93,6 +95,8 @@ class Resume extends Model
 
     /**
      * Get the indexable data array for the model.
+     *
+     * @psalm-mutation-free
      *
      * @return array<string,int|string>
      */
