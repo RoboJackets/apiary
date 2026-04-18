@@ -37,6 +37,7 @@ class Resume extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -65,7 +66,10 @@ class Resume extends Resource
 
     /**
      * Cards.
+     *
+     * @psalm-pure
      */
+    #[\Override]
     public function cards(NovaRequest $request): array
     {
         return [];
@@ -73,7 +77,10 @@ class Resume extends Resource
 
     /**
      * Filters.
+     *
+     * @psalm-pure
      */
+    #[\Override]
     public function filters(NovaRequest $request): array
     {
         return [];
@@ -81,7 +88,10 @@ class Resume extends Resource
 
     /**
      * Lenses.
+     *
+     * @psalm-pure
      */
+    #[\Override]
     public function lenses(NovaRequest $request): array
     {
         return [];
@@ -89,7 +99,10 @@ class Resume extends Resource
 
     /**
      * Actions.
+     *
+     * @psalm-pure
      */
+    #[\Override]
     public function actions(NovaRequest $request): array
     {
         return [];
