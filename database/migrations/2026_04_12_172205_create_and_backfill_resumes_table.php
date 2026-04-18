@@ -25,7 +25,7 @@ return new class extends Migration
         DB::table('users')
             ->whereNotNull('resume_date')
             ->orderBy('id')
-            ->each(function ($user) {
+            ->each(static function ($user) {
                 DB::table('resumes')->insert([
                     'user_id' => $user->id,
                     'filepath' => 'resumes/'.$user->uid.'.pdf',
