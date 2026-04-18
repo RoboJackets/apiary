@@ -434,7 +434,10 @@ class User extends Resource
                             return $request->user()->can('read-users-resume');
                         }),
 
-                    DateTime::make('Resume Uploaded At', static fn (AppModelsUser $u): ?Carbon => $u->resume?->last_uploaded_at)
+                    DateTime::make(
+                        'Resume Uploaded At',
+                        static fn (AppModelsUser $u): ?Carbon => $u->resume?->last_uploaded_at
+                    )
                         ->onlyOnDetail()
                         ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
                 ]
