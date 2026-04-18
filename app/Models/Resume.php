@@ -63,6 +63,8 @@ class Resume extends Model
 
     /**
      * Gets the filename from the filepath.
+     *
+     * @psalm-mutation-free
      */
     public function getFilenameAttribute(): string
     {
