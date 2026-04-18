@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
+use App\Models\Resume;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -213,8 +214,12 @@ class ResumeController implements HasMiddleware
             // Store in the resumes folder with the user's username
             $file->storeAs('resumes', $user->uid.'.pdf');
 
-            $user->resume_date = now();
-            $user->save();
+            $resume_record = Resume::firstOrNew([
+                'user_id' => $user->id,
+                'filepath' => 'resumes/'.$user->uid.'.pdf',
+                'last_uploaded_at' => now(),
+            ]);
+            $resume_record->save();
 
             return response()->json(
                 [

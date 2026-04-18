@@ -73,7 +73,7 @@ class User extends JsonResource
                     'ethnicity' => $this->ethnicity,
                 ]
             ),
-            'resume_date' => $this->resume_date,
+            'resume_date' => $this->whenLoaded('resume', fn () => $this->resume?->last_uploaded_at),
             'is_active' => $this->is_active,
             'is_access_active' => $this->is_access_active,
             'signed_latest_agreement' => $this->signed_latest_agreement,

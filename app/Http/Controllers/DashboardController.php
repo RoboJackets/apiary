@@ -93,7 +93,7 @@ class DashboardController
         $overrideDate = $user->access_override_until ? $user->access_override_until->format('F j, Y') : 'n/a';
 
         $needsResume = $user->is_active &&
-            (($user->resume_date && $user->resume_date < now()->startOfDay()->subDays(28)) || ! $user->resume_date)
+            (($user->resume && $user->resume->last_uploaded_at < now()->startOfDay()->subDays(28)) || ! $user->resume)
             && config('features.resumes') === true
             && $user->is_student;
 

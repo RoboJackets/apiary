@@ -190,8 +190,9 @@ final class ResumeTest extends TestCase
 
         // Check that the timestamp was set
         $user->refresh();
+        $user->load('resume');
         // Give a +/-5sec tolerance on the comparison
-        $this->assertEqualsWithDelta($user->resume_date->timestamp, now()->timestamp, 5);
+        $this->assertEqualsWithDelta($user->resume?->last_uploaded_at->timestamp, now()->timestamp, 5);
 
         // Check that the resume can be downloaded
         $response = $this->actingAs($user, 'api')->get('/users/'.$user->id.'/resume');

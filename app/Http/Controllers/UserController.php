@@ -172,7 +172,10 @@ class UserController implements HasMiddleware
     public function show(string $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $user = User::findByIdentifier($id)->with(AuthorizeInclude::authorize(User::class, $include))->first();
+        $user = User::findByIdentifier($id)
+            ->with(AuthorizeInclude::authorize(User::class, $include))
+            ->with('resume')
+            ->first();
         if ($user !== null) {
             $requestingUser = $request->user();
 

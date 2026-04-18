@@ -70,26 +70,27 @@ class ExportFullYearResumes extends Action
 
         $fiscal_year_id = FiscalYear::where('ending_year', '=', $fields->fiscal_year)->sole()->id;
 
-        $users = User::whereHas('dues', static function (Builder $q) use ($fiscal_year_id): void {
-            $q->whereHas('for', static function (Builder $q) use ($fiscal_year_id): void {
-                $q->where('fiscal_year_id', '=', $fiscal_year_id);
+        $users = User::with('resume')
+            ->whereHas('dues', static function (Builder $q) use ($fiscal_year_id): void {
+                $q->whereHas('for', static function (Builder $q) use ($fiscal_year_id): void {
+                    $q->where('fiscal_year_id', '=', $fiscal_year_id);
+                })
+                    ->paid();
             })
-                ->paid();
-        })
-            ->whereNotNull('resume_date')
+            ->whereHas('resume')
             ->whereDoesntHave('duesPackages', static function (Builder $q): void {
                 $q->where('restricted_to_students', false);
             })
             ->orderBy('last_name')
             ->orderBy('first_name')
-            ->pluck('uid');
+            ->get();
 
         if ($users->count() === 0) {
             return Action::danger('No resumes matched the provided criteria!');
         }
 
-        $filenames = $users->uniqueStrict()->map(
-            static fn (string $uid): string => Storage::disk('local')->path('resumes/'.$uid.'.pdf')
+        $filenames = $users->pluck('resume.filepath')->uniqueStrict()->map(
+            static fn (string $filepath): string => Storage::disk('local')->path($filepath)
         );
 
         return $fields->output_type === 'mono' ?

@@ -596,6 +596,11 @@ class User extends Authenticatable
         )->withTimestamps();
     }
 
+    public function resume(): HasOne
+    {
+        return $this->hasOne(Resume::class);
+    }
+
     /**
      * @psalm-mutation-free
      */

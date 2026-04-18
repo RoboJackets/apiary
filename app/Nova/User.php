@@ -418,7 +418,7 @@ class User extends Resource
                 [
                     File::make(
                         'Resume',
-                        fn (): ?string => $this->resume_date !== null ? 'resumes/'.$this->uid.'.pdf' : null
+                        fn (): ?string => $this->resume?->filepath
                     )->path(
                         'resumes'
                     )
@@ -434,7 +434,7 @@ class User extends Resource
                             return $request->user()->can('read-users-resume');
                         }),
 
-                    DateTime::make('Resume Uploaded At', 'resume_date')
+                    DateTime::make('Resume Uploaded At', static fn (): ?Carbon => $this->resume?->last_uploaded_at)
                         ->onlyOnDetail()
                         ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
                 ]

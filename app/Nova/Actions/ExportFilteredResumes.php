@@ -96,10 +96,13 @@ class ExportFilteredResumes extends Action
             $classStandings[] = $classStanding;
         }
 
-        $users = User::active()
-            ->whereNotNull('resume_date')
-            ->where('resume_date', '>', $fields->resume_date_cutoff)
+        $users = User::with('resume')
+            ->active()
+            ->whereHas('resume', static function (Builder $q) use ($fields): void {
+                $q->where('last_uploaded_at', '>', $fields->resume_date_cutoff);
+            })
             ->where('primary_affiliation', 'student')
+            ->where('is_service_account', '=', false)
             ->whereDoesntHave('duesPackages', static function (Builder $q): void {
                 $q->where('restricted_to_students', false);
             })
@@ -117,15 +120,15 @@ class ExportFilteredResumes extends Action
             ->whereIn('class_standings.name', $classStandings)
             ->orderBy('last_name')
             ->orderBy('first_name')
-            ->pluck('uid');
+            ->get();
 
         if ($users->count() === 0) {
             return Action::danger('No resumes matched the provided criteria!');
         }
 
-        $filenames = $users->uniqueStrict()->map(
-            static fn (string $uid): string => escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'))
-        );
+        $filenames = $users->pluck('resume.filepath')
+            ->uniqueStrict()
+            ->map(static fn (string $filepath): string => escapeshellarg(Storage::disk('local')->path($filepath)));
 
         $datecode = now()->format('Y-m-d-H-i-s');
         $filename = 'robojackets-resumes-'.$datecode.'.pdf';
@@ -207,7 +210,7 @@ class ExportFilteredResumes extends Action
             'distinct(class_standings.name) as distinct_class_standings, class_standings.rank_order'
         )
             ->active()
-            ->whereNotNull('resume_date')
+            ->whereHas('resume')
             ->where('primary_affiliation', 'student')
             ->where('is_service_account', '=', false)
             ->whereDoesntHave('duesPackages', static function (Builder $q): void {

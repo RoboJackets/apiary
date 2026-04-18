@@ -32,7 +32,9 @@ class ResumeBookController
         try {
             return response()
                 ->file(Storage::disk('local')
-                    ->path('resumes/'.$uid.'.pdf'), ['Content-Type' => 'application/pdf']);
+                    ->path(
+                        User::where('uid', $uid)->sole()->resume->filepath
+                    ), ['Content-Type' => 'application/pdf']);
         } catch (FileNotFoundException) {
             return response()->json(
                 [
@@ -71,7 +73,7 @@ class ResumeBookController
     {
         $semesters = User::select('graduation_semester')
             ->active()
-            ->whereNotNull('resume_date')
+            ->whereHas('resume')
             ->where('primary_affiliation', 'student')
             ->where('is_service_account', '=', false)
             ->whereDoesntHave('duesPackages', static function (Builder $q): void {
@@ -126,10 +128,13 @@ class ResumeBookController
 
     private function filterUsers(array $majors, array $graduation_semesters): array
     {
-        $usernames = collect(Storage::disk('local')->files('resumes'))
-            ->map(static fn (string $path): string => pathinfo($path, PATHINFO_FILENAME))
-            ->toArray();
-        $users = User::active()->whereIn('uid', $usernames);
+        $users = User::active()
+            ->where('primary_affiliation', 'student')
+            ->where('is_service_account', '=', false)
+            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                $q->where('restricted_to_students', false);
+            })
+            ->whereHas('resume');
 
         if ($majors !== []) {
             $users = $users->whereHas(
