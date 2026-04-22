@@ -4,40 +4,40 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "525b8fae89115dedd635dbf1d97029f0",
+    "content-hash": "bcfe94c1e7f95d175d4dd9b9abfa1bb2",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
-            "version": "v2.1.1",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ans-group/laravel-health-check.git",
-                "reference": "77af1169e699d38dd9f327ed18f553030a620db0"
+                "reference": "ec8a900d4c14befa87ee08b8c57606b523c2628a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ans-group/laravel-health-check/zipball/77af1169e699d38dd9f327ed18f553030a620db0",
-                "reference": "77af1169e699d38dd9f327ed18f553030a620db0",
+                "url": "https://api.github.com/repos/ans-group/laravel-health-check/zipball/ec8a900d4c14befa87ee08b8c57606b523c2628a",
+                "reference": "ec8a900d4c14befa87ee08b8c57606b523c2628a",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/console": "^10.0|^11.0|^12.0",
-                "illuminate/http": "^10.0|^11.0|^12.0",
-                "illuminate/support": "^10.0|^11.0|^12.0",
-                "php": "^8.1"
+                "illuminate/console": "^12.0|^13.0",
+                "illuminate/http": "^12.0|^13.0",
+                "illuminate/support": "^12.0|^13.0",
+                "php": "^8.2"
             },
             "require-dev": {
                 "enlightn/security-checker": "^2.0",
                 "guzzlehttp/guzzle": "^7.5",
-                "illuminate/database": "^10.0|^11.0|^12.0",
-                "illuminate/log": "^10.0|^11.0|^12.0",
-                "illuminate/redis": "^10.0|^11.0|^12.0",
+                "illuminate/database": "^12.0|^13.0",
+                "illuminate/log": "^12.0|^13.0",
+                "illuminate/redis": "^12.0|^13.0",
                 "larastan/larastan": "^3.1",
                 "league/flysystem": "^3.29",
                 "league/flysystem-ftp": "^3.29",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^8.0|^9.0|^10.0",
+                "orchestra/testbench": "^10.0|^11.0",
                 "phpmd/phpmd": "^2.15",
                 "phpstan/phpstan-mockery": "^1.1|^2.0",
                 "phpstan/phpstan-phpunit": "^1.4|^2.0",
@@ -99,7 +99,7 @@
                 "issues": "https://github.com/ukfast/laravel-health-check/issues",
                 "source": "https://github.com/ukfast/laravel-health-check/tree/master"
             },
-            "time": "2025-04-11T09:48:40+00:00"
+            "time": "2026-04-22T15:52:09+00:00"
         },
         {
             "name": "apereo/phpcas",
