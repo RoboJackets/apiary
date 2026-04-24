@@ -26,7 +26,7 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "ans-group/laravel-health-check": "3.0.0",
-        "apereo/phpcas": "1.6.1",
+        "apereo/phpcas": "1.6.2",
         "ashallendesign/laravel-config-validator": "2.10.0",
         "barryvdh/laravel-dompdf": "dev-master",
         "calebporzio/sushi": "2.5.4",
