@@ -42,7 +42,7 @@
         "http-interop/http-factory-guzzle": "1.2.1",
         "jeremy379/laravel-openid-connect": "3.2.2",
         "kiritokatklian/nova-permission": "5.2.0",
-        "laravel/framework": "12.57.0",
+        "laravel/framework": "12.58.0",
         "laravel/horizon": "5.46.0",
         "laravel/nova": "5.8.2",
         "laravel/passport": "13.7.5",
