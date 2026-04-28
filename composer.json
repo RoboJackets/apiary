@@ -73,7 +73,6 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.5.5",
         "beyondcode/laravel-dump-server": "2.1.0",
-        "danog/advanced-json-rpc": "3.2.3",
         "laravel/boost": "1.8.13",
         "laravel/pail": "1.2.6",
         "laravel/pint": "1.29.1",
