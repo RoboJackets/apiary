@@ -297,7 +297,6 @@ EOF
         meta {
           nginx-config = substr(var.precompressed_assets ? local.compressed_nginx_configuration : local.compressed_nginx_configuration_without_gzip_static, 0, 511)
           nginx-config-1 = substr(var.precompressed_assets ? local.compressed_nginx_configuration : local.compressed_nginx_configuration_without_gzip_static, 511, 511)
-          nginx-config-2 = substr(var.precompressed_assets ? local.compressed_nginx_configuration : local.compressed_nginx_configuration_without_gzip_static, 1022, 511)
           socket = "/var/opt/nomad/run/${NOMAD_JOB_NAME}-${NOMAD_ALLOC_ID}.sock"
           firewall-rules = jsonencode(["internet"])
           referrer-policy = "same-origin"
