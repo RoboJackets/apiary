@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c357ab0d25133ae913b9a05ddc6dfe4",
+    "content-hash": "589e019f2f7ecf2748f0968d62ffccab",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -14329,20 +14329,20 @@
         },
         {
             "name": "mxl/laravel-job",
-            "version": "v1.7.0",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mxl/laravel-job.git",
-                "reference": "1736d333c75dfc97fcb4ba52b9fb0c2c59773884"
+                "reference": "fdb676b3e72bda1c8772ce15e41f79e4e8bd1e3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mxl/laravel-job/zipball/1736d333c75dfc97fcb4ba52b9fb0c2c59773884",
-                "reference": "1736d333c75dfc97fcb4ba52b9fb0c2c59773884",
+                "url": "https://api.github.com/repos/mxl/laravel-job/zipball/fdb676b3e72bda1c8772ce15e41f79e4e8bd1e3c",
+                "reference": "fdb676b3e72bda1c8772ce15e41f79e4e8bd1e3c",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+                "laravel/framework": "5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "php": ">=7.0"
             },
             "require-dev": {
@@ -14384,7 +14384,7 @@
                 "issues": "https://github.com/mxl/laravel-job/issues",
                 "source": "https://github.com/mxl/laravel-job"
             },
-            "time": "2025-02-25T11:37:40+00:00"
+            "time": "2026-04-29T13:34:56+00:00"
         },
         {
             "name": "myclabs/deep-copy",
