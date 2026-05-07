@@ -12405,16 +12405,16 @@
         },
         {
             "name": "amphp/parallel",
-            "version": "v2.3.3",
+            "version": "v2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/parallel.git",
-                "reference": "296b521137a54d3a02425b464e5aee4c93db2c60"
+                "reference": "3ad45d1cff1bfbfe832c79671e6a4a1017dd9921"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/parallel/zipball/296b521137a54d3a02425b464e5aee4c93db2c60",
-                "reference": "296b521137a54d3a02425b464e5aee4c93db2c60",
+                "url": "https://api.github.com/repos/amphp/parallel/zipball/3ad45d1cff1bfbfe832c79671e6a4a1017dd9921",
+                "reference": "3ad45d1cff1bfbfe832c79671e6a4a1017dd9921",
                 "shasum": ""
             },
             "require": {
@@ -12434,7 +12434,7 @@
                 "amphp/php-cs-fixer-config": "^2",
                 "amphp/phpunit-util": "^3",
                 "phpunit/phpunit": "^9",
-                "psalm/phar": "^5.18"
+                "psalm/phar": "6.16.1"
             },
             "type": "library",
             "autoload": {
@@ -12477,7 +12477,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/parallel/issues",
-                "source": "https://github.com/amphp/parallel/tree/v2.3.3"
+                "source": "https://github.com/amphp/parallel/tree/v2.3.4"
             },
             "funding": [
                 {
@@ -12485,7 +12485,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-15T06:23:42+00:00"
+            "time": "2026-05-06T19:26:51+00:00"
         },
         {
             "name": "amphp/parser",
