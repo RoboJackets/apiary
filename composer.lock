@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0fa14ac4d23982dae5ccf7b2aaec8313",
+    "content-hash": "e44905288d8bc005a88f7c8b1f954bcd",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -15693,16 +15693,16 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v4.8.3",
+            "version": "v4.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "13e4c0d75ef343341a788de0d8354d07166b2fdc"
+                "reference": "d813b8844ffe5ff8d05e1ae47f7d630217f7538f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/13e4c0d75ef343341a788de0d8354d07166b2fdc",
-                "reference": "13e4c0d75ef343341a788de0d8354d07166b2fdc",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/d813b8844ffe5ff8d05e1ae47f7d630217f7538f",
+                "reference": "d813b8844ffe5ff8d05e1ae47f7d630217f7538f",
                 "shasum": ""
             },
             "require": {
@@ -15720,6 +15720,7 @@
                 "orchestra/testbench-core": "^10.0 || ^11.0",
                 "php": "^8.2",
                 "psalm/psalm-plugin-api": "^0.1.0",
+                "symfony/console": "^7.4 || ^8.0",
                 "vimeo/psalm": "^7.0.0-beta19 || dev-master"
             },
             "require-dev": {
@@ -15731,6 +15732,9 @@
                 "rector/rector": "^2.3",
                 "symfony/http-foundation": "^7.1 || ^8.0"
             },
+            "bin": [
+                "bin/psalm-laravel"
+            ],
             "type": "psalm-plugin",
             "extra": {
                 "psalm": {
@@ -15749,7 +15753,13 @@
             "authors": [
                 {
                     "name": "Matthew Brown",
-                    "email": "github@muglug.com"
+                    "email": "github@muglug.com",
+                    "role": "Original Author"
+                },
+                {
+                    "name": "Alies Lapatsin",
+                    "email": "github@alies.dev",
+                    "role": "Maintainer"
                 }
             ],
             "description": "Psalm plugin for Laravel",
@@ -15762,7 +15772,7 @@
             ],
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v4.8.3"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v4.9.3"
             },
             "funding": [
                 {
@@ -15770,7 +15780,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-17T12:46:03+00:00"
+            "time": "2026-05-07T07:27:34+00:00"
         },
         {
             "name": "psalm/psalm-plugin-api",
