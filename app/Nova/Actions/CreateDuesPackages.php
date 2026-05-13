@@ -92,7 +92,7 @@ class CreateDuesPackages extends Action
                     ->where('name', 'like', 'Fall%')
                     ->sole()
                     ->cost;
-            } catch (MultipleRecordsFoundException|ModelNotFoundException) {
+            } catch (ModelNotFoundException|MultipleRecordsFoundException) {
                 // do nothing
             }
 
@@ -102,7 +102,7 @@ class CreateDuesPackages extends Action
                     ->where('name', 'like', 'Spring%')
                     ->sole()
                     ->cost;
-            } catch (MultipleRecordsFoundException|ModelNotFoundException) {
+            } catch (ModelNotFoundException|MultipleRecordsFoundException) {
                 // do nothing
             }
 
@@ -114,7 +114,7 @@ class CreateDuesPackages extends Action
                     ->cost;
 
                 $nonStudentFullYearCost = $studentFullYearCost * 2;
-            } catch (MultipleRecordsFoundException|ModelNotFoundException) {
+            } catch (ModelNotFoundException|MultipleRecordsFoundException) {
                 // do nothing
             }
 
@@ -124,7 +124,7 @@ class CreateDuesPackages extends Action
                     ->where('name', 'like', 'Full Year (%) - Non-Student')
                     ->sole()
                     ->cost;
-            } catch (MultipleRecordsFoundException|ModelNotFoundException) {
+            } catch (ModelNotFoundException|MultipleRecordsFoundException) {
                 // do nothing
             }
         }
