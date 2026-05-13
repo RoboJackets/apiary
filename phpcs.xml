@@ -92,7 +92,6 @@
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
     <rule ref="Generic.Formatting.SpaceBeforeCast"/>
 
-    <rule ref="Generic.Functions.CallTimePassByReference"/>
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
 
     <rule ref="Generic.NamingConventions.CamelCapsFunctionName.ScopeNotCamelCaps">
@@ -335,8 +334,6 @@
     <rule ref="Squiz.Functions.FunctionDuplicateArgument"/>
     <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
     <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
-
-    <rule ref="Squiz.Objects.DisallowObjectStringIndex"/>
 
     <rule ref="Squiz.Operators.ComparisonOperatorUsage">
         <exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue"/>
