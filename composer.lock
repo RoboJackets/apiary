@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c9d106b7218e5ce4cfb7ac66f314241",
+    "content-hash": "e428e6a4f22ce1b4e5802612b5f6d5de",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -15693,16 +15693,16 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v4.10.1",
+            "version": "v4.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "9304208713a57542c08b14ed12e073cddbef978f"
+                "reference": "d8b58da58160e7f919b024bc7a1628b79175fbbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/9304208713a57542c08b14ed12e073cddbef978f",
-                "reference": "9304208713a57542c08b14ed12e073cddbef978f",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/d8b58da58160e7f919b024bc7a1628b79175fbbb",
+                "reference": "d8b58da58160e7f919b024bc7a1628b79175fbbb",
                 "shasum": ""
             },
             "require": {
@@ -15772,7 +15772,7 @@
             ],
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v4.10.1"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v4.10.2"
             },
             "funding": [
                 {
@@ -15780,7 +15780,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-11T07:04:22+00:00"
+            "time": "2026-05-15T12:53:35+00:00"
         },
         {
             "name": "psalm/psalm-plugin-api",
