@@ -81,7 +81,7 @@
         "nunomaduro/collision": "8.9.4",
         "phan/phan": "6.0.5",
         "phpunit/phpunit": "11.5.55",
-        "psalm/plugin-laravel": "4.10.1",
+        "psalm/plugin-laravel": "4.10.2",
         "slevomat/coding-standard": "8.29.0",
         "spatie/laravel-ignition": "2.12.0",
         "spatie/ray": "1.48.0",
