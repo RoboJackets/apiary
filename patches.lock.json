@@ -1,5 +1,5 @@
 {
-    "_hash": "7abd9336404b46af42f3ffbdc3da21a9078375da7b4277f7c7b66b5fd3e88bf9",
+    "_hash": "a55cd8201f99b7b3e72ed8ab2167d1aba488761941a1fac3cd7ad48ae9d5b38f",
     "patches": {
         "xammie/mailbook": [
             {
@@ -31,18 +31,6 @@
                 "description": "Check length of minified HTML before returning",
                 "url": "patches/htmlmin/htmlmin/check-minified-length.patch",
                 "sha256": "0a26e3c720870828ccc133f134c3117e4079c4a5c1236ab8107b6a0d2af656af",
-                "depth": 1,
-                "extra": {
-                    "provenance": "patches-file:patches.json"
-                }
-            }
-        ],
-        "laravel/horizon": [
-            {
-                "package": "laravel/horizon",
-                "description": "Add support for stop-when-empty-for to Horizon",
-                "url": "patches/laravel/horizon/add-stop-when-empty-for.patch",
-                "sha256": "92ebe667eab1de074864f58c8be86392a56a0d902ecf2e39496fabbf68cf8745",
                 "depth": 1,
                 "extra": {
                     "provenance": "patches-file:patches.json"
