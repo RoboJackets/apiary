@@ -17,12 +17,6 @@
                 "description": "Check length of minified HTML before returning",
                 "url": "patches/htmlmin/htmlmin/check-minified-length.patch"
             }
-        ],
-        "laravel/horizon": [
-            {
-                "description": "Add support for stop-when-empty-for to Horizon",
-                "url": "patches/laravel/horizon/add-stop-when-empty-for.patch"
-            }
         ]
     }
 }
