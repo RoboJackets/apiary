@@ -4,8 +4,69 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3986c17646d53cb8a338f4da0a7f3fbf",
+    "content-hash": "5e59629e047f3b79a6e63f49ca0fdaf6",
     "packages": [
+        {
+            "name": "adhocore/jwt",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adhocore/php-jwt.git",
+                "reference": "ad417603d9d45578b6af2089ad5b78f101c82367"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adhocore/php-jwt/zipball/ad417603d9d45578b6af2089ad5b78f101c82367",
+                "reference": "ad417603d9d45578b6af2089ad5b78f101c82367",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5 || ^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ahc\\Jwt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jitendra Adhikari",
+                    "email": "jiten.adhikary@gmail.com"
+                }
+            ],
+            "description": "Ultra lightweight JSON web token (JWT) library for PHP5.5+.",
+            "keywords": [
+                "auth",
+                "json-web-token",
+                "jwt",
+                "jwt-auth",
+                "jwt-php",
+                "token"
+            ],
+            "support": {
+                "issues": "https://github.com/adhocore/php-jwt/issues",
+                "source": "https://github.com/adhocore/php-jwt/tree/1.1.3"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/ji10",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/adhocore",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-18T01:00:50+00:00"
+        },
         {
             "name": "ans-group/laravel-health-check",
             "version": "v3.0.0",
@@ -1509,23 +1570,23 @@
         },
         {
             "name": "docusign/esign-client",
-            "version": "v8.8.0",
+            "version": "v8.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/docusign/docusign-esign-php-client.git",
-                "reference": "1936a03e73e35eb066c02b204311ac9bc62a0a5a"
+                "reference": "d026fdcb41bec593ec152f5a223f2820324b5124"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/1936a03e73e35eb066c02b204311ac9bc62a0a5a",
-                "reference": "1936a03e73e35eb066c02b204311ac9bc62a0a5a",
+                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/d026fdcb41bec593ec152f5a223f2820324b5124",
+                "reference": "d026fdcb41bec593ec152f5a223f2820324b5124",
                 "shasum": ""
             },
             "require": {
+                "adhocore/jwt": "^1.1",
                 "ext-curl": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "firebase/php-jwt": "^6.0",
                 "php": ">=7.4"
             },
             "require-dev": {
@@ -1562,9 +1623,9 @@
             ],
             "support": {
                 "issues": "https://github.com/docusign/docusign-esign-php-client/issues",
-                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v8.8.0"
+                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v8.8.1"
             },
-            "time": "2026-03-16T10:21:09+00:00"
+            "time": "2026-05-27T12:50:12+00:00"
         },
         {
             "name": "dompdf/dompdf",
