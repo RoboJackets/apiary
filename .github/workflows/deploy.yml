@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Nomad
-        uses: hashicorp/setup-nomad@1.0.0
+        uses: hashicorp/setup-nomad@v1.0.0
 
       - name: Set job name
         working-directory: ./.nomad/
