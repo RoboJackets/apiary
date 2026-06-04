@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Nomad
-        uses: lucasmelin/setup-nomad@v2.0.0
+        uses: hashicorp/setup-nomad@1.0.0
 
       - name: Exchange GitHub JWT for Nomad token
         uses: RoboJackets/nomad-jwt-auth@main
