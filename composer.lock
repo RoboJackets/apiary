@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2687a2c0d459f9b3192219157240c26f",
+    "content-hash": "2d86e67d81c06f88761c2e45f03855b2",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -9123,16 +9123,16 @@
         },
         {
             "name": "spatie/laravel-webhook-client",
-            "version": "3.6.2",
+            "version": "3.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-webhook-client.git",
-                "reference": "176de665301a33ec86778551422d31ccbc978211"
+                "reference": "a2c2474bf38bde8d29cf21755c8c7c49cf1e143d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/176de665301a33ec86778551422d31ccbc978211",
-                "reference": "176de665301a33ec86778551422d31ccbc978211",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/a2c2474bf38bde8d29cf21755c8c7c49cf1e143d",
+                "reference": "a2c2474bf38bde8d29cf21755c8c7c49cf1e143d",
                 "shasum": ""
             },
             "require": {
@@ -9189,7 +9189,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-webhook-client/issues",
-                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.6.2"
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.6.3"
             },
             "funding": [
                 {
@@ -9197,7 +9197,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-04-30T13:10:03+00:00"
+            "time": "2026-06-04T08:27:51+00:00"
         },
         {
             "name": "spomky-labs/cbor-php",
