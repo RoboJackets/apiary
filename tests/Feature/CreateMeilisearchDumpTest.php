@@ -39,7 +39,7 @@ final class CreateMeilisearchDumpTest extends TestCase
 
         $this->assertFileDoesNotExist($files[1]);
         $this->assertFileDoesNotExist($files[2]);
-        $this->assertFileExists($files[3]);
+        $this->assertFileDoesNotExist($files[3]);
         $this->assertFileExists($files[4]);
 
         array_map('unlink', glob($dumpPath.'/*') ?: []);
