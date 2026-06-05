@@ -31,17 +31,17 @@ class CreateMeilisearchDump extends Command
     /**
      * The number of dumps to keep when pruning.
      */
-    private const DUMPS_TO_KEEP = 2;
+    private const int DUMPS_TO_KEEP = 1;
 
     /**
      * How long to wait for the dump task to complete, in milliseconds.
      */
-    private const TIMEOUT_IN_MS = 1_800_000;
+    private const int TIMEOUT_IN_MS = 1800000;
 
     /**
      * How frequently to poll the dump task for completion, in milliseconds.
      */
-    private const INTERVAL_IN_MS = 2_000;
+    private const int INTERVAL_IN_MS = 2000;
 
     /**
      * Execute the console command.
@@ -52,12 +52,12 @@ class CreateMeilisearchDump extends Command
 
         $task = $client->createDump();
 
-        $this->info("Waiting for dump task {$task['taskUid']} to complete...");
+        $this->info('Waiting for dump task '.$task['taskUid'].' to complete...');
 
         $result = $client->waitForTask($task['taskUid'], self::TIMEOUT_IN_MS, self::INTERVAL_IN_MS);
 
         if ($result['status'] !== 'succeeded') {
-            $this->error("Dump task finished with status `{$result['status']}`.");
+            $this->error('Dump task finished with status `'.$result['status'].'`.');
 
             return 1;
         }
@@ -82,7 +82,7 @@ class CreateMeilisearchDump extends Command
             ->values();
 
         $dumps->slice(self::DUMPS_TO_KEEP)->each(function (string $file): void {
-            $this->info("Pruning old dump `{$file}`.");
+            $this->info('Pruning old dump `'.$file.'`.');
 
             unlink($file);
         });

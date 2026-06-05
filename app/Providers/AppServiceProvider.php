@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Client::class, static fn (): Client => new Client(
             config('scout.meilisearch.host'),
-            config('scout.meilisearch.key'),
+            config('scout.meilisearch.key')
         ));
     }
 
