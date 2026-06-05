@@ -1,6 +1,12 @@
 DB_PATH="${NOMAD_TASK_DIR}"
 DUMP_DIR="/data/meilisearch/dumps"
 
+if [ -z "${DB_PATH}" ]
+then
+    echo "NOMAD_TASK_DIR is empty; refusing to continue" >&2
+    exit 1
+fi
+
 mkdir -p "${DUMP_DIR}"
 
 run_meilisearch() {
@@ -39,6 +45,6 @@ if ! /bin/meilisearch \
     --master-key "${NOMAD_ALLOC_ID}" \
     --import-dump "${latest}"
 then
-    rm -rf "${DB_PATH:?}"/*
+    rm -rf "${DB_PATH}"/*
     run_meilisearch
 fi
