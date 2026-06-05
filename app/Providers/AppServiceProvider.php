@@ -23,10 +23,22 @@ use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
 use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\Passport;
+use Meilisearch\Client;
 use Spatie\WebhookClient\Models\WebhookCall;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        $this->app->singleton(Client::class, static fn (): Client => new Client(
+            config('scout.meilisearch.host'),
+            config('scout.meilisearch.key'),
+        ));
+    }
+
     /**
      * Bootstrap any application services.
      */

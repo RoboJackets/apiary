@@ -522,25 +522,27 @@ EOF
           image = "getmeili/meilisearch"
 
           entrypoint = [
-            "/bin/meilisearch",
-            "--db-path",
-            "${NOMAD_TASK_DIR}",
-            "--http-addr",
-            "127.0.0.1:${NOMAD_PORT_meilisearch}",
-            "--env",
-            "production",
-            "--max-indexing-memory",
-            "4Gb",
-            "--http-payload-size-limit",
-            "100Mb",
-            "--experimental-dumpless-upgrade",
-            "--master-key",
-            "${NOMAD_ALLOC_ID}",
+            "/bin/sh",
+            "-xeuo",
+            "pipefail",
+            "-c",
+            trimspace(file("scripts/meilisearch.sh"))
           ]
 
           force_pull = true
 
           network_mode = "host"
+
+          mount {
+            type = "volume"
+            target = "/data"
+            source = "${NOMAD_JOB_NAME}"
+            readonly = false
+
+            volume_options {
+              no_copy = false
+            }
+          }
         }
 
         resources {
