@@ -189,11 +189,13 @@
             <errorLevel type="suppress">
                 <directory name="app/Nova/Metrics/" />
                 <file name="app/Traits/GetMorphClassStatic.php" />
+                <file name="app/Console/Commands/CreateMeilisearchDump.php"/>
             </errorLevel>
         </InvalidFalsableReturnType>
         <FalsableReturnStatement>
             <errorLevel type="suppress">
                 <directory name="app/Nova/Metrics" />
+                <file name="app/Console/Commands/CreateMeilisearchDump.php"/>
             </errorLevel>
         </FalsableReturnStatement>
         <DocblockTypeContradiction>
@@ -338,6 +340,7 @@
                 <file name="app/Nova/Actions/ReviewTrip.php"/>
                 <file name="app/Nova/Dashboards/Main.php"/>
                 <file name="app/Util/CasUser.php"/>
+                <file name="app/Console/Commands/CreateMeilisearchDump.php"/>
             </errorLevel>
         </RiskyTruthyFalsyComparison>
         <InvalidPropertyFetch>
