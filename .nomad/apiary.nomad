@@ -578,7 +578,7 @@ EOF
 
           check_restart {
             limit = 5
-            grace = "20s"
+            grace = "60s"
           }
         }
 
