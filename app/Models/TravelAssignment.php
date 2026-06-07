@@ -225,15 +225,12 @@ class TravelAssignment extends Model implements Payable
     {
         $array = $this->toArray();
 
-        $user = $this->user->toSearchableArray();
-        $travel = $this->travel->toArray();
-
-        foreach ($user as $key => $val) {
-            $array['user_'.$key] = $val;
+        if (! array_key_exists('user', $array)) {
+            $array['user'] = $this->user->toSearchableArray();
         }
 
-        foreach ($travel as $key => $val) {
-            $array['trip_'.$key] = $val;
+        if (! array_key_exists('travel', $array)) {
+            $array['travel'] = $this->travel->toArray();
         }
 
         $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
