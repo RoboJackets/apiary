@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Sleep;
 use Meilisearch\Client;
+use Meilisearch\Contracts\TasksQuery;
+use RuntimeException;
 
 /**
  * Creates a Meilisearch dump and prunes older dumps.
@@ -44,10 +48,27 @@ class CreateMeilisearchDump extends Command
     private const int INTERVAL_IN_MS = 2000;
 
     /**
+     * How long to wait for indexing to complete before dumping, in seconds.
+     */
+    private const int INDEXING_TIMEOUT_IN_SECONDS = 1800;
+
+    /**
+     * How frequently to poll for indexing completion, in seconds.
+     */
+    private const int INDEXING_POLL_INTERVAL_IN_SECONDS = 5;
+
+    /**
+     * The number of consecutive idle polls required before indexing is considered complete.
+     */
+    private const int INDEXING_STABLE_CHECKS = 2;
+
+    /**
      * Execute the console command.
      */
     public function handle(Client $client): int
     {
+        $this->waitForIndexingToComplete($client);
+
         $this->info('Requesting Meilisearch dump...');
 
         $task = $client->createDump();
@@ -67,6 +88,51 @@ class CreateMeilisearchDump extends Command
         $this->pruneOldDumps();
 
         return 0;
+    }
+
+    /**
+     * Wait until queued indexing jobs have drained and Meilisearch has finished processing every task.
+     *
+     * Scout queues indexing onto the configured queue, which Horizon then turns into asynchronous
+     * Meilisearch tasks, so both layers must be idle before the dump captures the complete index.
+     */
+    private function waitForIndexingToComplete(Client $client): void
+    {
+        $queue = config('scout.queue.queue');
+        $waited = 0;
+        $stableChecks = 0;
+
+        while (true) {
+            $queuedJobs = Queue::size($queue);
+            $pendingTasks = $client->getTasks(
+                (new TasksQuery())->setStatuses(['enqueued', 'processing'])->setLimit(1)
+            )->count();
+
+            if ($queuedJobs === 0 && $pendingTasks === 0) {
+                $stableChecks++;
+
+                if ($stableChecks >= self::INDEXING_STABLE_CHECKS) {
+                    $this->comment('Indexing complete.');
+
+                    return;
+                }
+            } else {
+                $stableChecks = 0;
+
+                $this->info(
+                    'Waiting for indexing to complete: '.$queuedJobs.' queued job(s), '.
+                    $pendingTasks.' pending task(s)...'
+                );
+            }
+
+            if ($waited >= self::INDEXING_TIMEOUT_IN_SECONDS) {
+                throw new RuntimeException('Timed out waiting for indexing to complete before creating a dump.');
+            }
+
+            Sleep::for(self::INDEXING_POLL_INTERVAL_IN_SECONDS)->seconds();
+
+            $waited += self::INDEXING_POLL_INTERVAL_IN_SECONDS;
+        }
     }
 
     private function pruneOldDumps(): void

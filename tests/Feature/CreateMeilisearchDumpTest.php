@@ -4,12 +4,23 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Sleep;
 use Meilisearch\Client;
+use Meilisearch\Contracts\TasksResults;
 use Mockery;
 use Tests\TestCase;
 
 final class CreateMeilisearchDumpTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Queue::fake();
+        Sleep::fake();
+    }
+
     public function test_dump_command_creates_dump_and_prunes_old_dumps(): void
     {
         $dumpPath = storage_path('app/testing/meilisearch-dumps-'.uniqid());
@@ -25,6 +36,8 @@ final class CreateMeilisearchDumpTest extends TestCase
         }
 
         $client = Mockery::mock(Client::class);
+        $client->shouldReceive('getTasks')
+            ->andReturn(new TasksResults(['results' => [], 'total' => 0]));
         $client->shouldReceive('createDump')
             ->once()
             ->andReturn(['taskUid' => 42]);
@@ -46,9 +59,33 @@ final class CreateMeilisearchDumpTest extends TestCase
         rmdir($dumpPath);
     }
 
+    public function test_dump_command_waits_for_indexing_before_dumping(): void
+    {
+        config(['scout.meilisearch.dump-path' => storage_path('app/testing/meilisearch-dumps-'.uniqid())]);
+
+        $busy = new TasksResults(['results' => [['uid' => 1]], 'total' => 1]);
+        $idle = new TasksResults(['results' => [], 'total' => 0]);
+
+        $client = Mockery::mock(Client::class);
+        $client->shouldReceive('getTasks')
+            ->andReturn($busy, $idle, $idle);
+        $client->shouldReceive('createDump')
+            ->once()
+            ->andReturn(['taskUid' => 99]);
+        $client->shouldReceive('waitForTask')
+            ->once()
+            ->andReturn(['status' => 'succeeded']);
+
+        $this->instance(Client::class, $client);
+
+        $this->artisan('meilisearch:dump')->assertExitCode(0);
+    }
+
     public function test_dump_command_fails_when_task_does_not_succeed(): void
     {
         $client = Mockery::mock(Client::class);
+        $client->shouldReceive('getTasks')
+            ->andReturn(new TasksResults(['results' => [], 'total' => 0]));
         $client->shouldReceive('createDump')
             ->once()
             ->andReturn(['taskUid' => 7]);
