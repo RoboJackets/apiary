@@ -1,4 +1,4 @@
-# syntax = docker/dockerfile:1.24
+# syntax = docker/dockerfile:1.25
 
 FROM python:3.13-bookworm AS docs-source
 
