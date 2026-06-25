@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Register problem matchers
         run: echo "::add-matcher::.github/matchers.json"
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install exiftool and libuuid
         run: sudo apt-get update && sudo apt-get install --assume-yes libimage-exiftool-perl uuid-dev
