@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d65acd864022bd99b6d0cfd8dcdfbb92",
+    "content-hash": "69f89ced6ec04fb91520efa58c7694c9",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -3722,17 +3722,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.9.1",
+            "version": "5.9.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "fd5d7bda354feff41b0aa274d62f826c593a4d73"
+                "reference": "732a90beb7a55a73227b3a770d73839709bde3b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-fd5d7bda354feff41b0aa274d62f826c593a4d73-zip-7f395f.zip",
-                "reference": "fd5d7bda354feff41b0aa274d62f826c593a4d73",
-                "shasum": "1825f53206d1fcd9fb40c308366b419664e0426e"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-732a90beb7a55a73227b3a770d73839709bde3b9-zip-ba389d.zip",
+                "reference": "732a90beb7a55a73227b3a770d73839709bde3b9",
+                "shasum": "02aa32e86dd6f414a772c11e87ab291582681a48"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10|^0.11|^0.12|^0.13",
@@ -3899,10 +3899,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.9.1",
+                "source": "https://github.com/laravel/nova/tree/v5.9.2",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2026-06-24T15:21:04+00:00"
+            "time": "2026-06-29T12:19:23+00:00"
         },
         {
             "name": "laravel/passkeys",
