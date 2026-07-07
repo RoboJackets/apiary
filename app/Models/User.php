@@ -391,7 +391,7 @@ class User extends Authenticatable
         'merchandise.providedBy' => 'read-users',
         'attendance.recorded' => 'read-attendance',
         'attendance.attendable' => 'read-attendance',
-        'duesTransactions.payment' => 'read-payments',
+        'dues.payment' => 'read-payments',
     ];
 
     /**
