@@ -34,6 +34,7 @@ class Payment extends JsonResource
             'client_txn_id' => $this->client_txn_id,
             'server_txn_id' => $this->server_txn_id,
             'unique_id' => $this->unique_id,
+            'order_id' => $this->order_id,
             'card_type' => $this->card_type,
             'card_brand' => $this->card_brand,
             'last_4' => $this->last_4,
