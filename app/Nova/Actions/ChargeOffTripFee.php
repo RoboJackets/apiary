@@ -83,6 +83,8 @@ class ChargeOffTripFee extends DestructiveAction
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function fields(NovaRequest $request): array
