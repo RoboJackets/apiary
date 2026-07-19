@@ -24,7 +24,7 @@ class OverdueTripFees extends Value
      *
      * @var string
      */
-    public $helpText = 'Total trip fees that have been requested but not paid prior to departure';
+    public $helpText = 'Total trip fees that have been requested but not paid prior to departure, excluding charged-off fees';
 
     /**
      * Calculate the value of the metric.
@@ -43,6 +43,7 @@ class OverdueTripFees extends Value
                     ->whereNull('travel.deleted_at');
             })
             ->whereNull('payments.id')
+            ->whereNull('travel_assignments.charged_off_at')
             ->whereDate('travel.departure_date', '<=', now())
             ->get()
             ->toArray();

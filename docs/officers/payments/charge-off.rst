@@ -30,6 +30,7 @@ What happens after a charge-off
   If they pay, the assignment counts as paid, and the charge-off no longer has any effect.
 - Apiary stops sending payment reminder emails for the trip assignment.
 - The :guilabel:`Payment Status` chart for the trip shows charged-off assignments in a separate :guilabel:`Charged Off` segment, between :guilabel:`Paid` and :guilabel:`Not Paid`.
+- The fee no longer counts toward the :guilabel:`Overdue Trip Fees` total on the admin homepage.
 - Once every assignment for a past trip is either paid or charged off, the charts for the trip no longer appear on the admin homepage.
 
 Charging off a trip fee
