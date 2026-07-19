@@ -210,9 +210,6 @@ class Travel extends Model
         return $this->assignments()->needDocuSign()->exists();
     }
 
-    /**
-     * @psalm-mutation-free
-     */
     public function getReturnDateHasPassedAttribute(): bool
     {
         return $this->return_date < Carbon::today();
