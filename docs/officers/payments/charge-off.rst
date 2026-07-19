@@ -1,4 +1,4 @@
-:og:description: Admins can charge off unpaid trip fees that are unlikely to be collected, once the trip has returned.
+:og:description: Admins can charge off unpaid trip fees that are unlikely to be collected.
 
 Charging off trip fees
 ======================
