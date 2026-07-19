@@ -24,8 +24,8 @@ class OverdueTripFees extends Value
      *
      * @var string
      */
-    public $helpText = 'Total trip fees that have been requested but not paid prior to departure, excluding charged-off'.
-        ' fees.';
+    public $helpText = 'Total trip fees that have been requested but not paid prior to departure, excluding'
+        .' charged-off fees.';
 
     /**
      * Calculate the value of the metric.
