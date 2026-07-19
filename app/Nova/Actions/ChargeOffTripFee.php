@@ -41,7 +41,8 @@ class ChargeOffTripFee extends DestructiveAction
      *
      * @var string
      */
-    public $confirmText = 'Are you sure you want to charge off this trip fee? The assignment will remain unpaid, but will no longer keep this trip on the dashboard or trigger reminder emails.';
+    public $confirmText = 'Are you sure you want to charge off this trip fee? The assignment will remain unpaid,'.
+        ' but will no longer keep this trip on the dashboard or trigger reminder emails.';
 
     /**
      * Perform the action on the given models.
