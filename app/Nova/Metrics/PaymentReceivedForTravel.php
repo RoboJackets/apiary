@@ -34,7 +34,7 @@ class PaymentReceivedForTravel extends Partition
     #[\Override]
     public function name(): string
     {
-        return $this->resourceId === -1 ? 'Payment Received' : 'Payment Received for '.Travel::where(
+        return $this->resourceId === -1 ? 'Payment Status' : 'Payment Status for '.Travel::where(
             'id',
             $this->resourceId
         )->sole()->name;
