@@ -67,11 +67,7 @@ class TravelAssignmentReminder extends Notification implements ShouldQueue
             return false;
         }
 
-        if ($this->assignment->cannotReceiveDocuSignReminder()) {
-            return false;
-        }
-
-        return true;
+        return ! $this->assignment->cannotReceiveDocuSignReminder();
     }
 
     /**
