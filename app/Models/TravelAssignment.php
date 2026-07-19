@@ -9,6 +9,7 @@ namespace App\Models;
 
 use App\Observers\TravelAssignmentObserver;
 use App\Traits\GetMorphClassStatic;
+use App\Util\DocuSign;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
@@ -246,5 +247,14 @@ class TravelAssignment extends Model implements Payable
         return $this->is_paid &&
             ($this->tar_received || ! $this->travel->needs_docusign) &&
             ($this->user->has_emergency_contact_information || $this->travel->return_date < Carbon::now());
+    }
+
+    public function cannotReceiveDocuSignReminder(): bool
+    {
+        return $this->travel->return_date_has_passed
+            && $this->is_paid
+            && $this->needs_docusign
+            && $this->envelope()->whereNotNull('envelope_id')->doesntExist()
+            && DocuSign::getApiClientForUser($this->travel->primaryContact) === null;
     }
 }

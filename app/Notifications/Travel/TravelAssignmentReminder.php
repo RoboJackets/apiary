@@ -48,15 +48,30 @@ class TravelAssignmentReminder extends Notification implements ShouldQueue
 
     /**
      * Determine if the notification should be sent.
-     *
-     * @psalm-mutation-free
      */
     public function shouldSend(User $user, string $channel): bool
     {
-        return $user->should_receive_email &&
-            ! $this->assignment->is_complete &&
-            $this->assignment->deleted_at === null &&
-            $this->assignment->charged_off_at === null;
+        if (! $user->should_receive_email) {
+            return false;
+        }
+
+        if ($this->assignment->is_complete) {
+            return false;
+        }
+
+        if ($this->assignment->deleted_at !== null) {
+            return false;
+        }
+
+        if ($this->assignment->charged_off_at !== null && ! $this->assignment->needs_docusign) {
+            return false;
+        }
+
+        if ($this->assignment->cannotReceiveDocuSignReminder()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
