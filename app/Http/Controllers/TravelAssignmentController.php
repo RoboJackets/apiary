@@ -27,7 +27,7 @@ class TravelAssignmentController
                         ($user->legal_gender === null || $user->date_of_birth === null)
                     ),
                 'needs_agreement' => ! $user->signed_latest_agreement,
-                'needs_dues' => ! $user->is_active,
+                'needs_dues' => ! $user->is_active && ! $assignment->travel->return_date_has_passed,
                 'tar_received' => $assignment->tar_received,
                 'paid' => $assignment->is_paid,
             ]

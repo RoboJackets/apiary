@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -63,6 +64,7 @@ use Laravel\Scout\Searchable;
  * @property-read bool $needs_docusign
  * @property-read bool $assignments_need_forms
  * @property-read bool $assignments_need_payment
+ * @property-read bool $return_date_has_passed
  *
  * @method static \Database\Factories\TravelFactory factory(...$parameters)
  * @method static Builder|Travel newModelQuery()
@@ -206,6 +208,14 @@ class Travel extends Model
     public function getAssignmentsNeedFormsAttribute(): bool
     {
         return $this->assignments()->needDocuSign()->exists();
+    }
+
+    /**
+     * @psalm-mutation-free
+     */
+    public function getReturnDateHasPassedAttribute(): bool
+    {
+        return $this->return_date < Carbon::today();
     }
 
     /**
