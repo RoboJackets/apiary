@@ -74,26 +74,7 @@ class Main extends Dashboard
 
         if (request()->is('nova-api/dashboards/main')) {
             foreach (Travel::orderBy('departure_date')->orderBy('return_date')->get() as $travel) {
-                $should_include = false;
-
-                if ($travel->return_date > Carbon::now() && $travel->assignments()->exists()) {
-                    $should_include = true;
-                }
-
-                if (
-                    $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
-                        $join->on('travel_assignments.id', '=', 'payable_id')
-                            ->where('payments.amount', '>', 0)
-                            ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                            ->whereNull('payments.deleted_at');
-                    })->whereNull(
-                        'payments.id'
-                    )->exists()
-                ) {
-                    $should_include = true;
-                }
-
-                if (! $should_include) {
+                if (! self::shouldIncludeTravel($travel)) {
                     continue;
                 }
 
@@ -192,5 +173,25 @@ class Main extends Dashboard
         }
 
         return $cards;
+    }
+
+    /**
+     * Whether a trip should appear on the Nova home dashboard.
+     */
+    public static function shouldIncludeTravel(Travel $travel): bool
+    {
+        if ($travel->return_date > Carbon::now() && $travel->assignments()->exists()) {
+            return true;
+        }
+
+        return $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
+            $join->on('travel_assignments.id', '=', 'payable_id')
+                ->where('payments.amount', '>', 0)
+                ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                ->whereNull('payments.deleted_at');
+        })
+            ->whereNull('payments.id')
+            ->whereNull('travel_assignments.charged_off_at')
+            ->exists();
     }
 }

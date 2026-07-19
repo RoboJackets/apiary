@@ -30,6 +30,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $tar_received
+ * @property \Illuminate\Support\Carbon|null $charged_off_at
  * @property array|null $matrix_itinerary
  * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $envelope
  * @property-read int|null $envelope_count
@@ -53,6 +54,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|TravelAssignment whereCreatedAt($value)
  * @method static Builder|TravelAssignment whereDeletedAt($value)
  * @method static Builder|TravelAssignment whereId($value)
+ * @method static Builder|TravelAssignment whereChargedOffAt($value)
  * @method static Builder|TravelAssignment whereTarReceived($value)
  * @method static Builder|TravelAssignment whereTravelId($value)
  * @method static Builder|TravelAssignment whereUpdatedAt($value)
@@ -94,6 +96,7 @@ class TravelAssignment extends Model implements Payable
     {
         return [
             'tar_received' => 'boolean',
+            'charged_off_at' => 'datetime',
             'matrix_itinerary' => 'array',
         ];
     }

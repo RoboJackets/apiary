@@ -41,11 +41,12 @@ class SendReminders implements ShouldBeUnique, ShouldQueue
     {
         // check if travel assignment reminder should be sent
         if (
-            $this->user->assignments()->needDocuSign()->exists() &&
-            $this->user->assignments()->needDocuSign()->first()->travel->status !== 'draft'
+            $this->user->assignments()->needDocuSign()->whereNull('travel_assignments.charged_off_at')->exists() &&
+            $this->user->assignments()->needDocuSign()->whereNull('travel_assignments.charged_off_at')->first()
+                ->travel->status !== 'draft'
         ) {
             SendTravelAssignmentReminder::dispatch(
-                $this->user->assignments()->needDocuSign()->first(),
+                $this->user->assignments()->needDocuSign()->whereNull('travel_assignments.charged_off_at')->first(),
                 24
             );
 
@@ -53,11 +54,12 @@ class SendReminders implements ShouldBeUnique, ShouldQueue
         }
 
         if (
-            $this->user->assignments()->unpaid()->exists() &&
-            $this->user->assignments()->unpaid()->first()->travel->status !== 'draft'
+            $this->user->assignments()->unpaid()->whereNull('travel_assignments.charged_off_at')->exists() &&
+            $this->user->assignments()->unpaid()->whereNull('travel_assignments.charged_off_at')->first()
+                ->travel->status !== 'draft'
         ) {
             SendTravelAssignmentReminder::dispatch(
-                $this->user->assignments()->unpaid()->first(),
+                $this->user->assignments()->unpaid()->whereNull('travel_assignments.charged_off_at')->first(),
                 24
             );
 

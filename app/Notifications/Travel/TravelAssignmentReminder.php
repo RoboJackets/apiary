@@ -55,7 +55,8 @@ class TravelAssignmentReminder extends Notification implements ShouldQueue
     {
         return $user->should_receive_email &&
             ! $this->assignment->is_complete &&
-            $this->assignment->deleted_at === null;
+            $this->assignment->deleted_at === null &&
+            $this->assignment->charged_off_at === null;
     }
 
     /**

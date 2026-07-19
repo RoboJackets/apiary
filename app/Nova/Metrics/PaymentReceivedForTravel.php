@@ -47,24 +47,38 @@ class PaymentReceivedForTravel extends Partition
     {
         $resourceId = $request->resourceId ?? $this->resourceId;
 
-        return $this->result(
-            TravelAssignment::selectRaw('IF(ISNULL(payments.id), \'Not Paid\', \'Paid\') as paid')
-                ->selectRaw('count(distinct travel_assignments.id) as count')
-                ->leftJoin('payments', static function (JoinClause $join): void {
-                    $join->on('travel_assignments.id', '=', 'payable_id')
-                        ->where('payments.amount', '>', 0)
-                        ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                        ->whereNull('payments.deleted_at');
-                })
-                ->where('travel_id', $resourceId)
-                ->groupBy('paid')
-                ->orderByDesc('paid') // sorts "Paid" first
-                ->get()
-                ->mapWithKeys(static fn (object $row): array => [$row->paid => $row->count])
-                ->toArray()
-        )->colors(  // nova default pie chart colors but mapped to specific series
+        $counts = TravelAssignment::selectRaw(
+            "CASE
+                WHEN payments.id IS NOT NULL THEN 'Paid'
+                WHEN travel_assignments.charged_off_at IS NOT NULL THEN 'Charged Off'
+                ELSE 'Not Paid'
+            END as paid"
+        )
+            ->selectRaw('count(distinct travel_assignments.id) as count')
+            ->leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('travel_assignments.id', '=', 'payable_id')
+                    ->where('payments.amount', '>', 0)
+                    ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                    ->whereNull('payments.deleted_at');
+            })
+            ->where('travel_id', $resourceId)
+            ->groupBy('paid')
+            ->get()
+            ->mapWithKeys(static fn (object $row): array => [$row->paid => $row->count])
+            ->toArray();
+
+        $ordered = [];
+
+        foreach (['Paid', 'Charged Off', 'Not Paid'] as $label) {
+            if (array_key_exists($label, $counts)) {
+                $ordered[$label] = $counts[$label];
+            }
+        }
+
+        return $this->result($ordered)->colors(
             [
                 'Not Paid' => '#F5573B',
+                'Charged Off' => '#F99037',
                 'Paid' => '#8fc15d',
             ]
         );
