@@ -32,12 +32,12 @@ final class PayTravelWithoutDuesTest extends TestCase
             'fee_amount' => 10,
             'status' => 'approved',
         ]);
-        TravelAssignment::withoutEvents(static function () use ($travel, $member): void {
-            TravelAssignment::factory()->create([
+        TravelAssignment::withoutEvents(
+            static fn (): TravelAssignment => TravelAssignment::factory()->create([
                 'travel_id' => $travel->id,
                 'user_id' => $member->id,
-            ]);
-        });
+            ])
+        );
 
         $response = $this->actingAs($member, 'web')->get(route('travel.index'));
 
@@ -59,12 +59,12 @@ final class PayTravelWithoutDuesTest extends TestCase
             'fee_amount' => 10,
             'status' => 'approved',
         ]);
-        TravelAssignment::withoutEvents(static function () use ($travel, $member): void {
-            TravelAssignment::factory()->create([
+        TravelAssignment::withoutEvents(
+            static fn (): TravelAssignment => TravelAssignment::factory()->create([
                 'travel_id' => $travel->id,
                 'user_id' => $member->id,
-            ]);
-        });
+            ])
+        );
 
         $response = $this->actingAs($member, 'web')->get(route('travel.index'));
 
@@ -87,12 +87,12 @@ final class PayTravelWithoutDuesTest extends TestCase
             'fee_amount' => 10,
             'status' => 'approved',
         ]);
-        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $member): TravelAssignment {
-            return TravelAssignment::factory()->create([
+        $assignment = TravelAssignment::withoutEvents(
+            static fn (): TravelAssignment => TravelAssignment::factory()->create([
                 'travel_id' => $travel->id,
                 'user_id' => $member->id,
-            ]);
-        });
+            ])
+        );
 
         $payment = new Payment();
         $payment->amount = 0;
@@ -126,12 +126,12 @@ final class PayTravelWithoutDuesTest extends TestCase
             'fee_amount' => 10,
             'status' => 'approved',
         ]);
-        TravelAssignment::withoutEvents(static function () use ($travel, $member): void {
-            TravelAssignment::factory()->create([
+        TravelAssignment::withoutEvents(
+            static fn (): TravelAssignment => TravelAssignment::factory()->create([
                 'travel_id' => $travel->id,
                 'user_id' => $member->id,
-            ]);
-        });
+            ])
+        );
 
         $this->assertFalse($member->is_active);
         $this->assertFalse($travel->fresh()->return_date_has_passed);
