@@ -37,7 +37,7 @@
         "enlightn/security-checker": "2.0.0",
         "esi/numverify-api-client-php": "dev-master",
         "fakerphp/faker": "1.24.1",
-        "guzzlehttp/guzzle": "7.14.2",
+        "guzzlehttp/guzzle": "7.15.1",
         "htmlmin/htmlmin": "dev-master",
         "http-interop/http-factory-guzzle": "1.2.1",
         "jeremy379/laravel-openid-connect": "3.2.2",
