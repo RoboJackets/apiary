@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "434a8001ff3ab37f08148c297788976e",
+    "content-hash": "79d62391b5a0a06fc688844f3b0006a4",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -3147,16 +3147,16 @@
         },
         {
             "name": "jeremy379/laravel-openid-connect",
-            "version": "3.2.2",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeremy379/laravel-openid-connect.git",
-                "reference": "deb836033abdfe8167e0f122f0bc42c959d91631"
+                "reference": "5b996ee3eab90ce4714b347a3c4741bca27ef9d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeremy379/laravel-openid-connect/zipball/deb836033abdfe8167e0f122f0bc42c959d91631",
-                "reference": "deb836033abdfe8167e0f122f0bc42c959d91631",
+                "url": "https://api.github.com/repos/jeremy379/laravel-openid-connect/zipball/5b996ee3eab90ce4714b347a3c4741bca27ef9d0",
+                "reference": "5b996ee3eab90ce4714b347a3c4741bca27ef9d0",
                 "shasum": ""
             },
             "require": {
@@ -3217,9 +3217,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jeremy379/laravel-openid-connect/issues",
-                "source": "https://github.com/jeremy379/laravel-openid-connect/tree/3.2.2"
+                "source": "https://github.com/jeremy379/laravel-openid-connect/tree/3.3.0"
             },
-            "time": "2026-03-31T08:21:42+00:00"
+            "time": "2026-06-30T18:20:03+00:00"
         },
         {
             "name": "kevinrob/guzzle-cache-middleware",
