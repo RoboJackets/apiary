@@ -150,7 +150,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      packages: read
     with:
       image-digest: ${{ needs.docker.outputs.image-digest }}
       environment: sandbox
@@ -166,7 +165,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      packages: read
     with:
       image-digest: ${{ needs.docker.outputs.image-digest }}
       environment: test
@@ -183,7 +181,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      packages: read
     with:
       image-digest: ${{ needs.docker.outputs.image-digest }}
       environment: production
