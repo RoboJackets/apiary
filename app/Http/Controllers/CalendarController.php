@@ -185,14 +185,16 @@ class CalendarController
 
         return response(
             content: (new CalendarFactory())
-                ->createCalendar(new Calendar([
-                    ...$events,
-                    ...$trips,
-                    ...$assignments,
-                    ...$membershipEndDates,
-                    ...$accessEndDates,
-                ]))
-                ->setCalName(config('app.name'))
+                ->createCalendar(
+                    (new Calendar([
+                        ...$events,
+                        ...$trips,
+                        ...$assignments,
+                        ...$membershipEndDates,
+                        ...$accessEndDates,
+                    ]))
+                        ->setCalName(config('app.name'))
+                )
                 ->__toString(),
             headers: ['Content-Type' => 'text/calendar; charset=utf-8']
         );
