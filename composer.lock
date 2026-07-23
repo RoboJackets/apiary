@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7df9b67b961ff5ceae4a9281afa69d7c",
+    "content-hash": "65b84c2be5c60d0bc2d1edb36bc63053",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -8762,16 +8762,16 @@
         },
         {
             "name": "spatie/laravel-one-time-passwords",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-one-time-passwords.git",
-                "reference": "45ca723dcd0ccd25268850dc1185b2038e0c1a85"
+                "reference": "8e738f1dc3e0768517611befbaae30c9212748c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/45ca723dcd0ccd25268850dc1185b2038e0c1a85",
-                "reference": "45ca723dcd0ccd25268850dc1185b2038e0c1a85",
+                "url": "https://api.github.com/repos/spatie/laravel-one-time-passwords/zipball/8e738f1dc3e0768517611befbaae30c9212748c9",
+                "reference": "8e738f1dc3e0768517611befbaae30c9212748c9",
                 "shasum": ""
             },
             "require": {
@@ -8826,7 +8826,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-one-time-passwords/issues",
-                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.1.1"
+                "source": "https://github.com/spatie/laravel-one-time-passwords/tree/1.1.2"
             },
             "funding": [
                 {
@@ -8834,7 +8834,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-11T08:30:31+00:00"
+            "time": "2026-07-22T06:47:42+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
