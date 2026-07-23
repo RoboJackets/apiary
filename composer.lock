@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65b84c2be5c60d0bc2d1edb36bc63053",
+    "content-hash": "303bd0d0a9bff4e01a3e7d19a14f337f",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -3305,22 +3305,22 @@
         },
         {
             "name": "kiritokatklian/nova-permission",
-            "version": "5.2.0",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kiritokatklian/nova-permission.git",
-                "reference": "92afada445f13a7339a16da97457d329cdf6bae7"
+                "reference": "2d39e22e3ce1975a55aa977478940f192d7d2b76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/92afada445f13a7339a16da97457d329cdf6bae7",
-                "reference": "92afada445f13a7339a16da97457d329cdf6bae7",
+                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/2d39e22e3ce1975a55aa977478940f192d7d2b76",
+                "reference": "2d39e22e3ce1975a55aa977478940f192d7d2b76",
                 "shasum": ""
             },
             "require": {
                 "laravel/nova": "^5.0",
                 "php": ">=8.1",
-                "spatie/laravel-permission": "^5.0|^6.0|^7.0"
+                "spatie/laravel-permission": "^5.0|^6.0|^7.0|^8.0"
             },
             "type": "library",
             "extra": {
@@ -3350,9 +3350,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kiritokatklian/nova-permission/issues",
-                "source": "https://github.com/kiritokatklian/nova-permission/tree/5.2.0"
+                "source": "https://github.com/kiritokatklian/nova-permission/tree/5.3.0"
             },
-            "time": "2026-02-11T21:55:48+00:00"
+            "time": "2026-07-14T00:02:45+00:00"
         },
         {
             "name": "laravel/fortify",

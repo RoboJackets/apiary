@@ -41,7 +41,7 @@
         "htmlmin/htmlmin": "dev-master",
         "http-interop/http-factory-guzzle": "1.2.1",
         "jeremy379/laravel-openid-connect": "3.3.0",
-        "kiritokatklian/nova-permission": "5.2.0",
+        "kiritokatklian/nova-permission": "5.3.0",
         "laravel/framework": "12.64.0",
         "laravel/horizon": "5.48.1",
         "laravel/nova": "5.9.5",
