@@ -252,7 +252,7 @@ class TravelAssignment extends Model implements Payable
     public function cannotReceiveDocuSignReminder(): bool
     {
         return $this->travel->return_date_has_passed
-            && $this->is_paid
+            && ($this->is_paid || $this->charged_off_at !== null)
             && $this->needs_docusign
             && $this->envelope()->whereNotNull('envelope_id')->doesntExist()
             && DocuSign::getApiClientForUser($this->travel->primaryContact) === null;
