@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "303bd0d0a9bff4e01a3e7d19a14f337f",
+    "content-hash": "db398b8e2f7670f40c0bac75db7b05f6",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -8514,16 +8514,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "4.26.0",
+            "version": "4.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "8f2cc669ee99d3cda31a89f0a18197fd2efbd1b6"
+                "reference": "caa0ff39805a2eb8c70c4535a1443d7421c5a5b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/8f2cc669ee99d3cda31a89f0a18197fd2efbd1b6",
-                "reference": "8f2cc669ee99d3cda31a89f0a18197fd2efbd1b6",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/caa0ff39805a2eb8c70c4535a1443d7421c5a5b8",
+                "reference": "caa0ff39805a2eb8c70c4535a1443d7421c5a5b8",
                 "shasum": ""
             },
             "require": {
@@ -8536,6 +8536,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.11",
                 "guzzlehttp/guzzle": "^7.2",
+                "laravel/ai": "^0.1.5",
                 "laravel/folio": "^1.1",
                 "laravel/framework": "^6.0 | ^7.0 | ^8.0 | ^9.0 | ^10.0 | ^11.0 | ^12.0 | ^13.0",
                 "laravel/octane": "^2.15",
@@ -8589,7 +8590,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/4.26.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/4.27.0"
             },
             "funding": [
                 {
@@ -8601,7 +8602,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-06-11T13:22:14+00:00"
+            "time": "2026-07-15T14:47:03+00:00"
         },
         {
             "name": "spatie/laravel-csp",
