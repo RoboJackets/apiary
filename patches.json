@@ -4,6 +4,10 @@
             {
                 "description": "Render plain-text emails instead of HTML",
                 "url": "patches/xammie/mailbook/plaintext.patch"
+            },
+            {
+                "description": "Preview notification mailables even when shouldSend returns false",
+                "url": "patches/xammie/mailbook/preview-ignore-should-send.patch"
             }
         ],
         "mrclay/minify": [
