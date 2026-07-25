@@ -29,7 +29,7 @@ final class MailbookTravelAssignmentReminderTest extends TestCase
 
             $this->assertNotNull(
                 $mailable->subject(),
-                "Expected mailbook variant [{$variant->label}] to resolve a subject"
+                'Expected mailbook variant ['.$variant->label.'] to resolve a subject'
             );
         }
     }
