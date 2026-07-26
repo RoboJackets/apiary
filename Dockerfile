@@ -60,6 +60,17 @@ RUN set -eux && \
     npm install --no-progress && \
     npm run production --no-progress
 
+# The record-attendance modal shares the credential parser with the kiosk (app resources). Make it
+# available at the path the component imports (../../../../../resources/js/attendance/parseCredential).
+COPY --link resources/js/attendance/ /resources/js/attendance/
+
+WORKDIR /nova-components/RecordAttendanceModal/
+
+RUN set -eux && \
+    npm install -g npm@latest && \
+    npm install --no-progress && \
+    npm run production --no-progress
+
 FROM node:24 AS frontend
 
 COPY --link --from=frontend-source /app/ /app/
@@ -86,6 +97,7 @@ COPY --link --from=frontend /app/public/ /app/public/
 COPY --link nova-components/ /app/nova-components/
 COPY --link --from=nova-components /nova-components/ClientIdAndSecretModal/dist/ /app/nova-components/ClientIdAndSecretModal/dist/
 COPY --link --from=nova-components /nova-components/PersonalAccessTokenModal/dist/ /app/nova-components/PersonalAccessTokenModal/dist/
+COPY --link --from=nova-components /nova-components/RecordAttendanceModal/dist/ /app/nova-components/RecordAttendanceModal/dist/
 COPY --link --from=docs-minification /docs/ /app/public/docs/
 
 FROM debian:trixie-slim AS backend-uncompressed

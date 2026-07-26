@@ -14,6 +14,8 @@
 </template>
 
 <script>
+    import parseCredential from '../../attendance/parseCredential';
+
     function checkboxEventListener(e) {
         this.stickToTeam = e.target.checked;
         document.activeElement.blur();
@@ -219,64 +221,12 @@
                 let self = this;
                 this.attendance.source = 'kiosk';
 
-                const mrd5Regex = /\|?(\d*)\|(\d+)\|(\w+)\|/;
-                const tsRawRegex = /^1570=(\d+)=\d+=(\d+)$/;
+                const parsed = parseCredential(cardData);
 
-                if (this.isNumeric(cardData) && cardData.length == 9 && cardData[0] == '9') {
-                    // GTID only: no specific credential type discernible (e.g. 902900001)
-                    this.attendance.gtid = cardData;
-                    cardData = null;
-                    this.submit();
-                } else if (this.isNumeric(cardData) && cardData.length == 16 && cardData.startsWith('601770')) {
-                    // Mobile credential: sixteen-digit number starting with 601770 (e.g. 6017700010000123)
-                    this.cardType = 'mobile';
-                    this.attendance.access_card_number = cardData;
-                    this.attendance.source += '-' + this.cardType;
-                    cardData = null;
-                    this.submit();
-                } else if (this.isNumeric(cardData) && (cardData.length == 6 || cardData.length == 7 ||
-                  (cardData.length == 9 && cardData.startsWith('0')))) {
-                    // Plastic credential: 6-digit, 7-digit or 9-digit zero-padded
-                    // e.g. 800001, 1000003, 000800001, 001000003
-                    this.cardType = 'plastic';
-                    this.attendance.access_card_number = String(parseInt(cardData, 10));
-                    this.attendance.source += '-' + this.cardType;
-                    cardData = null;
-                    this.submit();
-                } else if (mrd5Regex.test(cardData)) {
-                    // Transact MRD5 custom format for RoboJackets: GTID|CardNumber|CardType|
-                    // Mobile Credential: |6017700010000123|MobileA|
-                    // Plastic Credential: 902900001|800001|DESFire|
-                    const [, gtid, cardNumber, cardType] = cardData.match(mrd5Regex);
-
-                    if (gtid) {
-                      this.attendance.gtid = gtid;
-                    } else {
-                      this.attendance.access_card_number = cardNumber;
-                    }
-
-                    this.cardType = cardType;
-                    this.attendance.source += '-' + this.cardType;
-                    cardData = null;
-                    this.submit();
-                } else if (tsRawRegex.test(cardData)) {
-                    // Transact Reader (MRD5, PS4101, maybe TWN4?) Raw (Non-Customized) Plastic Card Format
-                    // 1570=GTID=00=RawCardNumber (e.g. 1570=902900001=00=6017700008000010)
-                    const [, gtid, rawCardNumber] = cardData.match(bbRawRegex);
-                    const cardNumber = rawCardNumber.slice(6, 15); // drop '601770' prefix and trailing digit
-
-                    this.attendance.gtid = gtid;
-                    this.attendance.access_card_number = String(parseInt(cardNumber, 10)); // strip leading zeros
-
-                    this.cardType = 'plastic';
-                    this.attendance.source += '-' + this.cardType;
-                    cardData = null;
-                    this.submit();
-                } else {
+                if (parsed === null) {
                     Swal.close();
                     new Audio(this.sounds.error).play()
                     console.log('unknown cardData: ' + cardData);
-                    cardData = null;
                     Swal.fire({
                         title: 'Hmm...',
                         html: 'Card format not recognized.<br/>Contact #it-helpdesk for assistance.',
@@ -288,7 +238,21 @@
                             self.clearFields();
                         }
                     })
+                    return;
                 }
+
+                if (parsed.gtid !== null) {
+                    this.attendance.gtid = parsed.gtid;
+                }
+                if (parsed.access_card_number !== null) {
+                    this.attendance.access_card_number = parsed.access_card_number;
+                }
+                if (parsed.cardType !== null) {
+                    this.cardType = parsed.cardType;
+                    this.attendance.source += '-' + parsed.cardType;
+                }
+
+                this.submit();
             },
             randomIntFromInterval: function(min, max) { // min and max included
               // from a kind StackOverflower: https://stackoverflow.com/a/7228322
@@ -504,9 +468,6 @@
                 document.activeElement.blur();
                 this.attendance.gtid = '';
                 this.attendance.access_card_number = '';
-            },
-            isNumeric(n) {
-                return !isNaN(parseFloat(n)) && isFinite(n);
             },
             rowclass: function(team) {
                 // This is broken out as a function because the teams starting with Robo- used to be wider. This will
