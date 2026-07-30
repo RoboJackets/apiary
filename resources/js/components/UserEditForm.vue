@@ -240,20 +240,6 @@
               <payment-history :user-uid="userUid" />
             </div>
           </div>
-
-          <h3>Authorized Applications</h3>
-          <div class="row">
-            <div class="col-12">
-              <oauth2-authorizations />
-            </div>
-          </div>
-
-          <h3>Personal Access Tokens</h3>
-          <div class="row">
-            <div class="col-12">
-              <personal-access-tokens />
-            </div>
-          </div>
         </form>
       </div>
     </div>
