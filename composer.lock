@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "853865705d4f08dec12f0b7d70876907",
+    "content-hash": "59db0f91c2847b630c4ca272860ba279",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -9326,16 +9326,16 @@
         },
         {
             "name": "square/square",
-            "version": "45.2.0-rc.0",
+            "version": "46.0.1.20260715",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "cffbd6697a1cde693b128bf0f7dc4cba09546865"
+                "reference": "284fc9157079882903b12db448ca7aec5a23848e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/cffbd6697a1cde693b128bf0f7dc4cba09546865",
-                "reference": "cffbd6697a1cde693b128bf0f7dc4cba09546865",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/284fc9157079882903b12db448ca7aec5a23848e",
+                "reference": "284fc9157079882903b12db448ca7aec5a23848e",
                 "shasum": ""
             },
             "require": {
@@ -9377,9 +9377,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/45.2.0-rc.0"
+                "source": "https://github.com/square/square-php-sdk/tree/46.0.1.20260715"
             },
-            "time": "2026-06-20T00:38:45+00:00"
+            "time": "2026-07-14T18:57:38+00:00"
         },
         {
             "name": "subfission/cas",
@@ -18963,7 +18963,6 @@
         "madewithlove/laravel-nova-uuid-support": 20,
         "robojackets/client-id-and-secret-modal": 20,
         "robojackets/personal-access-token-modal": 20,
-        "square/square": 5,
         "subfission/cas": 20,
         "vimeo/psalm": 10
     },
