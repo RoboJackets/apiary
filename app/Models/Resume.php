@@ -112,13 +112,4 @@ class Resume extends Model
             'extracted_text' => $this->extracted_text ?? '',
         ];
     }
-
-    public function scopeSearchText(Builder $query, string $text): Builder
-    {
-        if (trim($text) === '') {
-            return $query;
-        }
-
-        return $query->where('extracted_text', 'like', '%'.$text.'%');
-    }
 }
