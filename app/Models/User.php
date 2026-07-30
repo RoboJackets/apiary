@@ -132,6 +132,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \App\Models\User|null $manager
  * @property-read \App\Models\Team|null $primaryTeam
  * @property-read bool $has_emergency_contact_information
+ * @property-read \App\Models\Resume|null $resume
  *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive(\Carbon\CarbonImmutable|null $asOfTimestamp)
@@ -562,6 +563,16 @@ class User extends Authenticatable
     public function events(): HasMany
     {
         return $this->hasMany(Event::class, 'organizer_id');
+    }
+
+    /**
+     * Get the resume belonging to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Resume, self>
+     */
+    public function resume(): HasOne
+    {
+        return $this->hasOne(Resume::class, 'user_id');
     }
 
     /**

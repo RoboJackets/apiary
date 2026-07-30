@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('resumes', static function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
-            $table->string('file_name')->nullable();
             $table->text('extracted_text')->nullable();
+            $table->timestamp('last_uploaded_at')->nullable();
             $table->timestamps();
 
             $table->unique('user_id');
