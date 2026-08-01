@@ -14,6 +14,7 @@ class MinifyHtml extends MinifyMiddleware
     /**
      * @param  Closure(Request): Response  $next
      */
+    #[\Override]
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->is('nova', 'nova/*', 'nova-api', 'nova-api/*')) {
