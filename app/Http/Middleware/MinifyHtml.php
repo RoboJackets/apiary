@@ -6,16 +6,14 @@ namespace App\Http\Middleware;
 
 use Closure;
 use HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class MinifyHtml extends MinifyMiddleware
 {
     /**
-     * @param  Closure(Request): Response  $next
+     * @param  \Closure(\Illuminate\Http\Request): \Symfony\Component\HttpFoundation\Response  $next
      */
     #[\Override]
-    public function handle(Request $request, Closure $next): Response
+    public function handle($request, Closure $next)
     {
         if ($request->is('nova', 'nova/*', 'nova-api', 'nova-api/*')) {
             return $next($request);
