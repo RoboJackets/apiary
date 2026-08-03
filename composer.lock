@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9bde7b93cf0507b6413dc140ff52cb81",
+    "content-hash": "981e6c8644d6385770254f7c6cd17018",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -13202,16 +13202,16 @@
         },
         {
             "name": "xammie/mailbook",
-            "version": "1.11.1",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Xammie/mailbook.git",
-                "reference": "d98244ef1b081bf3d45f43b3d7631fa4a8d432f5"
+                "reference": "eaea25aa96a26bcab352a59511654dd03d7a1b8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/d98244ef1b081bf3d45f43b3d7631fa4a8d432f5",
-                "reference": "d98244ef1b081bf3d45f43b3d7631fa4a8d432f5",
+                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/eaea25aa96a26bcab352a59511654dd03d7a1b8d",
+                "reference": "eaea25aa96a26bcab352a59511654dd03d7a1b8d",
                 "shasum": ""
             },
             "require": {
@@ -13233,7 +13233,7 @@
                 "phpunit/phpunit": "11.*",
                 "rector/rector": "^2.0",
                 "spatie/invade": "^1.1 || ^2.1",
-                "tomasvotruba/bladestan": "^0.10.0"
+                "tomasvotruba/bladestan": "^0.11.0"
             },
             "type": "library",
             "extra": {
@@ -13270,7 +13270,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Xammie/mailbook/issues",
-                "source": "https://github.com/Xammie/mailbook/tree/1.11.1"
+                "source": "https://github.com/Xammie/mailbook/tree/1.12.0"
             },
             "funding": [
                 {
@@ -13278,7 +13278,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-07T17:34:35+00:00"
+            "time": "2026-08-01T12:35:11+00:00"
         }
     ],
     "packages-dev": [
