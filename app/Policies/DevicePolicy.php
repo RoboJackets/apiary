@@ -1,0 +1,87 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Policies;
+
+use App\Models\Device;
+use App\Models\User;
+
+class DevicePolicy
+{
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user): bool
+    {
+        return $user->can('create-attendance');
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, Device $device): bool
+    {
+        return $user->can('create-attendance');
+    }
+
+    /**
+     * Determine whether the user can create models.
+     *
+     * @psalm-pure
+     */
+    public function create(User $user): false
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @psalm-pure
+     */
+    public function update(User $user, Device $device): false
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @psalm-pure
+     */
+    public function delete(User $user, Device $device): false
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @psalm-pure
+     */
+    public function restore(User $user, Device $device): false
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
+     */
+    public function forceDelete(User $user, Device $device): false
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can replicate the model.
+     *
+     * @psalm-pure
+     */
+    public function replicate(User $user, Device $device): false
+    {
+        return false;
+    }
+}
