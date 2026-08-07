@@ -93,8 +93,6 @@ class Device extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @return array<int, \Laravel\Nova\Fields\Field>
      */
     #[\Override]
     public function fields(NovaRequest $request): array
@@ -125,49 +123,5 @@ class Device extends Resource
 
             self::metadataPanel(),
         ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @return array<int, \Laravel\Nova\Card>
-     */
-    #[\Override]
-    public function cards(NovaRequest $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<int, \Laravel\Nova\Filters\Filter>
-     */
-    #[\Override]
-    public function filters(NovaRequest $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<int, \Laravel\Nova\Lenses\Lens>
-     */
-    #[\Override]
-    public function lenses(NovaRequest $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the actions available for the resource.
-     *
-     * @return array<int, \Laravel\Nova\Actions\Action>
-     */
-    #[\Override]
-    public function actions(NovaRequest $request): array
-    {
-        return [];
     }
 }

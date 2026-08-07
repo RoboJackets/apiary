@@ -8,7 +8,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Device>
+ * A factory for Devices.
+ *
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Device>
  */
 class DeviceFactory extends Factory
 {
