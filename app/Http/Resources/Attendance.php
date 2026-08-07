@@ -32,6 +32,7 @@ class Attendance extends JsonResource
                 $this->gtid
             ),
             'access_card_number' => $this->access_card_number,
+            'device_serial_number' => $this->device_serial_number,
             'source' => $this->source,
             'recorded_by' => new Manager($this->whenLoaded('recorded')),
             'created_at' => $this->created_at,
@@ -40,6 +41,7 @@ class Attendance extends JsonResource
 
             // Relationships
             'attendee' => new UserResource($this->whenLoaded('attendee')),
+            'device' => new Device($this->whenLoaded('device')),
             // This deliberately doesn't include the remote attendance link as there is no HTTP resource for it
         ];
     }

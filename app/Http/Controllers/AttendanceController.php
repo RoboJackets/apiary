@@ -12,6 +12,7 @@ use App\Http\Resources\Attendance as AttendanceResource;
 use App\Jobs\PushToJedi;
 use App\Models\AccessCard;
 use App\Models\Attendance;
+use App\Models\Device;
 use App\Models\Team;
 use App\Models\User;
 use App\Util\AuthorizeInclude;
@@ -73,12 +74,12 @@ class AttendanceController implements HasMiddleware
         }
 
         if ($gtid !== null) {
-            $user = User::where('gtid', '=', $gtid)->first();
+            $attendee = User::where('gtid', '=', $gtid)->first();
             $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id']))
                 ->where('gtid', '=', $gtid)->whereDate('created_at', $date);
             $identifier = ['key' => 'gtid', 'value' => $gtid];
         } else {
-            $user = null;
+            $attendee = null;
             $attExistingQ = Attendance::where(
                 $request->only(['attendable_type', 'attendable_id', 'access_card_number'])
             )
@@ -86,20 +87,64 @@ class AttendanceController implements HasMiddleware
             $identifier = ['key' => 'access_card_number', 'value' => $request->input('access_card_number')];
         }
 
+        // Upsert the device if a reader is provided
+        $device = null;
+        if ($request->has('reader')) {
+            $reader = $request->input('reader');
+            $recordingUser = $request->user();
+
+            if (! $recordingUser instanceof User) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'A user token is required.',
+                ], 401);
+            }
+
+            $ipAddress = $request->ip();
+
+            if ($ipAddress === null) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'last_seen_ip_address is required.',
+                ], 422);
+            }
+
+            $device = Device::updateOrCreate(
+                ['serial_number' => $reader['serial_number']],
+                [
+                    'hardware_version' => $reader['hardware_version'],
+                    'software_version' => $reader['software_version'],
+                    'firmware_version' => $reader['firmware_version'],
+                    'battery_percentage' => $reader['battery_percentage'],
+                    'last_seen_user_id' => $recordingUser->id,
+                    'last_seen_at' => now(),
+                    'last_seen_ip_address' => $ipAddress,
+                ]
+            );
+        }
+
+        $attendanceData = $request->validated();
+        unset($attendanceData['reader']);
+
         $attExistingCount = $attExistingQ->count();
         if ($attExistingCount > 0) {
             Log::debug(self::class.': Found attendance on '.$date.' for '.$identifier['value'].' - ignoring.');
             $att = $attExistingQ->first();
             $code = 200;
 
-            if ($user !== null) {
-                PushToJedi::dispatch($user, self::class, -1, 'duplicate-attendance');
+            if ($attendee !== null) {
+                PushToJedi::dispatch($attendee, self::class, -1, 'duplicate-attendance');
             }
         } else {
             Log::debug(self::class.': No attendance yet on '.$date.' for '.$identifier['value'].' - saving.');
+
+            if ($device !== null) {
+                $attendanceData['device_serial_number'] = $device->serial_number;
+            }
+
             $att = Attendance::create(
                 array_merge(
-                    $request->validated(),
+                    $attendanceData,
                     [
                         'recorded_by' => $request->user()->id,
                         $identifier['key'] => $identifier['value'],

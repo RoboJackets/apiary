@@ -53,6 +53,34 @@ class StoreAttendanceRequest extends FormRequest
             'created_at' => [
                 'date',
             ],
+            'reader' => [
+                'sometimes',
+                'array',
+            ],
+            'reader.serial_number' => [
+                'required_with:reader',
+                'digits:7',
+            ],
+            'reader.hardware_version' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.software_version' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.firmware_version' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.battery_percentage' => [
+                'required_with:reader',
+                'integer',
+                'between:0,100',
+            ],
         ];
     }
 }
