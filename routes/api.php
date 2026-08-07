@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DuesPackageController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\EventController;
@@ -58,6 +59,9 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth.user_or_client_token'])
         Route::apiResource('attendance', AttendanceController::class);
         Route::post('attendance/search', [AttendanceController::class, 'search'])->name('attendance.search');
         Route::get('attendance/statistics', [AttendanceController::class, 'statistics'])->name('attendance.statistics');
+
+        // Devices
+        Route::post('devices/inventory', [DeviceController::class, 'inventory'])->name('devices.inventory');
 
         // Users
         // The search endpoint MUST be registered before the apiResource, otherwise it will not take precedence

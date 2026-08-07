@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class Device extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    #[\Override]
+    public function toArray(Request $request): array
+    {
+        return [
+            'serial_number' => $this->serial_number,
+            'hardware_version' => $this->hardware_version,
+            'software_version' => $this->software_version,
+            'firmware_version' => $this->firmware_version,
+            'battery_percentage' => $this->battery_percentage,
+            'last_seen_user_id' => $this->last_seen_user_id,
+            'last_seen_at' => $this->last_seen_at,
+            'last_seen_ip_address' => $this->last_seen_ip_address,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
+    }
+}
