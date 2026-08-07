@@ -47,10 +47,6 @@ class DeviceController implements HasMiddleware
 
         $validated = $request->validated();
 
-        if (array_key_exists('battery_percentage', $validated) && $validated['battery_percentage'] === null) {
-            unset($validated['battery_percentage']);
-        }
-
         $device = Device::updateOrCreate(
             ['serial_number' => $validated['serial_number']],
             array_merge(

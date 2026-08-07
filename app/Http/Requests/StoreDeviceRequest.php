@@ -48,7 +48,7 @@ class StoreDeviceRequest extends FormRequest
                 'max:255',
             ],
             'battery_percentage' => [
-                'nullable',
+                'required',
                 'integer',
                 'between:0,100',
             ],

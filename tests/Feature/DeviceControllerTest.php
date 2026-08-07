@@ -101,6 +101,7 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'new-hw',
                 'software_version' => 'new-sw',
                 'firmware_version' => 'new-fw',
+                'battery_percentage' => 88,
             ]);
 
         $response->assertStatus(200);
@@ -125,36 +126,22 @@ final class DeviceControllerTest extends TestCase
         $this->assertSame('10.0.0.2', $device->last_seen_ip_address);
     }
 
-    public function test_explicit_null_battery_percentage_is_preserved(): void
+    public function test_missing_battery_percentage_fails_validation(): void
     {
-        $originalUser = $this->getTestUser(['non-member']);
-        $device = Device::factory()->create([
-            'serial_number' => 1122334,
-            'hardware_version' => 'old-hw',
-            'software_version' => 'old-sw',
-            'firmware_version' => 'old-fw',
-            'battery_percentage' => 42,
-            'last_seen_user_id' => $originalUser->id,
-            'last_seen_ip_address' => '10.0.0.1',
-        ]);
-
-        $user = $this->getTestUser(['shared-device'], 'apiarytestingshared2');
+        $user = $this->getTestUser(['shared-device']);
 
         $response = $this
-            ->withServerVariables(['REMOTE_ADDR' => '10.0.0.3'])
+            ->withServerVariables(['REMOTE_ADDR' => '127.0.0.1'])
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
-                'serial_number' => '1122334',
-                'hardware_version' => 'new-hw',
-                'software_version' => 'new-sw',
-                'firmware_version' => 'new-fw',
-                'battery_percentage' => null,
+                'serial_number' => '1234567',
+                'hardware_version' => 'hw-1',
+                'software_version' => 'sw-1',
+                'firmware_version' => 'fw-1',
             ]);
 
-        $response->assertStatus(200);
-
-        $device->refresh();
-        $this->assertSame(42, $device->battery_percentage);
+        $response->assertStatus(422);
+        $response->assertInvalid(['battery_percentage']);
     }
 
     public function test_invalid_serial_number_fails_validation(): void
@@ -169,6 +156,7 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'hw-1',
                 'software_version' => 'sw-1',
                 'firmware_version' => 'fw-1',
+                'battery_percentage' => 75,
             ]);
 
         $response->assertStatus(422);
@@ -184,6 +172,7 @@ final class DeviceControllerTest extends TestCase
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '1234567',
+                'battery_percentage' => 75,
             ]);
 
         $response->assertStatus(422);
@@ -225,6 +214,7 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'hw-1',
                 'software_version' => 'sw-1',
                 'firmware_version' => 'fw-1',
+                'battery_percentage' => 75,
             ]);
 
         $response->assertStatus(401);
@@ -242,6 +232,7 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'hw-1',
                 'software_version' => 'sw-1',
                 'firmware_version' => 'fw-1',
+                'battery_percentage' => 75,
             ]);
 
         $response->assertStatus(422);

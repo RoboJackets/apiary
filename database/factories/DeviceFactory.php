@@ -27,7 +27,7 @@ class DeviceFactory extends Factory
             'hardware_version' => $this->faker->word(),
             'software_version' => $this->faker->word(),
             'firmware_version' => $this->faker->word(),
-            'battery_percentage' => $this->faker->optional()->numberBetween(0, 100),
+            'battery_percentage' => $this->faker->numberBetween(0, 100),
             'last_seen_user_id' => User::factory(),
             'last_seen_at' => now(),
             'last_seen_ip_address' => $this->faker->ipv4(),

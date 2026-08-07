@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('hardware_version');
             $table->string('software_version');
             $table->string('firmware_version');
-            $table->unsignedTinyInteger('battery_percentage')->nullable();
+            $table->unsignedTinyInteger('battery_percentage');
             $table->foreignIdFor(User::class, 'last_seen_user_id');
             $table->timestamp('last_seen_at');
             $table->ipAddress('last_seen_ip_address');
