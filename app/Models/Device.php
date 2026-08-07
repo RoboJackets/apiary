@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Device extends Model
 {
@@ -68,5 +69,15 @@ class Device extends Model
     public function lastSeenUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'last_seen_user_id');
+    }
+
+    /**
+     * Get the attendance records created with this device.
+     *
+     * @return HasMany<\App\Models\Attendance, \App\Models\Device>
+     */
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class, 'device_serial_number', 'serial_number');
     }
 }
