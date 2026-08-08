@@ -60,7 +60,7 @@ class StoreDeviceRequest extends FormRequest
             'battery_percentage' => [
                 'required',
                 'integer',
-                'between:0,100',
+                'between:1,100',
             ],
         ];
     }

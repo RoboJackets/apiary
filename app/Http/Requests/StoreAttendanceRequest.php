@@ -86,7 +86,7 @@ class StoreAttendanceRequest extends FormRequest
             'reader.battery_percentage' => [
                 'required_with:reader',
                 'integer',
-                'between:0,100',
+                'between:1,100',
             ],
         ];
     }
