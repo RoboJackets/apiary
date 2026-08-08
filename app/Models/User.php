@@ -405,16 +405,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the access cards associated with this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AccessCard, self>
-     */
-    public function accessCards(): HasMany
-    {
-        return $this->hasMany(AccessCard::class);
-    }
-
-    /**
      * Get the teams that this user manages.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Team, self>

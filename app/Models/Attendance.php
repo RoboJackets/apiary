@@ -115,16 +115,6 @@ class Attendance extends Model
     }
 
     /**
-     * Get the access card associated with the Attendance model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\AccessCard, \App\Models\Attendance>
-     */
-    public function accessCard(): BelongsTo
-    {
-        return $this->belongsTo(AccessCard::class, 'access_card_number', 'access_card_number');
-    }
-
-    /**
      * Get the User who recorded the Attendance model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Attendance>

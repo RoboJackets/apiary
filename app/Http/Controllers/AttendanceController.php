@@ -10,7 +10,6 @@ use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Http\Resources\Attendance as AttendanceResource;
 use App\Jobs\PushToJedi;
-use App\Models\AccessCard;
 use App\Models\Attendance;
 use App\Models\Team;
 use App\Models\User;
@@ -57,35 +56,13 @@ class AttendanceController implements HasMiddleware
         $include = $request->input('include');
         unset($request['include']);
 
-        // Variables for comparison below
         $date = now()->toDateString();
         $gtid = $request->input('gtid');
 
-        // if an access card number is provided without a GTID, try to find the matching GTID
-        if ($request->input('gtid') === null && $request->input('access_card_number') !== null) {
-            if (AccessCard::where('access_card_number', '=', $request->input('access_card_number'))->exists()) {
-                $card = AccessCard::where('access_card_number', '=', $request->input('access_card_number'))->sole();
-
-                $gtid = $card->user->gtid;
-            } else {
-                Log::debug(self::class.': Could not resolve GTID for access card '.
-                    $request->input('access_card_number'));
-            }
-        }
-
-        if ($gtid !== null) {
-            $attendee = User::where('gtid', '=', $gtid)->first();
-            $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id']))
-                ->where('gtid', '=', $gtid)->whereDate('created_at', $date);
-            $identifier = ['key' => 'gtid', 'value' => $gtid];
-        } else {
-            $attendee = null;
-            $attExistingQ = Attendance::where(
-                $request->only(['attendable_type', 'attendable_id', 'access_card_number'])
-            )
-                ->whereDate('created_at', $date);
-            $identifier = ['key' => 'access_card_number', 'value' => $request->input('access_card_number')];
-        }
+        $attendee = User::where('gtid', '=', $gtid)->first();
+        $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id']))
+            ->where('gtid', '=', $gtid)
+            ->whereDate('created_at', $date);
 
         // Upsert the device if a reader is provided
         $device = null;
@@ -98,7 +75,7 @@ class AttendanceController implements HasMiddleware
 
         $attExistingCount = $attExistingQ->count();
         if ($attExistingCount > 0) {
-            Log::debug(self::class.': Found attendance on '.$date.' for '.$identifier['value'].' - ignoring.');
+            Log::debug(self::class.': Found attendance on '.$date.' for '.$gtid.' - ignoring.');
             $att = $attExistingQ->first();
             $code = 200;
 
@@ -106,7 +83,7 @@ class AttendanceController implements HasMiddleware
                 PushToJedi::dispatch($attendee, self::class, -1, 'duplicate-attendance');
             }
         } else {
-            Log::debug(self::class.': No attendance yet on '.$date.' for '.$identifier['value'].' - saving.');
+            Log::debug(self::class.': No attendance yet on '.$date.' for '.$gtid.' - saving.');
 
             if ($device !== null) {
                 $attendanceData['device_serial_number'] = $device->serial_number;
@@ -117,7 +94,7 @@ class AttendanceController implements HasMiddleware
                     $attendanceData,
                     [
                         'recorded_by' => $request->user()->id,
-                        $identifier['key'] => $identifier['value'],
+                        'gtid' => $gtid,
                     ]
                 )
             );

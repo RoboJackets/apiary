@@ -167,7 +167,6 @@ return [
                     'attendee.clickup_email',
                     'attendee.github_username',
                     'gtid',
-                    'access_card_number',
                     'attendable.name',
                 ],
                 'filterableAttributes' => [
