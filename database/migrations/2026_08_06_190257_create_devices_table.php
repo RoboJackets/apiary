@@ -16,9 +16,11 @@ return new class extends Migration
     {
         Schema::create('devices', static function (Blueprint $table): void {
             $table->unsignedInteger('serial_number')->primary();
-            $table->string('hardware_version');
-            $table->string('software_version');
-            $table->string('firmware_version');
+            $table->tinyText('hardware_version');
+            $table->tinyText('software_version');
+            $table->tinyText('firmware_version');
+            $table->tinyText('manufacturer');
+            $table->tinyText('model');
             $table->unsignedTinyInteger('battery_percentage');
             $table->foreignIdFor(User::class, 'last_seen_user_id');
             $table->timestamp('last_seen_at');

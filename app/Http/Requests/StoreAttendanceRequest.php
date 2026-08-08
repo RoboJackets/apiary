@@ -76,6 +76,16 @@ class StoreAttendanceRequest extends FormRequest
                 'string',
                 'max:255',
             ],
+            'reader.manufacturer' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.model' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
             'reader.battery_percentage' => [
                 'required_with:reader',
                 'integer',

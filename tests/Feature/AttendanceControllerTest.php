@@ -78,6 +78,8 @@ final class AttendanceControllerTest extends TestCase
                     'hardware_version' => 'hw-1',
                     'software_version' => 'sw-1',
                     'firmware_version' => 'fw-1',
+                    'manufacturer' => 'mfg-1',
+                    'model' => 'mdl-1',
                     'battery_percentage' => 75,
                 ],
             ]);
@@ -106,6 +108,8 @@ final class AttendanceControllerTest extends TestCase
             'hardware_version' => 'hw-1',
             'software_version' => 'sw-1',
             'firmware_version' => 'fw-1',
+            'manufacturer' => 'mfg-1',
+            'model' => 'mdl-1',
             'battery_percentage' => 75,
             'last_seen_user_id' => $user->id,
             'last_seen_ip_address' => '192.168.1.50',
@@ -130,6 +134,8 @@ final class AttendanceControllerTest extends TestCase
                     'hardware_version' => 'old-hw',
                     'software_version' => 'old-sw',
                     'firmware_version' => 'old-fw',
+                    'manufacturer' => 'old-mfg',
+                    'model' => 'old-mdl',
                     'battery_percentage' => 10,
                 ],
             ]);
@@ -147,6 +153,8 @@ final class AttendanceControllerTest extends TestCase
                     'hardware_version' => 'new-hw',
                     'software_version' => 'new-sw',
                     'firmware_version' => 'new-fw',
+                    'manufacturer' => 'new-mfg',
+                    'model' => 'new-mdl',
                     'battery_percentage' => 90,
                 ],
             ]);
@@ -163,6 +171,8 @@ final class AttendanceControllerTest extends TestCase
             'hardware_version' => 'new-hw',
             'software_version' => 'new-sw',
             'firmware_version' => 'new-fw',
+            'manufacturer' => 'new-mfg',
+            'model' => 'new-mdl',
             'battery_percentage' => 90,
             'last_seen_user_id' => $user->id,
             'last_seen_ip_address' => '10.0.0.2',
@@ -199,6 +209,8 @@ final class AttendanceControllerTest extends TestCase
                     'hardware_version' => 'hw-1',
                     'software_version' => 'sw-1',
                     'firmware_version' => 'fw-1',
+                    'manufacturer' => 'mfg-1',
+                    'model' => 'mdl-1',
                     'battery_percentage' => 75,
                 ],
             ]);
@@ -224,6 +236,8 @@ final class AttendanceControllerTest extends TestCase
                     'hardware_version' => 'hw-1',
                     'software_version' => 'sw-1',
                     'firmware_version' => 'fw-1',
+                    'manufacturer' => 'mfg-1',
+                    'model' => 'mdl-1',
                 ],
             ]);
 
@@ -249,6 +263,8 @@ final class AttendanceControllerTest extends TestCase
                     'hardware_version' => 'hw-1',
                     'software_version' => 'sw-1',
                     'firmware_version' => 'fw-1',
+                    'manufacturer' => 'mfg-1',
+                    'model' => 'mdl-1',
                     'battery_percentage' => 101,
                 ],
             ]);
@@ -275,6 +291,8 @@ final class AttendanceControllerTest extends TestCase
                     'hardware_version' => 'hw-1',
                     'software_version' => 'sw-1',
                     'firmware_version' => 'fw-1',
+                    'manufacturer' => 'mfg-1',
+                    'model' => 'mdl-1',
                     'battery_percentage' => 75,
                 ],
             ]);
@@ -304,6 +322,8 @@ final class AttendanceControllerTest extends TestCase
                     'hardware_version' => 'hw-1',
                     'software_version' => 'sw-1',
                     'firmware_version' => 'fw-1',
+                    'manufacturer' => 'mfg-1',
+                    'model' => 'mdl-1',
                     'battery_percentage' => 42,
                 ],
             ]);
@@ -315,6 +335,8 @@ final class AttendanceControllerTest extends TestCase
                     $json->where('device_serial_number', 7654321)
                         ->has('device', static function (AssertableJson $json) use ($user): void {
                             $json->where('serial_number', 7654321)
+                                ->where('manufacturer', 'mfg-1')
+                                ->where('model', 'mdl-1')
                                 ->where('battery_percentage', 42)
                                 ->where('last_seen_user_id', $user->id)
                                 ->etc();

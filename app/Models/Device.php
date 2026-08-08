@@ -9,6 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $serial_number
+ * @property string $hardware_version
+ * @property string $software_version
+ * @property string $firmware_version
+ * @property string $manufacturer
+ * @property string $model
+ * @property int $battery_percentage
+ * @property int $last_seen_user_id
+ * @property \Illuminate\Support\Carbon $last_seen_at
+ * @property string $last_seen_ip_address
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ */
 class Device extends Model
 {
     /** @use HasFactory<\Database\Factories\DeviceFactory> */
@@ -38,6 +52,8 @@ class Device extends Model
         'hardware_version',
         'software_version',
         'firmware_version',
+        'manufacturer',
+        'model',
         'battery_percentage',
         'last_seen_user_id',
         'last_seen_at',

@@ -31,6 +31,8 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => '1.0',
                 'software_version' => '2.0',
                 'firmware_version' => '3.0',
+                'manufacturer' => 'mfg-1',
+                'model' => 'mdl-1',
             ]);
 
         $response->assertStatus(403);
@@ -48,6 +50,8 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'hw-1',
                 'software_version' => 'sw-1',
                 'firmware_version' => 'fw-1',
+                'manufacturer' => 'mfg-1',
+                'model' => 'mdl-1',
                 'battery_percentage' => 75,
             ]);
 
@@ -59,6 +63,8 @@ final class DeviceControllerTest extends TestCase
                         ->where('hardware_version', 'hw-1')
                         ->where('software_version', 'sw-1')
                         ->where('firmware_version', 'fw-1')
+                        ->where('manufacturer', 'mfg-1')
+                        ->where('model', 'mdl-1')
                         ->where('battery_percentage', 75)
                         ->where('last_seen_user_id', (string) $user->id)
                         ->where('last_seen_ip_address', '192.168.1.50')
@@ -72,6 +78,8 @@ final class DeviceControllerTest extends TestCase
             'hardware_version' => 'hw-1',
             'software_version' => 'sw-1',
             'firmware_version' => 'fw-1',
+            'manufacturer' => 'mfg-1',
+            'model' => 'mdl-1',
             'battery_percentage' => 75,
             'last_seen_user_id' => $user->id,
             'last_seen_ip_address' => '192.168.1.50',
@@ -86,6 +94,8 @@ final class DeviceControllerTest extends TestCase
             'hardware_version' => 'old-hw',
             'software_version' => 'old-sw',
             'firmware_version' => 'old-fw',
+            'manufacturer' => 'old-mfg',
+            'model' => 'old-mdl',
             'battery_percentage' => 88,
             'last_seen_user_id' => $originalUser->id,
             'last_seen_ip_address' => '10.0.0.1',
@@ -101,6 +111,8 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'new-hw',
                 'software_version' => 'new-sw',
                 'firmware_version' => 'new-fw',
+                'manufacturer' => 'new-mfg',
+                'model' => 'new-mdl',
                 'battery_percentage' => 88,
             ]);
 
@@ -112,6 +124,8 @@ final class DeviceControllerTest extends TestCase
                         ->where('hardware_version', 'new-hw')
                         ->where('software_version', 'new-sw')
                         ->where('firmware_version', 'new-fw')
+                        ->where('manufacturer', 'new-mfg')
+                        ->where('model', 'new-mdl')
                         ->where('battery_percentage', 88)
                         ->where('last_seen_user_id', (string) $user->id)
                         ->where('last_seen_ip_address', '10.0.0.2')
@@ -121,6 +135,8 @@ final class DeviceControllerTest extends TestCase
 
         $device->refresh();
         $this->assertSame('new-hw', $device->hardware_version);
+        $this->assertSame('new-mfg', $device->manufacturer);
+        $this->assertSame('new-mdl', $device->model);
         $this->assertSame(88, $device->battery_percentage);
         $this->assertSame($user->id, $device->last_seen_user_id);
         $this->assertSame('10.0.0.2', $device->last_seen_ip_address);
@@ -138,6 +154,8 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'hw-1',
                 'software_version' => 'sw-1',
                 'firmware_version' => 'fw-1',
+                'manufacturer' => 'mfg-1',
+                'model' => 'mdl-1',
             ]);
 
         $response->assertStatus(422);
@@ -156,6 +174,8 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'hw-1',
                 'software_version' => 'sw-1',
                 'firmware_version' => 'fw-1',
+                'manufacturer' => 'mfg-1',
+                'model' => 'mdl-1',
                 'battery_percentage' => 75,
             ]);
 
@@ -172,6 +192,8 @@ final class DeviceControllerTest extends TestCase
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '1234567',
+                'manufacturer' => 'mfg-1',
+                'model' => 'mdl-1',
                 'battery_percentage' => 75,
             ]);
 
@@ -191,6 +213,8 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'hw-1',
                 'software_version' => 'sw-1',
                 'firmware_version' => 'fw-1',
+                'manufacturer' => 'mfg-1',
+                'model' => 'mdl-1',
                 'battery_percentage' => 101,
             ]);
 
@@ -214,6 +238,8 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'hw-1',
                 'software_version' => 'sw-1',
                 'firmware_version' => 'fw-1',
+                'manufacturer' => 'mfg-1',
+                'model' => 'mdl-1',
                 'battery_percentage' => 75,
             ]);
 
@@ -232,6 +258,8 @@ final class DeviceControllerTest extends TestCase
                 'hardware_version' => 'hw-1',
                 'software_version' => 'sw-1',
                 'firmware_version' => 'fw-1',
+                'manufacturer' => 'mfg-1',
+                'model' => 'mdl-1',
                 'battery_percentage' => 75,
             ]);
 

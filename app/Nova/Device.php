@@ -111,6 +111,12 @@ class Device extends Resource
             Text::make('Firmware Version', 'firmware_version')
                 ->sortable(),
 
+            Text::make('Manufacturer', 'manufacturer')
+                ->sortable(),
+
+            Text::make('Model', 'model')
+                ->sortable(),
+
             Number::make('Battery Percentage', 'battery_percentage')
                 ->min(0)
                 ->max(100),

@@ -47,6 +47,16 @@ class StoreDeviceRequest extends FormRequest
                 'string',
                 'max:255',
             ],
+            'manufacturer' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'model' => [
+                'required',
+                'string',
+                'max:255',
+            ],
             'battery_percentage' => [
                 'required',
                 'integer',
