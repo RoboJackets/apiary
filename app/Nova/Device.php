@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
@@ -120,6 +122,9 @@ class Device extends Resource
                 ->sortable(),
 
             Text::make('Last Seen IP Address', 'last_seen_ip_address'),
+
+            HasMany::make('Attendance', 'attendances', Attendance::class)
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
 
             self::metadataPanel(),
         ];

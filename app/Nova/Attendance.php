@@ -91,6 +91,7 @@ class Attendance extends Resource
         'recorded',
         'attendee',
         'attendable',
+        'device',
     ];
 
     /**
@@ -130,6 +131,10 @@ class Attendance extends Resource
             BelongsTo::make('Recorded By', 'recorded', User::class)
                 ->help('The user that recorded the swipe')
                 ->searchable(),
+
+            BelongsTo::make('Device', 'device', Device::class)
+                ->searchable()
+                ->canSee(static fn (Request $request): bool => $request->user()->can('create-attendance')),
 
             DateTime::make('Time', 'created_at')
                 ->sortable(),
