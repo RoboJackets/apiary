@@ -12,10 +12,10 @@ use App\Http\Resources\Attendance as AttendanceResource;
 use App\Jobs\PushToJedi;
 use App\Models\AccessCard;
 use App\Models\Attendance;
-use App\Models\Device;
 use App\Models\Team;
 use App\Models\User;
 use App\Util\AuthorizeInclude;
+use App\Util\DeviceInventory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -90,37 +90,7 @@ class AttendanceController implements HasMiddleware
         // Upsert the device if a reader is provided
         $device = null;
         if ($request->has('reader')) {
-            $reader = $request->input('reader');
-            $recordingUser = $request->user();
-
-            if (! $recordingUser instanceof User) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'A user token is required.',
-                ], 401);
-            }
-
-            $ipAddress = $request->ip();
-
-            if ($ipAddress === null) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'last_seen_ip_address is required.',
-                ], 422);
-            }
-
-            $device = Device::updateOrCreate(
-                ['serial_number' => $reader['serial_number']],
-                [
-                    'hardware_version' => $reader['hardware_version'],
-                    'software_version' => $reader['software_version'],
-                    'firmware_version' => $reader['firmware_version'],
-                    'battery_percentage' => $reader['battery_percentage'],
-                    'last_seen_user_id' => $recordingUser->id,
-                    'last_seen_at' => now(),
-                    'last_seen_ip_address' => $ipAddress,
-                ]
-            );
+            $device = DeviceInventory::upsert($request, $request->input('reader'));
         }
 
         $attendanceData = $request->validated();
