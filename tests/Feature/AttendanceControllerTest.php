@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Models\Attendance;
 use App\Models\Team;
 use Database\Seeders\TeamsSeeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\ClientRepository;
@@ -344,5 +346,48 @@ final class AttendanceControllerTest extends TestCase
                         ->etc();
                 });
         });
+    }
+
+    public function test_created_at_in_request_is_ignored(): void
+    {
+        $now = Carbon::parse('2025-03-15 12:00:00');
+        Carbon::setTestNow($now);
+
+        try {
+            $user = $this->getTestUser(['shared-device']);
+            $team = Team::first();
+
+            Attendance::create([
+                'attendable_type' => 'team',
+                'attendable_id' => $team->id,
+                'gtid' => $user->gtid,
+                'source' => 'kiosk',
+                'recorded_by' => $user->id,
+            ]);
+
+            $response = $this
+                ->withServerVariables(['REMOTE_ADDR' => '192.168.1.50'])
+                ->actingAs($user, 'api')
+                ->postJson('/api/v1/attendance', [
+                    'attendable_type' => 'team',
+                    'attendable_id' => $team->id,
+                    'gtid' => $user->gtid,
+                    'source' => 'kiosk',
+                    'created_at' => '2020-01-01',
+                ]);
+
+            $response->assertStatus(200);
+
+            $this->assertDatabaseCount('attendance', 1);
+
+            $this->assertDatabaseHas('attendance', [
+                'attendable_type' => 'team',
+                'attendable_id' => $team->id,
+                'gtid' => $user->gtid,
+                'created_at' => $now->toDateTimeString(),
+            ]);
+        } finally {
+            Carbon::setTestNow(null);
+        }
     }
 }

@@ -58,7 +58,7 @@ class AttendanceController implements HasMiddleware
         unset($request['include']);
 
         // Variables for comparison below
-        $date = $request->input('created_at', date('Y-m-d'));
+        $date = now()->toDateString();
         $gtid = $request->input('gtid');
 
         // if an access card number is provided without a GTID, try to find the matching GTID

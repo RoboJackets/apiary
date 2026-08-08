@@ -50,9 +50,6 @@ class StoreAttendanceRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'created_at' => [
-                'date',
-            ],
             'reader' => [
                 'sometimes',
                 'array',
