@@ -202,7 +202,6 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
                 .' has primary affiliation of student but no majors. Check data integrity.'
             );
         }
-
     }
 
     /**
