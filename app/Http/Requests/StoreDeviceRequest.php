@@ -32,27 +32,37 @@ class StoreDeviceRequest extends FormRequest
                 'required',
                 'digits:7',
             ],
-            'hardware_version' => [
-                'required',
-                'string',
-                'max:255',
-            ],
-            'software_version' => [
-                'required',
-                'string',
-                'max:255',
-            ],
-            'firmware_version' => [
-                'required',
-                'string',
-                'max:255',
-            ],
             'manufacturer' => [
                 'required',
                 'string',
                 'max:255',
             ],
             'model' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'hardware_version' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'bluetooth_firmware_version' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'bluetooth_software_version' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'bootloader_version' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'application_version' => [
                 'required',
                 'string',
                 'max:255',

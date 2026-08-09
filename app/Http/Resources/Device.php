@@ -19,11 +19,13 @@ class Device extends JsonResource
     {
         return [
             'serial_number' => $this->serial_number,
-            'hardware_version' => $this->hardware_version,
-            'software_version' => $this->software_version,
-            'firmware_version' => $this->firmware_version,
             'manufacturer' => $this->manufacturer,
             'model' => $this->model,
+            'hardware_version' => $this->hardware_version,
+            'bluetooth_firmware_version' => $this->bluetooth_firmware_version,
+            'bluetooth_software_version' => $this->bluetooth_software_version,
+            'bootloader_version' => $this->bootloader_version,
+            'application_version' => $this->application_version,
             'battery_percentage' => $this->battery_percentage,
             'last_seen_user_id' => $this->last_seen_user_id,
             'last_seen_at' => $this->last_seen_at,

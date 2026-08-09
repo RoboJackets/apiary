@@ -28,11 +28,13 @@ final class DeviceControllerTest extends TestCase
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '1234567',
-                'hardware_version' => '1.0',
-                'software_version' => '2.0',
-                'firmware_version' => '3.0',
                 'manufacturer' => 'mfg-1',
                 'model' => 'mdl-1',
+                'hardware_version' => 'hw-1',
+                'bluetooth_firmware_version' => 'bt-fw-1',
+                'bluetooth_software_version' => 'bt-sw-1',
+                'bootloader_version' => 'bld-1',
+                'application_version' => 'app-1',
             ]);
 
         $response->assertStatus(403);
@@ -47,11 +49,13 @@ final class DeviceControllerTest extends TestCase
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '1234567',
-                'hardware_version' => 'hw-1',
-                'software_version' => 'sw-1',
-                'firmware_version' => 'fw-1',
                 'manufacturer' => 'mfg-1',
                 'model' => 'mdl-1',
+                'hardware_version' => 'hw-1',
+                'bluetooth_firmware_version' => 'bt-fw-1',
+                'bluetooth_software_version' => 'bt-sw-1',
+                'bootloader_version' => 'bld-1',
+                'application_version' => 'app-1',
                 'battery_percentage' => 75,
             ]);
 
@@ -60,11 +64,13 @@ final class DeviceControllerTest extends TestCase
             $json->where('status', 'success')
                 ->has('device', static function (AssertableJson $json) use ($user): void {
                     $json->where('serial_number', 1234567)
-                        ->where('hardware_version', 'hw-1')
-                        ->where('software_version', 'sw-1')
-                        ->where('firmware_version', 'fw-1')
                         ->where('manufacturer', 'mfg-1')
                         ->where('model', 'mdl-1')
+                        ->where('hardware_version', 'hw-1')
+                        ->where('bluetooth_firmware_version', 'bt-fw-1')
+                        ->where('bluetooth_software_version', 'bt-sw-1')
+                        ->where('bootloader_version', 'bld-1')
+                        ->where('application_version', 'app-1')
                         ->where('battery_percentage', 75)
                         ->where('last_seen_user_id', (string) $user->id)
                         ->where('last_seen_ip_address', '192.168.1.50')
@@ -75,11 +81,13 @@ final class DeviceControllerTest extends TestCase
 
         $this->assertDatabaseHas('devices', [
             'serial_number' => 1234567,
-            'hardware_version' => 'hw-1',
-            'software_version' => 'sw-1',
-            'firmware_version' => 'fw-1',
             'manufacturer' => 'mfg-1',
             'model' => 'mdl-1',
+            'hardware_version' => 'hw-1',
+            'bluetooth_firmware_version' => 'bt-fw-1',
+            'bluetooth_software_version' => 'bt-sw-1',
+            'bootloader_version' => 'bld-1',
+            'application_version' => 'app-1',
             'battery_percentage' => 75,
             'last_seen_user_id' => $user->id,
             'last_seen_ip_address' => '192.168.1.50',
@@ -91,11 +99,13 @@ final class DeviceControllerTest extends TestCase
         $originalUser = $this->getTestUser(['non-member']);
         $device = Device::factory()->create([
             'serial_number' => 7654321,
-            'hardware_version' => 'old-hw',
-            'software_version' => 'old-sw',
-            'firmware_version' => 'old-fw',
             'manufacturer' => 'old-mfg',
             'model' => 'old-mdl',
+            'hardware_version' => 'old-hw',
+            'bluetooth_firmware_version' => 'old-bt-fw',
+            'bluetooth_software_version' => 'old-bt-sw',
+            'bootloader_version' => 'old-bld',
+            'application_version' => 'old-app',
             'battery_percentage' => 88,
             'last_seen_user_id' => $originalUser->id,
             'last_seen_ip_address' => '10.0.0.1',
@@ -108,11 +118,13 @@ final class DeviceControllerTest extends TestCase
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '7654321',
-                'hardware_version' => 'new-hw',
-                'software_version' => 'new-sw',
-                'firmware_version' => 'new-fw',
                 'manufacturer' => 'new-mfg',
                 'model' => 'new-mdl',
+                'hardware_version' => 'new-hw',
+                'bluetooth_firmware_version' => 'new-bt-fw',
+                'bluetooth_software_version' => 'new-bt-sw',
+                'bootloader_version' => 'new-bld',
+                'application_version' => 'new-app',
                 'battery_percentage' => 88,
             ]);
 
@@ -121,11 +133,13 @@ final class DeviceControllerTest extends TestCase
             $json->where('status', 'success')
                 ->has('device', static function (AssertableJson $json) use ($user): void {
                     $json->where('serial_number', 7654321)
-                        ->where('hardware_version', 'new-hw')
-                        ->where('software_version', 'new-sw')
-                        ->where('firmware_version', 'new-fw')
                         ->where('manufacturer', 'new-mfg')
                         ->where('model', 'new-mdl')
+                        ->where('hardware_version', 'new-hw')
+                        ->where('bluetooth_firmware_version', 'new-bt-fw')
+                        ->where('bluetooth_software_version', 'new-bt-sw')
+                        ->where('bootloader_version', 'new-bld')
+                        ->where('application_version', 'new-app')
                         ->where('battery_percentage', 88)
                         ->where('last_seen_user_id', (string) $user->id)
                         ->where('last_seen_ip_address', '10.0.0.2')
@@ -134,9 +148,13 @@ final class DeviceControllerTest extends TestCase
         });
 
         $device->refresh();
-        $this->assertSame('new-hw', $device->hardware_version);
         $this->assertSame('new-mfg', $device->manufacturer);
         $this->assertSame('new-mdl', $device->model);
+        $this->assertSame('new-hw', $device->hardware_version);
+        $this->assertSame('new-bt-fw', $device->bluetooth_firmware_version);
+        $this->assertSame('new-bt-sw', $device->bluetooth_software_version);
+        $this->assertSame('new-bld', $device->bootloader_version);
+        $this->assertSame('new-app', $device->application_version);
         $this->assertSame(88, $device->battery_percentage);
         $this->assertSame($user->id, $device->last_seen_user_id);
         $this->assertSame('10.0.0.2', $device->last_seen_ip_address);
@@ -151,11 +169,13 @@ final class DeviceControllerTest extends TestCase
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '1234567',
-                'hardware_version' => 'hw-1',
-                'software_version' => 'sw-1',
-                'firmware_version' => 'fw-1',
                 'manufacturer' => 'mfg-1',
                 'model' => 'mdl-1',
+                'hardware_version' => 'hw-1',
+                'bluetooth_firmware_version' => 'bt-fw-1',
+                'bluetooth_software_version' => 'bt-sw-1',
+                'bootloader_version' => 'bld-1',
+                'application_version' => 'app-1',
             ]);
 
         $response->assertStatus(422);
@@ -171,11 +191,13 @@ final class DeviceControllerTest extends TestCase
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '12345',
-                'hardware_version' => 'hw-1',
-                'software_version' => 'sw-1',
-                'firmware_version' => 'fw-1',
                 'manufacturer' => 'mfg-1',
                 'model' => 'mdl-1',
+                'hardware_version' => 'hw-1',
+                'bluetooth_firmware_version' => 'bt-fw-1',
+                'bluetooth_software_version' => 'bt-sw-1',
+                'bootloader_version' => 'bld-1',
+                'application_version' => 'app-1',
                 'battery_percentage' => 75,
             ]);
 
@@ -198,7 +220,13 @@ final class DeviceControllerTest extends TestCase
             ]);
 
         $response->assertStatus(422);
-        $response->assertInvalid(['hardware_version', 'software_version', 'firmware_version']);
+        $response->assertInvalid([
+            'hardware_version',
+            'bluetooth_firmware_version',
+            'bluetooth_software_version',
+            'bootloader_version',
+            'application_version',
+        ]);
     }
 
     public function test_battery_percentage_out_of_range_fails_validation(): void
@@ -210,11 +238,13 @@ final class DeviceControllerTest extends TestCase
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '1234567',
-                'hardware_version' => 'hw-1',
-                'software_version' => 'sw-1',
-                'firmware_version' => 'fw-1',
                 'manufacturer' => 'mfg-1',
                 'model' => 'mdl-1',
+                'hardware_version' => 'hw-1',
+                'bluetooth_firmware_version' => 'bt-fw-1',
+                'bluetooth_software_version' => 'bt-sw-1',
+                'bootloader_version' => 'bld-1',
+                'application_version' => 'app-1',
                 'battery_percentage' => 101,
             ]);
 
@@ -235,11 +265,13 @@ final class DeviceControllerTest extends TestCase
             ->withServerVariables(['REMOTE_ADDR' => '127.0.0.1'])
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '1234567',
-                'hardware_version' => 'hw-1',
-                'software_version' => 'sw-1',
-                'firmware_version' => 'fw-1',
                 'manufacturer' => 'mfg-1',
                 'model' => 'mdl-1',
+                'hardware_version' => 'hw-1',
+                'bluetooth_firmware_version' => 'bt-fw-1',
+                'bluetooth_software_version' => 'bt-sw-1',
+                'bootloader_version' => 'bld-1',
+                'application_version' => 'app-1',
                 'battery_percentage' => 75,
             ]);
 
@@ -255,11 +287,13 @@ final class DeviceControllerTest extends TestCase
             ->actingAs($user, 'api')
             ->postJson('/api/v1/devices/inventory', [
                 'serial_number' => '1234567',
-                'hardware_version' => 'hw-1',
-                'software_version' => 'sw-1',
-                'firmware_version' => 'fw-1',
                 'manufacturer' => 'mfg-1',
                 'model' => 'mdl-1',
+                'hardware_version' => 'hw-1',
+                'bluetooth_firmware_version' => 'bt-fw-1',
+                'bluetooth_software_version' => 'bt-sw-1',
+                'bootloader_version' => 'bld-1',
+                'application_version' => 'app-1',
                 'battery_percentage' => 75,
             ]);
 

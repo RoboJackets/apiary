@@ -48,9 +48,13 @@ class Device extends Resource
      */
     public static $search = [
         'serial_number',
+        'manufacturer',
+        'model',
         'hardware_version',
-        'software_version',
-        'firmware_version',
+        'bluetooth_firmware_version',
+        'bluetooth_software_version',
+        'bootloader_version',
+        'application_version',
     ];
 
     /**
@@ -100,21 +104,27 @@ class Device extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
+            Text::make('Manufacturer', 'manufacturer')
+                ->sortable(),
+
+            Text::make('Model', 'model')
+                ->sortable(),
+
             ID::make('Serial Number', 'serial_number')->sortable(),
 
             Text::make('Hardware Version', 'hardware_version')
                 ->sortable(),
 
-            Text::make('Software Version', 'software_version')
+            Text::make('Bluetooth Firmware Version', 'bluetooth_firmware_version')
                 ->sortable(),
 
-            Text::make('Firmware Version', 'firmware_version')
+            Text::make('Bluetooth Software Version', 'bluetooth_software_version')
                 ->sortable(),
 
-            Text::make('Manufacturer', 'manufacturer')
+            Text::make('Bootloader Version', 'bootloader_version')
                 ->sortable(),
 
-            Text::make('Model', 'model')
+            Text::make('Application Version', 'application_version')
                 ->sortable(),
 
             Number::make('Battery Percentage', 'battery_percentage')

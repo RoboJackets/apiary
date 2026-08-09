@@ -24,12 +24,14 @@ class DeviceFactory extends Factory
     {
         return [
             'serial_number' => $this->faker->unique()->numberBetween(1000000, 9999999),
-            'hardware_version' => $this->faker->word(),
-            'software_version' => $this->faker->word(),
-            'firmware_version' => $this->faker->word(),
             'manufacturer' => $this->faker->company(),
             'model' => $this->faker->word(),
-            'battery_percentage' => $this->faker->numberBetween(0, 100),
+            'hardware_version' => $this->faker->word(),
+            'bluetooth_firmware_version' => $this->faker->word(),
+            'bluetooth_software_version' => $this->faker->word(),
+            'bootloader_version' => $this->faker->word(),
+            'application_version' => $this->faker->word(),
+            'battery_percentage' => $this->faker->numberBetween(1, 100),
             'last_seen_user_id' => User::factory(),
             'last_seen_at' => now(),
             'last_seen_ip_address' => $this->faker->ipv4(),

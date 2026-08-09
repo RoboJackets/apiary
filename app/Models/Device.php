@@ -11,11 +11,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $serial_number
- * @property string $hardware_version
- * @property string $software_version
- * @property string $firmware_version
  * @property string $manufacturer
  * @property string $model
+ * @property string $hardware_version
+ * @property string $bluetooth_firmware_version
+ * @property string $bluetooth_software_version
+ * @property string $bootloader_version
+ * @property string $application_version
  * @property int $battery_percentage
  * @property int $last_seen_user_id
  * @property \Illuminate\Support\Carbon $last_seen_at
@@ -49,11 +51,13 @@ class Device extends Model
      */
     protected $fillable = [
         'serial_number',
-        'hardware_version',
-        'software_version',
-        'firmware_version',
         'manufacturer',
         'model',
+        'hardware_version',
+        'bluetooth_firmware_version',
+        'bluetooth_software_version',
+        'bootloader_version',
+        'application_version',
         'battery_percentage',
         'last_seen_user_id',
         'last_seen_at',
