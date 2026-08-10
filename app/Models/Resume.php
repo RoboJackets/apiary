@@ -118,6 +118,8 @@ class Resume extends Model
     /**
      * Get the file name for this Resume.
      * If running on multiple Resumes, should eager load Users to avoid N+1.
+     *
+     * @psalm-mutation-free
      */
     public function getFileNameAttribute(): string
     {

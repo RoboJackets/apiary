@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -566,7 +567,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the resume belonging to the User
+     * Get the resume belonging to the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Resume, self>
      */
