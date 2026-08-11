@@ -132,7 +132,7 @@ class Resume extends Model
             'id' => $this->id,
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
-            'extracted_text' => '', // TODO: Extract text at index time // phpcs:ignore Generic.Commenting.Todo
+            'extracted_text' => '', // Extract text at index time
         ];
     }
 }
