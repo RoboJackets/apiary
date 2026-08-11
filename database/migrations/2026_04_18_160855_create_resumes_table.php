@@ -15,16 +15,11 @@ return new class extends Migration
     {
         Schema::create('resumes', static function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
             $table->text('extracted_text')->nullable();
             $table->timestamp('last_uploaded_at')->nullable();
             $table->timestamps();
 
-            $table->unique('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnDelete();
+            $table->foreignIdFor(User::class);
         });
     }
 
