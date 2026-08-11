@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('resumes', static function (Blueprint $table) {
             $table->id();
-            $table->text('extracted_text')->nullable();
             $table->timestamp('last_uploaded_at')->nullable();
             $table->timestamps();
 

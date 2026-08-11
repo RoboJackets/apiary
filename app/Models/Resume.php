@@ -14,7 +14,6 @@ use Laravel\Scout\Searchable;
  *
  * @property int $id
  * @property int $user_id
- * @property string|null $extracted_text
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $last_uploaded_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -44,21 +43,6 @@ class Resume extends Model
         'updated_at',
         'last_uploaded_at',
     ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @psalm-pure
-     *
-     * @return array<string,string>
-     */
-    #[\Override]
-    protected function casts(): array
-    {
-        return [
-            'extracted_text' => 'string',
-        ];
-    }
 
     /**
      * Get the user that owns this Resume.
@@ -148,7 +132,7 @@ class Resume extends Model
             'id' => $this->id,
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
-            'extracted_text' => $this->extracted_text ?? '',
+            'extracted_text' => '', // TODO: Extract text at index time
         ];
     }
 }
