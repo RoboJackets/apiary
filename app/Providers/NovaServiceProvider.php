@@ -32,6 +32,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         Nova::serving(static function (ServingNova $event): void {
             Nova::script('sentry', asset('js/nova.js'));
+
+            // The record-attendance modal is a Vue 3 component (Nova runs Vue 3, unlike the Vue 2 app
+            // bundle), so it is built separately in nova-components/RecordAttendanceModal. Registered
+            // here rather than via a Composer package to avoid a path-package for this app-owned action.
+            Nova::script(
+                'record-attendance',
+                base_path('nova-components/RecordAttendanceModal/dist/js/asset.js')
+            );
         });
 
         Nova::footer(static fn (Request $request): string => '

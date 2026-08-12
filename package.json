@@ -11,7 +11,9 @@
         "build-personal-access-token-modal": "cd nova-components/PersonalAccessTokenModal && npm run dev",
         "build-personal-access-token-modal-prod": "cd nova-components/PersonalAccessTokenModal && npm run prod",
         "build-client-id-and-secret-modal": "cd nova-components/ClientIdAndSecretModal && npm run dev",
-        "build-client-id-and-secret-modal-prod": "cd nova-components/ClientIdAndSecretModal && npm run prod"
+        "build-client-id-and-secret-modal-prod": "cd nova-components/ClientIdAndSecretModal && npm run prod",
+        "build-record-attendance-modal": "cd nova-components/RecordAttendanceModal && npm run dev",
+        "build-record-attendance-modal-prod": "cd nova-components/RecordAttendanceModal && npm run prod"
     },
     "devDependencies": {
         "@sentry/webpack-plugin": "1.21.0",
