@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db398b8e2f7670f40c0bac75db7b05f6",
+    "content-hash": "36849553a2863aa227c0b21e3bc9e2fc",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -8325,6 +8325,42 @@
             "autoload": {
                 "psr-4": {
                     "RoboJackets\\PersonalAccessTokenModal\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova asset.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "robojackets/record-attendance-modal",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/RecordAttendanceModal",
+                "reference": "a4c331ca35caaffd6aac336e9b8c08acf19693d8"
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RoboJackets\\RecordAttendanceModal\\AssetServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RoboJackets\\RecordAttendanceModal\\": "src/"
                 }
             },
             "license": [
@@ -18961,6 +18997,7 @@
         "madewithlove/laravel-nova-uuid-support": 20,
         "robojackets/client-id-and-secret-modal": 20,
         "robojackets/personal-access-token-modal": 20,
+        "robojackets/record-attendance-modal": 20,
         "square/square": 5,
         "subfission/cas": 20,
         "vimeo/psalm": 10
