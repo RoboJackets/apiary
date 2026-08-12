@@ -25,7 +25,7 @@
 
             <div class="px-8">
                 <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                    Swipe a BuzzCard or type a GTID or BuzzCard number, then press Enter.
+                    Swipe a BuzzCard or enter a GTID, then press Enter.
                 </p>
 
                 <!-- autocomplete/data-*ignore attributes keep password managers from offering
@@ -45,7 +45,7 @@
                     data-form-type="other"
                     :disabled="submitting"
                     class="w-full form-control form-input form-input-bordered"
-                    placeholder="GTID or BuzzCard number"
+                    placeholder="BuzzCard Swipe/GTID"
                 />
 
                 <p
@@ -147,7 +147,7 @@ export default {
                 this.showResult(
                     'error',
                     this.identifier.trim() === ''
-                        ? 'Enter a GTID or BuzzCard number.'
+                        ? 'Swipe a BuzzCard or enter a GTID'
                         : 'Card format not recognized.'
                 );
                 this.identifier = '';
@@ -182,18 +182,17 @@ export default {
 
                     if (response.status === 201) {
                         this.count += 1;
-                        this.showResult('success', 'Recorded — ' + name);
-                    } else {
-                        // 200: attendance already existed for today.
-                        this.showResult('duplicate', 'Already recorded today — ' + name);
                     }
+
+                    this.showResult('success', 'Recorded — ' + name);
                 })
                 .catch(error => {
+                    Sentry.captureException(error)
                     const status = error.response ? error.response.status : null;
                     if (status === 403) {
                         this.showResult('error', "You don't have permission to record attendance.");
                     } else if (status === 422) {
-                        this.showResult('error', 'That does not look like a valid GTID or BuzzCard number.');
+                        this.showResult('error', 'That does not look like a valid GTID or BuzzCard swipe.');
                     } else {
                         this.showResult(
                             'error',
