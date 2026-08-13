@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "025afe3f592e864d14568d659176a00a",
+    "content-hash": "23f9f4e908ee3d05219db1c08fba44ab",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -3642,16 +3642,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.48.2",
+            "version": "v5.48.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "2ebe3cb25ab6461b53a4e3ef42e167edeafe7932"
+                "reference": "2d1045db2ecdc7842a13e96a7c21773f32c93ab3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/2ebe3cb25ab6461b53a4e3ef42e167edeafe7932",
-                "reference": "2ebe3cb25ab6461b53a4e3ef42e167edeafe7932",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/2d1045db2ecdc7842a13e96a7c21773f32c93ab3",
+                "reference": "2d1045db2ecdc7842a13e96a7c21773f32c93ab3",
                 "shasum": ""
             },
             "require": {
@@ -3716,9 +3716,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.48.2"
+                "source": "https://github.com/laravel/horizon/tree/v5.48.3"
             },
-            "time": "2026-07-27T13:13:49+00:00"
+            "time": "2026-08-10T13:09:54+00:00"
         },
         {
             "name": "laravel/nova",
