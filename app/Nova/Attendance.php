@@ -91,6 +91,7 @@ class Attendance extends Resource
         'recorded',
         'attendee',
         'attendable',
+        'device',
     ];
 
     /**
@@ -114,10 +115,6 @@ class Attendance extends Resource
                 ->resolveUsing(fn (?string $gtid): ?string => $this->attendee !== null ? null : $gtid)
                 ->copyable(),
 
-            BelongsTo::make('Access Card')
-                ->hideFromIndex()
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
-
             BelongsTo::make('User', 'attendee')
                 ->searchable(),
 
@@ -130,6 +127,10 @@ class Attendance extends Resource
             BelongsTo::make('Recorded By', 'recorded', User::class)
                 ->help('The user that recorded the swipe')
                 ->searchable(),
+
+            BelongsTo::make('Device', 'device', Device::class)
+                ->searchable()
+                ->canSee(static fn (Request $request): bool => $request->user()->can('create-attendance')),
 
             DateTime::make('Time', 'created_at')
                 ->sortable(),

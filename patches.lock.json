@@ -1,5 +1,5 @@
 {
-    "_hash": "a55cd8201f99b7b3e72ed8ab2167d1aba488761941a1fac3cd7ad48ae9d5b38f",
+    "_hash": "978dbd14b9128209fe807730e59d0f8fe840387b0915288ef925bc4467e8bcfe",
     "patches": {
         "xammie/mailbook": [
             {
@@ -7,6 +7,16 @@
                 "description": "Render plain-text emails instead of HTML",
                 "url": "patches/xammie/mailbook/plaintext.patch",
                 "sha256": "1c58157b1c2a7f470b401025c8123da9f94bcd57beecf5595907e0654c633c51",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            },
+            {
+                "package": "xammie/mailbook",
+                "description": "Preview notification mailables even when shouldSend returns false",
+                "url": "patches/xammie/mailbook/preview-ignore-should-send.patch",
+                "sha256": "0134938ededa071c1e0d9e88db6db04c9083c1a7f1569915dfe805f0188ac31e",
                 "depth": 1,
                 "extra": {
                     "provenance": "patches-file:patches.json"

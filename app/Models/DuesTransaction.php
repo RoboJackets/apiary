@@ -293,6 +293,17 @@ class DuesTransaction extends Model implements Payable
     }
 
     /**
+     * Modify the query used to retrieve models when making all of the models searchable.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
+     */
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with('user')->with('package');
+    }
+
+    /**
      * Get the indexable data array for the model.
      *
      * @return array<string,int|string>
@@ -301,15 +312,12 @@ class DuesTransaction extends Model implements Payable
     {
         $array = $this->toArray();
 
-        $user = $this->user->toSearchableArray();
-        $package = $this->package->toArray();
-
-        foreach ($user as $key => $val) {
-            $array['user_'.$key] = $val;
+        if (! array_key_exists('user', $array)) {
+            $array['user'] = $this->user->toSearchableArray();
         }
 
-        foreach ($package as $key => $val) {
-            $array['package_'.$key] = $val;
+        if (! array_key_exists('package', $array)) {
+            $array['package'] = $this->package->toArray();
         }
 
         $array['payable_type'] = $this->getMorphClass();

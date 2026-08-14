@@ -30,6 +30,8 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property int|null $remote_attendance_link_id
  * @property int|null $people_counter_id
+ * @property int|null $device_serial_number
+ * @property-read \App\Models\Device|null $device
  * @property-read \App\Models\Event|\App\Models\Team $attendable
  * @property-read \App\Models\User|null $attendee
  * @property-read \App\Models\User|null $recorded
@@ -89,6 +91,7 @@ class Attendance extends Model
     public const array RELATIONSHIP_PERMISSIONS = [
         'attendee' => 'read-users',
         'recorded' => 'read-users',
+        'device' => 'create-attendance',
     ];
 
     /**
@@ -112,16 +115,6 @@ class Attendance extends Model
     }
 
     /**
-     * Get the access card associated with the Attendance model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\AccessCard, \App\Models\Attendance>
-     */
-    public function accessCard(): BelongsTo
-    {
-        return $this->belongsTo(AccessCard::class, 'access_card_number', 'access_card_number');
-    }
-
-    /**
      * Get the User who recorded the Attendance model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Attendance>
@@ -139,6 +132,16 @@ class Attendance extends Model
     public function remoteAttendanceLink(): BelongsTo
     {
         return $this->belongsTo(RemoteAttendanceLink::class);
+    }
+
+    /**
+     * Get the Device that recorded this Attendance model.
+     *
+     * @return BelongsTo<Device, Attendance>
+     */
+    public function device(): BelongsTo
+    {
+        return $this->belongsTo(Device::class, 'device_serial_number', 'serial_number');
     }
 
     /**

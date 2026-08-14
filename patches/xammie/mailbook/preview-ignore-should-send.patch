@@ -1,0 +1,23 @@
+--- a/src/MailableSender.php
++++ b/src/MailableSender.php
+@@ -74,6 +74,20 @@
+             return;
+         }
+ 
++        // Preview the mail representation directly so Notification::shouldSend() cannot
++        // block rendering (e.g. business rules that skip delivery for past trips).
++        if (method_exists($this->subject, 'toMail') && is_object($this->notifiable)) {
++            $mailable = $this->subject->toMail($this->notifiable);
++
++            if ($mailable instanceof Mailable) {
++                // Call Mailable::send() directly so ShouldQueue mailables are not pushed
++                // onto the queue (same approach as Illuminate\Notifications\Channels\MailChannel).
++                $mailable->send(Mail::mailer());
++
++                return;
++            }
++        }
++
+         if (is_object($this->notifiable) && method_exists($this->notifiable, 'notify')) {
+             NotificationFacade::sendNow($this->notifiable, $this->subject);
+         } else {

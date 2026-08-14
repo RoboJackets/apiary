@@ -68,6 +68,9 @@ return [
         'resources/views/vendor/html',
         'resources/views/vendor/notifications',
         'resources/views/vendor/markdown',
+        // Nova's layout relies on ASI newlines inside inline scripts.
+        'vendor/laravel/nova',
+        'resources/views/vendor/nova',
     ],
 
 ];

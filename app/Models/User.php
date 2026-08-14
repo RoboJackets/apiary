@@ -393,6 +393,7 @@ class User extends Authenticatable
         'merchandise.providedBy' => 'read-users',
         'attendance.recorded' => 'read-attendance',
         'attendance.attendable' => 'read-attendance',
+        'dues.payment' => 'read-payments',
     ];
 
     /**
@@ -403,16 +404,6 @@ class User extends Authenticatable
     public function attendance(): HasMany
     {
         return $this->hasMany(Attendance::class, 'gtid', 'gtid');
-    }
-
-    /**
-     * Get the access cards associated with this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AccessCard, self>
-     */
-    public function accessCards(): HasMany
-    {
-        return $this->hasMany(AccessCard::class);
     }
 
     /**
@@ -1049,6 +1040,37 @@ class User extends Authenticatable
     public function toSearchableArray(): array
     {
         $array = $this->toArray();
+
+        unset($array['phone_verified']);
+        unset($array['emergency_contact_name']);
+        unset($array['emergency_contact_phone']);
+        unset($array['emergency_contact_phone_verified']);
+        unset($array['parent_guardian_name']);
+        unset($array['parent_guardian_email']);
+        unset($array['shirt_size']);
+        unset($array['polo_size']);
+        unset($array['gender']);
+        unset($array['ethnicity']);
+        unset($array['date_of_birth']);
+        unset($array['delta_skymiles_number']);
+        unset($array['legal_gender']);
+        unset($array['access_override_until']);
+        unset($array['access_override_by_id']);
+        unset($array['resume_date']);
+        unset($array['github_invite_pending']);
+        unset($array['clickup_invite_pending']);
+        unset($array['exists_in_sums']);
+        unset($array['create_reason']);
+        unset($array['has_ever_logged_in']);
+        unset($array['is_service_account']);
+        unset($array['buzzcard_access_opt_out']);
+        unset($array['email_suppression_reason']);
+        unset($array['employee_id']);
+        unset($array['employee_home_department']);
+        unset($array['docusign_access_token']);
+        unset($array['docusign_access_token_expires_at']);
+        unset($array['docusign_refresh_token']);
+        unset($array['docusign_refresh_token_expires_at']);
 
         $array['revenue_total'] = intval(Payment::selectRaw(
             '(coalesce(sum(payments.amount),0) - coalesce(sum(payments.processing_fee),0)) as revenue'

@@ -16,16 +16,6 @@ php artisan cache:clear --no-interaction --verbose || true
 php artisan responsecache:clear --no-interaction --verbose || true
 php artisan migrate --no-interaction --force --verbose
 
-if [ ${APP_ENV} != "sandbox" ]
-then
-    export SKIP_PHPSTAN_CHECKS=true
-    if ! php artisan ping --no-interaction --verbose
-    then
-        export SKIP_HTTP_CHECKS=true
-    fi
-    php artisan config:cache --no-interaction --verbose
-fi
-
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
 cp --recursive --verbose public/* /assets/${NOMAD_JOB_NAME}/
 

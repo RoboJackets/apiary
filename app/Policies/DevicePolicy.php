@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Models\AccessCard;
+use App\Models\Device;
 use App\Models\User;
 
-class AccessCardPolicy
+class DevicePolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('admin');
+        return $user->can('create-attendance');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, AccessCard $accessCard): bool
+    public function view(User $user, Device $device): bool
     {
-        return $user->hasRole('admin');
+        return $user->can('create-attendance');
     }
 
     /**
@@ -40,7 +40,7 @@ class AccessCardPolicy
      *
      * @psalm-pure
      */
-    public function update(User $user, AccessCard $accessCard): false
+    public function update(User $user, Device $device): false
     {
         return false;
     }
@@ -50,7 +50,7 @@ class AccessCardPolicy
      *
      * @psalm-pure
      */
-    public function delete(User $user, AccessCard $accessCard): false
+    public function delete(User $user, Device $device): false
     {
         return false;
     }
@@ -60,7 +60,7 @@ class AccessCardPolicy
      *
      * @psalm-pure
      */
-    public function restore(User $user, AccessCard $accessCard): false
+    public function restore(User $user, Device $device): false
     {
         return false;
     }
@@ -70,7 +70,17 @@ class AccessCardPolicy
      *
      * @psalm-pure
      */
-    public function forceDelete(User $user, AccessCard $accessCard): false
+    public function forceDelete(User $user, Device $device): false
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can replicate the model.
+     *
+     * @psalm-pure
+     */
+    public function replicate(User $user, Device $device): false
     {
         return false;
     }

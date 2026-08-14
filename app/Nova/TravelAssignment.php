@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\ChargeOffTripFee;
 use App\Nova\Actions\Payments\RecordPaymentActions;
 use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Rules\MatrixItineraryDataStructure;
@@ -16,6 +17,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
@@ -28,7 +30,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
  */
 class TravelAssignment extends Resource
 {
-    use RecordPaymentActions;
+    use RecordPaymentActions {
+        actions as paymentActions;
+    }
 
     /**
      * The model the resource corresponds to.
@@ -200,6 +204,10 @@ class TravelAssignment extends Resource
             Boolean::make('Paid', 'is_paid')
                 ->onlyOnIndex(),
 
+            DateTime::make('Charged Off At', 'charged_off_at')
+                ->onlyOnDetail()
+                ->showOnDetail(fn (): bool => $this->travel->fee_amount > 0),
+
             Boolean::make(
                 'Emergency Contact',
                 static fn (
@@ -217,6 +225,52 @@ class TravelAssignment extends Resource
 
             self::metadataPanel(),
         ];
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
+     */
+    #[\Override]
+    public function actions(NovaRequest $request): array
+    {
+        $actions = $this->paymentActions($request);
+
+        $resourceType = $request->resource;
+        $resourceId = $request->resourceId ?? $request->resources;
+        $user = $request->user();
+
+        if (
+            $resourceType !== self::uriKey() ||
+            $resourceId === null ||
+            $user === null ||
+            (
+                is_array($resourceId) && count($resourceId) > 1
+            ) ||
+            ! $user->hasRole('admin')
+        ) {
+            return $actions;
+        }
+
+        if (is_array($resourceId) && count($resourceId) === 1) {
+            $resourceId = $resourceId[0];
+        }
+
+        $assignment = \App\Models\TravelAssignment::find($resourceId);
+
+        if ($assignment === null || ! ChargeOffTripFee::availableFor($assignment)) {
+            return $actions;
+        }
+
+        $actions[] = ChargeOffTripFee::make()
+            ->canSee(static fn (NovaRequest $request): bool => $request->user()->hasRole('admin'))
+            ->canRun(
+                static fn (NovaRequest $request, \App\Models\TravelAssignment $assignment): bool => $request->user()
+                    ->hasRole('admin') && ChargeOffTripFee::availableFor($assignment)
+            );
+
+        return $actions;
     }
 
     /**

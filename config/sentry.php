@@ -54,4 +54,8 @@ return [
     'traces_sampler' => [\App\Util\Sentry::class, 'tracesSampler'],
 
     'controllers_base_namespace' => env('SENTRY_CONTROLLERS_BASE_NAMESPACE', 'App\\Http\\Controllers'),
+
+    'ignore_exceptions' => [
+        \League\OAuth2\Server\Exception\OAuthServerException::class,
+    ],
 ];
