@@ -144,7 +144,7 @@ class Resume extends Model
 
         if (Storage::disk('local')->exists($file_path) && Storage::disk('local')->size($file_path) > 0) {
             $file_hash = hash_file('sha512', Storage::disk('local')->path($file_path));
-            
+
             Cache::lock(name: 'tika_extraction_'.$file_hash, seconds: 360)->block(
                 seconds: 330,
                 callback: static function () use ($file_hash, $file_path, &$full_text): void {
@@ -171,7 +171,7 @@ class Resume extends Model
                                 ]
                             )->getBody()->getContents()
                         )
-                    )
+                    );
                 }
             );
         }
