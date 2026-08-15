@@ -15,7 +15,6 @@ use Laravel\Scout\Searchable;
  * @property int $id
  * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $last_uploaded_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User $user
  * @property-read string $file_name
@@ -41,7 +40,6 @@ class Resume extends Model
         'id',
         'created_at',
         'updated_at',
-        'last_uploaded_at',
     ];
 
     /**
@@ -126,12 +124,14 @@ class Resume extends Model
      *
      * @return array<string,int|string>
      */
+    #[\Override]
     public function toSearchableArray(): array
     {
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
+            'updated_at' => $this->updated_at,
             'extracted_text' => '', // Extract text at index time
         ];
     }
