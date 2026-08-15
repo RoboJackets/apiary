@@ -244,6 +244,12 @@
                 "enabled": true
             },
             "rangeStrategy": "replace"
+        },
+        {
+            "matchManagers": [
+                "github-actions"
+            ],
+            "rangeStrategy": "replace"
         }
     ]
 }

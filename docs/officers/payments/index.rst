@@ -11,3 +11,4 @@ Apiary supports several payment methods for both :doc:`dues </officers/dues/inde
 .. toctree::
    accept
    refund
+   charge-off

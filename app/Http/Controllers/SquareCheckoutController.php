@@ -128,7 +128,7 @@ class SquareCheckoutController
                     $assignment = $any_assignment_needs_payment;
                 }
 
-                if (! $user->is_active) {
+                if (! $user->is_active && ! $assignment->travel->return_date_has_passed) {
                     return view(
                         'travel.actionrequired',
                         [

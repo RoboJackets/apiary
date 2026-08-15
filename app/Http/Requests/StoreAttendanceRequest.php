@@ -38,20 +38,61 @@ class StoreAttendanceRequest extends FormRequest
                 'numeric',
             ],
             'gtid' => [
-                'required_without:access_card_number',
+                'required',
                 'numeric',
                 'digits:9',
-            ],
-            'access_card_number' => [
-                'string',
-                'numeric',
             ],
             'source' => [
                 'required',
                 'string',
             ],
-            'created_at' => [
-                'date',
+            'reader' => [
+                'sometimes',
+                'array',
+            ],
+            'reader.serial_number' => [
+                'required_with:reader',
+                'digits:7',
+            ],
+            'reader.manufacturer' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.model' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.hardware_version' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.bluetooth_firmware_version' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.bluetooth_software_version' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.bootloader_version' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.application_version' => [
+                'required_with:reader',
+                'string',
+                'max:255',
+            ],
+            'reader.battery_percentage' => [
+                'required_with:reader',
+                'integer',
+                'between:1,100',
             ],
         ];
     }

@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Register problem matchers
         run: echo "::add-matcher::.github/matchers.json"
@@ -30,7 +30,7 @@ jobs:
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Setup Composer cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install exiftool and libuuid
         run: sudo apt-get update && sudo apt-get install --assume-yes libimage-exiftool-perl uuid-dev
@@ -82,7 +82,7 @@ jobs:
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Setup composer cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
@@ -150,7 +150,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      packages: read
     with:
       image-digest: ${{ needs.docker.outputs.image-digest }}
       environment: sandbox
@@ -166,7 +165,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      packages: read
     with:
       image-digest: ${{ needs.docker.outputs.image-digest }}
       environment: test
@@ -183,7 +181,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      packages: read
     with:
       image-digest: ${{ needs.docker.outputs.image-digest }}
       environment: production
@@ -196,7 +193,7 @@ jobs:
     permissions:
       packages: write
     steps:
-      - uses: snok/container-retention-policy@v3.0.1
+      - uses: snok/container-retention-policy@v3.1.0
         with:
           account: robojackets
           token: ${{ secrets.GITHUB_TOKEN }}

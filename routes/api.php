@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DuesPackageController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\EventController;
@@ -59,10 +60,13 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth.user_or_client_token'])
         Route::post('attendance/search', [AttendanceController::class, 'search'])->name('attendance.search');
         Route::get('attendance/statistics', [AttendanceController::class, 'statistics'])->name('attendance.statistics');
 
+        // Devices
+        Route::post('devices/inventory', [DeviceController::class, 'inventory'])->name('devices.inventory');
+
         // Users
         // The search endpoint MUST be registered before the apiResource, otherwise it will not take precedence
         Route::get('users/search', [UserController::class, 'search']);
-        Route::apiResource('users', UserController::class)->middleware('cache:86400');
+        Route::apiResource('users', UserController::class);
         Route::post('users/{id}/resume', [ResumeController::class, 'store']);
         Route::get('user', [UserController::class, 'showSelf']);
         Route::post('user/override/self', [UserController::class, 'applySelfOverride']);

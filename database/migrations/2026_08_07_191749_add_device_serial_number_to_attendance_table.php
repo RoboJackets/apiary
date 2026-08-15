@@ -14,9 +14,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('attendance', static function (Blueprint $table): void {
-            $table->integer('gtid')->nullable()->change();
-            $table->bigInteger('access_card_number')->nullable();
-            $table->index('access_card_number');
+            $table->unsignedInteger('device_serial_number')->nullable();
+
+            $table->foreign('device_serial_number', 'attendance_device_serial_number_foreign')
+                ->references('serial_number')
+                ->on('devices');
         });
     }
 
@@ -26,9 +28,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('attendance', static function (Blueprint $table): void {
-            $table->integer('gtid')->nullable(false)->change();
-            $table->dropIndex('attendance_access_card_number_index');
-            $table->dropColumn('access_card_number');
+            $table->dropForeign('attendance_device_serial_number_foreign');
+
+            $table->dropColumn('device_serial_number');
         });
     }
 };

@@ -43,10 +43,7 @@ class NoAttendanceJediPush implements ShouldQueue
                 (new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York'))->startOfDay()->addDays(1)
             );
         })->whereHas('attendance', static function (Builder $query): void {
-            $query->where('attendable_type', Team::getMorphClassStatic())->whereBetween('created_at', [
-                (new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York'))->startOfDay(),
-                (new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York'))->endOfDay(),
-            ]);
+            $query->where('attendable_type', Team::getMorphClassStatic());
         })->get();
 
         foreach ($users as $user) {

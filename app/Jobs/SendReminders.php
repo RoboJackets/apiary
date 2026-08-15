@@ -6,6 +6,7 @@ namespace App\Jobs;
 
 use App\Models\DuesPackage;
 use App\Models\Team;
+use App\Models\TravelAssignment;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -39,25 +40,28 @@ class SendReminders implements ShouldBeUnique, ShouldQueue
      */
     public function handle(): void
     {
-        // check if travel assignment reminder should be sent
-        if (
-            $this->user->assignments()->needDocuSign()->exists() &&
-            $this->user->assignments()->needDocuSign()->first()->travel->status !== 'draft'
-        ) {
-            SendTravelAssignmentReminder::dispatch(
-                $this->user->assignments()->needDocuSign()->first(),
-                24
+        $assignmentNeedingDocuSign = $this->user->assignments()
+            ->needDocuSign()
+            ->with('travel.primaryContact')
+            ->get()
+            ->first(
+                static fn (TravelAssignment $assignment): bool => $assignment->travel->status !== 'draft'
+                    && ! $assignment->cannotReceiveDocuSignReminder()
             );
+
+        if ($assignmentNeedingDocuSign !== null) {
+            SendTravelAssignmentReminder::dispatch($assignmentNeedingDocuSign, 24);
 
             return;
         }
 
         if (
-            $this->user->assignments()->unpaid()->exists() &&
-            $this->user->assignments()->unpaid()->first()->travel->status !== 'draft'
+            $this->user->assignments()->unpaid()->whereNull('travel_assignments.charged_off_at')->exists() &&
+            $this->user->assignments()->unpaid()->whereNull('travel_assignments.charged_off_at')->first()
+                ->travel->status !== 'draft'
         ) {
             SendTravelAssignmentReminder::dispatch(
-                $this->user->assignments()->unpaid()->first(),
+                $this->user->assignments()->unpaid()->whereNull('travel_assignments.charged_off_at')->first(),
                 24
             );
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\GetMorphClassStatic;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -157,6 +158,17 @@ class Event extends Model
     }
 
     /**
+     * Modify the query used to retrieve models when making all of the models searchable.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Event>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Event> $query
+     */
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with('organizer');
+    }
+
+    /**
      * Get the indexable data array for the model.
      *
      * @return array<string,int|string>
@@ -164,6 +176,10 @@ class Event extends Model
     public function toSearchableArray(): array
     {
         $array = $this->toArray();
+
+        if (! array_key_exists('organizer', $array)) {
+            $array['organizer'] = $this->organizer->toArray();
+        }
 
         $array['start_time_unix'] = $this->start_time?->getTimestamp();
         $array['end_time_unix'] = $this->end_time?->getTimestamp();

@@ -189,11 +189,13 @@
             <errorLevel type="suppress">
                 <directory name="app/Nova/Metrics/" />
                 <file name="app/Traits/GetMorphClassStatic.php" />
+                <file name="app/Console/Commands/CreateMeilisearchDump.php"/>
             </errorLevel>
         </InvalidFalsableReturnType>
         <FalsableReturnStatement>
             <errorLevel type="suppress">
                 <directory name="app/Nova/Metrics" />
+                <file name="app/Console/Commands/CreateMeilisearchDump.php"/>
             </errorLevel>
         </FalsableReturnStatement>
         <DocblockTypeContradiction>
@@ -247,8 +249,6 @@
         </UnusedForeachValue>
         <UndefinedMagicPropertyAssignment>
             <errorLevel type="suppress">
-                <referencedProperty name="App\Models\AccessCard::$access_card_number"/>
-                <referencedProperty name="App\Models\AccessCard::$user_id"/>
                 <referencedProperty name="App\Models\Signature::$tar_received"/>
                 <referencedProperty name="App\Models\TravelAssignment::$complete"/>
                 <referencedProperty name="Illuminate\Database\Eloquent\Model::$airfare_policy"/>
@@ -317,7 +317,6 @@
                 <directory name="app/Notifications/"/>
                 <directory name="app/Nova/"/>
                 <directory name="app/Observers/"/>
-                <file name="app/Console/Commands/Ping.php"/>
                 <file name="app/Http/ContentSecurityPolicy.php"/>
                 <file name="app/Rules/TripFeeMinimumNonZeroValue.php"/>
                 <file name="app/Util/DocuSign.php"/>
@@ -338,6 +337,7 @@
                 <file name="app/Nova/Actions/ReviewTrip.php"/>
                 <file name="app/Nova/Dashboards/Main.php"/>
                 <file name="app/Util/CasUser.php"/>
+                <file name="app/Console/Commands/CreateMeilisearchDump.php"/>
             </errorLevel>
         </RiskyTruthyFalsyComparison>
         <InvalidPropertyFetch>

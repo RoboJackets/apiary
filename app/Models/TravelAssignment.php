@@ -9,6 +9,7 @@ namespace App\Models;
 
 use App\Observers\TravelAssignmentObserver;
 use App\Traits\GetMorphClassStatic;
+use App\Util\DocuSign;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,6 +31,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $tar_received
+ * @property \Illuminate\Support\Carbon|null $charged_off_at
  * @property array|null $matrix_itinerary
  * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $envelope
  * @property-read int|null $envelope_count
@@ -53,6 +55,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|TravelAssignment whereCreatedAt($value)
  * @method static Builder|TravelAssignment whereDeletedAt($value)
  * @method static Builder|TravelAssignment whereId($value)
+ * @method static Builder|TravelAssignment whereChargedOffAt($value)
  * @method static Builder|TravelAssignment whereTarReceived($value)
  * @method static Builder|TravelAssignment whereTravelId($value)
  * @method static Builder|TravelAssignment whereUpdatedAt($value)
@@ -94,6 +97,7 @@ class TravelAssignment extends Model implements Payable
     {
         return [
             'tar_received' => 'boolean',
+            'charged_off_at' => 'datetime',
             'matrix_itinerary' => 'array',
         ];
     }
@@ -225,15 +229,12 @@ class TravelAssignment extends Model implements Payable
     {
         $array = $this->toArray();
 
-        $user = $this->user->toSearchableArray();
-        $travel = $this->travel->toArray();
-
-        foreach ($user as $key => $val) {
-            $array['user_'.$key] = $val;
+        if (! array_key_exists('user', $array)) {
+            $array['user'] = $this->user->toSearchableArray();
         }
 
-        foreach ($travel as $key => $val) {
-            $array['trip_'.$key] = $val;
+        if (! array_key_exists('travel', $array)) {
+            $array['travel'] = $this->travel->toArray();
         }
 
         $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
@@ -246,5 +247,14 @@ class TravelAssignment extends Model implements Payable
         return $this->is_paid &&
             ($this->tar_received || ! $this->travel->needs_docusign) &&
             ($this->user->has_emergency_contact_information || $this->travel->return_date < Carbon::now());
+    }
+
+    public function cannotReceiveDocuSignReminder(): bool
+    {
+        return $this->travel->return_date_has_passed
+            && ($this->is_paid || $this->charged_off_at !== null)
+            && $this->needs_docusign
+            && $this->envelope()->whereNotNull('envelope_id')->doesntExist()
+            && DocuSign::getApiClientForUser($this->travel->primaryContact) === null;
     }
 }

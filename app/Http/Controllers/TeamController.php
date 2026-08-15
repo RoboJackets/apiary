@@ -89,7 +89,7 @@ class TeamController implements HasMiddleware
             ->where('id', $id)
             ->first();
 
-        if ($team !== null && $team->visible === false && $request->user()->cant('read-teams-hidden')) {
+        if ($team !== null && $team->visible === false && ! UserOrClient::can('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -103,14 +103,14 @@ class TeamController implements HasMiddleware
     /**
      * Returns a list of all members of the given team.
      */
-    public function showMembers(Request $request, string $id): JsonResponse
+    public function showMembers(string $id): JsonResponse
     {
         $team = Team::where('id', $id)->first();
         if ($team === null) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        if ($team->visible === false && $request->user()->cant('read-teams-hidden')) {
+        if ($team->visible === false && ! UserOrClient::can('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -123,7 +123,7 @@ class TeamController implements HasMiddleware
     public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->first();
-        if ($team === null || ($team->visible === false && $request->user()->cant('update-teams-hidden'))) {
+        if ($team === null || ($team->visible === false && ! UserOrClient::can('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -140,19 +140,21 @@ class TeamController implements HasMiddleware
         $requestingUser = $request->user();
 
         $team = Team::where('id', $id)->first();
-        if ($team === null || ($team->visible === false && $request->user()->cant('update-teams-hidden'))) {
+        if ($team === null || ($team->visible === false && ! UserOrClient::can('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
         // Enforce users only updating themselves (update-teams-membership-own)
-        if ($requestingUser->cant('update-teams') && $requestingUser->id !== $request->input('user_id')) {
+        if (! UserOrClient::can('update-teams') &&
+            ($requestingUser === null || $requestingUser->id !== $request->input('user_id'))
+        ) {
             return response()->json(['status' => 'error',
                 'message' => 'no_priv_for_target_user',
             ], 403);
         }
 
         // Enforce updating membership via self-service only for eligible teams
-        if ($requestingUser->cant('update-teams') && $team->self_serviceable === false) {
+        if (! UserOrClient::can('update-teams') && $team->self_serviceable === false) {
             return response()->json(['status' => 'error',
                 'message' => 'self_service_disabled',
             ], 403);

@@ -229,28 +229,6 @@
             </div>
           </div>
 
-          <div class="mb-3 row">
-            <label for="user-clickup" class="col-sm-2 col-form-label">ClickUp</label>
-            <div class="col-sm-10 col-lg-4">
-              <div class="input-group">
-              <template v-if="user.clickup_email && user.clickup_email === clickUpEmailInDatabase">
-                <input v-model="user.clickup_email" type="text" readonly class="form-control" id="user-clickup">
-                <div v-if="user.clickup_invite_pending === true">
-                  <a href="/clickup" class="btn btn-secondary">Resend Invitation</a>
-                </div>
-              </template>
-              <template v-if="!user.clickup_email || user.clickup_email !== clickUpEmailInDatabase">
-                <select class="form-control" id="user-clickup" v-model="user.clickup_email" @input="onFormChange();">
-                  <option v-for="option in clickUpEmailOptions" :value="option">{{ option }}</option>
-                </select>
-                <div>
-                  <button type="submit" class="btn btn-secondary">Send Invitation</button>
-                </div>
-              </template>
-              </div>
-            </div>
-          </div>
-
           <div class="mb-3">
             <button type="submit" class="btn btn-primary">Save Changes</button>
             <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
@@ -260,20 +238,6 @@
           <div class="row">
             <div class="col-12">
               <payment-history :user-uid="userUid" />
-            </div>
-          </div>
-
-          <h3>Authorized Applications</h3>
-          <div class="row">
-            <div class="col-12">
-              <oauth2-authorizations />
-            </div>
-          </div>
-
-          <h3>Personal Access Tokens</h3>
-          <div class="row">
-            <div class="col-12">
-              <personal-access-tokens />
             </div>
           </div>
         </form>
@@ -303,8 +267,6 @@ export default {
         { value: 'xxl', text: 'XXL' },
         { value: 'xxxl', text: 'XXXL' },
       ],
-      clickUpEmailOptions: [],
-      clickUpEmailInDatabase: null,
       formChanged: false,
     };
   },
@@ -321,10 +283,6 @@ export default {
       .get(this.dataUrl)
       .then(response => {
         this.user = response.data.user;
-        this.clickUpEmailOptions = [
-          ...new Set([this.user.gt_email.toLowerCase(), this.user.uid.toLowerCase() + '@gatech.edu', this.user.gmail_address || this.user.gt_email.toLowerCase()])
-        ];
-        this.clickUpEmailInDatabase = this.user.clickup_email;
       })
       .catch(response => {
         console.log(response);
@@ -361,12 +319,7 @@ export default {
         .put(this.dataUrl, this.user)
         .then(response => {
           this.hasError = false;
-          if (this.user.clickup_email !== this.clickUpEmailInDatabase && this.user.clickup_email && this.user.clickup_email.length > 0) {
-            this.clickUpEmailInDatabase = this.user.clickup_email;
-            this.feedback = 'Saved! Look out for an email from ClickUp in the next few minutes.'
-          } else {
-            this.feedback = 'Saved!';
-          }
+          this.feedback = 'Saved!';
           this.formChanged = false;
           console.log('success');
         })
