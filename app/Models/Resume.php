@@ -124,7 +124,6 @@ class Resume extends Model
      *
      * @return array<string,int|string>
      */
-    #[\Override]
     public function toSearchableArray(): array
     {
         return [
