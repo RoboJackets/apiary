@@ -132,8 +132,6 @@ class Resume extends Model
      * Get the indexable data array for the model.
      * Uses Apache Tika to extract text from a resume if the file exists.
      *
-     * @psalm-mutation-free
-     *
      * @return array<string,int|string>
      */
     public function toSearchableArray(): array
