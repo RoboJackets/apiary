@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Util\Sentry;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
@@ -118,7 +121,7 @@ class Resume extends Model
 
     /**
      * Get the indexable data array for the model.
-     * Will likely require Apache Tika.
+     * Uses Apache Tika to extract text from a resume if the file exists.
      *
      * @psalm-mutation-free
      *
@@ -126,12 +129,52 @@ class Resume extends Model
      */
     public function toSearchableArray(): array
     {
+        $file_path = $this->file_path;
+
+        $full_text = '';
+
+        if (Storage::disk('local')->exists($file_path) && Storage::disk('local')->size($file_path) > 0) {
+            $file_hash = hash_file('sha512', Storage::disk('local')->path($file_path));
+            
+            Cache::lock(name: 'tika_extraction_'.$file_hash, seconds: 360)->block(
+                seconds: 330,
+                callback: static function () use ($file_hash, $file_path, &$full_text): void {
+                    $full_text = Cache::rememberForever(
+                        'tika_file_'.$file_hash,
+                        static fn (): string => Sentry::wrapWithChildSpan(
+                            'tika.extract',
+                            static fn (): string => (new Client(
+                                [
+                                    'base_uri' => config('services.tika.url'),
+                                    'headers' => [
+                                        'Accept' => 'text/plain',
+                                        'Content-Type' => 'application/octet-stream',
+                                    ],
+                                    'allow_redirects' => false,
+                                    'connect_timeout' => 10,
+                                    'read_timeout' => 60,
+                                    'synchronous' => true,
+                                ]
+                            ))->put(
+                                '/tika',
+                                [
+                                    'body' => Storage::disk('local')->get($file_path),
+                                ]
+                            )->getBody()->getContents()
+                        )
+                    )
+                }
+            );
+        }
+
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
+            'file_path' => $this->file_path,
+            'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'extracted_text' => '', // Extract text at index time
+            'extracted_text' => $full_text,
         ];
     }
 }
