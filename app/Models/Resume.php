@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Util\Sentry;
 use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Cache;
@@ -117,6 +118,14 @@ class Resume extends Model
     public function getFilePathAttribute(): string
     {
         return Storage::disk(self::storageDisk())->path($this->storagePath());
+    }
+
+    /**
+     * Modify the collection of models being made searchable.
+     */
+    public function makeSearchableUsing(Collection $models): Collection
+    {
+        return $models->load('user');
     }
 
     /**
