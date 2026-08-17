@@ -145,10 +145,10 @@ class Resume extends Model
         if (Storage::disk('local')->exists($file_path) && Storage::disk('local')->size($file_path) > 0) {
             $file_hash = hash_file('sha512', Storage::disk('local')->path($file_path));
 
-            Cache::lock(name: 'tika_extraction_'.$file_hash, seconds: 360)->block(
+            $full_text = Cache::lock(name: 'tika_extraction_'.$file_hash, seconds: 360)->block(
                 seconds: 330,
-                callback: static function () use ($file_hash, $file_path, &$full_text): void {
-                    $full_text = Cache::rememberForever(
+                callback: static function () use ($file_hash, $file_path): string {
+                    return Cache::rememberForever(
                         'tika_file_'.$file_hash,
                         static fn (): string => Sentry::wrapWithChildSpan(
                             'tika.extract',
