@@ -131,8 +131,6 @@ class Resume extends Model
         $full_text = '';
 
         if (Storage::disk('local')->exists($file_path) && Storage::disk('local')->size($file_path) > 0) {
-            $file_hash = hash_file('sha512', Storage::disk('local')->path($file_path));
-
             $full_text = Sentry::wrapWithChildSpan(
                 'tika.extract',
                 static fn (): string => (new Client(
