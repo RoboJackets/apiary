@@ -6,10 +6,8 @@ namespace App\Models;
 
 use App\Util\Sentry;
 use GuzzleHttp\Client;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
@@ -121,14 +119,6 @@ class Resume extends Model
     }
 
     /**
-     * Modify the collection of models being made searchable.
-     */
-    public function makeSearchableUsing(Collection $models): Collection
-    {
-        return $models->load('user');
-    }
-
-    /**
      * Get the indexable data array for the model.
      * Uses Apache Tika to extract text from a resume if the file exists.
      *
@@ -143,32 +133,26 @@ class Resume extends Model
         if (Storage::disk('local')->exists($file_path) && Storage::disk('local')->size($file_path) > 0) {
             $file_hash = hash_file('sha512', Storage::disk('local')->path($file_path));
 
-            $full_text = Cache::lock(name: 'tika_extraction_'.$file_hash, seconds: 360)->block(
-                seconds: 330,
-                callback: static fn (): string => Cache::rememberForever(
-                    'tika_file_'.$file_hash,
-                    static fn (): string => Sentry::wrapWithChildSpan(
-                        'tika.extract',
-                        static fn (): string => (new Client(
-                            [
-                                'base_uri' => config('services.tika.url'),
-                                'headers' => [
-                                    'Accept' => 'text/plain',
-                                    'Content-Type' => 'application/octet-stream',
-                                ],
-                                'allow_redirects' => false,
-                                'connect_timeout' => 10,
-                                'read_timeout' => 60,
-                                'synchronous' => true,
-                            ]
-                        ))->put(
-                            '/tika',
-                            [
-                                'body' => Storage::disk('local')->get($file_path),
-                            ]
-                        )->getBody()->getContents()
-                    )
-                )
+            $full_text = Sentry::wrapWithChildSpan(
+                'tika.extract',
+                static fn (): string => (new Client(
+                    [
+                        'base_uri' => config('services.tika.url'),
+                        'headers' => [
+                            'Accept' => 'text/plain',
+                            'Content-Type' => 'application/octet-stream',
+                        ],
+                        'allow_redirects' => false,
+                        'connect_timeout' => 10,
+                        'read_timeout' => 60,
+                        'synchronous' => true,
+                    ]
+                ))->put(
+                    '/tika',
+                    [
+                        'body' => Storage::disk('local')->get($file_path),
+                    ]
+                )->getBody()->getContents()
             );
         }
 
