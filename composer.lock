@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3976dfbac6ac971f65090e5c7b5f787a",
+    "content-hash": "3a91ded54aeeb0a692c54a934e9b9462",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -3420,16 +3420,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.66.0",
+            "version": "v12.67.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "82a53323c701a668f9054cbeb1d6b6cdbb6a5e10"
+                "reference": "fe2cdaba052cbb9f350761ccefc7ac221cbdf0b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/82a53323c701a668f9054cbeb1d6b6cdbb6a5e10",
-                "reference": "82a53323c701a668f9054cbeb1d6b6cdbb6a5e10",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/fe2cdaba052cbb9f350761ccefc7ac221cbdf0b5",
+                "reference": "fe2cdaba052cbb9f350761ccefc7ac221cbdf0b5",
                 "shasum": ""
             },
             "require": {
@@ -3638,7 +3638,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-08-11T13:59:27+00:00"
+            "time": "2026-08-18T13:37:47+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -4371,16 +4371,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v5.29.0",
+            "version": "v5.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "cd343a5841f02292af119ee607edc71300c9ae4f"
+                "reference": "caf714f55d51ab0d914b40033d8b0f489d6219cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/cd343a5841f02292af119ee607edc71300c9ae4f",
-                "reference": "cd343a5841f02292af119ee607edc71300c9ae4f",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/caf714f55d51ab0d914b40033d8b0f489d6219cc",
+                "reference": "caf714f55d51ab0d914b40033d8b0f489d6219cc",
                 "shasum": ""
             },
             "require": {
@@ -4439,7 +4439,7 @@
                 "issues": "https://github.com/laravel/socialite/issues",
                 "source": "https://github.com/laravel/socialite"
             },
-            "time": "2026-07-01T13:50:23+00:00"
+            "time": "2026-08-13T23:01:33+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -5545,16 +5545,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v1.16.1",
+            "version": "v1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "f9f63e0e7d12ffaae54f7317fa8f4f4dfa8ae7b6"
+                "reference": "7b698e3d19ec1399931e4d921d5c37d875212295"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/f9f63e0e7d12ffaae54f7317fa8f4f4dfa8ae7b6",
-                "reference": "f9f63e0e7d12ffaae54f7317fa8f4f4dfa8ae7b6",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/7b698e3d19ec1399931e4d921d5c37d875212295",
+                "reference": "7b698e3d19ec1399931e4d921d5c37d875212295",
                 "shasum": ""
             },
             "require": {
@@ -5619,9 +5619,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v1.16.1"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v1.17.0"
             },
-            "time": "2025-09-18T10:15:45+00:00"
+            "time": "2026-08-04T04:12:21+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -9326,16 +9326,16 @@
         },
         {
             "name": "square/square",
-            "version": "46.0.1.20260715",
+            "version": "46.1.0.20260819",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "284fc9157079882903b12db448ca7aec5a23848e"
+                "reference": "fef70265315351c2e0317576dea5d0dd4547d6cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/284fc9157079882903b12db448ca7aec5a23848e",
-                "reference": "284fc9157079882903b12db448ca7aec5a23848e",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/fef70265315351c2e0317576dea5d0dd4547d6cb",
+                "reference": "fef70265315351c2e0317576dea5d0dd4547d6cb",
                 "shasum": ""
             },
             "require": {
@@ -9377,9 +9377,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/46.0.1.20260715"
+                "source": "https://github.com/square/square-php-sdk/tree/46.1.0.20260819"
             },
-            "time": "2026-07-14T18:57:38+00:00"
+            "time": "2026-08-18T21:18:29+00:00"
         },
         {
             "name": "subfission/cas",
