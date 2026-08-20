@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Util\Sentry;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
@@ -118,20 +120,48 @@ class Resume extends Model
 
     /**
      * Get the indexable data array for the model.
-     * Will likely require Apache Tika.
-     *
-     * @psalm-mutation-free
+     * Uses Apache Tika to extract text from a resume if the file exists.
      *
      * @return array<string,int|string>
      */
     public function toSearchableArray(): array
     {
+        $file_path = $this->file_path;
+
+        $full_text = '';
+
+        if (Storage::disk('local')->exists($file_path) && Storage::disk('local')->size($file_path) > 0) {
+            $full_text = Sentry::wrapWithChildSpan(
+                'tika.extract',
+                static fn (): string => (new Client(
+                    [
+                        'base_uri' => config('services.tika.url'),
+                        'headers' => [
+                            'Accept' => 'text/plain',
+                            'Content-Type' => 'application/octet-stream',
+                        ],
+                        'allow_redirects' => false,
+                        'connect_timeout' => 10,
+                        'read_timeout' => 60,
+                        'synchronous' => true,
+                    ]
+                ))->put(
+                    '/tika',
+                    [
+                        'body' => Storage::disk('local')->get($file_path),
+                    ]
+                )->getBody()->getContents()
+            );
+        }
+
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
+            'file_path' => $this->file_path,
+            'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'extracted_text' => '', // Extract text at index time
+            'extracted_text' => $full_text,
         ];
     }
 }
