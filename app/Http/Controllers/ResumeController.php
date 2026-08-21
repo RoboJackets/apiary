@@ -216,6 +216,10 @@ class ResumeController implements HasMiddleware
             $user->resume_date = now();
             $user->save();
 
+            Resume::create([
+                'user_id' => $user->id,
+            ]);
+
             return response()->json(
                 [
                     'status' => 'success',
