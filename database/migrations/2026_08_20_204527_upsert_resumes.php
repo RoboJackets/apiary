@@ -20,7 +20,7 @@ return new class extends Migration
         $users = User::whereIn('uid', $resumes)->get();
         Resume::upsert(
             $users->map(static fn ($user) => ['user_id' => $user->id])->all(),
-            ['user_id'],
+            ['user_id']
         );
     }
 
