@@ -217,9 +217,13 @@ class ResumeController implements HasMiddleware
             $user->resume_date = now();
             $user->save();
 
-            Resume::create([
-                'user_id' => $user->id,
-            ]);
+            if (! Resume::where('user_id', $user->id)->exists()) {
+                Resume::create([
+                    'user_id' => $user->id,
+                ]);
+            } else {
+                Resume::where('user_id', $user->id)->first()->touch();
+            }
 
             return response()->json(
                 [
