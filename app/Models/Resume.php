@@ -183,6 +183,11 @@ class Resume extends Model
                     ]
                 )->getBody()->getContents()
             );
+            if ($full_text === '') {
+                $full_text = 'Tika extraction did not work';
+            }
+        } else {
+            $full_text = 'No resume file found.';
         }
 
         return [
