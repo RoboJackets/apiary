@@ -81,8 +81,8 @@ class Resume extends Resource
                 ->rules('required')
                 ->sortable(),
             Textarea::make('Extracted Text', function () {
-                $raw = $this->resource::search('')
-                    ->where('id', $this->resource->getKey())
+                $raw = $this->model::search('')
+                    ->where('id', $this->model->getKey())
                     ->raw();
 
                 return $raw['hits'][0]['extracted_text'] ?? null;
