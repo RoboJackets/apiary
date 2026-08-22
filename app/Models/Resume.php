@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Util\Sentry;
 use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
@@ -116,6 +117,36 @@ class Resume extends Model
     public function getFilePathAttribute(): string
     {
         return Storage::disk(self::storageDisk())->path($this->storagePath());
+    }
+
+    /**
+     * Get the is_active flag for the Resume.
+     *
+     * @psalm-mutation-free
+     */
+    public function getIsActiveAttribute(): bool
+    {
+        self::where('id', $this->id)->active()->count() !== 0;
+    }
+
+    /**
+     * Scope a query to automatically include only active resumes.
+     * Active: Resume is for a user who has paid dues for a currently ongoing term
+     *         or, has a non-zero payment for an active DuesPackage.
+     *         Additionally, the Resume's user is a student.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->whereHas('user', static function (Builder $q): void {
+            $q->active()
+                ->where('primary_affiliation', 'student')
+                ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                    $q->where('restricted_to_students', false);
+                });
+        });
     }
 
     /**
