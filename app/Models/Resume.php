@@ -161,9 +161,7 @@ class Resume extends Model
 
         if (Storage::disk('local')->exists('resumes/'.$this->user->uid.'.pdf')
             && Storage::disk('local')->size('resumes/'.$this->user->uid.'.pdf') > 0) {
-            $full_text = Sentry::wrapWithChildSpan(
-                'tika.extract',
-                fn (): string => (new Client(
+            $full_text = new Client(
                     [
                         'base_uri' => config('services.tika.url'),
                         'headers' => [
@@ -175,13 +173,12 @@ class Resume extends Model
                         'read_timeout' => 60,
                         'synchronous' => true,
                     ]
-                ))->put(
+                )->put(
                     '/tika',
                     [
                         'body' => Storage::disk('local')->get('resumes/'.$this->user->uid.'.pdf'),
                     ]
-                )->getBody()->getContents()
-            );
+                )->getBody()->getContents();
             if ($full_text === '') {
                 $full_text = 'Tika extraction did not work';
             }
