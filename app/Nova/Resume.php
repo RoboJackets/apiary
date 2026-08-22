@@ -6,7 +6,9 @@ namespace App\Nova;
 
 use App\Models\Resume as AppModelsResume;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 
@@ -73,7 +75,14 @@ class Resume extends Resource
                 ->rules('required')
                 ->sortable(),
             DateTime::make('Last Uploaded', 'updated_at')
-                ->rules('required'),
+                ->rules('required')
+                ->sortable(),
+            Boolean::make('Active', 'is_active')
+                ->rules('required')
+                ->sortable(),
+            Textarea::make('Full Text', 'extracted_text')
+                ->onlyOnDetail()
+                ->alwaysShow(),
         ];
     }
 }
