@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
+use App\Models\Resume;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -215,6 +216,9 @@ class ResumeController implements HasMiddleware
 
             $user->resume_date = now();
             $user->save();
+
+            // Call touch to ensure $resume->updated_at is always updated
+            Resume::firstOrCreate(['user_id' => $user->id])->touch();
 
             return response()->json(
                 [
