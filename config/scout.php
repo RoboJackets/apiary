@@ -264,6 +264,31 @@ return [
                     'disableOnNumbers' => true,
                 ],
             ],
+            \App\Models\Resume::class => [
+                'displayedAttributes' => [
+                    'id',
+                ],
+                'searchableAttributes' => [
+                    'id',
+                    'user_id',
+                    'file_name',
+                    'file_path',
+                    'created_at',
+                    'updated_at',
+                    'extracted_text',
+                ],
+                'rankingRules' => [
+                    'words',
+                    'typo',
+                    'proximity',
+                    'attribute',
+                    'sort',
+                    'exactness',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
+                ],
+            ],
             \App\Models\Sponsor::class => [
                 'displayedAttributes' => [
                     'id',
