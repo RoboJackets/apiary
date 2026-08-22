@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Util\Sentry;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -162,23 +161,23 @@ class Resume extends Model
         if (Storage::disk('local')->exists('resumes/'.$this->user->uid.'.pdf')
             && Storage::disk('local')->size('resumes/'.$this->user->uid.'.pdf') > 0) {
             $full_text = new Client(
-                    [
-                        'base_uri' => config('services.tika.url'),
-                        'headers' => [
-                            'Accept' => 'text/plain',
-                            'Content-Type' => 'application/octet-stream',
-                        ],
-                        'allow_redirects' => false,
-                        'connect_timeout' => 10,
-                        'read_timeout' => 60,
-                        'synchronous' => true,
-                    ]
-                )->put(
-                    '/tika',
-                    [
-                        'body' => Storage::disk('local')->get('resumes/'.$this->user->uid.'.pdf'),
-                    ]
-                )->getBody()->getContents();
+                [
+                    'base_uri' => config('services.tika.url'),
+                    'headers' => [
+                        'Accept' => 'text/plain',
+                        'Content-Type' => 'application/octet-stream',
+                    ],
+                    'allow_redirects' => false,
+                    'connect_timeout' => 10,
+                    'read_timeout' => 60,
+                    'synchronous' => true,
+                ]
+            )->put(
+                '/tika',
+                [
+                    'body' => Storage::disk('local')->get('resumes/'.$this->user->uid.'.pdf'),
+                ]
+            )->getBody()->getContents();
             if ($full_text === '') {
                 $full_text = 'Tika extraction did not work';
             }
