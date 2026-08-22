@@ -159,7 +159,7 @@ class Resume extends Model
     {
         $file_path = $this->file_path;
 
-        if (Storage::disk('local')->exists($file_path) && Storage::disk('local')->size($file_path) > 0) {
+        if (Storage::exists($file_path) && Storage::size($file_path) > 0) {
             $full_text = Sentry::wrapWithChildSpan(
                 'tika.extract',
                 static fn (): string => (new Client(
@@ -177,7 +177,7 @@ class Resume extends Model
                 ))->put(
                     '/tika',
                     [
-                        'body' => Storage::disk('local')->get($file_path),
+                        'body' => Storage::get($file_path),
                     ]
                 )->getBody()->getContents()
             );
