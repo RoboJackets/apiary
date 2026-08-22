@@ -159,7 +159,7 @@ class Resume extends Model
     {
         $file_path = $this->file_path;
 
-        if (Storage::disk('local')->exists('resumes/'.$this->user->uid.'.pdf') 
+        if (Storage::disk('local')->exists('resumes/'.$this->user->uid.'.pdf')
             && Storage::disk('local')->size('resumes/'.$this->user->uid.'.pdf') > 0) {
             $full_text = Sentry::wrapWithChildSpan(
                 'tika.extract',
