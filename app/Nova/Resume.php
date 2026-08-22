@@ -7,7 +7,7 @@ namespace App\Nova;
 use App\Models\Resume as AppModelsResume;
 use App\Models\User;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 
@@ -73,9 +73,8 @@ class Resume extends Resource
             BelongsTo::make('User', 'user', User::class)
                 ->rules('required')
                 ->sortable(),
-            Text::make('Last Uploaded', 'updated_at')
-                ->rules('required')
-                ->sortable(),
+            DateTime::make('Last Uploaded', 'updated_at')
+                ->rules('required'),
         ];
     }
 }
