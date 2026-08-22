@@ -16,6 +16,10 @@ return [
         'redirect' => '/google/callback',
     ],
 
+    'tika' => [
+        'url' => env('TIKA_URL'),
+    ],
+
     'team_slack_webhook_url' => env('TEAM_SLACK_WEBHOOK_URL'),
 
     'treasurer_slack_webhook_url' => env('TREASURER_SLACK_WEBHOOK_URL'),
