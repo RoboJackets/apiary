@@ -267,6 +267,12 @@ return [
             \App\Models\Resume::class => [
                 'displayedAttributes' => [
                     'id',
+                    'user_id',
+                    'file_name',
+                    'file_path',
+                    'created_at',
+                    'updated_at',
+                    'extracted_text',
                 ],
                 'searchableAttributes' => [
                     'id',
