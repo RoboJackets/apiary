@@ -277,6 +277,14 @@ return [
                     'updated_at',
                     'extracted_text',
                 ],
+                'filterableAttributes' => [
+                    'id',
+                    'user_id',
+                    'file_name',
+                    'file_path',
+                    'created_at',
+                    'updated_at',
+                ],
                 'rankingRules' => [
                     'words',
                     'typo',
