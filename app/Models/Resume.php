@@ -157,7 +157,7 @@ class Resume extends Model
      */
     public function toSearchableArray(): array
     {
-        $file_path = $this->file_path;
+        // $file_path = $this->file_path; -- Not used for now.
 
         if (Storage::disk('local')->exists('resumes/'.$this->user->uid.'.pdf')
             && Storage::disk('local')->size('resumes/'.$this->user->uid.'.pdf') > 0) {
