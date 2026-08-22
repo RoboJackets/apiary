@@ -80,7 +80,13 @@ class Resume extends Resource
             Boolean::make('Active', 'is_active')
                 ->rules('required')
                 ->sortable(),
-            Textarea::make('Full Text', 'extracted_text')
+            Textarea::make('Extracted Text', static function () {
+                $raw = $this->resource::search('')
+                    ->where('id', $this->resource->getKey())
+                    ->raw();
+
+                return $raw['hits'][0]['extracted_text'] ?? null;
+            })
                 ->onlyOnDetail()
                 ->alwaysShow(),
         ];
