@@ -126,7 +126,7 @@ class Resume extends Model
      */
     public function getIsActiveAttribute(): bool
     {
-        self::where('id', $this->id)->active()->count() !== 0;
+        return self::where('id', $this->id)->active()->count() !== 0;
     }
 
     /**
