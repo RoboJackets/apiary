@@ -17,7 +17,7 @@ class ResumePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view-resumes');
+        return $user->can('read-users-resume');
     }
 
     /**
@@ -25,7 +25,7 @@ class ResumePolicy
      */
     public function view(User $user, Resume $resume): bool
     {
-        return $user->can('view-resumes');
+        return $user->can('read-users-resume');
     }
 
     /**
