@@ -80,7 +80,7 @@ class Resume extends Resource
             Boolean::make('Active', 'is_active')
                 ->rules('required')
                 ->sortable(),
-            Textarea::make('Extracted Text', function (AppModelsResume $resume) {
+            Textarea::make('Extracted Text', static function (AppModelsResume $resume) {
                 $raw = AppModelsResume::search('')
                     ->where('id', $resume->id)
                     ->raw();
