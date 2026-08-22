@@ -163,7 +163,7 @@ class Resume extends Model
             && Storage::disk('local')->size('resumes/'.$this->user->uid.'.pdf') > 0) {
             $full_text = Sentry::wrapWithChildSpan(
                 'tika.extract',
-                static fn (): string => (new Client(
+                fn (): string => (new Client(
                     [
                         'base_uri' => config('services.tika.url'),
                         'headers' => [
