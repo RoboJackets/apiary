@@ -156,10 +156,8 @@ class Resume extends Model
      */
     public function toSearchableArray(): array
     {
-        // $file_path = $this->file_path; -- Not used for now.
-
-        if (Storage::disk('local')->exists('resumes/'.$this->user->uid.'.pdf')
-            && Storage::disk('local')->size('resumes/'.$this->user->uid.'.pdf') > 0) {
+        if (Storage::disk(self::storageDisk())->exists($this->storagePath())
+            && Storage::disk(self::storageDisk())->size($this->storagePath()) > 0) {
             $full_text = new Client(
                 [
                     'base_uri' => config('services.tika.url'),
@@ -175,7 +173,7 @@ class Resume extends Model
             )->put(
                 '/tika',
                 [
-                    'body' => Storage::disk('local')->get('resumes/'.$this->user->uid.'.pdf'),
+                    'body' => Storage::disk(self::storageDisk())->get($this->storagePath()),
                 ]
             )->getBody()->getContents();
             if ($full_text === '') {
@@ -189,7 +187,7 @@ class Resume extends Model
             'id' => $this->id,
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
-            'file_path' => Storage::disk('local')->path('resumes/'.$this->user->uid.'.pdf'),
+            'file_path' => $this->file_path,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'extracted_text' => $full_text,
