@@ -20,7 +20,10 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User $user
  * @property-read string $file_name
- * @property-read string $file_path
+ * @property-read string $absolute_file_path
+ * @property-read string $storage_path
+ * @property-read string $is_active
+ * 
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Resume whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Resume whereExtractedText($value)
@@ -90,11 +93,11 @@ class Resume extends Model
     }
 
     /**
-     * Return the storage path for the current Resume.
+     * Return the storage path relative to Storage::disk('local') for the current Resume.
      *
      * @psalm-mutation-free
      */
-    public function storagePath(): string
+    public function getStoragePathAttribute(): string
     {
         return self::storagePathForUser($this->user);
     }
@@ -113,9 +116,9 @@ class Resume extends Model
     /**
      * File path, complete with file name, for this Resume.
      */
-    public function getFilePathAttribute(): string
+    public function getAbsoluteFilePathAttribute(): string
     {
-        return Storage::disk(self::storageDisk())->path($this->storagePath());
+        return Storage::disk(self::storageDisk())->path($this->storage_path);
     }
 
     /**
@@ -156,8 +159,8 @@ class Resume extends Model
      */
     public function toSearchableArray(): array
     {
-        if (Storage::disk(self::storageDisk())->exists($this->storagePath())
-            && Storage::disk(self::storageDisk())->size($this->storagePath()) > 0) {
+        if (Storage::disk(self::storageDisk())->exists($this->storage_path)
+            && Storage::disk(self::storageDisk())->size($this->storage_path) > 0) {
             $full_text = new Client(
                 [
                     'base_uri' => config('services.tika.url'),
@@ -173,7 +176,7 @@ class Resume extends Model
             )->put(
                 '/tika',
                 [
-                    'body' => Storage::disk(self::storageDisk())->get($this->storagePath()),
+                    'body' => Storage::disk(self::storageDisk())->get($this->storage_path),
                 ]
             )->getBody()->getContents();
             if ($full_text === '') {
@@ -187,7 +190,8 @@ class Resume extends Model
             'id' => $this->id,
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
-            'file_path' => $this->file_path,
+            'storage_path' => $this->storage_path,
+            'absolute_file_path' => $this->absolute_file_path,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'extracted_text' => $full_text,

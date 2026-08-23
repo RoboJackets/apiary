@@ -85,10 +85,9 @@ class Resume extends Resource
                     ->where('id', $resume->id)
                     ->raw();
 
-                return json_encode($raw['hits'][0] ?? [], JSON_PRETTY_PRINT);
+                return $raw['hits'][0]['extracted_text'] ?? '';
             })
-                ->onlyOnDetail()
-                ->alwaysShow(),
+                ->onlyOnDetail(),
         ];
     }
 }
