@@ -189,7 +189,7 @@ class Resume extends Model
             'id' => $this->id,
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
-            'file_path' => $this->file_path,
+            'file_path' => Storage::disk('local')->path('resumes/'.$this->user->uid.'.pdf'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'extracted_text' => $full_text,
