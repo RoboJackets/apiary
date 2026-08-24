@@ -97,29 +97,6 @@ class ExportFilteredResumes extends Action
             $classStandings[] = $classStanding;
         }
 
-        // $users = User::active()
-        //     ->whereNotNull('resume_date')
-        //     ->where('resume_date', '>', $fields->resume_date_cutoff)
-        //     ->where('primary_affiliation', 'student')
-        //     ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-        //         $q->where('restricted_to_students', false);
-        //     })
-        //     ->leftJoin('major_user', static function (JoinClause $join): void {
-        //         $join->on('users.id', '=', 'major_user.user_id')
-        //             ->whereNull('major_user.deleted_at');
-        //     })
-        //     ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
-        //     ->leftJoin('class_standing_user', static function (JoinClause $join): void {
-        //         $join->on('users.id', '=', 'class_standing_user.user_id')
-        //             ->whereNull('class_standing_user.deleted_at');
-        //     })
-        //     ->leftJoin('class_standings', 'class_standing_user.class_standing_id', '=', 'class_standings.id')
-        //     ->whereIn('majors.display_name', $majors)
-        //     ->whereIn('class_standings.name', $classStandings)
-        //     ->orderBy('last_name')
-        //     ->orderBy('first_name')
-        //     ->pluck('uid');
-
         $resumes = Resume::with('user')
             ->active()
             ->where('updated_at', '>', $fields->resume_date_cutoff)
@@ -141,10 +118,6 @@ class ExportFilteredResumes extends Action
         if ($resumes->count() === 0) {
             return Action::danger('No resumes matched the provided criteria!');
         }
-
-        // $filenames = $users->uniqueStrict()->map(
-        //     static fn (string $uid): string => escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'))
-        // );
 
         $filenames = $resumes->pluck('absolute_file_path')->map(
             static fn (string $fn): string => escapeshellarg($fn)
