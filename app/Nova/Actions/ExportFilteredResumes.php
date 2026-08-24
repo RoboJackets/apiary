@@ -128,14 +128,14 @@ class ExportFilteredResumes extends Action
                     $join->on('users.id', '=', 'major_user.user_id')
                         ->whereNull('major_user.deleted_at');
                 })
-                ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
-                ->leftJoin('class_standing_user', static function (JoinClause $join): void {
-                    $join->on('users.id', '=', 'class_standing_user.user_id')
-                        ->whereNull('class_standing_user.deleted_at');
-                })
-                ->leftJoin('class_standings', 'class_standing_user.class_standing_id', '=', 'class_standings.id')
-                ->whereIn('majors.display_name', $majors)
-                ->whereIn('class_standings.name', $classStandings);
+                    ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
+                    ->leftJoin('class_standing_user', static function (JoinClause $join): void {
+                        $join->on('users.id', '=', 'class_standing_user.user_id')
+                            ->whereNull('class_standing_user.deleted_at');
+                    })
+                    ->leftJoin('class_standings', 'class_standing_user.class_standing_id', '=', 'class_standings.id')
+                    ->whereIn('majors.display_name', $majors)
+                    ->whereIn('class_standings.name', $classStandings);
             });
 
         if ($resumes->count() === 0) {

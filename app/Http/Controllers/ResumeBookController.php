@@ -129,8 +129,6 @@ class ResumeBookController
      *
      * @param  $majors  Array of all majors to include.
      * @param  $graduation_semesters  array of graduation semesters to include.
-     *
-     * @return array
      */
     private function filterUsers(array $majors, array $graduation_semesters): array
     {

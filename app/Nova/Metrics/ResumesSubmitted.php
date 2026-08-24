@@ -27,7 +27,7 @@ class ResumesSubmitted extends Value
             User::active()->whereHas('resume', static function (Builder $q): void {
                 $q->where('updated_at', '>', now()->subDays($request->range)->startOfDay());
             })
-            ->count()
+                ->count()
         )->allowZeroResult();
     }
 
