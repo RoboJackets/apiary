@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
@@ -23,9 +24,10 @@ class ResumesSubmitted extends Value
      */
     public function calculate(Request $request): ValueResult
     {
+        $earliest = now()->subDays($request->range)->startOfDay();
         return $this->result(
-            User::active()->whereHas('resume', static function (Builder $q): void {
-                $q->where('updated_at', '>', now()->subDays($request->range)->startOfDay());
+            User::active()->whereHas('resume', static function (Builder $q) use ($earliest): void {
+                $q->where('updated_at', '>', $earliest);
             })
                 ->count()
         )->allowZeroResult();
