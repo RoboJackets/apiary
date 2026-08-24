@@ -25,6 +25,7 @@ class ResumesSubmitted extends Value
     public function calculate(Request $request): ValueResult
     {
         $earliest = now()->subDays($request->range)->startOfDay();
+
         return $this->result(
             User::active()->whereHas('resume', static function (Builder $q) use ($earliest): void {
                 $q->where('updated_at', '>', $earliest);
