@@ -418,7 +418,7 @@ class User extends Resource
                 [
                     File::make(
                         'Resume',
-                        fn (): ?string => $this->resume !== null ? $this->resume->storage_path : null
+                        fn (): ?string => $this->resume !== null ? $this->resume?->storage_path : null
                     )->path(
                         'resumes'
                     )
