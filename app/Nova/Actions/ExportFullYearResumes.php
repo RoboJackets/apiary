@@ -92,6 +92,7 @@ class ExportFullYearResumes extends Action
         $filenames = Resume::whereHas('user', static function (Builder $q) use ($users): void {
             $q->whereIn('uid', $users);
         })
+            ->get()
             ->pluck('absolute_file_path');
 
         return $fields->output_type === 'mono' ?

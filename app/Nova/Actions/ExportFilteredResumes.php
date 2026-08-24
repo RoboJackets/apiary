@@ -119,7 +119,7 @@ class ExportFilteredResumes extends Action
             return Action::danger('No resumes matched the provided criteria!');
         }
 
-        $filenames = $resumes->pluck('absolute_file_path')->map(
+        $filenames = $resumes->get()->pluck('absolute_file_path')->map(
             static fn (string $fn): string => escapeshellarg($fn)
         );
 
