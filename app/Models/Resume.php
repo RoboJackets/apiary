@@ -92,6 +92,19 @@ class Resume extends Model
     }
 
     /**
+     * Returns the file name for a given User.
+     * Should be used as the source of truth in resume storage.
+     *
+     * @psalm-pure
+     *
+     * @param  $user  User for this file name.
+     */
+    public static function fileNameForUser(User $user): string
+    {
+        return $user->uid.'.pdf';
+    }
+
+    /**
      * Return the storage path relative to Storage::disk('local') for the current Resume.
      *
      * @psalm-mutation-free
@@ -144,6 +157,7 @@ class Resume extends Model
         return $query->whereHas('user', static function (Builder $q): void {
             $q->active()
                 ->where('primary_affiliation', 'student')
+                ->where('is_service_account', '=', false)
                 ->whereDoesntHave('duesPackages', static function (Builder $q): void {
                     $q->where('restricted_to_students', false);
                 });

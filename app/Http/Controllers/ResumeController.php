@@ -45,7 +45,7 @@ class ResumeController implements HasMiddleware
             }
 
             try {
-                return response()->file(Storage::disk('local')->path('resumes/'.$user->uid.'.pdf'));
+                return response()->file($user->resume->absolute_file_path);
             } catch (FileNotFoundException) {
                 return response()->json(
                     [
@@ -212,10 +212,7 @@ class ResumeController implements HasMiddleware
             }
 
             // Store in the resumes folder with the user's username
-            $file->storeAs('resumes', $user->uid.'.pdf');
-
-            $user->resume_date = now();
-            $user->save();
+            $file->storeAs(Resume::storageDirectory(), Resume::fileNameForUser($user));
 
             // Call touch to ensure $resume->updated_at is always updated
             Resume::firstOrCreate(['user_id' => $user->id])->touch();

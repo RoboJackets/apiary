@@ -65,7 +65,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Carbon|null $updated_at
  * @property Carbon|null $access_override_until
  * @property int|null $access_override_by_id user_id of the user who entered access override
- * @property Carbon|null $resume_date
  * @property bool $github_invite_pending
  * @property bool $exists_in_sums
  * @property string $create_reason
@@ -366,7 +365,6 @@ class User extends Authenticatable
     {
         return [
             'access_override_until' => 'datetime',
-            'resume_date' => 'datetime',
             'github_invite_pending' => 'boolean',
             'clickup_invite_pending' => 'boolean',
             'exists_in_sums' => 'boolean',
@@ -1056,7 +1054,6 @@ class User extends Authenticatable
         unset($array['legal_gender']);
         unset($array['access_override_until']);
         unset($array['access_override_by_id']);
-        unset($array['resume_date']);
         unset($array['github_invite_pending']);
         unset($array['clickup_invite_pending']);
         unset($array['exists_in_sums']);

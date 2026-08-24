@@ -84,12 +84,8 @@ class Major extends Model
     public static function getResumeMajors(): array
     {
         return User::selectRaw('distinct(majors.display_name) as distinct_display_names')
-            ->active()
-            ->whereNotNull('resume_date')
-            ->where('primary_affiliation', 'student')
-            ->where('is_service_account', '=', false)
-            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-                $q->where('restricted_to_students', false);
+            ->whereHas('resume', static function (Builder $q): void {
+                $q->active();
             })
             ->leftJoin('major_user', static function (JoinClause $join): void {
                 $join->on('users.id', '=', 'major_user.user_id')

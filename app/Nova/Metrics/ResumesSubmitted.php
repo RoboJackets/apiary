@@ -24,7 +24,10 @@ class ResumesSubmitted extends Value
     public function calculate(Request $request): ValueResult
     {
         return $this->result(
-            User::active()->where('resume_date', '>', now()->subDays($request->range)->startOfDay())->count()
+            User::active()->whereHas('resume', static function (Builder $q): void {
+                $q->where('updated_at', '>', now()->subDays($request->range)->startOfDay());
+            })
+            ->count()
         )->allowZeroResult();
     }
 

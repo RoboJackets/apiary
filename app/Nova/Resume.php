@@ -31,7 +31,7 @@ class Resume extends Resource
      *
      * @var string
      */
-    public static $title = 'user';
+    public static $title = 'id';
 
     /**
      * The logical group associated with the resource.
