@@ -63,6 +63,13 @@ class User extends Resource
     public static $model = AppModelsUser::class;
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array
+     */
+    public static $with = ['resume'];
+
+    /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
