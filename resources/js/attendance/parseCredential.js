@@ -11,7 +11,7 @@
 // in sync. The Nova modal is built in an isolated stage; the Dockerfile copies this file in so its
 // relative import resolves.
 
-const mrd5Regex = /\|?(\d*)\|(\d+)\|(\w+)\|/;
+const tsCustomRegex = /\|?(\d*)\|(\d*)\|(\w+)\|?/;
 const tsRawRegex = /^1570=(\d+)=\d+=(\d+)$/;
 
 function isNumeric(n) {
@@ -46,11 +46,12 @@ export default function parseCredential(cardData) {
         return { gtid: null, access_card_number: String(parseInt(value, 10)), cardType: 'plastic' };
     }
 
-    if (mrd5Regex.test(value)) {
-        // Transact MRD5 custom format for RoboJackets: GTID|CardNumber|CardType|
-        // Mobile Credential: |6017700010000123|MobileA|
-        // Plastic Credential: 902900001|800001|DESFire|
-        const [, gtid, cardNumber, cardType] = value.match(mrd5Regex);
+    if (tsCustomRegex.test(value)) {
+        // Transact reader custom format for RoboJackets: GTID|CardNumber|CardType
+        // Mobile Credential (Card): |6017700010000123|MobileA
+        // Mobile Credential (GTID): 902900001||MobileA
+        // Plastic Credential: 902900001|800001|DESFire
+        const [, gtid, cardNumber, cardType] = value.match(tsCustomRegex);
 
         return {
             gtid: gtid ? gtid : null,
