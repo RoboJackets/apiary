@@ -223,7 +223,7 @@
 
                 const parsed = parseCredential(cardData);
 
-                if (parsed === null) {
+                if (parsed === null || parsed.gtid === null) {
                     Swal.close();
                     new Audio(this.sounds.error).play()
                     console.log('unknown cardData: ' + cardData);
@@ -241,12 +241,9 @@
                     return;
                 }
 
-                if (parsed.gtid !== null) {
-                    this.attendance.gtid = parsed.gtid;
-                }
-                if (parsed.access_card_number !== null) {
-                    this.attendance.access_card_number = parsed.access_card_number;
-                }
+                // At this point, we definitely have a GTID (else would've been caught above)
+                this.attendance.gtid = parsed.gtid;
+
                 if (parsed.cardType !== null) {
                     this.cardType = parsed.cardType;
                     this.attendance.source += '-' + parsed.cardType;
