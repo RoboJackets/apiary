@@ -168,6 +168,10 @@ class Event extends Resource
                 ->confirmText('Are you sure you want to create a remote attendance link?')
                 ->confirmButtonText('Create Link')
                 ->cancelButtonText('Cancel'),
+
+            (new Actions\RecordAttendance())
+                ->canSee(static fn (Request $request): bool => $request->user()->can('create-attendance'))
+                ->canRun(static fn (Request $request): bool => $request->user()->can('create-attendance')),
         ];
     }
 
