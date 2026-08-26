@@ -10,7 +10,7 @@ use Laravel\Nova\Fields\ActionFields;
 
 /**
  * Opens a custom modal (the `record-attendance` Vue component) on the Team/Event detail view for
- * recording attendance by GTID or access card number. The modal talks directly to the attendance
+ * recording attendance by GTID. The modal talks directly to the attendance
  * API, so this action's handle() is not part of the normal flow.
  */
 class RecordAttendance extends Action
@@ -40,6 +40,6 @@ class RecordAttendance extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        return Action::danger('Use the Record Attendance window to enter a GTID or access card number.');
+        return Action::danger('Use the Record Attendance window to enter a GTID.');
     }
 }
