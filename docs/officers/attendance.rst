@@ -17,7 +17,12 @@ In-person meetings
 
 .. vale Google.Parens = NO
 
-RoboJackets developed an Android app to read physical BuzzCards using :abbr:`NFC (near-field communication)` and upload the data to the Apiary server.
+Attendance for in-person meetings can be collected in a few different ways:
+#. Using the `MyRoboJackets` mobile app on an Android device
+#. Using the Apiary Admin web interface
+
+RoboJackets developed an Android app to read physical BuzzCards using either :abbr:`NFC (near-field communication)`
+or an external BuzzCard Reader connected via Bluetooth and upload the data to the Apiary server.
 Your phone must support NFC and run Android 7 (Nougat) or newer.
 
 .. vale Google.Parens = YES
@@ -39,7 +44,16 @@ To record attendance using the app:
 #. You can manually enter a GTID using the :guilabel:`Enter GTID manually` button if someone forgot their BuzzCard.
    If a valid BuzzCard consistently displays an error message, post in :slack:`apiary-mobile`.
 
-The app uses the NFC radio in your phone to read data from BuzzCards. Below are some tips for consistent, successful reads:
+You may also utilize an external BuzzCard reader connected to your phone by Bluetooth to read both physical and mobile
+BuzzCards. To use a reader:
+
+#. Power on the BuzzCard reader by pressing and holding the power button (top left corner) for three seconds.
+#. Open the app and follow the prompts to sign in.
+#. After signing in, go to the :guilabel:`Settings` page and select :guilabel:`Connect BuzzCard reader`.
+#. Tap the :guilabel:`Start scan` button to scan for readers. Select the reader from the list that matches the numbers on the label on the bottom.
+#. Go back to the :guilabel:`Attendance` page and resume collecting attendance as normal.
+
+By default, the app uses the NFC radio in your phone to read data from physical BuzzCards. Below are some tips for consistent, successful reads:
 
 .. vale write-good.Weasel = NO
 
