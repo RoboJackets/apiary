@@ -423,6 +423,18 @@ class User extends Resource
             new Panel(
                 'Resume',
                 [
+                    HasOne::make(
+                        'Resume'
+                    )
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
+                        ->canSee(static function (Request $request): bool {
+                            if ($request->resourceId === $request->user()->id) {
+                                return true;
+                            }
+
+                            return $request->user()->can('read-users-resume');
+                        }),
                     File::make(
                         'Resume',
                         fn (): ?string => $this->resume !== null ? $this->resume?->storage_path : null
