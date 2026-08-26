@@ -14,10 +14,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('access_cards', static function (Blueprint $table): void {
-            $table->id('access_card_number');
-            $table->foreignIdFor(User::class);
+        Schema::create('resumes', static function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
+
+            $table->foreignIdFor(User::class);
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('access_cards');
+        Schema::dropIfExists('resumes');
     }
 };

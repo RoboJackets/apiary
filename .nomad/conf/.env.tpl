@@ -34,3 +34,4 @@ REDIS_DB=0
 REDIS_CACHE_DB=1
 MEILISEARCH_HOST="http://127.0.0.1:{{- env "NOMAD_PORT_meilisearch" -}}"
 MEILISEARCH_KEY="{{- env "NOMAD_ALLOC_ID" -}}"
+TIKA_URL="http://127.0.0.1:{{- env "NOMAD_PORT_tika" -}}"
