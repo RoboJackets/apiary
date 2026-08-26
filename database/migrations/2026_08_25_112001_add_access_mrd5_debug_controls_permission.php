@@ -15,7 +15,7 @@ return new class extends Migration
     {
         app()['cache']->forget('spatie.permission.cache');
 
-        $debug_mrd5 = Permission::firstOrCreate(['name' => 'debug-mrd5']);
+        $debug_mrd5 = Permission::firstOrCreate(['name' => 'access-mrd5-debug-tools']);
 
         $r_admin = Role::firstOrCreate(['name' => 'admin']);
         $r_admin->givePermissionTo($debug_mrd5);
@@ -27,6 +27,6 @@ return new class extends Migration
     public function down(): void
     {
         app()['cache']->forget('spatie.permission.cache');
-        Permission::where('name', 'debug-mrd5')->delete();
+        Permission::where('name', 'access-mrd5-debug-tools')->delete();
     }
 };
