@@ -642,7 +642,7 @@ class Travel extends Resource
             ];
         }
 
-        $trip = \App\Models\Travel::with('assignments.user', 'assignments.envelope')
+        $trip = \App\Models\Travel::with('assignments.user', 'assignments.envelope', 'primaryContact', 'createdBy')
             ->where('id', '=', $tripId)
             ->sole();
 
@@ -654,7 +654,7 @@ class Travel extends Resource
             $trip->assignments->count() > 0 &&
             (
                 $request->user()->can('view-docusign-envelopes') ||
-                $request->user()->id === $trip->primary_contact_user_id
+                ($request->user()?->is($trip->primaryContact) ?? false)
             )
         ) {
             if (
@@ -679,7 +679,7 @@ class Travel extends Resource
                         static fn (NovaRequest $request, AppModelsTravel $travel): bool => $request->user()->can(
                             'view-docusign-envelopes'
                         ) ||
-                            $travel->primaryContact->id === $request->user()->id
+                            $travel->primaryContact?->is($request->user()) ?? false
                     );
             } else {
                 $actions[] = Action::danger(
@@ -700,7 +700,7 @@ class Travel extends Resource
                     $request->user()->can('read-users-gtid') &&
                     $request->user()->can('read-users-emergency_contact')
                 ) ||
-                $request->user()->id === $trip->primary_contact_user_id
+                ($request->user()?->is($trip->primaryContact) ?? false)
             )
         ) {
             if (
@@ -721,7 +721,7 @@ class Travel extends Resource
                         static fn (NovaRequest $request, AppModelsTravel $trip): bool => (
                             $request->user()->can('read-users-gtid') &&
                             $request->user()->can('read-users-emergency_contact')
-                        ) || $trip->primary_contact_user_id === $request->user()->id
+                        ) || ($trip->primaryContact?->is($request->user()) ?? false)
                     );
             } else {
                 $actions[] = Action::danger(
@@ -740,7 +740,7 @@ class Travel extends Resource
             $trip->needs_airfare_form &&
             (
                 $request->user()->hasRole('admin') ||
-                $request->user()->id === $trip->primary_contact_user_id
+                ($request->user()?->is($trip->primaryContact) ?? false)
             )
         ) {
             if (
@@ -758,7 +758,7 @@ class Travel extends Resource
                         static fn (NovaRequest $request, AppModelsTravel $trip): bool => $request->user()->hasRole(
                             'admin'
                         ) ||
-                            $trip->primary_contact_user_id === $request->user()->id
+                            ($trip->primaryContact?->is($request->user()) ?? false)
                     );
             } else {
                 $actions[] = Action::danger(
@@ -784,7 +784,7 @@ class Travel extends Resource
                     ->withoutConfirmation()
                     ->withoutActionEvents()
                     ->canRun(static fn (): bool => true);
-            } elseif ($request->user()->id === $trip->primary_contact_user_id) {
+            } elseif ($request->user()?->is($trip->primaryContact) ?? false) {
                 $actions[] = Action::danger(
                     ReviewTrip::make()->name(),
                     'You can\'t review this trip because you are the primary contact.'
@@ -792,7 +792,7 @@ class Travel extends Resource
                     ->withoutConfirmation()
                     ->withoutActionEvents()
                     ->canRun(static fn (): bool => true);
-            } elseif ($request->user()->id === $trip->created_by_user_id) {
+            } elseif ($request->user()?->is($trip->createdBy) ?? false) {
                 $actions[] = Action::danger(
                     ReviewTrip::make()->name(),
                     'You can\'t review this trip because you created it.'

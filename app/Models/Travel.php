@@ -20,8 +20,10 @@ use Laravel\Scout\Searchable;
  * @property int $id
  * @property string $name
  * @property string $destination
- * @property int $primary_contact_user_id
+ * @property string $primary_contact_user_id
+ * @property string|null $created_by_user_id
  * @property-read \App\Models\User $primaryContact
+ * @property-read \App\Models\User|null $createdBy
  * @property \Illuminate\Support\Carbon $departure_date
  * @property \Illuminate\Support\Carbon $return_date
  * @property int $fee_amount
@@ -160,6 +162,8 @@ class Travel extends Model
             'equipment' => 'boolean',
             'airfare_policy' => 'array',
             'forms' => 'array',
+            'primary_contact_user_id' => 'string',
+            'created_by_user_id' => 'string',
         ];
     }
 
