@@ -196,13 +196,13 @@ class Resume extends Model
                 )->getBody()->getContents();
             } catch (\GuzzleHttp\Exception\GuzzleException $e) {
                 throw new TextExtractionError(
-                    "Failed to extract text for resume ".$this->id.": ".$e->getMessage(),
+                    'Failed to extract text for resume '.$this->id.': '.$e->getMessage(),
                     previous: $e
                 );
             }
             if ($full_text === '') {
                 throw new TextExtractionError(
-                    "Failed to extract text for resume ".$this->id.": Tika returned empty response."
+                    'Failed to extract text for resume '.$this->id.': Tika returned empty response.'
                 );
             }
         } else {
