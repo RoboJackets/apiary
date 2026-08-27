@@ -14,6 +14,9 @@
 const tsCustomRegex = /\|?(\d*)\|(\d*)\|(\w+)\|?/;
 const tsRawRegex = /^1570=(\d+)=\d+=(\d+)$/;
 
+// GTIDs are nine digits, always starting with "90".
+const GTID_REGEX = /^90\d{7}$/;
+
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
@@ -29,7 +32,7 @@ export default function parseCredential(cardData) {
         return null;
     }
 
-    if (isNumeric(value) && value.length === 9 && value[0] === '9') {
+    if (GTID_REGEX.test(value)) {
         // GTID only: no specific credential type discernible (e.g. 902900001)
         return { gtid: value, access_card_number: null, cardType: null };
     }
@@ -53,6 +56,10 @@ export default function parseCredential(cardData) {
         // Plastic Credential: 902900001|800001|DESFire
         const [, gtid, cardNumber, cardType] = value.match(tsCustomRegex);
 
+        if (gtid && !GTID_REGEX.test(gtid)) {
+            return null;
+        }
+
         return {
             gtid: gtid ? gtid : null,
             access_card_number: gtid ? null : cardNumber,
@@ -64,6 +71,11 @@ export default function parseCredential(cardData) {
         // Transact Reader (MRD5, PS4101, maybe TWN4?) Raw (Non-Customized) Plastic Card Format
         // 1570=GTID=00=RawCardNumber (e.g. 1570=902900001=00=6017700008000010)
         const [, gtid, rawCardNumber] = value.match(tsRawRegex);
+
+        if (!GTID_REGEX.test(gtid)) {
+            return null;
+        }
+
         const cardNumber = rawCardNumber.slice(6, 15); // drop '601770' prefix and trailing digit
 
         return {

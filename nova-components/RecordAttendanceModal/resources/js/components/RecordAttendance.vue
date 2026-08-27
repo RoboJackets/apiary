@@ -39,6 +39,19 @@
                         {{ readerButtonText }}
                     </button>
 
+                    <span
+                        v-if="paired && readerBattery !== null"
+                        class="inline-flex items-center h-7 px-3 mr-3 rounded-full text-xs font-bold border"
+                        :class="batteryLow ? 'border-red-500 text-red-500' : 'border-gray-400 dark:border-gray-500 text-gray-600 dark:text-gray-400'"
+                        dusk="reader-battery-pill"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 mr-2" aria-hidden="true">
+                            <rect x="2" y="7" width="17" height="10" rx="2" />
+                            <line x1="22" y1="10" x2="22" y2="14" />
+                        </svg>
+                        {{ readerBattery }}%
+                    </span>
+
                     <a
                         href="/docs/officers/attendance/"
                         target="_blank"
@@ -56,6 +69,24 @@
                     <span v-if="paired && batteryLow" class="text-xs font-semibold text-red-500" dusk="reader-battery-warning">
                         ⚠ Reader battery low ({{ readerBattery }}%) - charge it soon.
                     </span>
+                </div>
+
+                <div
+                    v-if="sessionStuck"
+                    class="flex items-center justify-between mb-4 p-3 rounded border border-red-500 bg-red-50 dark:bg-transparent"
+                    dusk="session-stuck-banner"
+                >
+                    <span class="text-xs font-semibold text-red-500 mr-3">
+                        Reader isn't responding. Disconnect and reconnect to fix this.
+                    </span>
+                    <button
+                        type="button"
+                        dusk="reconnect-stuck-button"
+                        @click.prevent="recoverStuckSession"
+                        class="inline-flex items-center justify-center h-7 px-3 rounded-full text-xs font-bold border border-red-500 text-red-500 cursor-pointer appearance-none shrink-0"
+                    >
+                        Reconnect
+                    </button>
                 </div>
 
                 <div v-if="paired && !manualEntryVisible" class="flex flex-col items-center text-center mb-4" dusk="mrd5-tap-prompt">
@@ -194,6 +225,7 @@ export default {
             readerDeviceName: null,
             readerBattery: null,
             manualEntryVisible: false,
+            sessionStuck: false,
         };
     },
 
@@ -232,11 +264,15 @@ export default {
                     this.readerDeviceName = null;
                     this.readerBattery = null;
                     this.manualEntryVisible = false;
+                    this.sessionStuck = false;
                 }
             },
             onCardRead: card => this.submit(card),
             onBattery: battery => {
                 this.readerBattery = battery.percent;
+            },
+            onSessionStuck: () => {
+                this.sessionStuck = true;
             },
             onError: error => {
                 Sentry.captureException(error);
@@ -281,6 +317,15 @@ export default {
             }
         },
 
+        async recoverStuckSession() {
+            // No confirmation dialog here, unlike disconnectReader() — the connection is already
+            // known to be broken (that's why this banner is showing), so there's nothing to protect
+            // the user from by asking first.
+            this.sessionStuck = false;
+            await this.reader.disconnect();
+            this.pairReader();
+        },
+
         submit(rawFromReader) {
             if (this.submitting) {
                 return;
@@ -291,12 +336,27 @@ export default {
             const parsed = parseCredential(value);
 
             if (parsed === null) {
+                const trimmedValue = String(value).trim();
                 this.showResult(
                     'error',
-                    String(value).trim() === ''
+                    trimmedValue === ''
                         ? 'Enter a GTID'
                         : 'Card format not recognized.'
                 );
+                if (fromReader) {
+                    // Fire-and-forget, same as the success chirp — gives feedback from the reader
+                    // itself without waiting on or blocking the UI.
+                    this.reader.playErrorChirp();
+
+                    if (trimmedValue !== '') {
+                        // Only reader-sourced misses are logged: a manually typed value failing to
+                        // parse is almost always a human typo, not a gap in parseCredential's format
+                        // coverage, and would otherwise flood Sentry with noise.
+                        Sentry.captureException(
+                            new Error('Card format not recognized: ' + JSON.stringify(trimmedValue))
+                        );
+                    }
+                }
                 this.identifier = '';
                 this.focusInput();
                 return;
@@ -338,6 +398,12 @@ export default {
                     }
 
                     this.showResult('success', 'Recorded — ' + name);
+
+                    if (fromReader) {
+                        // Fire-and-forget: gives feedback from the reader itself for someone who
+                        // tapped a card without watching the screen. Never awaited/blocking.
+                        this.reader.playSuccessChirp();
+                    }
                 })
                 .catch(error => {
                     Sentry.captureException(error)

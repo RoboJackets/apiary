@@ -10,12 +10,14 @@
 // Requires a secure context (https or localhost/127.0.0.1) and a Chromium-based browser (Chrome/Edge);
 // the reader must have Bluetooth Security Mode disabled or it transmits nothing over the characteristic.
 
-// Microchip MLDP service + data/command characteristics advertised by the MRD5. Data (RX) carries
-// card reads, battery status, and command responses as notifications; command (TX) is where ASCII
-// commands like `VER:` are written.
+// Microchip MLDP service + data characteristic advertised by the MRD5. Card reads, battery status,
+// and command responses (e.g. to `VER:`) all arrive as notifications on this one characteristic;
+// commands are written to the same characteristic (it accepts WRITE / WRITE NO RESPONSE too) —
+// this is a transparent bidirectional serial pipe, not two separate channels.
+// It discovers "the write characteristic" by scanning for write permission,
+// which would happily land on this data characteristic too.
 export const MLDP_SERVICE = '00035b03-58e6-07dd-021a-08123a000300';
 export const MLDP_DATA_CHARACTERISTIC = '00035b03-58e6-07dd-021a-08123a000301';
-export const MLDP_COMMAND_CHARACTERISTIC = '00035b03-58e6-07dd-021a-08123a0003ff';
 
 // Standard Bluetooth SIG Device Information Service, read once after connecting so the UI can
 // show firmware/hardware/etc. Serial Number String (0x2A25) is intentionally omitted: Chrome's
@@ -49,6 +51,42 @@ const COMMAND_QUIET_MS = 350;
 const COMMAND_TIMEOUT_MS = 1500;
 // Conservative default ATT payload size for chunking command writes.
 const COMMAND_WRITE_CHUNK_SIZE = 20;
+
+// VER: info is supplementary — it's only used for the `reader` field sent with attendance records,
+// never for card reads themselves — so it's queried in the background after the connection is
+// already usable rather than blocking "connected" on it, and retried a few times spread over the
+// first several seconds in case the very first attempt lands before the link has fully settled.
+const VER_INITIAL_DELAY_MS = 2500;
+const VER_RETRY_DELAY_MS = 2500;
+const VER_MAX_ATTEMPTS = 4;
+
+// A correctly configured MRD5 pushes a BATT: notification every few seconds on its own, with no
+// command needed to request it — so its absence is actually a faster/more direct dead-session
+// signal than VER: (which requires a round trip we send ourselves). If none has arrived by this
+// long after connecting, something's probably wrong; see startBatteryLivenessWatchdog.
+const BATTERY_LIVENESS_TIMEOUT_MS = 8000;
+
+// `LED:<color>,<durationMs>` — <color> is 3 ASCII chars, one per subpixel in R/G/B order; only the
+// low 3 bits of each character matter, so decimal digit characters '0'-'7' give a predictable 0-7
+// brightness dial per channel (e.g. "070" = green at max). Device replies "LED on". See
+// mrd5-web-demo/detailed-findings.md §16.
+const LED_MAX_DURATION_MS = 3000;
+
+// `TONE:<letter>` triggers a beep pattern; device replies "Tone = <letter>". The letter is the key
+// of the Mrd5Tone enum (apiary-mobile) — same set as the config protocol's Tones enum minus None:
+// L=LowHighLow, H=HighLowHigh, W=Warble, K=Single, A=Ascending, D=Descending, B=FourLongBeeps,
+// V=LongTone. See mrd5-web-demo/detailed-findings.md §16.
+
+// Feedback played on a successful attendance record, matching apiary-mobile's doSuccessChirp().
+const SUCCESS_CHIRP_TONE = 'A';
+const SUCCESS_CHIRP_LED_COLOR = '070';
+const SUCCESS_CHIRP_LED_DURATION_MS = 400;
+
+// Feedback played on a card read that fails to parse (e.g. a malformed GTID), matching
+// apiary-mobile's doErrorChirp().
+const ERROR_CHIRP_TONE = 'W';
+const ERROR_CHIRP_LED_COLOR = '700';
+const ERROR_CHIRP_LED_DURATION_MS = 400;
 
 /**
  * @typedef {Object} Mrd5DeviceInfo
@@ -89,6 +127,9 @@ const COMMAND_WRITE_CHUNK_SIZE = 20;
  * @property {(battery: { raw: string, percent: number }) => void} [onBattery]
  * @property {(info: Mrd5DeviceInfo) => void} [onDeviceInfo]
  * @property {(error: Error) => void} [onError]
+ * @property {() => void} [onSessionStuck] Fired when the connection appears to be one where the
+ *   MRD5's MLDP session never came alive (see queryVersionInBackground) — nothing, including card
+ *   reads, is likely to work until the user disconnects and reconnects.
  */
 
 export class Mrd5Reader {
@@ -109,7 +150,6 @@ export class Mrd5Reader {
 
         this.device = null;
         this.characteristic = null;
-        this.commandCharacteristic = null;
         this.rxBuffer = '';
         this.rxTimer = null;
         this.decoder = new TextDecoder('ascii');
@@ -120,6 +160,8 @@ export class Mrd5Reader {
         // Set while a command (e.g. `VER:`) is awaiting its response; incoming notifications are
         // routed here instead of the card-read/battery classifier until it resolves.
         this.pendingCommand = null;
+        // See startBatteryLivenessWatchdog().
+        this.batteryLivenessTimer = null;
 
         // Bound so they can be added/removed as event listeners.
         this.handleRx = this.handleRx.bind(this);
@@ -139,7 +181,13 @@ export class Mrd5Reader {
      * @returns {Mrd5ReaderPayload|null}
      */
     get readerPayload() {
-        if (this.deviceInfo === null || this.verInfo === null || this.batteryPercent === null) {
+        const missing = this.missingReaderFields();
+        if (missing.length > 0) {
+            // eslint-disable-next-line no-console
+            console.warn(
+                'Mrd5Reader: omitting `reader` from the attendance request — missing '
+                + missing.join(', ') + '.'
+            );
             return null;
         }
 
@@ -149,13 +197,6 @@ export class Mrd5Reader {
         const {
             serial_number: serialNumber, bootloader_version: bootloaderVersion, application_version: applicationVersion,
         } = this.verInfo;
-
-        if (
-            manufacturer == null || model == null || firmware == null || hardware == null || software == null
-            || serialNumber == null || bootloaderVersion == null || applicationVersion == null
-        ) {
-            return null;
-        }
 
         return {
             serial_number: serialNumber,
@@ -168,6 +209,41 @@ export class Mrd5Reader {
             application_version: applicationVersion,
             battery_percentage: this.batteryPercent,
         };
+    }
+
+    /**
+     * List which pieces of the `reader` payload haven't been observed yet, for diagnostics.
+     *
+     * @returns {string[]}
+     */
+    missingReaderFields() {
+        const missing = [];
+
+        if (this.deviceInfo === null) {
+            missing.push('deviceInfo (Device Information Service was never read)');
+        } else {
+            for (const key of ['manufacturer', 'model', 'firmware', 'hardware', 'software']) {
+                if (this.deviceInfo[key] == null) {
+                    missing.push(`deviceInfo.${key}`);
+                }
+            }
+        }
+
+        if (this.verInfo === null) {
+            missing.push('verInfo (VER: command never completed)');
+        } else {
+            for (const key of ['serial_number', 'bootloader_version', 'application_version']) {
+                if (this.verInfo[key] == null) {
+                    missing.push(`verInfo.${key}`);
+                }
+            }
+        }
+
+        if (this.batteryPercent === null) {
+            missing.push('batteryPercent (no BATT: notification received yet)');
+        }
+
+        return missing;
     }
 
     /**
@@ -186,28 +262,21 @@ export class Mrd5Reader {
                 filters: [{ services: [MLDP_SERVICE] }],
                 optionalServices: [MLDP_SERVICE, DEVICE_INFO_SERVICE],
             });
-
             this.device.addEventListener('gattserverdisconnected', this.handleDisconnect);
 
-            const server = await this.device.gatt.connect();
-            const service = await server.getPrimaryService(MLDP_SERVICE);
-            this.characteristic = await service.getCharacteristic(MLDP_DATA_CHARACTERISTIC);
-
-            this.characteristic.addEventListener('characteristicvaluechanged', this.handleRx);
-            await this.characteristic.startNotifications();
-
-            // Query VER: before announcing "connected" so nothing can tap a card while its
-            // response is still being collected — while pendingCommand is set, incoming
-            // notifications are routed to it instead of the card-read classifier (see handleRx),
-            // so a card read during that window would otherwise be silently swallowed.
-            this.commandCharacteristic = await this.discoverCommandCharacteristic(service);
-            if (this.commandCharacteristic !== null) {
-                await this.queryVersion();
-            }
+            const server = await this.establishSession();
 
             this.emitStatus('connected');
 
+            this.startBatteryLivenessWatchdog();
+
             await this.readDeviceInfo(server);
+
+            // Kicked off last, unawaited: see the comment on VER_INITIAL_DELAY_MS for why this
+            // can't block "connected", and the comment on queryVersion for the tradeoff this
+            // implies (a real card tap landing in one of its collection windows is possible, if
+            // unlikely, since it now runs after the reader is already usable).
+            this.queryVersionInBackground();
         } catch (error) {
             // Reset partial state, then surface. A user cancelling the chooser throws NotFoundError;
             // callers may choose to ignore that quietly.
@@ -215,6 +284,73 @@ export class Mrd5Reader {
             this.emitStatus('disconnected');
             throw error;
         }
+    }
+
+    /**
+     * Connect the GATT link and subscribe to the data characteristic.
+     *
+     * @returns {Promise<BluetoothRemoteGATTServer>}
+     */
+    async establishSession() {
+        const server = await this.device.gatt.connect();
+        const service = await server.getPrimaryService(MLDP_SERVICE);
+        this.characteristic = await service.getCharacteristic(MLDP_DATA_CHARACTERISTIC);
+
+        this.characteristic.addEventListener('characteristicvaluechanged', this.handleRx);
+        await this.characteristic.startNotifications();
+
+        return server;
+    }
+
+    /**
+     * Start a one-shot timer that fires onSessionStuck if no BATT: notification has arrived by
+     * BATTERY_LIVENESS_TIMEOUT_MS after connecting. Cleared as soon as any battery update is
+     * observed (see noteBatteryReceived), or on disconnect (see cleanup). This runs independently
+     * of — and typically resolves faster than — the VER:-based stuck detection in
+     * queryVersionInBackground, since it doesn't require us to send anything first.
+     */
+    startBatteryLivenessWatchdog() {
+        this.batteryLivenessTimer = setTimeout(() => {
+            this.batteryLivenessTimer = null;
+            if (this.batteryPercent === null) {
+                this.emit('onSessionStuck');
+            }
+        }, BATTERY_LIVENESS_TIMEOUT_MS);
+    }
+
+    /**
+     * Record a freshly observed battery percentage and cancel the liveness watchdog, whether the
+     * reading came from a normal BATT: push (see flush) or one harvested from inside a VER:
+     * collection window (see queryVersion).
+     *
+     * @param {string} raw
+     * @param {number} percent
+     */
+    noteBatteryReceived(raw, percent) {
+        this.batteryPercent = percent;
+        if (this.batteryLivenessTimer !== null) {
+            clearTimeout(this.batteryLivenessTimer);
+            this.batteryLivenessTimer = null;
+        }
+        this.emit('onBattery', { raw, percent });
+    }
+
+    /**
+     * Fire-and-forget: wait for the link to settle, then query VER: (with its own internal
+     * retries). Errors are surfaced via onError inside queryVersion() itself, not thrown here,
+     * since there's no caller left to catch them by the time this resolves.
+     * A completely empty response after every attempt fires onSessionStuck
+     * so the UI can prompt the user to reconnect themselves.
+     */
+    queryVersionInBackground() {
+        (async () => {
+            await new Promise(resolve => setTimeout(resolve, VER_INITIAL_DELAY_MS));
+            const outcome = await this.queryVersion();
+
+            if (outcome === 'empty') {
+                this.emit('onSessionStuck');
+            }
+        })();
     }
 
     /**
@@ -308,42 +444,26 @@ export class Mrd5Reader {
     }
 
     /**
-     * Find the MLDP command (TX) characteristic used to send ASCII commands like `VER:`.
-     * Best-effort: returns null (rather than throwing) if it isn't present, since it's only
-     * needed for supplementary reader info, not for card reads.
-     *
-     * @param {BluetoothRemoteGATTService} service
-     * @returns {Promise<BluetoothRemoteGATTCharacteristic|null>}
-     */
-    async discoverCommandCharacteristic(service) {
-        try {
-            return await service.getCharacteristic(MLDP_COMMAND_CHARACTERISTIC);
-        } catch {
-            return null;
-        }
-    }
-
-    /**
-     * Write an ASCII command to the MLDP command characteristic, chunked to a conservative ATT
-     * payload size.
+     * Write an ASCII command to the data characteristic
+     * chunked to a conservative ATT payload size.
      *
      * @param {string} text
      */
     async sendCommand(text) {
-        if (this.commandCharacteristic === null) {
-            throw new Error('No MLDP command characteristic available.');
+        if (this.characteristic === null) {
+            throw new Error('Not connected to a reader.');
         }
 
         const bytes = this.encoder.encode(text);
         for (let i = 0; i < bytes.length; i += COMMAND_WRITE_CHUNK_SIZE) {
             const slice = bytes.slice(i, i + COMMAND_WRITE_CHUNK_SIZE);
-            if (this.commandCharacteristic.properties.write) {
-                await this.commandCharacteristic.writeValueWithResponse(slice);
-            } else if (this.commandCharacteristic.properties.writeWithoutResponse) {
-                await this.commandCharacteristic.writeValueWithoutResponse(slice);
+            if (this.characteristic.properties.write) {
+                await this.characteristic.writeValueWithResponse(slice);
+            } else if (this.characteristic.properties.writeWithoutResponse) {
+                await this.characteristic.writeValueWithoutResponse(slice);
                 await new Promise(resolve => setTimeout(resolve, 12));
             } else {
-                await this.commandCharacteristic.writeValue(slice);
+                await this.characteristic.writeValue(slice);
             }
         }
     }
@@ -389,10 +509,22 @@ export class Mrd5Reader {
 
     /**
      * Query the reader's `VER:` info (serial number, bootloader version, application version) and
-     * cache it on the instance. Best-effort: a reader that doesn't respond simply leaves
-     * `verInfo` null, and `readerPayload` reflects that by returning null.
+     * cache it on the instance. Best-effort: card reads still work if this fails, but the failure
+     * is surfaced via onError (rather than swallowed) since it silently blocks `readerPayload`. A
+     * response that doesn't parse is retried (see VER_MAX_ATTEMPTS), in case it was sent before the
+     * link had actually settled and was dropped. A response that turns out to just be a `BATT:` line
+     * — a periodic push that happened to land inside this collection window instead of the real
+     * reply — is harvested as a normal battery update rather than discarded.
+     *
+     * @param {number} [attempt]
+     * @returns {Promise<'ok'|'empty'|'unparsed'|'not-connected'|'error'>}
      */
-    async queryVersion() {
+    async queryVersion(attempt = 1) {
+        if (this.characteristic === null) {
+            // Disconnected (or torn down) while a background retry was waiting; nothing to do.
+            return 'not-connected';
+        }
+
         try {
             const text = await this.collectCommandResponse('VER:\n');
             const serial = VER_SERIAL_REGEX.exec(text);
@@ -404,9 +536,97 @@ export class Mrd5Reader {
                 bootloader_version: boot ? boot[1] : null,
                 application_version: application ? application[1] : null,
             };
-        } catch {
-            // Best-effort; card reads still work without VER info.
+
+            if (serial !== null && boot !== null && application !== null) {
+                return 'ok';
+            }
+
+            const trimmed = text.trim();
+
+            const battery = BATTERY_REGEX.exec(trimmed);
+            if (battery !== null) {
+                this.noteBatteryReceived(trimmed, Number(battery[1]));
+            }
+
+            if (attempt < VER_MAX_ATTEMPTS) {
+                await new Promise(resolve => setTimeout(resolve, VER_RETRY_DELAY_MS));
+                return this.queryVersion(attempt + 1);
+            }
+
+            const message = 'MRD5: VER: response did not match the expected format: ' + JSON.stringify(text);
+            // eslint-disable-next-line no-console
+            console.warn(message);
+            this.emit('onError', new Error(message));
+
+            return trimmed === '' ? 'empty' : 'unparsed';
+        } catch (error) {
+            this.emit('onError', new Error('MRD5: VER: query failed: ' + error.message));
+            return 'error';
         }
+    }
+
+    /**
+     * Trigger a beep pattern via `TONE:<letter>`. Best-effort and silent on failure (logged, not
+     * surfaced via onError/Sentry — this is cosmetic feedback, not something worth alarming on).
+     * The device's short text reply ("Tone = <letter>") is drained via collectCommandResponse
+     * rather than left to flow through the normal card-read path, where it would otherwise show up
+     * as a bogus "Card format not recognized" error right after a successful scan.
+     *
+     * @param {string} letter
+     */
+    async playTone(letter) {
+        if (this.characteristic === null) {
+            return;
+        }
+        try {
+            await this.collectCommandResponse(`TONE:${letter}\n`);
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn('MRD5: TONE: command failed: ' + error.message);
+        }
+    }
+
+    /**
+     * Flash the LED via `LED:<color>,<durationMs>`. Same best-effort/response-draining rationale as
+     * {@link playTone}.
+     *
+     * @param {string} color Three ASCII digit characters ('0'-'7'), one per R/G/B channel.
+     * @param {number} durationMs Clamped to LED_MAX_DURATION_MS.
+     */
+    async playLed(color, durationMs) {
+        if (this.characteristic === null) {
+            return;
+        }
+        const duration = Math.min(LED_MAX_DURATION_MS, Math.max(0, durationMs));
+        try {
+            await this.collectCommandResponse(`LED:${color},${duration}\n`);
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn('MRD5: LED: command failed: ' + error.message);
+        }
+    }
+
+    /**
+     * Play the reader's tone + LED feedback for a successful attendance record, so someone tapping
+     * a card gets confirmation from the reader itself without needing to look at the screen —
+     * matches apiary-mobile's doSuccessChirp(). Fire-and-forget from the caller's perspective: the
+     * two commands are sent sequentially (each collects and discards its own reply before the next
+     * is sent, same as everywhere else in this module), but this method itself is never awaited by
+     * callers, so it never blocks the UI on the reader responding.
+     */
+    async playSuccessChirp() {
+        await this.playTone(SUCCESS_CHIRP_TONE);
+        await this.playLed(SUCCESS_CHIRP_LED_COLOR, SUCCESS_CHIRP_LED_DURATION_MS);
+    }
+
+    /**
+     * Play the reader's tone + LED feedback for a card read that failed to parse (e.g. a malformed
+     * GTID), matching apiary-mobile's doErrorChirp(). Same fire-and-forget contract as
+     * {@link playSuccessChirp}.
+     */
+    async playErrorChirp() {
+        await this.playTone(ERROR_CHIRP_TONE);
+        await this.playLed(ERROR_CHIRP_LED_COLOR, ERROR_CHIRP_LED_DURATION_MS);
     }
 
     /**
@@ -423,8 +643,7 @@ export class Mrd5Reader {
 
         const battery = BATTERY_REGEX.exec(message);
         if (battery !== null) {
-            this.batteryPercent = Number(battery[1]);
-            this.emit('onBattery', { raw: message, percent: this.batteryPercent });
+            this.noteBatteryReceived(message, Number(battery[1]));
             return;
         }
 
@@ -448,11 +667,14 @@ export class Mrd5Reader {
             clearTimeout(this.pendingCommand.timer);
             this.pendingCommand = null;
         }
+        if (this.batteryLivenessTimer !== null) {
+            clearTimeout(this.batteryLivenessTimer);
+            this.batteryLivenessTimer = null;
+        }
         this.rxBuffer = '';
         this.deviceInfo = null;
         this.verInfo = null;
         this.batteryPercent = null;
-        this.commandCharacteristic = null;
 
         if (this.characteristic !== null) {
             this.characteristic.removeEventListener('characteristicvaluechanged', this.handleRx);
