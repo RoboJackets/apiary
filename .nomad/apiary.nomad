@@ -85,6 +85,7 @@ job "apiary" {
     network {
       port "redis" {}
       port "meilisearch" {}
+      port "tika" {}
     }
 
     volume "run" {
@@ -316,6 +317,76 @@ EOF
       }
 
       shutdown_delay = var.web_shutdown_delay
+    }
+
+    task "tika" {
+      driver = "docker"
+
+      lifecycle {
+        hook = "prestart"
+        sidecar = true
+      }
+
+      config {
+        image = "apache/tika:latest-full"
+
+        force_pull = true
+
+        network_mode = "host"
+
+        args = [
+          "--host=127.0.0.1",
+          "--port=${NOMAD_PORT_tika}"
+        ]
+      }
+
+      env {
+        JAVA_OPTS = "-Xms2048M -Xmx4096M -XX:MaxDirectMemorySize=256M"
+      }
+
+      resources {
+        cpu = 1000
+        memory = 128
+        memory_max = 4096
+      }
+
+      service {
+        name = "${NOMAD_JOB_NAME}-tika"
+
+        port = "tika"
+
+        address = "127.0.0.1"
+
+        tags = [
+          "http"
+        ]
+
+        check {
+          success_before_passing = 3
+          failures_before_critical = 2
+
+          interval = "1s"
+
+          name = "HTTP"
+          path = "/tika"
+          port = "tika"
+          protocol = "http"
+          timeout = "1s"
+          type = "http"
+        }
+
+        check_restart {
+          limit = 5
+          grace = "20s"
+        }
+      }
+
+      restart {
+        attempts = 5
+        delay = "10s"
+        interval = "1m"
+        mode = "fail"
+      }
     }
 
     dynamic "task" {

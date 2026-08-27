@@ -10,10 +10,13 @@ use App\Jobs\PrefetchSquareCheckoutLinkForTravelAssignment;
 use App\Jobs\SendDocuSignEnvelopeForTravelAssignment;
 use App\Jobs\SendTravelAssignmentCreatedNotification;
 use App\Models\Payment;
+use App\Models\Travel;
 use App\Models\TravelAssignment;
+use App\Models\User;
 use App\Notifications\Nova\TravelApproved;
 use App\Rules\AllCriteriaMustBeSelected;
 use App\Util\Matrix;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\ActionResponse;
@@ -54,6 +57,39 @@ class ReviewTrip extends Action
      * @var string
      */
     public $modalSize = '4xl';
+
+    /**
+     * Determine if the action can be run for the given request and model.
+     */
+    #[\Override]
+    public function authorizedToRun(Request $request, $model): bool
+    {
+        if (! $model instanceof Travel) {
+            return $this->authorizedToRunAction = false;
+        }
+
+        $trip = $model;
+
+        if ($trip->assignments->count() === 0) {
+            return $this->authorizedToRunAction = false;
+        }
+
+        $user = $request->user();
+
+        if (! $user instanceof User) {
+            return $this->authorizedToRunAction = false;
+        }
+
+        if ($user->is($trip->primaryContact)) {
+            return $this->authorizedToRunAction = false;
+        }
+
+        if ($user->is($trip->createdBy)) {
+            return $this->authorizedToRunAction = false;
+        }
+
+        return $this->authorizedToRunAction = parent::authorizedToRun($request, $model);
+    }
 
     /**
      * Perform the action on the given models.

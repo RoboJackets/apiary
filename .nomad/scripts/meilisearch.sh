@@ -17,7 +17,6 @@ run_meilisearch() {
         --env production \
         --max-indexing-memory 4Gb \
         --http-payload-size-limit 100Mb \
-        --experimental-dumpless-upgrade \
         --master-key "${NOMAD_ALLOC_ID}" \
         "$@"
 }
@@ -41,7 +40,6 @@ if ! /bin/meilisearch \
     --env production \
     --max-indexing-memory 4Gb \
     --http-payload-size-limit 100Mb \
-    --experimental-dumpless-upgrade \
     --master-key "${NOMAD_ALLOC_ID}" \
     --import-dump "$${latest}"
 then

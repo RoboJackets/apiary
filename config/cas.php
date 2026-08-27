@@ -185,7 +185,6 @@ return [
     'cas_masquerade_authnContextClass' => env('CAS_MASQUERADE_authnContextClass'),
     'cas_masquerade_authenticationDate' => env('CAS_MASQUERADE_authenticationDate'),
     'cas_masquerade_eduPersonScopedAffiliation' => [env('CAS_MASQUERADE_eduPersonScopedAffiliation')],
-    'cas_masquerade_gtAccessCardNumber' => env('CAS_MASQUERADE_gtAccessCardNumber'),
 
     /*
     |--------------------------------------------------------------------------

@@ -8,7 +8,6 @@ namespace App\Util;
 
 use App\Exceptions\MissingAttribute;
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
-use App\Models\AccessCard;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -29,7 +28,6 @@ class CasUser
             'eduPersonPrimaryAffiliation',
             'eduPersonScopedAffiliation',
             'authenticationDate',
-            'gtAccessCardNumber',
         ];
         if (Cas::isMasquerading()) {
             $masq_attrs = [];
@@ -47,11 +45,7 @@ class CasUser
 
         if (config('features.sandbox-mode') !== true) {
             foreach ($attrs as $attr) {
-                if (
-                    $attr !== 'gtAccessCardNumber' && (
-                        ! Cas::hasAttribute($attr) || Cas::getAttribute($attr) === null
-                    )
-                ) {
+                if (! Cas::hasAttribute($attr) || Cas::getAttribute($attr) === null) {
                     throw new MissingAttribute('Missing attribute '.$attr.' from CAS for user '.Cas::user());
                 }
             }
@@ -108,15 +102,6 @@ class CasUser
                     self::class.': User '.$user->uid
                     .' has primary affiliation of student but no majors. Check data integrity.'
                 );
-            }
-        }
-
-        if (Cas::hasAttribute('gtAccessCardNumber')) {
-            if (AccessCard::where('access_card_number', '=', Cas::getAttribute('gtAccessCardNumber'))->doesntExist()) {
-                $card = new AccessCard();
-                $card->access_card_number = Cas::getAttribute('gtAccessCardNumber');
-                $card->user_id = $user->id;
-                $card->save();
             }
         }
 

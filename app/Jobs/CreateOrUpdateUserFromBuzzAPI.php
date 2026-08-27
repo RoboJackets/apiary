@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Exceptions\MissingAttribute;
-use App\Models\AccessCard;
 use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
@@ -31,8 +30,6 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     public const string IDENTIFIER_USER = 'user';
 
     public const string IDENTIFIER_GTDIRGUID = 'gtPersonDirectoryID';
-
-    public const string IDENTIFIER_GTBUZZCARDNUMBER = 'gtBuzzcardNumber';
 
     public const array EXPECTED_ATTRIBUTES = [
         'uid',
@@ -93,15 +90,6 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             $searchValue = $this->value;
         }
 
-        if ($this->identifier === self::IDENTIFIER_GTBUZZCARDNUMBER) {
-            // Plastic card numbers are stored as bigint and lose leading zeros, but LDAP holds them as 9-digit
-            // zero-padded strings. Mobile credentials are 16 digits and pass through unchanged.
-            $searchValue = (string) $searchValue;
-            if (strlen($searchValue) <= 9) {
-                $searchValue = str_pad($searchValue, 9, '0', STR_PAD_LEFT);
-            }
-        }
-
         $client = new Client([
             'base_uri' => 'https://'.config('buzzapi.host').'/apiv3/',
             'allow_redirects' => false,
@@ -126,16 +114,10 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
                 'gtEmployeeHomeDepartmentName',
                 'eduPersonScopedAffiliation',
                 'gtCurriculum',
-                'gtAccessCardNumber',
             ],
         ];
 
-        if ($this->identifier === self::IDENTIFIER_GTBUZZCARDNUMBER) {
-            // gtBuzzcardNumber is not exposed as a top-level BuzzAPI filter; it must go through the LDAP filter string.
-            $requestBody['filter'] = $this->identifier.'='.$searchValue;
-        } else {
-            $requestBody[$this->identifier] = $searchValue;
-        }
+        $requestBody[$this->identifier] = $searchValue;
 
         $response = $client->post(
             'central.iam.gted.accounts/search',
@@ -219,28 +201,6 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
                 self::class.': User '.$user->uid
                 .' has primary affiliation of student but no majors. Check data integrity.'
             );
-        }
-
-        if (property_exists($account, 'gtAccessCardNumber')) {
-            if (AccessCard::where('access_card_number', '=', $account->gtAccessCardNumber)->doesntExist()) {
-                $card = new AccessCard();
-                $card->access_card_number = $account->gtAccessCardNumber;
-                $card->user_id = $user->id;
-                $card->save();
-            }
-        }
-
-        // When this job was dispatched to resolve a swiped card, link that specific card to the user. The account's
-        // primary gtAccessCardNumber may not match the swiped value (e.g. mobile credential vs. plastic), and BuzzAPI
-        // does not yet return gtBuzzcardNumber as an attribute.
-        if (
-            $this->identifier === self::IDENTIFIER_GTBUZZCARDNUMBER
-            && AccessCard::where('access_card_number', '=', $this->value)->doesntExist()
-        ) {
-            $card = new AccessCard();
-            $card->access_card_number = $this->value;
-            $card->user_id = $user->id;
-            $card->save();
         }
     }
 
