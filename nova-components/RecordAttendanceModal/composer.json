@@ -1,0 +1,29 @@
+{
+    "name": "robojackets/record-attendance-modal",
+    "description": "A Laravel Nova asset.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RoboJackets\\RecordAttendanceModal\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RoboJackets\\RecordAttendanceModal\\AssetServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
