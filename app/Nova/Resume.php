@@ -85,7 +85,7 @@ class Resume extends Resource
             Boolean::make('Visible to Sponsors', 'is_visible')
                 ->rules('required')
                 ->sortable(),
-            File::make('Resume', $this->storage_path)
+            File::make('Resume', 'storage_path')
                 ->path('resumes')
                 ->disk('local')
                 ->deletable(false)
