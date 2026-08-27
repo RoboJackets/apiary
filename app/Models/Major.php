@@ -85,7 +85,7 @@ class Major extends Model
     {
         return User::selectRaw('distinct(majors.display_name) as distinct_display_names')
             ->whereHas('resume', static function (Builder $q): void {
-                $q->active();
+                $q->visible();
             })
             ->leftJoin('major_user', static function (JoinClause $join): void {
                 $join->on('users.id', '=', 'major_user.user_id')

@@ -453,10 +453,6 @@ class User extends Resource
 
                             return $request->user()->can('read-users-resume');
                         }),
-
-                    DateTime::make('Resume Uploaded At', $this->resume?->updated_at)
-                        ->onlyOnDetail()
-                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
                 ]
             ),
 

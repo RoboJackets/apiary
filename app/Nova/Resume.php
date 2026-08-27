@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Resume as AppModelsResume;
+use App\Nova\Actions\ExportFilteredResumes;
+use App\Nova\Actions\ExportFullYearResumes;
+use Laravel\Nova\Action;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -77,9 +80,26 @@ class Resume extends Resource
             DateTime::make('Last Uploaded', 'updated_at')
                 ->rules('required')
                 ->sortable(),
-            Boolean::make('Active', 'is_active')
+            Boolean::make('Visible to Sponsors', 'is_visible')
                 ->rules('required')
                 ->sortable(),
+            File::make(
+                'Resume',
+                $this->resume?->storage_path
+            )->path(
+                'resumes'
+            )
+                ->disk('local')
+                ->deletable(false)
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    $r = AppModelsResume::find($request->resourceId);
+                    if ($r && $r->user->id == $request->user()->id) {
+                        return true;
+                    }
+
+                    return $request->user()->can('read-users-resume');
+                }),
             Textarea::make('Extracted Text', static function (AppModelsResume $resume) {
                 $raw = AppModelsResume::search('')
                     ->where('id', $resume->id)
@@ -87,7 +107,54 @@ class Resume extends Resource
 
                 return $raw['hits'][0]['extracted_text'] ?? '';
             })
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    $r = AppModelsResume::find($request->resourceId);
+                    if ($r && $r->user->id == $request->user()->id) {
+                        return true;
+                    }
+
+                    return $request->user()->can('read-users-resume');
+                }),
         ];
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
+     */
+    #[\Override]
+    public function actions(NovaRequest $request): array
+    {
+        if ($request->user()->can('read-users-resume')) {
+            $exportResumes = [
+                ExportFilteredResumes::make()
+                    ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
+                ExportFullYearResumes::make()
+                    ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
+            ];
+        } else {
+            $exportResumes = [
+                Action::danger(
+                    ExportFilteredResumes::make()->name(),
+                    'You do not have access to export resumes.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->standalone()
+                    ->onlyOnIndex()
+                    ->canRun(static fn (): bool => true),
+                Action::danger(
+                    ExportFullYearResumes::make()->name(),
+                    'You do not have access to export resumes.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->standalone()
+                    ->onlyOnIndex()
+                    ->canRun(static fn (): bool => true),
+            ];
+        }
     }
 }

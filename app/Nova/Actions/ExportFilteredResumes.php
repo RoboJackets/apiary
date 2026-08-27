@@ -98,7 +98,7 @@ class ExportFilteredResumes extends Action
         }
 
         $resumes = Resume::with('user')
-            ->active()
+            ->visible()
             ->where('updated_at', '>', $fields->resume_date_cutoff)
             ->whereHas('user', static function (Builder $q) use ($majors, $classStandings): void {
                 $q->leftJoin('major_user', static function (JoinClause $join): void {

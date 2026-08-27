@@ -134,25 +134,25 @@ class Resume extends Model
     }
 
     /**
-     * Get the is_active flag for the Resume.
+     * Get the is_visible flag for the Resume.
      *
      * @psalm-mutation-free
      */
-    public function getIsActiveAttribute(): bool
+    public function getIsVisibleAttribute(): bool
     {
-        return self::where('id', $this->id)->active()->count() !== 0;
+        return self::where('id', $this->id)->visible()->count() !== 0;
     }
 
     /**
-     * Scope a query to automatically include only active resumes.
-     * Active: Resume is for a user who has paid dues for a currently ongoing term
+     * Scope a query to automatically include only visible resumes.
+     * Visible: Resume is for a user who has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
      *         Additionally, the Resume's user is a student.
      *
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
-    public function scopeActive(Builder $query): Builder
+    public function scopeVisible(Builder $query): Builder
     {
         return $query->whereHas('user', static function (Builder $q): void {
             $q->active()
@@ -193,10 +193,10 @@ class Resume extends Model
                 ]
             )->getBody()->getContents();
             if ($full_text === '') {
-                $full_text = 'Tika extraction did not work';
+                $full_text = '';
             }
         } else {
-            $full_text = 'No resume file found.';
+            $full_text = '';
         }
 
         return [
