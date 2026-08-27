@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Exceptions\TextExtractionException;
+use App\Exceptions\TextExtractionError;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -195,14 +195,14 @@ class Resume extends Model
                     ]
                 )->getBody()->getContents();
             } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-                throw new TextExtractionException(
-                    "Failed to extract text for resume [{$this->id}]: {$e->getMessage()}",
+                throw new TextExtractionError(
+                    "Failed to extract text for resume ".$this->id.": ".$e->getMessage(),
                     previous: $e
                 );
             }
             if ($full_text === '') {
-                throw new TextExtractionException(
-                    "Failed to extract text for resume [{$this->id}]: Tika returned empty response."
+                throw new TextExtractionError(
+                    "Failed to extract text for resume ".$this->id.": Tika returned empty response."
                 );
             }
         } else {
