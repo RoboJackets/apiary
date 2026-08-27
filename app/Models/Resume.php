@@ -22,7 +22,7 @@ use Laravel\Scout\Searchable;
  * @property-read string $file_name
  * @property-read string $absolute_file_path
  * @property-read string $storage_path
- * @property-read string $is_active
+ * @property-read string $is_visible
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Resume whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Resume whereExtractedText($value)
