@@ -17,7 +17,7 @@ In-person meetings
 
 .. vale Google.Parens = NO
 
-Attendance for in-person meetings can be collected in a few different ways:
+You can collect attendance for in-person meetings in a few different ways:
 
 #. Using the Apiary mobile app on an Android-powered device
 #. Using the Apiary Admin web interface
@@ -83,7 +83,7 @@ At this point you may either continue by entering GTIDs manually in the text fie
 
 .. important::
     Support for using an external BuzzCard reader by Bluetooth is limited to Google Chrome (on Windows, macOS, Linux, ChromeOS, and Android)
-    and Microsoft Edge (on Windows and macOS). If you are not using one of these browsers/platforms, you will not see the option
+    and Microsoft Edge (on Windows and macOS). If you aren't using one of these browsers/platforms, you won't see the option
     to connect to a reader in the popup, and will only be able to enter GTIDs manually.
 
 #. Power on the BuzzCard reader by pressing and holding the power button for three seconds.
