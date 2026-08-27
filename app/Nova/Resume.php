@@ -83,18 +83,14 @@ class Resume extends Resource
             Boolean::make('Visible to Sponsors', 'is_visible')
                 ->rules('required')
                 ->sortable(),
-            File::make(
-                'Resume',
-                $this->resume?->storage_path
-            )->path(
-                'resumes'
-            )
+            File::make('Resume', $this->resume?->storage_path)
+                ->path('resumes')
                 ->disk('local')
                 ->deletable(false)
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     $r = AppModelsResume::find($request->resourceId);
-                    if ($r && $r->user->id == $request->user()->id) {
+                    if ($r && $r->user->id === $request->user()->id) {
                         return true;
                     }
 
@@ -110,7 +106,7 @@ class Resume extends Resource
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     $r = AppModelsResume::find($request->resourceId);
-                    if ($r && $r->user->id == $request->user()->id) {
+                    if ($r && $r->user->id === $request->user()->id) {
                         return true;
                     }
 
@@ -156,5 +152,9 @@ class Resume extends Resource
                     ->canRun(static fn (): bool => true),
             ];
         }
+
+        return [
+            ...$exportResumes,
+        ];
     }
 }

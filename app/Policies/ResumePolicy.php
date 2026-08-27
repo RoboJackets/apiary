@@ -29,7 +29,7 @@ class ResumePolicy
      */
     public function view(User $user, Resume $resume): bool
     {
-        if ($resume->user->id == $user->id) {
+        if ($resume->user->id === $user->id) {
             return true;
         }
 
