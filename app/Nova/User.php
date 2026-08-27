@@ -434,23 +434,6 @@ class User extends Resource
 
                             return $request->user()->can('read-users-resume');
                         }),
-                    File::make(
-                        'Resume',
-                        fn (): ?string => $this->resume !== null ? $this->resume?->storage_path : null
-                    )->path(
-                        'resumes'
-                    )
-                        ->disk('local')
-                        ->deletable(false)
-                        ->onlyOnDetail()
-                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
-                        ->canSee(static function (Request $request): bool {
-                            if ($request->resourceId === $request->user()->id) {
-                                return true;
-                            }
-
-                            return $request->user()->can('read-users-resume');
-                        }),
                 ]
             ),
 
