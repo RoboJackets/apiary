@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Exceptions\TextExtractionException;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -174,26 +175,35 @@ class Resume extends Model
     {
         if (Storage::disk(self::storageDisk())->exists($this->storage_path)
             && Storage::disk(self::storageDisk())->size($this->storage_path) > 0) {
-            $full_text = new Client(
-                [
-                    'base_uri' => config('services.tika.url'),
-                    'headers' => [
-                        'Accept' => 'text/plain',
-                        'Content-Type' => 'application/octet-stream',
-                    ],
-                    'allow_redirects' => false,
-                    'connect_timeout' => 10,
-                    'read_timeout' => 60,
-                    'synchronous' => true,
-                ]
-            )->put(
-                '/tika',
-                [
-                    'body' => Storage::disk(self::storageDisk())->get($this->storage_path),
-                ]
-            )->getBody()->getContents();
+            try {
+                $full_text = new Client(
+                    [
+                        'base_uri' => config('services.tika.url'),
+                        'headers' => [
+                            'Accept' => 'text/plain',
+                            'Content-Type' => 'application/octet-stream',
+                        ],
+                        'allow_redirects' => false,
+                        'connect_timeout' => 10,
+                        'read_timeout' => 60,
+                        'synchronous' => true,
+                    ]
+                )->put(
+                    '/tika',
+                    [
+                        'body' => Storage::disk(self::storageDisk())->get($this->storage_path),
+                    ]
+                )->getBody()->getContents();
+            } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+                throw new TextExtractionException(
+                    "Failed to extract text for resume [{$this->id}]: {$e->getMessage()}",
+                    previous: $e
+                );
+            }
             if ($full_text === '') {
-                $full_text = '';
+                throw new TextExtractionException(
+                    "Failed to extract text for resume [{$this->id}]: Tika returned empty response."
+                );
             }
         } else {
             $full_text = '';
