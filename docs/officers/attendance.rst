@@ -3,7 +3,7 @@
 Attendance
 ==========
 
-Apiary supports recording attendance for both in-person and online meetings, using either BuzzCards or links.
+Apiary supports recording attendance for both in-person and online meetings using either BuzzCards or links.
 
 .. hint::
    To use either method, you must have an :ref:`officer`, :ref:`project-manager`, :ref:`team-lead`, or :ref:`trainer` role.
@@ -18,11 +18,15 @@ In-person meetings
 .. vale Google.Parens = NO
 
 Attendance for in-person meetings can be collected in a few different ways:
-#. Using the `MyRoboJackets` mobile app on an Android device
+
+#. Using the Apiary mobile app on an Android-powered device
 #. Using the Apiary Admin web interface
 
+Using the Apiary mobile app
+~~~~~~~~~~~
+
 RoboJackets developed an Android app to read physical BuzzCards using either :abbr:`NFC (near-field communication)`
-or an external BuzzCard Reader connected via Bluetooth and upload the data to the Apiary server.
+or an external BuzzCard reader connected via Bluetooth and upload the data to the Apiary server.
 Your phone must support NFC and run Android 7 (Nougat) or newer.
 
 .. vale Google.Parens = YES
@@ -44,10 +48,10 @@ To record attendance using the app:
 #. You can manually enter a GTID using the :guilabel:`Enter GTID manually` button if someone forgot their BuzzCard.
    If a valid BuzzCard consistently displays an error message, post in :slack:`apiary-mobile`.
 
-You may also utilize an external BuzzCard reader connected to your phone by Bluetooth to read both physical and mobile
+You may also use an external BuzzCard reader connected to your Android-powered device by Bluetooth to read both physical and mobile
 BuzzCards. To use a reader:
 
-#. Power on the BuzzCard reader by pressing and holding the power button (top left corner) for three seconds.
+#. Power on the BuzzCard reader by pressing and holding the power button for three seconds.
 #. Open the app and follow the prompts to sign in.
 #. After signing in, go to the :guilabel:`Settings` page and select :guilabel:`Connect BuzzCard reader`.
 #. Tap the :guilabel:`Start scan` button to scan for readers. Select the reader from the list that matches the numbers on the label on the bottom.
@@ -63,6 +67,29 @@ By default, the app uses the NFC radio in your phone to read data from physical 
 - Remove the card for a few seconds, then try again.
 
 If you need help, post in :slack:`apiary-mobile`.
+
+Using the Apiary Admin web interface
+~~~~~~~~~~~
+
+To record attendance using the Apiary Admin web interface:
+
+#. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
+#. Under the :guilabel:`Meetings` header in the left sidebar, click :guilabel:`Teams` or :guilabel:`Events`.
+#. Select the team or event for which you want to record attendance.
+#. Click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Team Details` or :guilabel:`Event Details` header, then choose the :guilabel:`Record Attendance` option.
+   A popup will appear.
+
+At this point you may either continue by entering GTIDs manually in the text field, or connecting to an external BuzzCard reader by Bluetooth.
+
+.. important::
+    Support for using an external BuzzCard reader by Bluetooth is limited to Google Chrome (on Windows, macOS, Linux, ChromeOS, and Android)
+    and Microsoft Edge (on Windows and macOS). If you are not using one of these browsers/platforms, you will not see the option
+    to connect to a reader in the popup, and will only be able to enter GTIDs manually.
+
+#. Power on the BuzzCard reader by pressing and holding the power button for three seconds.
+#. Click the :guilabel:`Connect BuzzCard Reader` button. Select the reader from the list that matches the numbers on the label on the bottom.
+#. If prompted by your device, accept any request for Bluetooth pairing.
+#. Attendance will be recorded for any BuzzCard presented to the reader automatically.
 
 Online meetings
 ---------------
