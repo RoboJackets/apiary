@@ -92,7 +92,7 @@ class Resume extends Resource
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     $r = AppModelsResume::find($request->resourceId);
-                    if ($r && $r->user->id === $request->user()->id) {
+                    if ($r && $r->user->is($request->user())) {
                         return true;
                     }
 
@@ -125,7 +125,7 @@ class Resume extends Resource
     #[\Override]
     public function actions(NovaRequest $request): array
     {
-        $exportResumes = $request->user()->can('read-users-resume') ?
+        return $request->user()->can('read-users-resume') ?
             [
                 ExportFilteredResumes::make()
                     ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
@@ -151,9 +151,5 @@ class Resume extends Resource
                     ->onlyOnIndex()
                     ->canRun(static fn (): bool => true),
             ];
-
-        return [
-            ...$exportResumes,
-        ];
     }
 }
