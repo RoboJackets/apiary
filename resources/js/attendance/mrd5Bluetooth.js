@@ -1,11 +1,13 @@
 // WebBluetooth client for a Transact MRD5 card reader.
 //
-// The MRD5 exposes a Microchip MLDP (Low Energy Data Profile) service; card reads and battery status
-// both arrive as ASCII text notifications on the same data characteristic. This module connects to
-// the reader, buffers incoming chunks into complete messages, and classifies each message as either
-// a battery status line (`BATT:<percent>/<opaque>`) or a card read. Card reads are handed off
-// verbatim — the same string a user would type/swipe into the text field — so they can flow through
-// the shared credential parser (resources/js/attendance/parseCredential.js).
+// The MRD5 exposes a Microchip MLDP (Low Energy Data Profile) service; card reads, battery status,
+// and command replies all arrive as ASCII text notifications on the same data characteristic. This
+// module connects to the reader, buffers incoming chunks into complete messages, and classifies
+// each message as a battery status line (`BATT:<percent>/<opaque>`), a stray command
+// acknowledgment/reply not otherwise captured (see DEVICE_ACK_REGEX and
+// VER_RESPONSE_FRAGMENT_REGEX), or a card read. Card reads are handed off verbatim — the same
+// string a user would type/swipe into the text field — so they can flow through the shared
+// credential parser (resources/js/attendance/parseCredential.js).
 //
 // Requires a secure context (https or localhost/127.0.0.1) and a Chromium-based browser (Chrome/Edge);
 // the reader must have Bluetooth Security Mode disabled or it transmits nothing over the characteristic.
@@ -87,6 +89,15 @@ const SUCCESS_CHIRP_LED_DURATION_MS = 400;
 const ERROR_CHIRP_TONE = 'W';
 const ERROR_CHIRP_LED_COLOR = '700';
 const ERROR_CHIRP_LED_DURATION_MS = 400;
+
+// The MRD5's MLDP link is shared across every WebBluetooth client connected to it, not private to
+// whichever one sent a given command — so a second tab connected to the same physical reader
+// can see the reply to *our* VER: query, or we can see someone else's, with no pendingCommand
+// active on the receiving side to capture it either way.
+// Recognized by content (not the full expected shape) since it can arrive split across several
+// flush() calls, same as a real VER: response can for its own sender.
+const DEVICE_ACK_REGEX = /^(LED on|Tone = \S+)$/i;
+const VER_RESPONSE_FRAGMENT_REGEX = /Blackboard MRD5|SN:\s*\d+|Boot:\s*\S+|Application:\s*\S+/i;
 
 /**
  * @typedef {Object} Mrd5DeviceInfo
@@ -630,7 +641,8 @@ export class Mrd5Reader {
     }
 
     /**
-     * Classify the buffered message as battery status or a card read, then reset the buffer.
+     * Classify the buffered message as battery status, a stray command acknowledgment, or a card
+     * read, then reset the buffer.
      */
     flush() {
         this.rxTimer = null;
@@ -644,6 +656,12 @@ export class Mrd5Reader {
         const battery = BATTERY_REGEX.exec(message);
         if (battery !== null) {
             this.noteBatteryReceived(message, Number(battery[1]));
+            return;
+        }
+
+        if (DEVICE_ACK_REGEX.test(message) || VER_RESPONSE_FRAGMENT_REGEX.test(message)) {
+            // Discard acknowledgements or version responses that we didn't ask for
+            // See the comment above DEVICE_ACK_REGEX for more specifics
             return;
         }
 
