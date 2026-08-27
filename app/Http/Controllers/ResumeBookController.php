@@ -74,7 +74,7 @@ class ResumeBookController
         $semesters = User::with('resume')
             ->select('graduation_semester')
             ->whereHas('resume', static function (Builder $q): void {
-                $q->active();
+                $q->visible();
             })
             ->distinct()
             ->orderByDesc('graduation_semester')

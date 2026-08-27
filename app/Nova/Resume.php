@@ -123,15 +123,13 @@ class Resume extends Resource
     #[\Override]
     public function actions(NovaRequest $request): array
     {
-        if ($request->user()->can('read-users-resume')) {
-            $exportResumes = [
+        $exportResumes = ($request->user()->can('read-users-resume')) ?
+            [
                 ExportFilteredResumes::make()
                     ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
                 ExportFullYearResumes::make()
                     ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
-            ];
-        } else {
-            $exportResumes = [
+            ] : [
                 Action::danger(
                     ExportFilteredResumes::make()->name(),
                     'You do not have access to export resumes.'
@@ -151,7 +149,6 @@ class Resume extends Resource
                     ->onlyOnIndex()
                     ->canRun(static fn (): bool => true),
             ];
-        }
 
         return [
             ...$exportResumes,
