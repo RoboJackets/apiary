@@ -123,7 +123,7 @@ class Resume extends Resource
     #[\Override]
     public function actions(NovaRequest $request): array
     {
-        $exportResumes = ($request->user()->can('read-users-resume')) ?
+        $exportResumes = $request->user()->can('read-users-resume') ?
             [
                 ExportFilteredResumes::make()
                     ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
