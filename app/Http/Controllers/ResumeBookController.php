@@ -9,6 +9,7 @@ use App\Models\Major;
 use App\Models\Resume;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
@@ -31,15 +32,23 @@ class ResumeBookController
     public function show(string $uid)
     {
         try {
+            $user = User::where('uid', $uid)->with('resume')->firstOrFail();
+
             return response()
-                ->file(User::where('uid', $uid)
-                    ->resume
-                    ->absolute_file_path, ['Content-Type' => 'application/pdf']);
+                ->file($user->resume->absolute_file_path, ['Content-Type' => 'application/pdf']);
         } catch (FileNotFoundException) {
             return response()->json(
                 [
                     'status' => 'error',
                     'message' => 'The requested user has no resume.',
+                ],
+                404
+            );
+        } catch (ModelNotFoundException) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'The requested user does not exist.',
                 ],
                 404
             );
