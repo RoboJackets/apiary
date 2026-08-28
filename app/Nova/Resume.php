@@ -108,7 +108,7 @@ class Resume extends Resource
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     $r = AppModelsResume::find($request->resourceId);
-                    if ($r && $r->user->id === $request->user()->id) {
+                    if ($r && $r->user->is($request->user())) {
                         return true;
                     }
 
