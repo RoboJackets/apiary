@@ -30,13 +30,11 @@ return new class extends Migration
         DB::table('users')->select('id', 'resume_date')
             ->orderBy('id')
             ->chunk(200, static function ($rows) {
-                $data = $rows->map(static function ($row) {
-                    return [
-                        'user_id' => $row->id,
-                        'updated_at' => $row->resume_date,
-                        'created_at' => now(),
-                    ];
-                })->toArray();
+                $data = $rows->map(static fn ($row) => [
+                    'user_id' => $row->id,
+                    'updated_at' => $row->resume_date,
+                    'created_at' => now(),
+                ])->toArray();
 
                 DB::table('resumes')->insertOrIgnore($data);
             });
