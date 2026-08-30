@@ -165,6 +165,11 @@ class Device extends Resource
         ];
     }
 
+    /**
+     * Normalize a version string for display.
+     *
+     * @psalm-pure
+     */
     public static function normalizeVersion(string $version): string
     {
         return 'v'.ltrim($version, 'V');
