@@ -15,9 +15,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $resumes = Storage::disk('local')->files('resumes');
-        $resumes = array_map(static fn ($f) => pathinfo($f, PATHINFO_FILENAME), $resumes);
-
         Schema::table('resumes', static function (Blueprint $table) {
             $table->foreign('user_id')
                 ->references('id')
@@ -27,7 +24,7 @@ return new class extends Migration
             $table->unique('user_id');
         });
 
-        DB::table('users')->select('id', 'resume_date')
+        DB::table('users')->select(['id', 'resume_date'])
             ->orderBy('id')
             ->chunk(200, static function ($rows) {
                 $data = $rows->map(static fn ($row) => [
