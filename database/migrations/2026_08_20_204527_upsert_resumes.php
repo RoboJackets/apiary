@@ -24,6 +24,7 @@ return new class extends Migration
         });
 
         DB::table('users')->select(['id', 'resume_date'])
+            ->whereNotNull('resume_date')
             ->orderBy('id')
             ->chunk(200, static function ($rows) {
                 $data = $rows->map(static fn ($row) => [
