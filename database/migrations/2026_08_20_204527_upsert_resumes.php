@@ -42,8 +42,6 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @psalm-mutation-free
      */
     public function down(): void
     {
