@@ -217,10 +217,13 @@
         </PossiblyInvalidCast>
         <UnusedClosureParam>
             <errorLevel type="suppress">
+                <directory name="app/Jobs"/>
                 <directory name="app/Nova" />
+                <directory name="app/Providers"/>
                 <file name="app/Http/Middleware/Sentry.php" />
                 <file name="app/Jobs/ProcessPostmarkInboundWebhook.php" />
                 <file name="app/Providers/NovaServiceProvider.php" />
+                <file name="app/Console/Commands/ImportAllModels.php" />
             </errorLevel>
         </UnusedClosureParam>
         <MissingTemplateParam>
@@ -228,14 +231,6 @@
                 <directory name="app/"/>
             </errorLevel>
         </MissingTemplateParam>
-        <UnusedClosureParam>
-            <errorLevel type="suppress">
-                <directory name="app/Jobs"/>
-                <directory name="app/Nova"/>
-                <directory name="app/Providers"/>
-                <file name="app/Http/Middleware/Sentry.php"/>
-            </errorLevel>
-        </UnusedClosureParam>
         <UndefinedConstant>
             <errorLevel type="suppress">
                 <file name="app/Nova/Actions/Payments/RecordPayment.php"/>
