@@ -59,6 +59,6 @@ return new class extends Migration
             }
         });
 
-        Resume::truncate();
+        DB::table('resumes')->truncate();
     }
 };
