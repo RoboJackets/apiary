@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
+use App\Models\Resume;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class ResumeController implements HasMiddleware
@@ -44,7 +44,7 @@ class ResumeController implements HasMiddleware
             }
 
             try {
-                return response()->file(Storage::disk('local')->path('resumes/'.$user->uid.'.pdf'));
+                return response()->file($user->resume->absolute_file_path);
             } catch (FileNotFoundException) {
                 return response()->json(
                     [
@@ -211,10 +211,10 @@ class ResumeController implements HasMiddleware
             }
 
             // Store in the resumes folder with the user's username
-            $file->storeAs('resumes', $user->uid.'.pdf');
+            $file->storeAs(Resume::storageDirectory(), Resume::fileNameForUser($user));
 
-            $user->resume_date = now();
-            $user->save();
+            // Call touch to ensure $resume->updated_at is always updated
+            Resume::firstOrCreate(['user_id' => $user->id])->touch();
 
             return response()->json(
                 [

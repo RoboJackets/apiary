@@ -6,6 +6,7 @@ namespace App\Nova\Actions;
 
 use App\Models\ClassStanding;
 use App\Models\Major;
+use App\Models\Resume;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -96,35 +97,30 @@ class ExportFilteredResumes extends Action
             $classStandings[] = $classStanding;
         }
 
-        $users = User::active()
-            ->whereNotNull('resume_date')
-            ->where('resume_date', '>', $fields->resume_date_cutoff)
-            ->where('primary_affiliation', 'student')
-            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-                $q->where('restricted_to_students', false);
-            })
-            ->leftJoin('major_user', static function (JoinClause $join): void {
-                $join->on('users.id', '=', 'major_user.user_id')
-                    ->whereNull('major_user.deleted_at');
-            })
-            ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
-            ->leftJoin('class_standing_user', static function (JoinClause $join): void {
-                $join->on('users.id', '=', 'class_standing_user.user_id')
-                    ->whereNull('class_standing_user.deleted_at');
-            })
-            ->leftJoin('class_standings', 'class_standing_user.class_standing_id', '=', 'class_standings.id')
-            ->whereIn('majors.display_name', $majors)
-            ->whereIn('class_standings.name', $classStandings)
-            ->orderBy('last_name')
-            ->orderBy('first_name')
-            ->pluck('uid');
+        $resumes = Resume::with('user')
+            ->visible()
+            ->where('updated_at', '>', $fields->resume_date_cutoff)
+            ->whereHas('user', static function (Builder $q) use ($majors, $classStandings): void {
+                $q->leftJoin('major_user', static function (JoinClause $join): void {
+                    $join->on('users.id', '=', 'major_user.user_id')
+                        ->whereNull('major_user.deleted_at');
+                })
+                    ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
+                    ->leftJoin('class_standing_user', static function (JoinClause $join): void {
+                        $join->on('users.id', '=', 'class_standing_user.user_id')
+                            ->whereNull('class_standing_user.deleted_at');
+                    })
+                    ->leftJoin('class_standings', 'class_standing_user.class_standing_id', '=', 'class_standings.id')
+                    ->whereIn('majors.display_name', $majors)
+                    ->whereIn('class_standings.name', $classStandings);
+            });
 
-        if ($users->count() === 0) {
+        if ($resumes->count() === 0) {
             return Action::danger('No resumes matched the provided criteria!');
         }
 
-        $filenames = $users->uniqueStrict()->map(
-            static fn (string $uid): string => escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'))
+        $filenames = $resumes->get()->pluck('absolute_file_path')->map(
+            static fn (string $fn): string => escapeshellarg($fn)
         );
 
         $datecode = now()->format('Y-m-d-H-i-s');
@@ -207,7 +203,7 @@ class ExportFilteredResumes extends Action
             'distinct(class_standings.name) as distinct_class_standings, class_standings.rank_order'
         )
             ->active()
-            ->whereNotNull('resume_date')
+            ->whereHas('resume')
             ->where('primary_affiliation', 'student')
             ->where('is_service_account', '=', false)
             ->whereDoesntHave('duesPackages', static function (Builder $q): void {

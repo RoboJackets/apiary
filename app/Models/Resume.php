@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Util\Sentry;
+use App\Exceptions\TextExtractionError;
 use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +21,9 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User $user
  * @property-read string $file_name
- * @property-read string $file_path
+ * @property-read string $absolute_file_path
+ * @property-read string $storage_path
+ * @property-read string $is_visible
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Resume whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Resume whereExtractedText($value)
@@ -90,11 +93,24 @@ class Resume extends Model
     }
 
     /**
-     * Return the storage path for the current Resume.
+     * Returns the file name for a given User.
+     * Should be used as the source of truth in resume storage.
+     *
+     * @psalm-pure
+     *
+     * @param  $user  User for this file name.
+     */
+    public static function fileNameForUser(User $user): string
+    {
+        return $user->uid.'.pdf';
+    }
+
+    /**
+     * Return the storage path relative to Storage::disk('local') for the current Resume.
      *
      * @psalm-mutation-free
      */
-    public function storagePath(): string
+    public function getStoragePathAttribute(): string
     {
         return self::storagePathForUser($this->user);
     }
@@ -113,9 +129,40 @@ class Resume extends Model
     /**
      * File path, complete with file name, for this Resume.
      */
-    public function getFilePathAttribute(): string
+    public function getAbsoluteFilePathAttribute(): string
     {
-        return Storage::disk(self::storageDisk())->path($this->storagePath());
+        return Storage::disk(self::storageDisk())->path($this->storage_path);
+    }
+
+    /**
+     * Get the is_visible flag for the Resume.
+     *
+     * @psalm-mutation-free
+     */
+    public function getIsVisibleAttribute(): bool
+    {
+        return self::where('id', $this->id)->visible()->count() !== 0;
+    }
+
+    /**
+     * Scope a query to automatically include only visible resumes.
+     * Visible: Resume is for a user who has paid dues for a currently ongoing term
+     *         or, has a non-zero payment for an active DuesPackage.
+     *         Additionally, the Resume's user is a student.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
+     */
+    public function scopeVisible(Builder $query): Builder
+    {
+        return $query->whereHas('user', static function (Builder $q): void {
+            $q->active()
+                ->where('primary_affiliation', 'student')
+                ->where('is_service_account', '=', false)
+                ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                    $q->where('restricted_to_students', false);
+                });
+        });
     }
 
     /**
@@ -126,14 +173,10 @@ class Resume extends Model
      */
     public function toSearchableArray(): array
     {
-        $file_path = $this->file_path;
-
-        $full_text = '';
-
-        if (Storage::disk('local')->exists($file_path) && Storage::disk('local')->size($file_path) > 0) {
-            $full_text = Sentry::wrapWithChildSpan(
-                'tika.extract',
-                static fn (): string => (new Client(
+        if (Storage::disk(self::storageDisk())->exists($this->storage_path)
+            && Storage::disk(self::storageDisk())->size($this->storage_path) > 0) {
+            try {
+                $full_text = new Client(
                     [
                         'base_uri' => config('services.tika.url'),
                         'headers' => [
@@ -145,20 +188,33 @@ class Resume extends Model
                         'read_timeout' => 60,
                         'synchronous' => true,
                     ]
-                ))->put(
+                )->put(
                     '/tika',
                     [
-                        'body' => Storage::disk('local')->get($file_path),
+                        'body' => Storage::disk(self::storageDisk())->get($this->storage_path),
                     ]
-                )->getBody()->getContents()
-            );
+                )->getBody()->getContents();
+            } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+                throw new TextExtractionError(
+                    'Failed to extract text for resume '.$this->id.': '.$e->getMessage(),
+                    previous: $e
+                );
+            }
+            if ($full_text === '') {
+                throw new TextExtractionError(
+                    'Failed to extract text for resume '.$this->id.': Tika returned empty response.'
+                );
+            }
+        } else {
+            $full_text = '';
         }
 
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
-            'file_path' => $this->file_path,
+            'storage_path' => $this->storage_path,
+            'absolute_file_path' => $this->absolute_file_path,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'extracted_text' => $full_text,

@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ResumeSearchRequest;
 use App\Models\Major;
+use App\Models\Resume;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
@@ -30,14 +32,23 @@ class ResumeBookController
     public function show(string $uid)
     {
         try {
+            $user = User::where('uid', $uid)->with('resume')->firstOrFail();
+
             return response()
-                ->file(Storage::disk('local')
-                    ->path('resumes/'.$uid.'.pdf'), ['Content-Type' => 'application/pdf']);
+                ->file($user->resume->absolute_file_path, ['Content-Type' => 'application/pdf']);
         } catch (FileNotFoundException) {
             return response()->json(
                 [
                     'status' => 'error',
                     'message' => 'The requested user has no resume.',
+                ],
+                404
+            );
+        } catch (ModelNotFoundException) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'The requested user does not exist.',
                 ],
                 404
             );
@@ -69,13 +80,10 @@ class ResumeBookController
      */
     public function getGraduationSemesters()
     {
-        $semesters = User::select('graduation_semester')
-            ->active()
-            ->whereNotNull('resume_date')
-            ->where('primary_affiliation', 'student')
-            ->where('is_service_account', '=', false)
-            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-                $q->where('restricted_to_students', false);
+        $semesters = User::with('resume')
+            ->select('graduation_semester')
+            ->whereHas('resume', static function (Builder $q): void {
+                $q->visible();
             })
             ->distinct()
             ->orderByDesc('graduation_semester')
@@ -124,9 +132,16 @@ class ResumeBookController
         return ['code' => $code, 'name' => ($months[$month] ?? $month).' '.$year];
     }
 
+    /**
+     * Filters users by major and graduation semester.
+     * Later versions of this function will also perform text search.
+     *
+     * @param  $majors  Array of all majors to include.
+     * @param  $graduation_semesters  array of graduation semesters to include.
+     */
     private function filterUsers(array $majors, array $graduation_semesters): array
     {
-        $usernames = collect(Storage::disk('local')->files('resumes'))
+        $usernames = collect(Storage::disk(Resume::storageDisk())->files(Resume::storageDirectory()))
             ->map(static fn (string $path): string => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
         $users = User::active()->whereIn('uid', $usernames);

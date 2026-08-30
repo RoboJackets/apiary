@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Models\FiscalYear;
+use App\Models\Resume;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
@@ -76,7 +77,7 @@ class ExportFullYearResumes extends Action
             })
                 ->paid();
         })
-            ->whereNotNull('resume_date')
+            ->whereHas('resume')
             ->whereDoesntHave('duesPackages', static function (Builder $q): void {
                 $q->where('restricted_to_students', false);
             })
@@ -88,9 +89,11 @@ class ExportFullYearResumes extends Action
             return Action::danger('No resumes matched the provided criteria!');
         }
 
-        $filenames = $users->uniqueStrict()->map(
-            static fn (string $uid): string => Storage::disk('local')->path('resumes/'.$uid.'.pdf')
-        );
+        $filenames = Resume::whereHas('user', static function (Builder $q) use ($users): void {
+            $q->whereIn('uid', $users);
+        })
+            ->get()
+            ->pluck('absolute_file_path');
 
         return $fields->output_type === 'mono' ?
             $this->exportMono($filenames) :
