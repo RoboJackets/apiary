@@ -91,7 +91,7 @@ class ImportAllModels extends Command
 
         Resume::all()->each(static function (Resume $resume, int $key): void {
             $resume->searchable();
-        })
+        });
 
         PruneIndexingNotificationsInNova::dispatch();
 
