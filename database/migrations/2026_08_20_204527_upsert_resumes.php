@@ -15,6 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('resumes', static function (Blueprint $table) {
+            $table->unsignedInteger('user_id')->change();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('user')
@@ -60,5 +61,11 @@ return new class extends Migration
         });
 
         DB::table('resumes')->truncate();
+
+        Schema::table('resumes', static function (Blueprint $table) {
+            $table->dropUnique(['user_id']);
+            $table->dropForeign(['user_id']);
+            $table->unsignedBigInteger('user_id')->change();
+        });
     }
 };
