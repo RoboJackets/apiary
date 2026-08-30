@@ -62,10 +62,6 @@ class ImportAllModels extends Command
         ]);
 
         $this->call('scout:import', [
-            'model' => Resume::class,
-        ]);
-
-        $this->call('scout:import', [
             'model' => Sponsor::class,
         ]);
 
@@ -92,6 +88,10 @@ class ImportAllModels extends Command
         $this->call('scout:import', [
             'model' => User::class,
         ]);
+
+        Resume::all()->each(static function (Resume $resume, int $key): void {
+            $resume->searchable();
+        })
 
         PruneIndexingNotificationsInNova::dispatch();
 
