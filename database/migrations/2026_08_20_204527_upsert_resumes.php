@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::table('resumes', static function (Blueprint $table) {
             $table->foreign('user_id')
                 ->references('id')
-                ->on('user')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->unique('user_id');
