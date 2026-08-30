@@ -20,13 +20,13 @@ In-person meetings
 You can collect attendance for in-person meetings in a few different ways:
 
 #. Using the Apiary mobile app on an Android-powered device
-#. Using the Apiary Admin web interface
+#. Using the Apiary admin web interface
 
 Using the Apiary mobile app
 ~~~~~~~~~~~
 
 RoboJackets developed an Android app to read physical BuzzCards using either :abbr:`NFC (near-field communication)`
-or an external BuzzCard reader connected via Bluetooth and upload the data to the Apiary server.
+or an external BuzzCard reader connected via Bluetooth.
 Your phone must support NFC and run Android 7 (Nougat) or newer.
 
 .. vale Google.Parens = YES
@@ -48,14 +48,14 @@ To record attendance using the app:
 #. You can manually enter a GTID using the :guilabel:`Enter GTID manually` button if someone forgot their BuzzCard.
    If a valid BuzzCard consistently displays an error message, post in :slack:`apiary-mobile`.
 
-You may also use an external BuzzCard reader connected to your Android-powered device by Bluetooth to read both physical and mobile
+You may also use an external BuzzCard reader connected to your Android-powered device by Bluetooth to read both physical and digital
 BuzzCards. To use a reader:
 
 #. Power on the BuzzCard reader by pressing and holding the power button for three seconds.
 #. Open the app and follow the prompts to sign in.
 #. After signing in, go to the :guilabel:`Settings` page and select :guilabel:`Connect BuzzCard reader`.
 #. Tap the :guilabel:`Start scan` button to scan for readers. Select the reader from the list that matches the numbers on the label on the bottom.
-#. Go back to the :guilabel:`Attendance` page and resume collecting attendance as normal.
+#. Go back to the :guilabel:`Attendance` page and collect attendance as normal.
 
 By default, the app uses the NFC radio in your phone to read data from physical BuzzCards. Below are some tips for consistent, successful reads:
 
@@ -79,7 +79,7 @@ To record attendance using the Apiary Admin web interface:
 #. Click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Team Details` or :guilabel:`Event Details` header, then choose the :guilabel:`Record Attendance` option.
    A popup will appear.
 
-At this point you may either continue by entering GTIDs manually in the text field, or connecting to an external BuzzCard reader by Bluetooth.
+At this point you may either continue by entering GTIDs manually in the text field, or connect to an external BuzzCard reader with Bluetooth.
 
 .. important::
     Support for using an external BuzzCard reader by Bluetooth is limited to Google Chrome (on Windows, macOS, Linux, ChromeOS, and Android)
