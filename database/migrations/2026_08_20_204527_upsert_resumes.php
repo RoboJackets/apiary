@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('user_id')->change();
             $table->foreign('user_id')
                 ->references('id')
-                ->on('user')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->unique('user_id');
