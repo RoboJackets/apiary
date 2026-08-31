@@ -67,8 +67,8 @@
         "spatie/laravel-webhook-client": "3.7.0",
         "square/square": "46.1.0.20260819",
         "subfission/cas": "dev-master",
-        "symfony/http-client": "7.4.17",
-        "symfony/postmark-mailer": "7.4.13",
+        "symfony/http-client": "7.4.18",
+        "symfony/postmark-mailer": "7.4.18",
         "xammie/mailbook": "1.12.0"
     },
     "require-dev": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0205e5f128c26acf414d6b1d28eea05a",
+    "content-hash": "429f5ab7367fd96b504dc94a60ea6b2b",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -10318,16 +10318,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v7.4.17",
+            "version": "v7.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "d0aca330a822fe40376cd04c335cb48a24743d0c"
+                "reference": "68d81f78d127984ff2e741f0e0d9cb1078f8f3ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/d0aca330a822fe40376cd04c335cb48a24743d0c",
-                "reference": "d0aca330a822fe40376cd04c335cb48a24743d0c",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/68d81f78d127984ff2e741f0e0d9cb1078f8f3ea",
+                "reference": "68d81f78d127984ff2e741f0e0d9cb1078f8f3ea",
                 "shasum": ""
             },
             "require": {
@@ -10395,7 +10395,7 @@
                 "http"
             ],
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v7.4.17"
+                "source": "https://github.com/symfony/http-client/tree/v7.4.18"
             },
             "funding": [
                 {
@@ -10415,7 +10415,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-21T17:40:08+00:00"
+            "time": "2026-08-30T13:49:59+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -11281,16 +11281,16 @@
         },
         {
             "name": "symfony/postmark-mailer",
-            "version": "v7.4.13",
+            "version": "v7.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/postmark-mailer.git",
-                "reference": "ffda8a32cfbef6cd33ed544e811eb992d6f62347"
+                "reference": "4309412724a05a9543ad0c376afac6cfd9277f68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/postmark-mailer/zipball/ffda8a32cfbef6cd33ed544e811eb992d6f62347",
-                "reference": "ffda8a32cfbef6cd33ed544e811eb992d6f62347",
+                "url": "https://api.github.com/repos/symfony/postmark-mailer/zipball/4309412724a05a9543ad0c376afac6cfd9277f68",
+                "reference": "4309412724a05a9543ad0c376afac6cfd9277f68",
                 "shasum": ""
             },
             "require": {
@@ -11331,7 +11331,7 @@
             "description": "Symfony Postmark Mailer Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/postmark-mailer/tree/v7.4.13"
+                "source": "https://github.com/symfony/postmark-mailer/tree/v7.4.18"
             },
             "funding": [
                 {
@@ -11351,7 +11351,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-23T16:05:06+00:00"
+            "time": "2026-08-30T00:47:26+00:00"
         },
         {
             "name": "symfony/process",
