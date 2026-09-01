@@ -27,7 +27,7 @@ Using the Apiary mobile app
 
 RoboJackets developed an Android app to read physical BuzzCards using either :abbr:`NFC (near-field communication)`
 or an external BuzzCard reader connected via Bluetooth.
-Your phone must support NFC and run Android 7 (Nougat) or newer.
+Your phone must support NFC and Bluetooth, and run Android 12 or newer.
 
 .. vale Google.Parens = YES
 
