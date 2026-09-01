@@ -196,7 +196,7 @@ import parseCredential from '../../../../../resources/js/attendance/parseCredent
 import Mrd5Reader from '../../../../../resources/js/attendance/mrd5Bluetooth';
 
 // Battery percentage below which the low-battery warning is shown.
-const LOW_BATTERY_THRESHOLD = 25;
+const LOW_BATTERY_THRESHOLD = 15;
 
 const CONNECT_ERROR_TIPS = [
     "Press the reader's power button three times quickly.",
