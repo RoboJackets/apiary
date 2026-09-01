@@ -92,12 +92,23 @@ const ERROR_CHIRP_LED_DURATION_MS = 400;
 
 // The MRD5's MLDP link is shared across every WebBluetooth client connected to it, not private to
 // whichever one sent a given command — so a second tab connected to the same physical reader
-// can see the reply to *our* VER: query, or we can see someone else's, with no pendingCommand
-// active on the receiving side to capture it either way.
+// can see the reply to *our* VER: query (or a combined TONE:/LED: chirp), or we can see someone
+// else's, with no pendingCommand active on the receiving side to capture it either way.
 // Recognized by content (not the full expected shape) since it can arrive split across several
 // flush() calls, same as a real VER: response can for its own sender.
 const DEVICE_ACK_REGEX = /^(LED on|Tone = \S+)$/i;
 const VER_RESPONSE_FRAGMENT_REGEX = /Blackboard MRD5|SN:\s*\d+|Boot:\s*\S+|Application:\s*\S+/i;
+
+// A combined write (see playChirp) draws two separate one-line replies ("Tone = <letter>" and
+// "LED on") back in a single notification burst, so a stray/observed ack can arrive as more than
+// one line; DEVICE_ACK_REGEX alone only matches a single line. True when every non-blank line of
+// the message independently looks like a device ack or a VER: fragment.
+function isDeviceNoise(message) {
+    return message.split(/\r?\n/).every(line => {
+        const trimmed = line.trim();
+        return trimmed === '' || DEVICE_ACK_REGEX.test(trimmed) || VER_RESPONSE_FRAGMENT_REGEX.test(trimmed);
+    });
+}
 
 /**
  * @typedef {Object} Mrd5DeviceInfo
@@ -577,57 +588,41 @@ export class Mrd5Reader {
     }
 
     /**
-     * Trigger a beep pattern via `TONE:<letter>`. Best-effort and silent on failure (logged, not
-     * surfaced via onError/Sentry — this is cosmetic feedback, not something worth alarming on).
-     * The device's short text reply ("Tone = <letter>") is drained via collectCommandResponse
-     * rather than left to flow through the normal card-read path, where it would otherwise show up
-     * as a bogus "Card format not recognized" error right after a successful scan.
+     * Trigger a beep pattern + LED flash in a single write, joining `TONE:<letter>` and
+     * `LED:<color>,<durationMs>` with `\n` the same way apiary-mobile's Mrd5Command.combined()
+     * does, so both take effect from one command/response round trip instead of two back-to-back
+     * ones. Best-effort and silent on failure (logged, not surfaced via onError/Sentry — this is
+     * cosmetic feedback, not something worth alarming on). The device's combined text reply
+     * ("Tone = <letter>\nLED on") is drained via collectCommandResponse rather than left to flow
+     * through the normal card-read path, where it would otherwise show up as a bogus "Card format
+     * not recognized" error right after a successful scan.
      *
-     * @param {string} letter
+     * @param {string} tone
+     * @param {string} ledColor Three ASCII digit characters ('0'-'7'), one per R/G/B channel.
+     * @param {number} ledDurationMs Clamped to LED_MAX_DURATION_MS.
      */
-    async playTone(letter) {
+    async playChirp(tone, ledColor, ledDurationMs) {
         if (this.characteristic === null) {
             return;
         }
+        const duration = Math.min(LED_MAX_DURATION_MS, Math.max(0, ledDurationMs));
+        const command = `TONE:${tone}\nLED:${ledColor},${duration}\n`;
         try {
-            await this.collectCommandResponse(`TONE:${letter}\n`);
+            await this.collectCommandResponse(command);
         } catch (error) {
             // eslint-disable-next-line no-console
-            console.warn('MRD5: TONE: command failed: ' + error.message);
-        }
-    }
-
-    /**
-     * Flash the LED via `LED:<color>,<durationMs>`. Same best-effort/response-draining rationale as
-     * {@link playTone}.
-     *
-     * @param {string} color Three ASCII digit characters ('0'-'7'), one per R/G/B channel.
-     * @param {number} durationMs Clamped to LED_MAX_DURATION_MS.
-     */
-    async playLed(color, durationMs) {
-        if (this.characteristic === null) {
-            return;
-        }
-        const duration = Math.min(LED_MAX_DURATION_MS, Math.max(0, durationMs));
-        try {
-            await this.collectCommandResponse(`LED:${color},${duration}\n`);
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.warn('MRD5: LED: command failed: ' + error.message);
+            console.warn('MRD5: combined TONE:/LED: command failed: ' + error.message);
         }
     }
 
     /**
      * Play the reader's tone + LED feedback for a successful attendance record, so someone tapping
      * a card gets confirmation from the reader itself without needing to look at the screen —
-     * matches apiary-mobile's doSuccessChirp(). Fire-and-forget from the caller's perspective: the
-     * two commands are sent sequentially (each collects and discards its own reply before the next
-     * is sent, same as everywhere else in this module), but this method itself is never awaited by
-     * callers, so it never blocks the UI on the reader responding.
+     * matches apiary-mobile's doSuccessChirp(). Fire-and-forget from the caller's perspective: never
+     * awaited by callers, so it never blocks the UI on the reader responding.
      */
     async playSuccessChirp() {
-        await this.playTone(SUCCESS_CHIRP_TONE);
-        await this.playLed(SUCCESS_CHIRP_LED_COLOR, SUCCESS_CHIRP_LED_DURATION_MS);
+        await this.playChirp(SUCCESS_CHIRP_TONE, SUCCESS_CHIRP_LED_COLOR, SUCCESS_CHIRP_LED_DURATION_MS);
     }
 
     /**
@@ -636,8 +631,7 @@ export class Mrd5Reader {
      * {@link playSuccessChirp}.
      */
     async playErrorChirp() {
-        await this.playTone(ERROR_CHIRP_TONE);
-        await this.playLed(ERROR_CHIRP_LED_COLOR, ERROR_CHIRP_LED_DURATION_MS);
+        await this.playChirp(ERROR_CHIRP_TONE, ERROR_CHIRP_LED_COLOR, ERROR_CHIRP_LED_DURATION_MS);
     }
 
     /**
@@ -659,7 +653,7 @@ export class Mrd5Reader {
             return;
         }
 
-        if (DEVICE_ACK_REGEX.test(message) || VER_RESPONSE_FRAGMENT_REGEX.test(message)) {
+        if (isDeviceNoise(message)) {
             // Discard acknowledgements or version responses that we didn't ask for
             // See the comment above DEVICE_ACK_REGEX for more specifics
             return;
