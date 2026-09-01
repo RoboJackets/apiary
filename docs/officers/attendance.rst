@@ -82,13 +82,13 @@ To record attendance using the Apiary Admin web interface:
 At this point you may either continue by entering GTIDs manually in the text field, or connect to an external BuzzCard reader with Bluetooth.
 
 .. important::
-    Support for using an external BuzzCard reader by Bluetooth is limited to browsers/platforms that support the `Web Bluetooth API <https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API#browser_compatibility>`_.
+    Support for using an external BuzzCard reader by Bluetooth is limited to browsers and platforms that support the `Web Bluetooth API <https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API#browser_compatibility>`_.
     If you aren't using one of these, you won't see the option to connect to a reader in the popup, and will only be able to enter GTIDs manually.
 
 #. Power on the BuzzCard reader by pressing and holding the power button for three seconds.
 #. Click the :guilabel:`Connect BuzzCard Reader` button. Select the reader from the list that matches the numbers on the label on the bottom.
 #. If prompted by your device, accept any request for Bluetooth pairing.
-#. Attendance will be recorded for any BuzzCard presented to the reader automatically.
+#. Tap a plastic or digital BuzzCard to the reader, and wait for a short beep, followed by an ascending chime.
 
 Online meetings
 ---------------
