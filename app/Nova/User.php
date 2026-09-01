@@ -10,8 +10,6 @@ use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Models\User as AppModelsUser;
 use App\Nova\Actions\CreatePersonalAccessToken;
 use App\Nova\Actions\ExportDemographicsSurveyRecipients;
-use App\Nova\Actions\ExportFilteredResumes;
-use App\Nova\Actions\ExportFullYearResumes;
 use App\Nova\Actions\ExportUsersBuzzCardAccess;
 use App\Nova\Actions\OverrideAccess;
 use App\Nova\Actions\RefreshFromGTED;
@@ -34,8 +32,8 @@ use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Email;
-use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\MorphToMany;
@@ -61,6 +59,13 @@ class User extends Resource
      * @var string
      */
     public static $model = AppModelsUser::class;
+
+    /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = ['resume'];
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -416,14 +421,9 @@ class User extends Resource
             new Panel(
                 'Resume',
                 [
-                    File::make(
-                        'Resume',
-                        fn (): ?string => $this->resume_date !== null ? 'resumes/'.$this->uid.'.pdf' : null
-                    )->path(
-                        'resumes'
+                    HasOne::make(
+                        'Resume'
                     )
-                        ->disk('local')
-                        ->deletable(false)
                         ->onlyOnDetail()
                         ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->canSee(static function (Request $request): bool {
@@ -433,10 +433,6 @@ class User extends Resource
 
                             return $request->user()->can('read-users-resume');
                         }),
-
-                    DateTime::make('Resume Uploaded At', 'resume_date')
-                        ->onlyOnDetail()
-                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
                 ]
             ),
 
@@ -724,36 +720,6 @@ class User extends Resource
             $refreshFromGted = [];
         }
 
-        if ($request->user()->can('read-users-resume')) {
-            $exportResumes = [
-                ExportFilteredResumes::make()
-                    ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
-                ExportFullYearResumes::make()
-                    ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
-            ];
-        } else {
-            $exportResumes = [
-                Action::danger(
-                    ExportFilteredResumes::make()->name(),
-                    'You do not have access to export resumes.'
-                )
-                    ->withoutConfirmation()
-                    ->withoutActionEvents()
-                    ->standalone()
-                    ->onlyOnIndex()
-                    ->canRun(static fn (): bool => true),
-                Action::danger(
-                    ExportFullYearResumes::make()->name(),
-                    'You do not have access to export resumes.'
-                )
-                    ->withoutConfirmation()
-                    ->withoutActionEvents()
-                    ->standalone()
-                    ->onlyOnIndex()
-                    ->canRun(static fn (): bool => true),
-            ];
-        }
-
         if ($request->user()->can('read-users-gtid')) {
             $exportBuzzCardList = [
                 ExportUsersBuzzCardAccess::make()
@@ -810,8 +776,6 @@ class User extends Resource
             RevokeOAuth2Tokens::make()
                 ->canSee(static fn (Request $r): bool => self::adminOrSelfCanSee($r))
                 ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminOrSelfCanRun($r, $u)),
-
-            ...$exportResumes,
 
             ...$exportBuzzCardList,
 

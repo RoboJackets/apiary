@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Console\Commands;
 
 use App\Jobs\PruneIndexingNotificationsInNova;
@@ -9,6 +12,7 @@ use App\Models\Airport;
 use App\Models\Attendance;
 use App\Models\DuesTransaction;
 use App\Models\Event;
+use App\Models\Resume;
 use App\Models\Sponsor;
 use App\Models\SponsorDomain;
 use App\Models\SponsorUser;
@@ -87,6 +91,10 @@ class ImportAllModels extends Command
         $this->call('scout:import', [
             'model' => User::class,
         ]);
+
+        Resume::all()->each(static function (Resume $resume, int $key): void {
+            $resume->searchable();
+        });
 
         PruneIndexingNotificationsInNova::dispatch();
 

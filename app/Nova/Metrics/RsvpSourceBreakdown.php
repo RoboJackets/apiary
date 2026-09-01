@@ -57,7 +57,7 @@ class RsvpSourceBreakdown extends Partition
                         return [$item->rsvpsource => $item->aggregate];
                     }
 
-                    return ['<unknown>' => $item->aggregate];
+                    return ['Unknown' => $item->aggregate];
                 })
                 ->toArray()
         );

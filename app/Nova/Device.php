@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 /**
  * A Nova resource for devices.
@@ -112,37 +113,65 @@ class Device extends Resource
 
             ID::make('Serial Number', 'serial_number')->sortable(),
 
-            Text::make('Hardware Version', 'hardware_version')
-                ->sortable(),
+            Panel::make('Versions', [
+                Text::make('Hardware', 'hardware_version')
+                    ->sortable()
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                    ->displayUsing([self::class, 'normalizeVersion']),
 
-            Text::make('Bluetooth Firmware Version', 'bluetooth_firmware_version')
-                ->sortable(),
+                Text::make('Bluetooth Firmware', 'bluetooth_firmware_version')
+                    ->sortable()
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                    ->displayUsing([self::class, 'normalizeVersion']),
 
-            Text::make('Bluetooth Software Version', 'bluetooth_software_version')
-                ->sortable(),
+                Text::make('Bluetooth Software', 'bluetooth_software_version')
+                    ->sortable()
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                    ->displayUsing([self::class, 'normalizeVersion']),
 
-            Text::make('Bootloader Version', 'bootloader_version')
-                ->sortable(),
+                Text::make('Bootloader', 'bootloader_version')
+                    ->sortable()
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                    ->displayUsing([self::class, 'normalizeVersion']),
 
-            Text::make('Application Version', 'application_version')
-                ->sortable(),
+                Text::make('Application', 'application_version')
+                    ->sortable()
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                    ->displayUsing([self::class, 'normalizeVersion']),
+            ]),
 
-            Number::make('Battery Percentage', 'battery_percentage')
+            Number::make('Battery', 'battery_percentage')
                 ->min(0)
-                ->max(100),
+                ->max(100)
+                ->sortable()
+                ->displayUsing(static fn (string $percentage): string => $percentage.'%'),
 
-            BelongsTo::make('Last Seen User', 'lastSeenUser', User::class)
-                ->searchable(),
+            Panel::make('Last Seen', [
+                BelongsTo::make('User', 'lastSeenUser', User::class)
+                    ->searchable(),
 
-            DateTime::make('Last Seen At', 'last_seen_at')
-                ->sortable(),
+                DateTime::make('Last Seen At', 'last_seen_at')
+                    ->sortable(),
 
-            Text::make('Last Seen IP Address', 'last_seen_ip_address'),
+                Text::make('IP Address', 'last_seen_ip_address')
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                    ->onlyOnDetail(),
+            ]),
 
             HasMany::make('Attendance', 'attendances', Attendance::class)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
 
             self::metadataPanel(),
         ];
+    }
+
+    /**
+     * Normalize a version string for display.
+     *
+     * @psalm-pure
+     */
+    public static function normalizeVersion(string $version): string
+    {
+        return 'v'.ltrim($version, 'V');
     }
 }

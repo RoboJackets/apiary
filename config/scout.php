@@ -264,6 +264,34 @@ return [
                     'disableOnNumbers' => true,
                 ],
             ],
+            \App\Models\Resume::class => [
+                'displayedAttributes' => [
+                    'id',
+                    'user_id',
+                    'file_name',
+                    'file_path',
+                    'created_at',
+                    'updated_at',
+                    'extracted_text',
+                ],
+                'searchableAttributes' => [
+                    'extracted_text',
+                ],
+                'filterableAttributes' => [
+                    'id',
+                ],
+                'rankingRules' => [
+                    'words',
+                    'typo',
+                    'proximity',
+                    'attribute',
+                    'sort',
+                    'exactness',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
+                ],
+            ],
             \App\Models\Sponsor::class => [
                 'displayedAttributes' => [
                     'id',
