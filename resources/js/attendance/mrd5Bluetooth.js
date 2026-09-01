@@ -66,7 +66,7 @@ const VER_MAX_ATTEMPTS = 4;
 // command needed to request it — so its absence is actually a faster/more direct dead-session
 // signal than VER: (which requires a round trip we send ourselves). If none has arrived by this
 // long after connecting, something's probably wrong; see startBatteryLivenessWatchdog.
-const BATTERY_LIVENESS_TIMEOUT_MS = 8000;
+const BATTERY_LIVENESS_TIMEOUT_MS = 12000;
 
 // `LED:<color>,<durationMs>` — <color> is 3 ASCII chars, one per subpixel in R/G/B order; only the
 // low 3 bits of each character matter, so decimal digit characters '0'-'7' give a predictable 0-7
