@@ -1,3 +1,5 @@
+import { initBeacio } from '@beacio/detect';
+
 // WebBluetooth client for a Transact MRD5 card reader.
 //
 // The MRD5 exposes a Microchip MLDP (Low Energy Data Profile) service; card reads, battery status,
@@ -161,6 +163,16 @@ export class Mrd5Reader {
      * @returns {boolean}
      */
     static isSupported() {
+        if (navigator.bluetooth === undefined) {
+            await initBeacio({
+              operatorName: 'RoboJackets',
+              banner: {
+                mode: 'sheet',          // 'sheet' (default) or 'banner'
+                dismissDays: 14,        // suppress after dismiss
+              },
+            });
+        }
+
         return typeof navigator !== 'undefined' && navigator.bluetooth != null;
     }
 
