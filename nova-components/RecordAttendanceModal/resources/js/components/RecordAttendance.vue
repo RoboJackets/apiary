@@ -29,7 +29,7 @@
                         type="button"
                         dusk="reader-connection-button"
                         :disabled="readerStatus === 'connecting'"
-                        :title="paired ? 'Disconnect ' + (readerDeviceName || 'the BuzzCard reader') : 'Connect a BuzzCard reader'"
+                        :title="paired ? `Disconnect ${readerDeviceName || 'the BuzzCard reader'}` : 'Connect a BuzzCard reader'"
                         @click.prevent="paired ? disconnectReader() : pairReader()"
                         class="inline-flex items-center justify-center h-7 px-3 mr-3 rounded-full text-xs font-bold border bg-transparent border-gray-400 dark:border-gray-500 text-gray-600 dark:text-gray-400 hover:[&:not(:disabled)]:bg-gray-700/5 dark:hover:[&:not(:disabled)]:bg-gray-950 cursor-pointer appearance-none disabled:cursor-not-allowed disabled:opacity-50"
                     >
@@ -352,7 +352,7 @@ export default {
                         // parse is almost always a human typo, not a gap in parseCredential's format
                         // coverage, and would otherwise flood Sentry with noise.
                         Sentry.captureException(
-                            new Error('Card format not recognized: ' + JSON.stringify(trimmedValue))
+                            new Error(`Card format not recognized: ${JSON.stringify(trimmedValue)}`)
                         );
                     }
                 }
@@ -363,7 +363,7 @@ export default {
 
             let source = fromReader ? 'Nova - MRD5' : 'Nova';
             if (parsed.cardType !== null) {
-                source += ' - ' + parsed.cardType;
+                source += ` - ${parsed.cardType}`;
             }
 
             const payload = {
@@ -396,7 +396,7 @@ export default {
                         this.count += 1;
                     }
 
-                    this.showResult('success', 'Recorded — ' + name);
+                    this.showResult('success', `Recorded — ${name}`);
 
                     if (fromReader) {
                         // Fire-and-forget: gives feedback from the reader itself for someone who
