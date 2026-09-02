@@ -105,8 +105,8 @@
                     Enter a GTID, then press Enter.
                 </p>
 
-                <!-- autocomplete/data-*ignore attributes keep password managers from offering
-                     credit-card autofill (the field is an ID, not a payment card). -->
+<!-- autocomplete/data-*ignore attributes keep password managers from offering
+                    credit-card autofill -->
                 <input
                     v-if="!paired || manualEntryVisible"
                     ref="input"
