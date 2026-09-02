@@ -3,7 +3,7 @@
 Attendance
 ==========
 
-Apiary supports recording attendance for both in-person and online meetings, using either BuzzCards or links.
+Apiary supports recording attendance for both in-person and online meetings using either BuzzCards or links.
 
 .. hint::
    To use either method, you must have an :ref:`officer`, :ref:`project-manager`, :ref:`team-lead`, or :ref:`trainer` role.
@@ -17,8 +17,17 @@ In-person meetings
 
 .. vale Google.Parens = NO
 
-RoboJackets developed an Android app to read physical BuzzCards using :abbr:`NFC (near-field communication)` and upload the data to the Apiary server.
-Your phone must support NFC and run Android 7 (Nougat) or newer.
+You can collect attendance for in-person meetings in a few different ways:
+
+#. Using the Apiary mobile app on an Android-powered device
+#. Using the Apiary admin web interface
+
+Using the Apiary mobile app
+~~~~~~~~~~~
+
+RoboJackets developed an Android app to read physical BuzzCards using either :abbr:`NFC (near-field communication)`
+or an external BuzzCard reader connected via Bluetooth.
+Your phone must support NFC and Bluetooth, and run Android 12 or newer.
 
 .. vale Google.Parens = YES
 
@@ -39,7 +48,16 @@ To record attendance using the app:
 #. You can manually enter a GTID using the :guilabel:`Enter GTID manually` button if someone forgot their BuzzCard.
    If a valid BuzzCard consistently displays an error message, post in :slack:`apiary-mobile`.
 
-The app uses the NFC radio in your phone to read data from BuzzCards. Below are some tips for consistent, successful reads:
+You may also use an external BuzzCard reader connected to your device by Bluetooth to read both plastic and digital
+BuzzCards. To use a reader:
+
+#. Power on the BuzzCard reader by pressing and holding the power button for three seconds.
+#. Open the app and follow the prompts to sign in.
+#. After signing in, go to the :guilabel:`Settings` page and select :guilabel:`Connect BuzzCard reader`.
+#. Tap the :guilabel:`Search for readers` button to scan for readers. Select the reader from the list that matches the numbers on the label on the bottom.
+#. Once the reader has connected successfully, return to the :guilabel:`Attendance` page. You can now record attendance by presenting BuzzCards to the external reader.
+
+By default, the app uses the NFC radio in your phone to read data from physical BuzzCards. Below are some tips for consistent, successful reads:
 
 .. vale write-good.Weasel = NO
 
@@ -49,6 +67,27 @@ The app uses the NFC radio in your phone to read data from BuzzCards. Below are 
 - Remove the card for a few seconds, then try again.
 
 If you need help, post in :slack:`apiary-mobile`.
+
+Using the Apiary Admin web interface
+~~~~~~~~~~~
+
+To record attendance using the Apiary Admin web interface:
+
+#. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
+#. Under the :guilabel:`Meetings` header in the left sidebar, click :guilabel:`Teams` or :guilabel:`Events`.
+#. Select the team or event for which you want to record attendance.
+#. Click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Team Details` or :guilabel:`Event Details` header, then choose the :guilabel:`Record Attendance` option.
+   A popup will appear.
+
+At this point you may either continue by entering GTIDs manually in the text field, or connect to an external BuzzCard reader with Bluetooth.
+
+.. important::
+   To use an external BuzzCard reader, your browser must support the `Web Bluetooth API <https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API#browser_compatibility>`_.
+
+#. Power on the BuzzCard reader by pressing and holding the power button for three seconds.
+#. Click the :guilabel:`Connect BuzzCard Reader` button. Select the reader from the list that matches the numbers on the label on the bottom.
+#. If prompted by your device, accept any request for Bluetooth pairing.
+#. Tap a plastic or digital BuzzCard to the reader, and wait for a short beep, followed by an ascending chime.
 
 Online meetings
 ---------------

@@ -13,6 +13,7 @@ class NovaExtension {
   webpackConfig(webpackConfig) {
     webpackConfig.externals = {
       vue: 'Vue',
+      'laravel-nova-ui': 'LaravelNovaUi',
     }
 
     webpackConfig.output = {
