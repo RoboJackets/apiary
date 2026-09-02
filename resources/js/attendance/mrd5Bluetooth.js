@@ -654,8 +654,6 @@ export class Mrd5Reader {
         }
 
         if (isDeviceNoise(message)) {
-            // Discard acknowledgements or version responses that we didn't ask for
-            // See the comment above DEVICE_ACK_REGEX for more specifics
             return;
         }
 

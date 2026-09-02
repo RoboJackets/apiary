@@ -185,13 +185,11 @@
 // AttendanceKiosk.vue) so both entry points detect card formats identically. It is bundled from the
 // app's resources during the build; the Dockerfile copies it into the nova-components build stage.
 import parseCredential from '../../../../../resources/js/attendance/parseCredential';
-// Shared with the same build-time copy step as parseCredential above.
 import Mrd5Reader from '../../../../../resources/js/attendance/mrd5Bluetooth';
 import { Icon } from 'laravel-nova-ui';
 import BluetoothIcon from './icons/BluetoothIcon';
 import BatteryIcon from './icons/BatteryIcon';
 
-// Battery percentage below which the low-battery warning is shown.
 const LOW_BATTERY_THRESHOLD = 15;
 
 const CONNECT_ERROR_TIPS = [
@@ -232,7 +230,6 @@ export default {
     },
 
     computed: {
-        // 'teams' => 'team', 'events' => 'event'
         attendableType() {
             return this.resourceName.replace(/s$/, '');
         },
