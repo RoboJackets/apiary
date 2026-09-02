@@ -220,7 +220,7 @@ export default {
             count: 0,
             result: null,
             submitting: false,
-            mrd5Supported: Mrd5Reader.isSupported(),
+            mrd5Supported: false,
             readerStatus: 'disconnected',
             readerDeviceName: null,
             readerBattery: null,
@@ -253,6 +253,10 @@ export default {
     },
 
     created() {
+        Mrd5Reader.isSupported().then(supported => {
+            this.mrd5Supported = supported;
+        });
+
         this.reader = new Mrd5Reader({
             onStatusChange: status => {
                 this.readerStatus = status;

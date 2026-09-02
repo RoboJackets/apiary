@@ -1,3 +1,4 @@
+import '@beacio/core/auto';
 import { initBeacio } from '@beacio/detect';
 
 // WebBluetooth client for a Transact MRD5 card reader.
@@ -11,8 +12,9 @@ import { initBeacio } from '@beacio/detect';
 // string a user would type/swipe into the text field — so they can flow through the shared
 // credential parser (resources/js/attendance/parseCredential.js).
 //
-// Requires a secure context (https or localhost/127.0.0.1) and a Chromium-based browser (Chrome/Edge);
-// the reader must have Bluetooth Security Mode disabled or it transmits nothing over the characteristic.
+// Requires a secure context (https or localhost/127.0.0.1) and a browser with Web Bluetooth support
+// (Chrome/Edge natively, or Safari iOS via the Beacio extension). The reader must have Bluetooth
+// Security Mode disabled or it transmits nothing over the characteristic.
 
 // Microchip MLDP service + data characteristic advertised by the MRD5. Card reads, battery status,
 // and command responses (e.g. to `VER:`) all arrive as notifications on this one characteristic;
@@ -112,6 +114,22 @@ function isDeviceNoise(message) {
     });
 }
 
+let beacioInitPromise = null;
+
+function initializeBeacio() {
+    if (beacioInitPromise === null) {
+        beacioInitPromise = initBeacio({
+            operatorName: 'RoboJackets',
+            banner: {
+                mode: 'sheet',
+                dismissDays: 14,
+            },
+        }).catch(() => {});
+    }
+
+    return beacioInitPromise;
+}
+
 /**
  * @typedef {Object} Mrd5DeviceInfo
  * @property {string|null} manufacturer
@@ -159,18 +177,13 @@ function isDeviceNoise(message) {
 export class Mrd5Reader {
     /**
      * Whether WebBluetooth is available in this browser/context.
+     * Runs Beacio detection once if there is no native `navigator.bluetooth`.
      *
-     * @returns {boolean}
+     * @returns {Promise<boolean>}
      */
-    static isSupported() {
-        if (navigator.bluetooth === undefined) {
-            await initBeacio({
-              operatorName: 'RoboJackets',
-              banner: {
-                mode: 'sheet',          // 'sheet' (default) or 'banner'
-                dismissDays: 14,        // suppress after dismiss
-              },
-            });
+    static async isSupported() {
+        if (typeof navigator !== 'undefined' && navigator.bluetooth === undefined) {
+            await initializeBeacio();
         }
 
         return typeof navigator !== 'undefined' && navigator.bluetooth != null;
@@ -285,7 +298,7 @@ export class Mrd5Reader {
      * from a user gesture (e.g. a click handler) or the browser will reject requestDevice().
      */
     async connect() {
-        if (!Mrd5Reader.isSupported()) {
+        if (!(await Mrd5Reader.isSupported())) {
             throw new Error('WebBluetooth is not supported in this browser.');
         }
 

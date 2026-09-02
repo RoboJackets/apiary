@@ -19,5 +19,8 @@
     "vue-loader": "16.8.3",
     "webpack": "5.104.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@beacio/core": "^1.2.0",
+    "@beacio/detect": "^1.0.0"
+  }
 }

@@ -1,4 +1,5 @@
 const mix = require('laravel-mix')
+const path = require('path')
 const webpack = require('webpack')
 
 class NovaExtension {
@@ -19,6 +20,12 @@ class NovaExtension {
     webpackConfig.output = {
       uniqueName: this.name,
     }
+
+    webpackConfig.resolve = webpackConfig.resolve || {}
+    webpackConfig.resolve.modules = [
+      path.resolve(__dirname, 'node_modules'),
+      'node_modules',
+    ]
   }
 }
 
