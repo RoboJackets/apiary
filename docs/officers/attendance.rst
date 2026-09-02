@@ -48,14 +48,14 @@ To record attendance using the app:
 #. You can manually enter a GTID using the :guilabel:`Enter GTID manually` button if someone forgot their BuzzCard.
    If a valid BuzzCard consistently displays an error message, post in :slack:`apiary-mobile`.
 
-You may also use an external BuzzCard reader connected to your Android-powered device by Bluetooth to read both physical and digital
+You may also use an external BuzzCard reader connected to your device by Bluetooth to read both plastic and digital
 BuzzCards. To use a reader:
 
 #. Power on the BuzzCard reader by pressing and holding the power button for three seconds.
 #. Open the app and follow the prompts to sign in.
 #. After signing in, go to the :guilabel:`Settings` page and select :guilabel:`Connect BuzzCard reader`.
-#. Tap the :guilabel:`Start scan` button to scan for readers. Select the reader from the list that matches the numbers on the label on the bottom.
-#. Go back to the :guilabel:`Attendance` page and collect attendance as normal.
+#. Tap the :guilabel:`Search for readers` button to scan for readers. Select the reader from the list that matches the numbers on the label on the bottom.
+#. Once the reader has connected successfully, return to the :guilabel:`Attendance` page. You can now record attendance by presenting BuzzCards to the external reader.
 
 By default, the app uses the NFC radio in your phone to read data from physical BuzzCards. Below are some tips for consistent, successful reads:
 
@@ -82,8 +82,7 @@ To record attendance using the Apiary Admin web interface:
 At this point you may either continue by entering GTIDs manually in the text field, or connect to an external BuzzCard reader with Bluetooth.
 
 .. important::
-    Support for using an external BuzzCard reader by Bluetooth is limited to browsers and platforms that support the `Web Bluetooth API <https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API#browser_compatibility>`_.
-    If you aren't using one of these, you won't see the option to connect to a reader in the popup, and will only be able to enter GTIDs manually.
+   To use an external BuzzCard reader, your browser must support the `Web Bluetooth API <https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API#browser_compatibility>`_.
 
 #. Power on the BuzzCard reader by pressing and holding the power button for three seconds.
 #. Click the :guilabel:`Connect BuzzCard Reader` button. Select the reader from the list that matches the numbers on the label on the bottom.
