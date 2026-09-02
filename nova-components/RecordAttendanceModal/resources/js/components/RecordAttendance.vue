@@ -33,9 +33,7 @@
                         @click.prevent="paired ? disconnectReader() : pairReader()"
                         class="inline-flex items-center justify-center h-7 px-3 mr-3 rounded-full text-xs font-bold border bg-transparent border-gray-400 dark:border-gray-500 text-gray-600 dark:text-gray-400 hover:[&:not(:disabled)]:bg-gray-700/5 dark:hover:[&:not(:disabled)]:bg-gray-950 cursor-pointer appearance-none disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 mr-2" aria-hidden="true">
-                            <path d="m7 7 10 10-5 5V2l5 5L7 17" />
-                        </svg>
+                        <bluetooth-icon class="h-3 w-3 mr-2" aria-hidden="true" />
                         {{ readerButtonText }}
                     </button>
 
@@ -45,10 +43,7 @@
                         :class="batteryLow ? 'border-red-500 text-red-500' : 'border-gray-400 dark:border-gray-500 text-gray-600 dark:text-gray-400'"
                         dusk="reader-battery-pill"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 mr-2" aria-hidden="true">
-                            <rect x="2" y="7" width="17" height="10" rx="2" />
-                            <line x1="22" y1="10" x2="22" y2="14" />
-                        </svg>
+                        <battery-icon class="h-3 w-3 mr-2" aria-hidden="true" />
                         {{ readerBattery }}%
                     </span>
 
@@ -61,9 +56,7 @@
                         aria-label="Help with pairing a reader"
                         class="inline-flex items-center justify-center mr-3 text-gray-400 dark:text-gray-500 hover:text-primary-500 dark:hover:text-primary-400"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-6 w-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                        </svg>
+                        <icon name="question-mark-circle" />
                     </a>
 
                     <span v-if="paired && batteryLow" class="text-xs font-semibold text-red-500" dusk="reader-battery-warning">
@@ -194,6 +187,9 @@
 import parseCredential from '../../../../../resources/js/attendance/parseCredential';
 // Shared with the same build-time copy step as parseCredential above.
 import Mrd5Reader from '../../../../../resources/js/attendance/mrd5Bluetooth';
+import { Icon } from 'laravel-nova-ui';
+import BluetoothIcon from './icons/BluetoothIcon';
+import BatteryIcon from './icons/BatteryIcon';
 
 // Battery percentage below which the low-battery warning is shown.
 const LOW_BATTERY_THRESHOLD = 15;
@@ -206,6 +202,12 @@ const CONNECT_ERROR_TIPS = [
 ];
 
 export default {
+    components: {
+        Icon,
+        BluetoothIcon,
+        BatteryIcon,
+    },
+
     props: {
         working: Boolean,
         resourceName: { type: String, required: true },
