@@ -150,8 +150,8 @@ class Resume extends Model
      *         or, has a non-zero payment for an active DuesPackage.
      *         Additionally, the Resume's user is a student.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Resume>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Resume>
      */
     public function scopeVisible(Builder $query): Builder
     {
