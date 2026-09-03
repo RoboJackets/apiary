@@ -178,7 +178,7 @@ class Resume extends Resource
                     ->active()
                     ->where('primary_affiliation', 'student')
                     ->where('is_service_account', false)
-                    ->whereDoesntHave('duesPackages', function ($q) {
+                    ->whereDoesntHave('duesPackages', static function ($q) {
                         $q->where('restricted_to_students', false);
                     })
                     ->limit(1),
