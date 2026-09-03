@@ -19,7 +19,7 @@ use Laravel\Scout\Searchable;
  * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read User $user
+ * @property-read User|null $user
  * @property-read string $file_name
  * @property-read string $absolute_file_path
  * @property-read string $storage_path
