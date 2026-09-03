@@ -112,7 +112,7 @@ class Resume extends Model
      */
     public function getStoragePathAttribute(): string
     {
-        return self::storagePathForUser($this->user);
+        return self::storageDirectory().'/'.$this->user->uid.'.pdf';
     }
 
     /**
