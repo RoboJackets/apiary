@@ -110,9 +110,9 @@ class Resume extends Model
      *
      * @psalm-mutation-free
      */
-    public function getStoragePathAttribute(): string
+    public function getStoragePathAttribute(): ?string
     {
-        return self::storageDirectory().'/'.$this->user->uid.'.pdf';
+        return $this->user ? self::storageDirectory().'/'.$this->user->uid.'.pdf' : null;
     }
 
     /**
@@ -121,17 +121,17 @@ class Resume extends Model
      *
      * @psalm-mutation-free
      */
-    public function getFileNameAttribute(): string
+    public function getFileNameAttribute(): ?string
     {
-        return $this->user->uid.'.pdf';
+        return $this->user ? $this->user->uid.'.pdf' : null;
     }
 
     /**
      * File path, complete with file name, for this Resume.
      */
-    public function getAbsoluteFilePathAttribute(): string
+    public function getAbsoluteFilePathAttribute(): ?string
     {
-        return Storage::disk(self::storageDisk())->path($this->storage_path);
+        return $this->user ? Storage::disk(self::storageDisk())->path($this->storage_path) : null;
     }
 
     /**
@@ -141,7 +141,7 @@ class Resume extends Model
      */
     public function getIsVisibleAttribute(): bool
     {
-        return self::where('id', $this->id)->visible()->count() !== 0;
+        return $this->user ? self::where('id', $this->id)->visible()->count() !== 0 : false;
     }
 
     /**
