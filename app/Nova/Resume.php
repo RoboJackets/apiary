@@ -46,6 +46,13 @@ class Resume extends Resource
     public static $group = 'Other';
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = ['user'];
+
+    /**
      * The columns that should be searched.
      *
      * @var array<string>
