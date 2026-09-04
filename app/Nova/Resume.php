@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Resume as AppModelsResume;
-use App\Models\User as AppModelsUser;
 use App\Nova\Actions\ExportFilteredResumes;
 use App\Nova\Actions\ExportFullYearResumes;
 use Illuminate\Http\Request;
