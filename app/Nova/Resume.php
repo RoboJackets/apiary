@@ -46,6 +46,13 @@ class Resume extends Resource
     public static $group = 'Other';
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = ['user'];
+
+    /**
      * The columns that should be searched.
      *
      * @var array<string>
@@ -83,8 +90,7 @@ class Resume extends Resource
                 ->rules('required')
                 ->sortable(),
             Boolean::make('Visible to Sponsors', 'is_visible')
-                ->rules('required')
-                ->sortable(),
+                ->rules('required'),
             File::make('Resume', 'storage_path')
                 ->path('resumes')
                 ->disk('local')
