@@ -91,8 +91,7 @@ class Resume extends Resource
                 ->rules('required')
                 ->sortable(),
             Boolean::make('Visible to Sponsors', 'is_visible')
-                ->rules('required')
-                ->sortable(),
+                ->rules('required'),
             File::make('Resume', 'storage_path')
                 ->path('resumes')
                 ->disk('local')
@@ -159,37 +158,5 @@ class Resume extends Resource
                     ->onlyOnIndex()
                     ->canRun(static fn (): bool => true),
             ];
-    }
-
-    /**
-     * Build an "index" query for the given resource.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Resume>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Resume>
-     */
-    #[\Override]
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        if ($request->get('orderBy') === 'is_visible') {
-            $direction = $request->get('orderByDirection', 'asc');
-
-            $query->addSelect([
-                'is_visible_sort' => AppModelsUser::selectRaw('1')
-                    ->whereColumn('users.id', 'resumes.user_id')
-                    ->active()
-                    ->where('primary_affiliation', 'student')
-                    ->where('is_service_account', false)
-                    ->whereDoesntHave('duesPackages', static function ($q) {
-                        $q->where('restricted_to_students', false);
-                    })
-                    ->limit(1),
-            ])
-                ->orderByRaw('is_visible_sort IS NULL')
-                ->orderBy('is_visible_sort', $direction);
-
-            return $query;
-        }
-
-        return $query;
     }
 }
