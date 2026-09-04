@@ -9,6 +9,7 @@ namespace Tests\Feature;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
+use App\Models\Resume;
 use App\Models\User;
 use Database\Seeders\UsersSeeder;
 use Illuminate\Http\UploadedFile;
@@ -229,5 +230,20 @@ final class ResumeTest extends TestCase
         $user = $this->getTestUser(['admin']);
         $response = $this->actingAs($user, 'web')->get('/users/_nonexistentuser/resume');
         $response->assertStatus(422);
+    }
+
+    public function test_resume_file_attributes_have_string_types(): void
+    {
+        $user = $this->getTestUser(['member']);
+
+        $resume = Resume::create(['user_id' => $user->id]);
+
+        $this->assertInstanceOf(\App\Models\Resume::class, $resume);
+
+        $this->assertSame('resumes/'.$user->uid.'.pdf', $resume->storage_path);
+        $this->assertSame($user->uid.'.pdf', $resume->file_name);
+        $this->assertIsString($resume->absolute_file_path);
+        $this->assertStringContainsString('resumes/'.$user->uid.'.pdf', $resume->absolute_file_path);
+        $this->assertIsBool($resume->is_visible);
     }
 }

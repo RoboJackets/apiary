@@ -32,6 +32,7 @@ use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Email;
+use Laravel\Nova\Fields\FieldCollection;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Hidden;
@@ -112,6 +113,28 @@ class User extends Resource
      * @var int
      */
     public static $scoutSearchResults = 5;
+
+    /**
+     * Get the fields available for the given request.
+     *
+     * The resume HasOne is only displayed on detail, but Nova's
+     * attribute-names pass uses availableFields instead of updateFields,
+     * which would otherwise resolve the Resume's detail-only File field on
+     * a new, unsaved Resume and crash on the non-nullable user relation.
+     */
+    #[\Override]
+    public function availableFields(NovaRequest $request): FieldCollection
+    {
+        $fields = parent::availableFields($request);
+
+        if ($request->isUpdateOrUpdateAttachedRequest()) {
+            $fields = $fields->reject(
+                static fn ($field): bool => $field instanceof HasOne && $field->attribute === 'resume'
+            );
+        }
+
+        return $fields;
+    }
 
     /**
      * Get the fields displayed by the resource.

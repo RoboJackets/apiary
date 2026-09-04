@@ -43,6 +43,16 @@ class ResumeController implements HasMiddleware
                 );
             }
 
+            if ($user->resume === null) {
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'The requested user has no resume.',
+                    ],
+                    404
+                );
+            }
+
             try {
                 return response()->file($user->resume->absolute_file_path);
             } catch (FileNotFoundException) {

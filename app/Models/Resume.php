@@ -19,11 +19,11 @@ use Laravel\Scout\Searchable;
  * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read User|null $user
+ * @property-read User $user
  * @property-read string $file_name
  * @property-read string $absolute_file_path
  * @property-read string $storage_path
- * @property-read string $is_visible
+ * @property-read bool $is_visible
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Resume whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Resume whereExtractedText($value)
@@ -110,9 +110,9 @@ class Resume extends Model
      *
      * @psalm-mutation-free
      */
-    public function getStoragePathAttribute(): ?string
+    public function getStoragePathAttribute(): string
     {
-        return $this->user ? self::storageDirectory().'/'.$this->user->uid.'.pdf' : null;
+        return self::storagePathForUser($this->user);
     }
 
     /**
@@ -121,17 +121,17 @@ class Resume extends Model
      *
      * @psalm-mutation-free
      */
-    public function getFileNameAttribute(): ?string
+    public function getFileNameAttribute(): string
     {
-        return $this->user ? $this->user->uid.'.pdf' : null;
+        return self::fileNameForUser($this->user);
     }
 
     /**
      * File path, complete with file name, for this Resume.
      */
-    public function getAbsoluteFilePathAttribute(): ?string
+    public function getAbsoluteFilePathAttribute(): string
     {
-        return $this->user ? Storage::disk(self::storageDisk())->path($this->storage_path) : null;
+        return Storage::disk(self::storageDisk())->path($this->storage_path);
     }
 
     /**
@@ -141,7 +141,7 @@ class Resume extends Model
      */
     public function getIsVisibleAttribute(): bool
     {
-        return $this->user ? self::where('id', $this->id)->visible()->count() !== 0 : false;
+        return self::where('id', $this->id)->visible()->count() !== 0;
     }
 
     /**
