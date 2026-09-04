@@ -173,7 +173,7 @@ class Resume extends Resource
             $direction = $request->get('orderByDirection', 'asc');
 
             $query->addSelect([
-                'is_visible_sort' => User::selectRaw('1')
+                'is_visible_sort' => App\Models\User::selectRaw('1')
                     ->whereColumn('users.id', 'resumes.user_id')
                     ->active()
                     ->where('primary_affiliation', 'student')
