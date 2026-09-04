@@ -29,8 +29,8 @@
         "webpack": "5.104.1"
     },
     "dependencies": {
-        "@beacio/core": "^1.0.0",
-        "@beacio/detect": "^1.0.0",
+        "@beacio/core": "1.2.0",
+        "@beacio/detect": "1.0.0",
         "@popperjs/core": "2.11.8",
         "@sentry/vue": "8.55.2",
         "axios": "1.20.0",
