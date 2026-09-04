@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Resume as AppModelsResume;
+use App\Models\User as AppModelsUser;
 use App\Nova\Actions\ExportFilteredResumes;
 use App\Nova\Actions\ExportFullYearResumes;
 use Illuminate\Http\Request;
@@ -173,7 +174,7 @@ class Resume extends Resource
             $direction = $request->get('orderByDirection', 'asc');
 
             $query->addSelect([
-                'is_visible_sort' => App\Models\User::selectRaw('1')
+                'is_visible_sort' => AppModelsUser::selectRaw('1')
                     ->whereColumn('users.id', 'resumes.user_id')
                     ->active()
                     ->where('primary_affiliation', 'student')
