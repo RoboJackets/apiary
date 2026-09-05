@@ -24,8 +24,9 @@
             </h3>
 
             <div class="px-8">
-                <div v-if="mrd5Supported" class="flex items-center flex-wrap mb-4" dusk="mrd5-status-row">
+                <div v-if="mrd5Supported || readerBattery !== null" class="flex items-center flex-wrap mb-4" dusk="mrd5-status-row">
                     <button
+                        v-if="mrd5Supported"
                         type="button"
                         dusk="reader-connection-button"
                         :disabled="readerStatus === 'connecting'"
@@ -38,7 +39,7 @@
                     </button>
 
                     <span
-                        v-if="paired && readerBattery !== null"
+                        v-if="readerBattery !== null"
                         class="inline-flex items-center h-7 px-3 mr-3 rounded-full text-xs font-bold border"
                         :class="batteryLow ? 'border-red-500 text-red-500' : 'border-gray-400 dark:border-gray-500 text-gray-600 dark:text-gray-400'"
                         dusk="reader-battery-pill"
@@ -48,6 +49,7 @@
                     </span>
 
                     <a
+                        v-if="mrd5Supported"
                         href="/docs/officers/attendance/"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -59,7 +61,7 @@
                         <icon name="question-mark-circle" />
                     </a>
 
-                    <span v-if="paired && batteryLow" class="text-xs font-semibold text-red-500" dusk="reader-battery-warning">
+                    <span v-if="batteryLow" class="text-xs font-semibold text-red-500" dusk="reader-battery-warning">
                         ⚠ Reader battery low ({{ readerBattery }}%) - charge it soon.
                     </span>
                 </div>
@@ -185,6 +187,7 @@
 // AttendanceKiosk.vue) so both entry points detect card formats identically. It is bundled from the
 // app's resources during the build; the Dockerfile copies it into the nova-components build stage.
 import parseCredential from '../../../../../resources/js/attendance/parseCredential';
+import parseBatteryMessage from '../../../../../resources/js/attendance/mrd5Battery';
 import Mrd5Reader from '../../../../../resources/js/attendance/mrd5Bluetooth';
 import { Icon } from 'laravel-nova-ui';
 import BluetoothIcon from './icons/BluetoothIcon';
@@ -330,12 +333,24 @@ export default {
         },
 
         submit(rawFromReader) {
+            const fromReader = rawFromReader !== undefined;
+            const value = fromReader ? rawFromReader : this.identifier;
+
+            // A keyboard-mode reader types its periodic battery status into the input like a card
+            // read. Consume it before the submitting guard so a BATT: burst arriving while a
+            // request is in-flight doesn't linger in the field and poison the next submission.
+            const battery = parseBatteryMessage(value);
+            if (battery !== null) {
+                this.readerBattery = battery.percent;
+                this.identifier = '';
+                this.focusInput();
+                return;
+            }
+
             if (this.submitting) {
                 return;
             }
 
-            const fromReader = rawFromReader !== undefined;
-            const value = fromReader ? rawFromReader : this.identifier;
             const parsed = parseCredential(value);
 
             if (parsed === null) {
