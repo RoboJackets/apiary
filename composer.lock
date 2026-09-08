@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9164daa209745f04b6345624635d4455",
+    "content-hash": "6f17b18d141ade9943541432524b3968",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -3725,20 +3725,20 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.10.1",
+            "version": "5.10.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "0e3265d21d8ffceeff8dafeb6624c2079a827872"
+                "reference": "cef74d54d7cdecb10011a9a736b0cea75ab3ac44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-0e3265d21d8ffceeff8dafeb6624c2079a827872-zip-1ffaee.zip",
-                "reference": "0e3265d21d8ffceeff8dafeb6624c2079a827872",
-                "shasum": "cfeef745c2948ba6b071bd477f8ebce25255ffa7"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-cef74d54d7cdecb10011a9a736b0cea75ab3ac44-zip-fe1982.zip",
+                "reference": "cef74d54d7cdecb10011a9a736b0cea75ab3ac44",
+                "shasum": "a4c0ad83efed03ef743d17a55c775d460fbe209c"
             },
             "require": {
-                "brick/money": "^0.8|^0.9|^0.10|^0.11|^0.12|^0.13",
+                "brick/money": "^0.8|^0.9|^0.10|^0.11|^0.12|^0.13|^0.14",
                 "ext-json": "*",
                 "illuminate/filesystem": "^10.48.29|^11.44.1|^12.1.1|^13.0.0",
                 "illuminate/support": "^10.48.29|^11.44.1|^12.1.1|^13.0.0",
@@ -3903,10 +3903,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.10.1",
+                "source": "https://github.com/laravel/nova/tree/v5.10.2",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2026-08-04T17:18:29+00:00"
+            "time": "2026-09-08T07:24:34+00:00"
         },
         {
             "name": "laravel/passkeys",
