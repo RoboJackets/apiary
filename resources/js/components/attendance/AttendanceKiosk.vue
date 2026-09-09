@@ -15,6 +15,7 @@
 
 <script>
     import parseCredential from '../../attendance/parseCredential';
+    import parseBatteryMessage from '../../attendance/mrd5Battery';
 
     function checkboxEventListener(e) {
         this.stickToTeam = e.target.checked;
@@ -220,6 +221,12 @@
                 // Card is presented, process the data
                 let self = this;
                 this.attendance.source = 'kiosk';
+
+                // A keyboard-mode reader types a periodic battery status line that arrives here
+                // just like a card read — drop it silently instead of showing a parse error.
+                if (parseBatteryMessage(cardData) !== null) {
+                    return;
+                }
 
                 const parsed = parseCredential(cardData);
 

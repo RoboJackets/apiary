@@ -1,12 +1,13 @@
 import '@beacio/core/auto';
 import { initBeacio } from '@beacio/detect';
+import { parseBatteryMessage } from './mrd5Battery';
 
 // WebBluetooth client for a Transact MRD5 card reader.
 //
 // The MRD5 exposes a Microchip MLDP (Low Energy Data Profile) service; card reads, battery status,
 // and command replies all arrive as ASCII text notifications on the same data characteristic. This
 // module connects to the reader, buffers incoming chunks into complete messages, and classifies
-// each message as a battery status line (`BATT:<percent>/<opaque>`), a stray command
+// each message as a battery status line (`BATT:<percent>/<current>`), a stray command
 // acknowledgment/reply not otherwise captured (see DEVICE_ACK_REGEX and
 // VER_RESPONSE_FRAGMENT_REGEX), or a card read. Card reads are handed off verbatim — the same
 // string a user would type/swipe into the text field — so they can flow through the shared
@@ -37,9 +38,9 @@ const DEVICE_INFO_CHARACTERISTICS = {
     software: 'software_revision_string',
 };
 
-// Battery status line, e.g. "BATT:99/136". The first number is the battery percentage directly;
-// the number after the slash is of unknown meaning and is preserved only as `raw`.
-const BATTERY_REGEX = /^BATT:(\d+)\/(\d+)$/;
+// Battery status lines (`BATT:<percent>/<current>`, e.g. "BATT:99/136") are parsed by the shared
+// parseBatteryMessage helper (./mrd5Battery) — the reader emits the same line in keyboard-wedge
+// mode, where it must be intercepted before it reaches the credential parser.
 
 // Wait this long after the last chunk before treating the buffer as a complete message.
 const RX_DEBOUNCE_MS = 80;
@@ -590,9 +591,9 @@ export class Mrd5Reader {
 
             const trimmed = text.trim();
 
-            const battery = BATTERY_REGEX.exec(trimmed);
+            const battery = parseBatteryMessage(trimmed);
             if (battery !== null) {
-                this.noteBatteryReceived(trimmed, Number(battery[1]));
+                this.noteBatteryReceived(battery.raw, battery.percent);
             }
 
             if (attempt < VER_MAX_ATTEMPTS) {
@@ -672,9 +673,9 @@ export class Mrd5Reader {
             return;
         }
 
-        const battery = BATTERY_REGEX.exec(message);
+        const battery = parseBatteryMessage(message);
         if (battery !== null) {
-            this.noteBatteryReceived(message, Number(battery[1]));
+            this.noteBatteryReceived(battery.raw, battery.percent);
             return;
         }
 
