@@ -274,6 +274,19 @@ class TravelAssignment extends Resource
     }
 
     /**
+     * Get the filters available for the resource.
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
+     */
+    #[\Override]
+    public function filters(NovaRequest $request): array
+    {
+        return $request->user()->can('read-payments') ? [
+            new Filters\TravelAssignmentPaymentStatus(),
+        ] : [];
+    }
+
+    /**
      * Handle any post-validation processing.
      *
      * @param  \Illuminate\Validation\Validator  $validator
