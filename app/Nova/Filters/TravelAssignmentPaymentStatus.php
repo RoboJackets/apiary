@@ -19,7 +19,10 @@ class TravelAssignmentPaymentStatus extends BooleanFilter
 
     /**
      * Apply the filter to the given query.
+     *
+     * @psalm-pure
      */
+    #[\Override]
     public function apply(NovaRequest $request, Builder $query, mixed $value): Builder
     {
         return $value['pending'] === true ? $query->unpaid()->whereNull('charged_off_at') : $query;
@@ -28,8 +31,11 @@ class TravelAssignmentPaymentStatus extends BooleanFilter
     /**
      * Get the filter's available options.
      *
+     * @psalm-pure
+     *
      * @return array<string, string>
      */
+    #[\Override]
     public function options(NovaRequest $request): array
     {
         return [
