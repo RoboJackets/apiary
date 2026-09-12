@@ -60,7 +60,7 @@ class TravelAssignmentPolicy
                     // then users with the manage-travel permission can also update the assignment
                     $user->can('manage-travel') ||
                     // or the primary contact can update the assignment
-                    $assignment->travel->primary_contact_user_id === $user->id
+                    $assignment->travel->primaryContact->is($user)
                 )
             )
         );
@@ -80,7 +80,7 @@ class TravelAssignmentPolicy
                     // then users with the manage-travel permission can also delete the assignment
                     $user->can('manage-travel') ||
                     // or the primary contact can delete the assignment
-                    $assignment->travel->primary_contact_user_id === $user->id
+                    $assignment->travel->primaryContact->is($user)
                 )
             );
     }
