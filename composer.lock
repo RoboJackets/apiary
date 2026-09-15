@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "530983ab1ba2c5477b7153731121946e",
+    "content-hash": "5b11b5a7b93d68a81dfb585699949d87",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -3730,17 +3730,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.10.2",
+            "version": "5.11.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "cef74d54d7cdecb10011a9a736b0cea75ab3ac44"
+                "reference": "fcc67a67eb4151976f7a1e3b6304a8ae5f7bbbf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-cef74d54d7cdecb10011a9a736b0cea75ab3ac44-zip-fe1982.zip",
-                "reference": "cef74d54d7cdecb10011a9a736b0cea75ab3ac44",
-                "shasum": "a4c0ad83efed03ef743d17a55c775d460fbe209c"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-fcc67a67eb4151976f7a1e3b6304a8ae5f7bbbf8-zip-1e850f.zip",
+                "reference": "fcc67a67eb4151976f7a1e3b6304a8ae5f7bbbf8",
+                "shasum": "aa15f33d626336129530376bbe18cf15415d81e0"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10|^0.11|^0.12|^0.13|^0.14",
@@ -3759,6 +3759,7 @@
                 "symfony/console": "^6.4.14|^7.0.3|^8.0.0",
                 "symfony/deprecation-contracts": "^2.5|^3.0",
                 "symfony/finder": "^6.4.13|^7.0.3|^8.0.0",
+                "symfony/html-sanitizer": "^6.4.14|^7.0.3|^8.0.0",
                 "symfony/http-foundation": "^6.4.13|^7.0.3|^8.0.0",
                 "symfony/polyfill-intl-icu": "^1.33",
                 "symfony/polyfill-php82": "^1.33",
@@ -3908,10 +3909,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.10.2",
+                "source": "https://github.com/laravel/nova/tree/v5.11.0",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2026-09-08T07:24:34+00:00"
+            "time": "2026-09-15T09:05:11+00:00"
         },
         {
             "name": "laravel/passkeys",
@@ -10336,6 +10337,78 @@
                 }
             ],
             "time": "2026-08-21T12:09:28+00:00"
+        },
+        {
+            "name": "symfony/html-sanitizer",
+            "version": "v8.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/html-sanitizer.git",
+                "reference": "3d79bdecd01f71bccc45ddfa1d33c024df347a1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/html-sanitizer/zipball/3d79bdecd01f71bccc45ddfa1d33c024df347a1f",
+                "reference": "3d79bdecd01f71bccc45ddfa1d33c024df347a1f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "league/uri": "^6.5|^7.0",
+                "php": ">=8.4.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HtmlSanitizer\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Titouan Galopin",
+                    "email": "galopintitouan@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides an object-oriented API to sanitize untrusted HTML input for safe insertion into a document's DOM.",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "Purifier",
+                "html",
+                "sanitizer"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/html-sanitizer/tree/v8.1.7"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-09-04T10:14:04+00:00"
         },
         {
             "name": "symfony/http-client",
