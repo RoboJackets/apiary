@@ -38,7 +38,7 @@
         "chartist": "0.11.4",
         "chartist-plugin-legend": "0.6.2",
         "chartist-plugin-pointlabels": "0.0.6",
-        "moment": "2.30.1",
+        "moment": "2.31.0",
         "sweetalert2": "11.26.25",
         "vue": "2.7.16",
         "vue-flatpickr-component": "8.1.8",
