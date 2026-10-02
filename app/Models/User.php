@@ -629,7 +629,7 @@ class User extends Authenticatable
     #[\Override]
     public function getAuthPassword(): string
     {
-        throw new BadMethodCallException('Not implemented');
+        return '';
     }
 
     /**

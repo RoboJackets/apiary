@@ -7,6 +7,7 @@ namespace Tests\Unit;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 final class UserTest extends TestCase
@@ -59,5 +60,15 @@ final class UserTest extends TestCase
 
         // They paid a non-student package
         $this->assertFalse($user->is_student);
+    }
+
+    public function test_can_log_in_to_session_guard_without_password(): void
+    {
+        $user = $this->getTestUser(['member']);
+
+        Auth::login($user);
+
+        $this->assertAuthenticatedAs($user);
+        $this->assertFalse(session()->has('password_hash_web'));
     }
 }
