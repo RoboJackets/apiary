@@ -12,15 +12,33 @@ use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
 use Carbon\CarbonImmutable;
+use CAS_GracefullTerminationException;
 use Faker\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Subfission\Cas\CasManager;
+use Subfission\Cas\LogFactory;
 
 abstract class TestCase extends BaseTestCase
 {
     use RefreshDatabase;
+
+    #[\Override]
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        CAS_GracefullTerminationException::throwInsteadOfExiting();
+
+        $this->app->singleton('cas', static function (): CasManager {
+            $cas = new CasManager(config('cas'), new InitializeOncePhpCasProxy());
+            $cas->setLogger(resolve(LogFactory::class)->make());
+
+            return $cas;
+        });
+    }
 
     /**
      * Shortcut to create a dummy dues package.
