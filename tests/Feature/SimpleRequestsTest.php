@@ -42,6 +42,8 @@ final class SimpleRequestsTest extends TestCase
      */
     public function test_info(): void
     {
+        config(['oauth.android.client_id' => 'android-client-id']);
+
         $response = $this->get('/api/v1/info');
         $response->assertStatus(200);
         $response->assertJson(static function (AssertableJson $json): void {
@@ -50,7 +52,8 @@ final class SimpleRequestsTest extends TestCase
                     $json->where('appName', 'TESTING Apiary')
                         ->where('appEnv', 'testing')
                         ->where('allocId', 'asdf')
-                        ->where('release', 'jkl');
+                        ->where('release', 'jkl')
+                        ->where('oAuthClients.reactNative.clientId', 'android-client-id');
                 });
         });
     }
