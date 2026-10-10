@@ -71,6 +71,21 @@ class SponsorUser extends Authenticatable
         return $this->email_suppression_reason === null;
     }
 
+    /**
+     * Overrides getAuthPassword for Authenticatable.
+     * Spatie One Time Passwords goes through the normal login() guard
+     * after checking OTPs, and the normal login() guard runs getAuthPassword().
+     * Since this model has no password attribute and uses OTPs instead, it
+     * produces an error unless a blank password is supplied during login().
+     *
+     * @psalm-pure
+     */
+    #[\Override]
+    public function getAuthPassword(): string
+    {
+        return '';
+    }
+
     /** @psalm-pure */
     #[\Override]
     public function getRememberTokenName(): string

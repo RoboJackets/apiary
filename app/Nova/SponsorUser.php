@@ -64,18 +64,6 @@ class SponsorUser extends Resource
     public static $scoutSearchResults = 5;
 
     /**
-     * Overrides getAuthPassword for Authenticatable.
-     * Spatie One Time Passwords goes through the normal login() guard
-     * after checking OTPs, and the normal login() guard runs getAuthPassword().
-     * Since this model has no password attribute and uses OTPs instead, it
-     * produces an error unless a blank password is supplied during login().
-     */
-    public function getAuthPassword(): string
-    {
-        return '';
-    }
-
-    /**
      * Get the fields displayed by the resource.
      */
     #[\Override]
