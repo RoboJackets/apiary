@@ -70,7 +70,6 @@ class SponsorUser extends Resource
      * Since this model has no password attribute and uses OTPs instead, it
      * produces an error unless a blank password is supplied during login().
      */
-    #[\Override]
     public function getAuthPassword(): string
     {
         return '';
