@@ -67,7 +67,7 @@ class SponsorUser extends Resource
      * Overrides getAuthPassword for Authenticatable.
      * Spatie One Time Passwords goes through the normal login() guard
      * after checking OTPs, and the normal login() guard runs getAuthPassword().
-     * Since this model has no password attribute and uses OTPs instead, it 
+     * Since this model has no password attribute and uses OTPs instead, it
      * produces an error unless a blank password is supplied during login().
      */
     #[\Override]
