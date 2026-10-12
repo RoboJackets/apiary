@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use Backstage\MinifyHtml\Middleware\MinifyHtml as BaseMinifyHtml;
 use Closure;
-use HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware;
 
-class MinifyHtml extends MinifyMiddleware
+class MinifyHtml extends BaseMinifyHtml
 {
     /**
      * @param  \Closure(\Illuminate\Http\Request): \Symfony\Component\HttpFoundation\Response  $next
