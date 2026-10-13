@@ -14,7 +14,7 @@ class MinifyHtml extends BaseMinifyHtml
     #[\Override]
     public function handle($request, $next)
     {
-        if ($request->is('nova', 'nova/*', 'nova-api', 'nova-api/*')) {
+        if ($request->is('nova', 'nova/*', 'nova-api', 'nova-api/*', 'horizon', 'horizon/*')) {
             return $next($request);
         }
 
