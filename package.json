@@ -26,6 +26,7 @@
         "sass": "1.71.1",
         "sass-loader": "13.3.3",
         "vue-loader": "15.11.1",
+        "vue-template-compiler": "2.7.16",
         "webpack": "5.104.1"
     },
     "dependencies": {
@@ -44,7 +45,6 @@
         "vue-flatpickr-component": "8.1.8",
         "vue-moment": "4.1.0",
         "vue-select": "3.20.4",
-        "vue-template-compiler": "2.7.16",
         "vuelidate": "0.7.7"
     }
 }
