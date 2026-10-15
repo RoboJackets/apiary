@@ -28,7 +28,7 @@
         "ans-group/laravel-health-check": "3.0.0",
         "apereo/phpcas": "1.6.2",
         "ashallendesign/laravel-config-validator": "2.10.0",
-        "backstage/laravel-minify-html-middleware": "5.6.2",
+        "backstage/laravel-minify-html-middleware": "5.7.4",
         "barryvdh/laravel-dompdf": "dev-master",
         "calebporzio/sushi": "2.5.4",
         "chelout/laravel-relationship-events": "4.0.0",
