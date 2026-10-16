@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4041110fa95b43ce7e5f1a2fff247ef2",
+    "content-hash": "343463c71993b1f0ca5ac4cd86f0e8cf",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -528,7 +528,7 @@
         },
         {
             "name": "backstage/laravel-minify-html-middleware",
-            "version": "v5.7.4",
+            "version": "v5.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/backstagephp/laravel-minify-html-middleware.git",
@@ -596,7 +596,7 @@
             ],
             "support": {
                 "issues": "https://github.com/backstagephp/laravel-minify-html-middleware/issues",
-                "source": "https://github.com/backstagephp/laravel-minify-html-middleware/tree/v5.7.4"
+                "source": "https://github.com/backstagephp/laravel-minify-html-middleware/tree/v5.8.0"
             },
             "funding": [
                 {
