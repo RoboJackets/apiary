@@ -195,7 +195,7 @@ abstract class TestCase extends BaseTestCase
             $sponsor->name = $name;
             $sponsor->end_date = Carbon::now()->addDays(30);
             $sponsor->save();
-        } else if ($sponsor->end_date <= now()) {
+        } elseif ($sponsor->end_date <= now()) {
             $sponsor->end_date = Carbon::now()->addDays(30);
             $sponsor->save();
         }

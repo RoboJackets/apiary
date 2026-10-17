@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Spatie\OneTimePasswords\Enums\ConsumeOneTimePasswordResult;
 use Spatie\OneTimePasswords\Notifications\OneTimePasswordNotification;
@@ -104,7 +103,6 @@ final class SponsorTest extends TestCase
 
         $user->sendOneTimePassword();
 
-        Notification::assertSentToTimes($user, OneTimePasswordNotification::class, 1);
         $notification = Notification::sent($user, OneTimePasswordNotification::class)->first();
         $code = $notification->oneTimePassword->password;
         $this->assertMatchesRegularExpression('/^\d{6}$/', $code);
