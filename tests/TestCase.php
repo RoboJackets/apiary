@@ -8,9 +8,13 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\FiscalYear;
 use App\Models\Payment;
+use App\Models\Sponsor;
+use App\Models\SponsorDomain;
+use App\Models\SponsorUser;
 use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use CAS_GracefullTerminationException;
 use Faker\Factory;
@@ -178,5 +182,62 @@ abstract class TestCase extends BaseTestCase
         $user->refresh();
 
         return $user;
+    }
+
+    /**
+     * Get the testing sponsor.
+     */
+    protected function getTestSponsor(string $name = 'Test Sponsor'): Sponsor
+    {
+        $sponsor = Sponsor::where('name', $name)->first();
+        if ($sponsor === null) {
+            $sponsor = new Sponsor();
+            $sponsor->name = $name;
+            $sponsor->end_date = Carbon::now()->addDays(30);
+            $sponsor->save();
+        } else if ($sponsor->end_date <= now()) {
+            $sponsor->end_date = Carbon::now()->addDays(30);
+            $sponsor->save();
+        }
+
+        return $sponsor;
+    }
+
+    /**
+     * get the testing sponsor domain.
+     */
+    protected function getTestSponsorDomain(Sponsor $sponsor, string $domain = 'test.robojackets.org'): SponsorDomain
+    {
+        $sponsorDomain = SponsorDomain::where('sponsor_id', $sponsor->id)
+            ->where('domain_name', $domain)
+            ->first();
+
+        if ($sponsorDomain === null) {
+            $sponsorDomain = new SponsorDomain();
+            $sponsorDomain->sponsor_id = $sponsor->id;
+            $sponsorDomain->domain_name = $domain;
+            $sponsorDomain->save();
+        }
+
+        return $sponsorDomain;
+    }
+
+    /**
+     * get the testing sponsor user.
+     */
+    protected function getTestSponsorUser(Sponsor $sponsor, string $email = 'test@test.robojackets.org'): SponsorUser
+    {
+        $sponsorUser = SponsorUser::where('sponsor_id', $sponsor->id)
+            ->where('email', $email)
+            ->first();
+
+        if ($sponsorUser === null) {
+            $sponsorUser = new SponsorUser();
+            $sponsorUser->sponsor_id = $sponsor->id;
+            $sponsorUser->email = $email;
+            $sponsorUser->save();
+        }
+
+        return $sponsorUser;
     }
 }
