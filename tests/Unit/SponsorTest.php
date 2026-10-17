@@ -14,7 +14,7 @@ final class SponsorTest extends TestCase
     public function test_one_time_password_login(): void
     {
         $sponsor = $this->getTestSponsor();
-        $sponsorDomain = $this->getTestSponsorDomain($sponsor);
+        $this->getTestSponsorDomain($sponsor);
         $user = $this->getTestSponsorUser($sponsor);
 
         $code = $user->createOneTimePassword()->password;
@@ -28,7 +28,7 @@ final class SponsorTest extends TestCase
     public function test_consume_without_login(): void
     {
         $sponsor = $this->getTestSponsor();
-        $sponsorDomain = $this->getTestSponsorDomain($sponsor);
+        $this->getTestSponsorDomain($sponsor);
         $user = $this->getTestSponsorUser($sponsor);
 
         $code = $user->createOneTimePassword()->password;
@@ -42,7 +42,7 @@ final class SponsorTest extends TestCase
     public function test_one_time_password_expiry(): void
     {
         $sponsor = $this->getTestSponsor();
-        $sponsorDomain = $this->getTestSponsorDomain($sponsor);
+        $this->getTestSponsorDomain($sponsor);
         $user = $this->getTestSponsorUser($sponsor);
 
         $code = $user->createOneTimePassword()->password;
@@ -57,7 +57,7 @@ final class SponsorTest extends TestCase
     public function test_code_is_single_use(): void
     {
         $sponsor = $this->getTestSponsor();
-        $sponsorDomain = $this->getTestSponsorDomain($sponsor);
+        $this->getTestSponsorDomain($sponsor);
         $user = $this->getTestSponsorUser($sponsor);
 
         $code = $user->createOneTimePassword()->password;
@@ -72,7 +72,7 @@ final class SponsorTest extends TestCase
     public function test_wrong_code_is_rejected(): void
     {
         $sponsor = $this->getTestSponsor();
-        $sponsorDomain = $this->getTestSponsorDomain($sponsor);
+        $this->getTestSponsorDomain($sponsor);
         $user = $this->getTestSponsorUser($sponsor);
 
         $user->createOneTimePassword();
@@ -86,7 +86,7 @@ final class SponsorTest extends TestCase
     public function test_user_with_no_code_is_rejected(): void
     {
         $sponsor = $this->getTestSponsor();
-        $sponsorDomain = $this->getTestSponsorDomain($sponsor);
+        $this->getTestSponsorDomain($sponsor);
         $user = $this->getTestSponsorUser($sponsor);
 
         $result = $user->consumeOneTimePassword('123456');
@@ -98,7 +98,7 @@ final class SponsorTest extends TestCase
     {
         Notification::fake();
         $sponsor = $this->getTestSponsor();
-        $sponsorDomain = $this->getTestSponsorDomain($sponsor);
+        $this->getTestSponsorDomain($sponsor);
         $user = $this->getTestSponsorUser($sponsor);
 
         $user->sendOneTimePassword();
@@ -113,7 +113,7 @@ final class SponsorTest extends TestCase
     public function test_rate_limit(): void
     {
         $sponsor = $this->getTestSponsor();
-        $sponsorDomain = $this->getTestSponsorDomain($sponsor);
+        $this->getTestSponsorDomain($sponsor);
         $user = $this->getTestSponsorUser($sponsor);
 
         $user->createOneTimePassword();
