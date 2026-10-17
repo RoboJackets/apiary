@@ -40,6 +40,7 @@ class UserController implements HasMiddleware
                     'search',
                     'searchByEmail',
                     'fuzzySearch',
+                    'syncAccess',
                 ]
             ),
             new Middleware('permission:create-users', only: ['store']),
@@ -390,5 +391,34 @@ class UserController implements HasMiddleware
             'tasks' => $overrideEligibility->required_tasks,
             'override_until' => $overrideEndDate,
         ]);
+    }
+
+    public function syncAccess(string $id): JsonResponse
+    {
+        $user = User::findByIdentifier($id)->first();
+
+        if ($user === null) {
+            return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
+        }
+
+        if ($user->is_service_account) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Service accounts do not have access to other systems.',
+                ],
+                422
+            );
+        }
+
+        PushToJedi::dispatchSync($user, self::class, -1, 'manual');
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Access was synced successfully!',
+            ],
+            202
+        );
     }
 }
