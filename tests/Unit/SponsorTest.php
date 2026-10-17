@@ -7,7 +7,6 @@ namespace Tests\Unit;
 use App\Notifications\SponsorOneTimePasswordNotification;
 use Illuminate\Support\Facades\Notification;
 use Spatie\OneTimePasswords\Enums\ConsumeOneTimePasswordResult;
-use Spatie\OneTimePasswords\Notifications\OneTimePasswordNotification;
 use Tests\TestCase;
 
 final class SponsorTest extends TestCase
@@ -103,7 +102,6 @@ final class SponsorTest extends TestCase
         $user = $this->getTestSponsorUser($sponsor);
 
         $user->sendOneTimePassword();
-
 
         Notification::assertSentToTimes($user, SponsorOneTimePasswordNotification::class, 1);
         $notification = Notification::sent($user, SponsorOneTimePasswordNotification::class)->first();
