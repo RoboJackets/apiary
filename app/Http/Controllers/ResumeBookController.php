@@ -110,6 +110,36 @@ class ResumeBookController
         ]);
     }
 
+    /**
+     * Exports resumes displayed with current search terms and filters. 
+     * Currently exports name, email, major, graduation date.
+     *
+     * @param  $request  Request object containing arrays of parameters to search.
+     */
+    public function export(ResumeSearchRequest $request)
+    {
+        $validated = $request->validated();
+
+        $majors = $validated['majors'] ?? [];
+        $graduation_semesters = $validated['graduation_semesters'] ?? [];
+
+        $users = $this->filterUsers($majors, $graduation_semesters);
+
+        return response()->streamDownload(function () use ($users): void {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, ['Name', 'Email', 'Major', 'Graduation Term']);
+            foreach ($users as $user) {
+                fputcsv($out, [
+                    $user['full_name'],
+                    $user['gt_email'],
+                    collect($user['majors'])->pluck('display_name')->implode(', '),
+                    $user['graduation_semester']['name'] ?? '',
+                ]);
+            }
+            fclose($out);
+        }, 'robojackets-resume-book.csv', ['Content-Type' => 'text/csv']);
+    }
+
     /** @psalm-pure */
     private static function formatGradSemester(?string $code): array
     {

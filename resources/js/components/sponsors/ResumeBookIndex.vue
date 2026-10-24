@@ -5,9 +5,9 @@
     <div class="rj-page-header px-4 py-3 flex-shrink-0 d-flex align-items-center justify-content-between border-bottom">
       <h1 class="h4 mb-0 fw-semibold">Resume Book</h1>
       <!-- TODO: Implement CSV Exports -->
-      <!--<button class="btn btn-sm btn-outline-secondary">
+      <button class="btn btn-sm btn-outline-secondary" @click="exportCsv">
         Export CSV <span class="badge bg-secondary ms-1">{{ users.length }}</span> 
-      </button>-->
+      </button>
     </div>
 
     <!-- Folder tab bar -->
@@ -232,6 +232,21 @@ export default {
         this.majors = response.data.majors;
       } catch (error) {
         console.error('Error fetching majors:', error);
+      }
+    },
+
+    async exportCsv() {
+      try {
+        const response = await axios.post('/sponsor/export', this.filters, { responseType: 'blob' });
+        const url = URL.createObjectURL(response.data);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'robojackets-resume-book.csv';
+        // click the link to download the csv -> file directory pops up automatically
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error('Error exporting users:', error);
       }
     },
 
