@@ -125,7 +125,7 @@ class ResumeBookController
 
         $users = $this->filterUsers($majors, $graduation_semesters);
 
-        return response()->streamDownload(function () use ($users): void {
+        return response()->streamDownload(static function () use ($users): void {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['Name', 'Email', 'Major', 'Graduation Term']);
             foreach ($users as $user) {

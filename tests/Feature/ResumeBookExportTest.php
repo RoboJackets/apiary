@@ -39,14 +39,14 @@ final class ResumeBookExportTest extends TestCase
             firstName: 'User',
             lastName: 'One',
             graduationSemester: '202608',
-            major: $cs,
+            major: $cs
         );
         $userTwo = $this->createResumeBookUser(
             uid: 'exportuser2',
             firstName: 'User',
             lastName: 'Two',
             graduationSemester: '202705',
-            major: $ee,
+            major: $ee
         );
 
         $header = 'Name,Email,Major,"Graduation Term"';
@@ -121,7 +121,7 @@ final class ResumeBookExportTest extends TestCase
         string $firstName,
         string $lastName,
         string $graduationSemester,
-        Major $major,
+        Major $major
     ): User {
         $user = User::factory()->create([
             'uid' => $uid,
