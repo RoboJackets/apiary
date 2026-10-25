@@ -32,6 +32,7 @@ final class ResumeBookExportTest extends TestCase
 
         $cs = $this->createMajor('Computer Science', 'cs');
         $ee = $this->createMajor('Electrical Engineering', 'ee');
+        $this->createMajor('Mechanical Engineering', 'me');
 
         $userOne = $this->createResumeBookUser(
             uid: 'exportuser1',
@@ -48,8 +49,9 @@ final class ResumeBookExportTest extends TestCase
             major: $ee,
         );
 
-        $userOneRow = 'User One,'.$userOne->gt_email.',Computer Science,Fall 2026';
-        $userTwoRow = 'User Two,'.$userTwo->gt_email.',Electrical Engineering,Summer 2027';
+        $header = 'Name,Email,Major,"Graduation Term"';
+        $userOneRow = '"User One",'.$userOne->gt_email.',"Computer Science","Fall 2026"';
+        $userTwoRow = '"User Two",'.$userTwo->gt_email.',"Electrical Engineering","Summer 2027"';
 
         $response = $this->actingAs($sponsorUser, 'sponsor')
             ->post(route('sponsor.export'), [
@@ -61,7 +63,7 @@ final class ResumeBookExportTest extends TestCase
         $response->assertDownload('robojackets-resume-book.csv');
 
         $csv = $response->streamedContent();
-        $this->assertStringContainsString('Name,Email,Major,Graduation Term', $csv);
+        $this->assertStringContainsString($header, $csv);
         $this->assertStringContainsString($userOneRow, $csv);
         $this->assertStringContainsString($userTwoRow, $csv);
 
@@ -92,7 +94,7 @@ final class ResumeBookExportTest extends TestCase
             ]);
 
         $csv = $response->streamedContent();
-        $this->assertStringContainsString('Name,Email,Major,Graduation Term', $csv);
+        $this->assertStringContainsString($header, $csv);
         $this->assertStringNotContainsString($userOne->gt_email, $csv);
         $this->assertStringNotContainsString($userTwo->gt_email, $csv);
     }

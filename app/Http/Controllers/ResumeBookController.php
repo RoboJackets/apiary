@@ -111,7 +111,7 @@ class ResumeBookController
     }
 
     /**
-     * Exports resumes displayed with current search terms and filters. 
+     * Exports resumes displayed with current search terms and filters.
      * Currently exports name, email, major, graduation date.
      *
      * @param  $request  Request object containing arrays of parameters to search.
