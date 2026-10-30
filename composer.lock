@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cba0777818ca8cd0d9883e4b01a70425",
+    "content-hash": "481b77df68578fcbc813f057348d07fd",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -528,7 +528,7 @@
         },
         {
             "name": "backstage/laravel-minify-html-middleware",
-            "version": "v5.9.4",
+            "version": "v5.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/backstagephp/laravel-minify-html-middleware.git",
@@ -596,7 +596,7 @@
             ],
             "support": {
                 "issues": "https://github.com/backstagephp/laravel-minify-html-middleware/issues",
-                "source": "https://github.com/backstagephp/laravel-minify-html-middleware/tree/v5.9.4"
+                "source": "https://github.com/backstagephp/laravel-minify-html-middleware/tree/v5.10.0"
             },
             "funding": [
                 {
@@ -604,7 +604,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-29T18:55:56+00:00"
+            "time": "2026-08-29T18:55:56+00:00",
+            "published-time": "2026-10-28T08:40:04+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -8684,7 +8685,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-28T07:16:50+00:00"
+            "time": "2026-09-28T07:16:50+00:00",
+            "published-time": "2026-09-28T07:17:01+00:00"
         },
         {
             "name": "spatie/laravel-permission",
