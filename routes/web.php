@@ -140,6 +140,7 @@ Route::prefix('sponsor')->name('sponsor.')->group(static function (): void {
     Route::get('/login', [SponsorLoginController::class, 'showLoginForm'])->name('login');
     Route::post('/validate-email', [SponsorLoginController::class, 'validateEmail'])->name('validate-email');
     Route::post('/verify-otp', [SponsorLoginController::class, 'verifyOneTimePassword'])->name('verify-otp');
+    Route::post('/export', [ResumeBookController::class, 'export'])->name('export')->middleware('auth.sponsor');
 });
 
 Route::get('/.well-known/openid-configuration', [OAuthController::class, 'showOpenIdConfiguration']);
