@@ -32,6 +32,7 @@ class ResumeSearchRequest extends FormRequest
             'majors.*' => 'sometimes|string|exists:majors,display_name',
             'graduation_semesters' => 'nullable|array',
             'graduation_semesters.*' => 'sometimes|integer|digits:6',
+            'search_terms' => 'nullable|string|max:255'
         ];
     }
 }

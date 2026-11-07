@@ -24,8 +24,17 @@
 
       <!-- Sidebar -->
       <div class="col-auto border-end overflow-auto h-100 rj-sidebar py-3 px-3" style="min-height:0;">
-        <!-- TODO: Implement search -->
-        <!--<input class="form-control form-control-sm mb-3" placeholder="Search by name…" type="search"/>-->
+        <form class="mb-3" @submit.prevent="submitSearch">
+          <label for="resume-search" class="form-label small mb-1">Keyword Search</label>
+          <input
+            id="resume-search"
+            v-model="searchInput"
+            class="form-control form-control-sm mb-2"
+            placeholder="Search resume text…"
+            type="search"
+          />
+          <button class="btn btn-primary btn-sm w-100" type="submit">Search</button>
+        </form>
 
         <!-- Major -->
         <div class="rj-collapsible-header" @click="expanded.major = !expanded.major">
@@ -159,8 +168,9 @@ export default {
       filters: {
         majors: [],
         graduation_semesters: [],
-        majors: [],
+        search_terms: "",
       },
+      searchInput: "",
       selectedUser: null,
       openDd: null,
       expanded: { major: true, term: true },
@@ -188,7 +198,13 @@ export default {
   },
 
   watch: {
-    filters: {
+    'filters.majors': {
+      handler() {
+        this.search();
+      },
+      deep: true,
+    },
+    'filters.graduation_semesters': {
       handler() {
         this.search();
       },
@@ -215,6 +231,11 @@ export default {
       } catch (error) {
         console.error('Error fetching users:', error);
       }
+    },
+
+    submitSearch() {
+      this.filters.search_terms = this.searchInput.trim();
+      this.search();
     },
 
     async getGraduationSemesters() {

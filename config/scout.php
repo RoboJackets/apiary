@@ -279,6 +279,7 @@ return [
                 ],
                 'filterableAttributes' => [
                     'id',
+                    'user_id',
                 ],
                 'rankingRules' => [
                     'words',

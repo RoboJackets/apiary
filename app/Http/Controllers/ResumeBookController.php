@@ -66,8 +66,9 @@ class ResumeBookController
 
         $majors = $validated['majors'] ?? [];
         $graduation_semesters = $validated['graduation_semesters'] ?? [];
+        $search_terms = $validated['search_terms'] ?? '';
 
-        $users = $this->filterUsers($majors, $graduation_semesters);
+        $users = $this->filterUsers($majors, $graduation_semesters, $search_terms);
 
         return response()->json([
             'status' => 'success',
@@ -133,13 +134,13 @@ class ResumeBookController
     }
 
     /**
-     * Filters users by major and graduation semester.
-     * Later versions of this function will also perform text search.
+     * Filters users by major, graduation semester, and search terms.
      *
      * @param  $majors  Array of all majors to include.
      * @param  $graduation_semesters  array of graduation semesters to include.
+     * @param  $search_terms  String of search terms to match.
      */
-    private function filterUsers(array $majors, array $graduation_semesters): array
+    private function filterUsers(array $majors, array $graduation_semesters, string $search_terms): array
     {
         $usernames = collect(Storage::disk(Resume::storageDisk())->files(Resume::storageDirectory()))
             ->map(static fn (string $path): string => pathinfo($path, PATHINFO_FILENAME))
@@ -155,6 +156,20 @@ class ResumeBookController
 
         if ($graduation_semesters !== []) {
             $users = $users->whereIn('graduation_semester', $graduation_semesters);
+        }
+
+        if ($search_terms !== '') {
+            $candidate_ids = $users->pluck('id')->all();
+
+            $matching_ids = Resume::search($search_terms)
+                ->whereIn('user_id', $candidate_ids)
+                ->take(count($candidate_ids))
+                ->get()
+                ->pluck('user_id')
+                ->unique()
+                ->all();
+
+            $users = $users->whereIn('id', $matching_ids);
         }
 
         $users = $users->with('majors')
