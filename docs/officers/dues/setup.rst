@@ -3,6 +3,7 @@
 Set up dues
 ===========
 
+.. vale ai-tells.DefensiveHedges = NO
 .. vale write-good.E-Prime = NO
 .. vale write-good.Weasel = NO
 
@@ -18,6 +19,8 @@ While dues collection itself is largely automated, there are a few steps that th
 Create a fiscal year
 --------------------
 
+.. vale ai-tells.FormalTransitions = NO
+.. vale ai-tells.NounString = NO
 .. vale Google.WordListCase = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.

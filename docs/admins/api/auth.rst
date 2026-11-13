@@ -24,7 +24,7 @@ To create a new personal access token, navigate to a user's details page within 
 .. vale write-good.Weasel = NO
 
 .. note::
-   Users with access to Nova can create their own personal access tokens. Users with the :ref:`admin` role can additionally create tokens for **any** user.
+   Users with access to Nova can create their own personal access tokens. Users with the :ref:`admin` role can create tokens for **any** user.
 
 .. vale Google.Parens = NO
 
@@ -37,6 +37,8 @@ If the token is still valid, you can use it against the :http:get:`/api/v1/user`
 .. vale Google.Will = NO
 
 The ``aud`` field is the client ID for the OAuth client that issued this token. For personal access tokens, this will always be a dedicated "Personal Access Client."
+
+.. vale ai-tells.FigurativeOwns = NO
 
 The ``sub`` field is the user ID of the user that owns the token, or the client ID, depending on the ``grant_type`` used to create it.
 

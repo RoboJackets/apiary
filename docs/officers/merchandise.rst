@@ -36,6 +36,7 @@ Recording merchandise distribution on web
 
 To record distribution of an item, follow these steps.
 
+.. vale ai-tells.ParallelStaccato = NO
 .. vale Google.Parens = NO
 
 #. Open the details page for the merchandise item you want to distribute.

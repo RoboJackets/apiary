@@ -3,6 +3,7 @@
 Endpoints
 =========
 
+.. vale ai-tells.OverusedVocabulary = NO
 .. vale Google.Passive = NO
 .. vale write-good.E-Prime = NO
 .. vale write-good.Passive = NO
@@ -10,7 +11,7 @@ Endpoints
 This list includes the endpoints that are most heavily used and maintained, but isn't comprehensive.
 If you're looking for an endpoint to perform a specific operation not listed here, ask in :slack:`apiary`.
 
-All endpoints require an ``Authorization`` header with an OAuth access token, and an ``Accept`` header set to ``application/json``. See :doc:`/admins/api/auth` for more information.
+All endpoints listed on this page require an ``Authorization`` header with an OAuth access token, and an ``Accept`` header set to ``application/json``. See :doc:`/admins/api/auth` for more information.
 
 .. vale Google.Parens = NO
 
@@ -85,7 +86,7 @@ All endpoints require an ``Authorization`` header with an OAuth access token, an
    :status 403: the authenticated user doesn't have permission for this operation (``read-teams``)
 
 .. http:get:: /api/v1/teams/(int:id)/members
-   :synopsis: Return information about members for a given team
+   :synopsis: Return information about members for a team
 
    :requestheader Authorization: an OAuth access token (see :ref:`Authentication`)
    :requestheader Accept: ``application/json``

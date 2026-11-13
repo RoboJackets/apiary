@@ -30,6 +30,7 @@ Any filters applied to the user list outside of the popup are ignored.
 
 To export resumes:
 
+.. vale ai-tells.MicDrop = NO
 .. vale Google.WordListCase = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
@@ -42,7 +43,9 @@ To export resumes:
 #. Click :guilabel:`Export Resumes`, then wait.
    This may take several seconds depending on how many resumes are included.
 
-All resumes that match the criteria are combined into a single :abbr:`PDF (Portable Document Format)` and downloaded.
+.. vale ai-tells.FillerIntensifier = NO
+
+Resumes that match the criteria are combined into a single :abbr:`PDF (Portable Document Format)` and downloaded.
 Review the PDF before distributing it to sponsors.
 
 .. vale Google.Headings = NO

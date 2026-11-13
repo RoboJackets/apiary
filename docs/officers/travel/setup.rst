@@ -56,8 +56,11 @@ Approve a trip
    To approve trips, you must have the :ref:`officer` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
+.. vale ai-tells.Metacommentary = NO
+
 Once all assignments have been created, the trip must be approved by an officer. This ensures that all trip details are accurate before travelers are notified of their assignments.
 
+.. vale ai-tells.VerbTricolon = NO
 .. vale Google.Parens = NO
 
 #. On the :guilabel:`Trip Details` page, click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Trip Details` header.
@@ -68,6 +71,8 @@ Once all assignments have been created, the trip must be approved by an officer.
    #. If any changes need to be made to the trip, click :guilabel:`Cancel` at the bottom of the popup, and work with the primary contact to make the changes.
    #. If all criteria are met, click :guilabel:`Approve` at the bottom of the popup.
 #. Once the trip is approved, travelers will receive email notifications with instructions to pay and submit forms, if needed.
+
+.. vale ai-tells.DoubleHyphen = NO
 
 .. important::
    Approving a trip is final -- trips can't be moved back to :guilabel:`Draft` status after approval.

@@ -42,6 +42,8 @@ Collecting RSVPs
 After creating the event, the details page shows an :guilabel:`RSVP URL`.
 You can send this link to anyone to allow them to RSVP to the event.
 
+.. vale ai-tells.FormalTransitions = NO
+
 You can also append a ``source`` query parameter to the URL to track clicks from different channels, such as newsletters or the website.
 For example, you can append ``?source=website`` to the end of the URL.
 

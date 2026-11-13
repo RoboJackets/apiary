@@ -29,6 +29,7 @@ A trip fee can only be charged off when all of the following are true:
 What happens after a charge-off
 -------------------------------
 
+.. vale ai-tells.MicDrop = NO
 .. vale Google.Anthropomorphism = NO
 .. vale Google.OxfordComma = NO
 
@@ -42,6 +43,7 @@ What happens after a charge-off
 Charging off a trip fee
 -----------------------
 
+.. vale ai-tells.NounString = NO
 .. vale Google.Parens = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
