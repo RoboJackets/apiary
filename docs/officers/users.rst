@@ -77,6 +77,8 @@ To generate the list:
    You should generate lists for **both** populations and send **both** to Mechanical Engineering Facilities, but the export can only generate one at a time due to technical limitations.
 #. Click :guilabel:`Export List`.
 
+.. vale ai-tells.NounString = NO
+
 Export demographics survey recipients
 -------------------------------------
 
@@ -93,8 +95,6 @@ Any filters applied to the user list are ignored.
    Apiary automatically applies an email suppression when an email address bounces, or if a user explicitly unsubscribes from Apiary emails.
 
 To generate the list:
-
-.. vale ai-tells.NounString = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.
