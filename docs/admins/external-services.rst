@@ -115,7 +115,7 @@ DocuSign requires the following configuration within Apiary:
 Postmark
 --------
 
-Apiary sends transactional emails to remind members about mandatory tasks, as well as receipts and DocuSign acknowledgement emails.
+Apiary sends transactional emails to remind members about mandatory tasks, receipts, and DocuSign acknowledgement emails.
 While Laravel supports a wide variety of email service providers, RoboJackets uses `Postmark <https://postmarkapp.com/>`_.
 
 Postmark requires the following configuration within Apiary:

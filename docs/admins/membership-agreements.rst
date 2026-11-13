@@ -3,10 +3,12 @@
 Membership agreements
 =====================
 
+.. vale Google.Passive = NO
 .. vale write-good.E-Prime = NO
+.. vale write-good.Passive = NO
 .. vale write-good.Weasel = NO
 
-Apiary requires prospective members to review and sign a membership agreement before paying dues. This feature is currently implemented using `DocuSign Embedded Signing <https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/embedding/>`_.
+Apiary requires prospective members to review and sign a membership agreement before paying dues. This feature is implemented using `DocuSign Embedded Signing <https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/embedding/>`_.
 
 Parent or legal guardian signatures
 -----------------------------------
@@ -18,6 +20,7 @@ This feature requires an administrator to enter the parent or legal guardian's n
 
 .. vale Google.Parens = NO
 .. vale Google.WordList = NO
+.. vale Google.WordListCase = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.

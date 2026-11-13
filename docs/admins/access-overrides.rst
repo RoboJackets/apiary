@@ -55,6 +55,8 @@ Administrators can generally grant manual access overrides to users, even if the
 
 Manual overrides have two requirements:
 
+.. vale Google.Timeless = NO
+
 - Administrators can't grant overrides to themselves
 - The user receiving the override must have signed the latest membership agreement
 

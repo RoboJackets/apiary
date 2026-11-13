@@ -16,6 +16,8 @@ If creating a token for use by another system, rather than a human user, you sho
    Creating personal access tokens for service accounts is **deprecated** and may be removed in a future release.
    New implementations should use OAuth ``client_credentials`` grant to retrieve short-lived access tokens.
 
+.. vale Google.Parens = NO
+
 To create a new personal access token, navigate to a user's details page within Nova, then use the :guilabel:`Create Personal Access Token` action under the actions menu (three dots |actionsmenu|).
 
 .. vale Google.WordList = NO

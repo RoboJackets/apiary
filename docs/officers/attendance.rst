@@ -16,6 +16,7 @@ In-person meetings
    For in-person meetings in the Student Competition Center, use the attendance kiosk to record attendance.
 
 .. vale Google.Parens = NO
+.. vale Google.WordListCase = NO
 
 You can collect attendance for in-person meetings in a few different ways:
 
@@ -68,10 +69,14 @@ By default, the app uses the NFC radio in your phone to read data from physical 
 
 If you need help, post in :slack:`apiary-mobile`.
 
+.. vale Google.Headings = NO
+
 Using the Apiary Admin web interface
 ~~~~~~~~~~~
 
 To record attendance using the Apiary Admin web interface:
+
+.. vale Google.Parens = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Meetings` header in the left sidebar, click :guilabel:`Teams` or :guilabel:`Events`.

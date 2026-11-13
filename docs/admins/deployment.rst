@@ -120,6 +120,7 @@ You must log in to the database server as ``root`` or another administrative use
 The selected database name, user name, and password must be loaded in the environment-specific configuration key in Consul.
 
 .. vale Google.WordList = NO
+.. vale Google.WordListCase = NO
 
 No other setup is required for the database.
 Tables and other necessary data are initialized when the app is deployed.

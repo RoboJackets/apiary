@@ -18,7 +18,7 @@ While dues collection itself is largely automated, there are a few steps that th
 Create a fiscal year
 --------------------
 
-.. vale Google.WordList = NO
+.. vale Google.WordListCase = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Dues` header in the left sidebar, click :guilabel:`Fiscal Years`.
@@ -33,6 +33,7 @@ Create dues packages
 --------------------
 
 .. vale Google.Will = NO
+.. vale Google.Parens = NO
 
 #. Click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Fiscal Year Details` header, then choose the :guilabel:`Create Dues Packages` option.
 #. A confirmation popup will appear with an option to create a non-student package.

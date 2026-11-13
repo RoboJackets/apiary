@@ -30,6 +30,8 @@ Any filters applied to the user list outside of the popup are ignored.
 
 To export resumes:
 
+.. vale Google.WordListCase = NO
+
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.
 #. Click the Actions menu (three dots |actionsmenu|) in the top right corner, then select :guilabel:`Export Resumes`.
@@ -58,7 +60,7 @@ The CSV file includes members meeting the following criteria. Any filters applie
 
 * Must be access active
 * Must be a current student, faculty, or staff, as determined by Georgia Tech
-* Must not have paid for any dues packages that are **not** :guilabel:`Restricted to Students`
+* Must not have paid for any dues packages that **aren't** :guilabel:`Restricted to Students`
 * Must not have the :guilabel:`BuzzCard Access Opt-Out` flag applied
 
 To generate the list:

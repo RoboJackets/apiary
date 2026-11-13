@@ -23,6 +23,8 @@ Creating an event
    To create an event, you must have the :ref:`officer`, :ref:`project-manager`, or :ref:`team-lead` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
+.. vale Google.WordListCase = NO
+
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Meetings` header in the left sidebar, click :guilabel:`Events`.
 #. In the top-right corner, click :guilabel:`Create Event`.

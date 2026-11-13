@@ -7,6 +7,7 @@ Charging off trip fees
 .. vale write-good.E-Prime = NO
 .. vale write-good.Passive = NO
 .. vale write-good.Weasel = NO
+.. vale Google.WordListCase = NO
 
 Admins can charge off unpaid trip fees that are unlikely to be collected.
 
@@ -15,6 +16,8 @@ The member still owes the fee, but Apiary stops sending payment reminder emails,
 
 .. hint::
    To charge off trip fees, you must have the :ref:`admin` role.
+
+.. vale write-good.TooWordy = NO
 
 A trip fee can only be charged off when all of the following are true:
 
@@ -26,6 +29,9 @@ A trip fee can only be charged off when all of the following are true:
 What happens after a charge-off
 -------------------------------
 
+.. vale Google.Anthropomorphism = NO
+.. vale Google.OxfordComma = NO
+
 - The member still sees the fee as an outstanding payment on their dashboard and Travel tab, and they can still pay it online or in person.
   If they pay, the assignment counts as paid, and the charge-off no longer has any effect.
 - Apiary stops sending payment reminder emails for the trip assignment.
@@ -35,6 +41,8 @@ What happens after a charge-off
 
 Charging off a trip fee
 -----------------------
+
+.. vale Google.Parens = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.
