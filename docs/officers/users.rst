@@ -94,6 +94,8 @@ Any filters applied to the user list are ignored.
 
 To generate the list:
 
+.. vale ai-tells.NounString = NO
+
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.
 #. Click the Actions menu (three dots |actionsmenu|) in the top right corner, then select :guilabel:`Export Demographics Survey Recipients`.
