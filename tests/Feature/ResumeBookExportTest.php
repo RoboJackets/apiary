@@ -63,6 +63,18 @@ final class ResumeBookExportTest extends TestCase
         $response->assertDownload('robojackets-resume-book.csv');
 
         $csv = $response->streamedContent();
+
+        // Troubleshooting, remove after
+        $client = app(\Meilisearch\Client::class);
+        $index = $client->index((new Resume())->searchableAs());
+
+        dump(
+            config('scout.driver'),
+            config('scout.queue'),
+            $index->getFilterableAttributes(),
+            $index->search('', ['filter' => 'user_id = '.$userOne->id])->getHits(),
+        );
+
         $this->assertStringContainsString($header, $csv);
         $this->assertStringContainsString($userOneRow, $csv);
         $this->assertStringContainsString($userTwoRow, $csv);
