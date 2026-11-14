@@ -104,10 +104,10 @@
                 style="cursor:pointer;"
                 @click="selectResume(resume)">
               <td class="align-middle">
-                <span class="fw-medium">{{ resume.full_name }}</span>
+                <span class="fw-medium">{{ resume.user.full_name }}</span>
               </td>
-              <td v-if="!selectedResume" class="align-middle small text-muted">{{ resume.major.join(', ') }}</td>
-              <td v-if="!selectedResume" class="align-middle small text-muted">{{ graduationSemesterName(resume.graduation_semester) }}</td>
+              <td v-if="!selectedResume" class="align-middle small text-muted">{{ resume.user.majors.map(m => m.display_name ?? m.gtad_majorgroup_name).join(', ') }}</td>
+              <td v-if="!selectedResume" class="align-middle small text-muted">{{ graduationSemesterName(resume.user.graduation_semester) }}</td>
               <!-- TODO: Add tags -->
               <!--<td v-if="!selectedResume" class="align-middle">
                  <div class="d-flex flex-wrap gap-1">
@@ -135,8 +135,8 @@
         <div class="px-4 py-3 border-bottom">
           <div class="d-flex justify-content-between align-items-start">
             <div>
-              <h2 class="h5 mb-0 fw-semibold">{{ selectedResume.full_name }}</h2>
-              <div class="text-muted small">{{ selectedResume.major.join(', ') }} · {{ graduationSemesterName(selectedResume.graduation_semester) }} · {{ selectedResume.gt_email }}</div>
+              <h2 class="h5 mb-0 fw-semibold">{{ selectedResume.user.full_name }}</h2>
+              <div class="text-muted small">{{ selectedResume.user.majors.map(m => m.display_name ?? m.gtad_majorgroup_name).join(', ') }} · {{ graduationSemesterName(selectedResume.user.graduation_semester) }} · {{ selectedResume.user.gt_email }}</div>
             </div>
           </div>
           <!-- <div class="d-flex flex-wrap gap-1 mt-2">
@@ -218,7 +218,7 @@ export default {
       if (this.resume_url) {
         URL.revokeObjectURL(this.resume_url);
       }
-      this.resume_url = `/sponsor/resumes/${resume.user_uid}`
+      this.resume_url = `/sponsor/resumes/${resume.user.uid}`
       this.selectedResume = resume;
     },
 

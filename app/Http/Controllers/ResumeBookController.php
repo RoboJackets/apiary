@@ -132,10 +132,12 @@ class ResumeBookController
             fputcsv($out, ['Name', 'Email', 'Major', 'Graduation Term']);
             foreach ($resumes as $resume) {
                 fputcsv($out, [
-                    $resume['full_name'],
-                    $resume['gt_email'],
-                    implode(', ', $resume['major'] ?? []),
-                    self::formatGradSemester($resume['graduation_semester'] ?? null)['name'],
+                    $resume->user->full_name,
+                    $resume->user->gt_email,
+                    $resume->user->majors
+                        ->map(static fn (Major $major): ?string => $major->display_name ?? $major->gtad_majorgroup_name)
+                        ->implode(', '),
+                    self::formatGradSemester($resume->user->graduation_semester)['name'],
                 ]);
             }
             fclose($out);
@@ -171,15 +173,18 @@ class ResumeBookController
      * @param  array<string>  $graduation_semesters  Graduation semester codes to include.
      * @param  string  $search_terms  Search terms to match against resume text.
      */
-    private function filterResumes(array $majors, array $graduation_semesters, string $search_terms): array
-    {
+    private function filterResumes(
+        array $majors,
+        array $graduation_semesters,
+        string $search_terms
+    ): \Illuminate\Database\Eloquent\Collection {
         $usernames = collect(Storage::disk(Resume::storageDisk())->files(Resume::storageDirectory()))
             ->map(static fn (string $path): string => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
         $candidate_ids = User::active()->whereIn('uid', $usernames)->pluck('id')->all();
 
         if ($candidate_ids === []) {
-            return [];
+            return (new Resume())->newCollection();
         }
 
         $resume_search = Resume::search($search_terms)
@@ -194,6 +199,9 @@ class ResumeBookController
             $resume_search->whereIn('major', $majors);
         }
 
-        return $resume_search->raw()['hits'];
+        return $resume_search->get()->load([
+            'user:id,uid,first_name,last_name,gt_email,graduation_semester',
+            'user.majors:id,display_name,gtad_majorgroup_name',
+        ]);
     }
 }
