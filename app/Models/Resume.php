@@ -169,7 +169,7 @@ class Resume extends Model
      * Get the indexable data array for the model.
      * Uses Apache Tika to extract text from a resume if the file exists.
      *
-     * @return array<string,int|string>
+     * @return array<string,array<int,string>|int|string|null>
      */
     public function toSearchableArray(): array
     {
@@ -212,11 +212,16 @@ class Resume extends Model
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'user_uid' => $this->user->uid,
+            'full_name' => $this->user->full_name,
+            'gt_email' => $this->user->gt_email,
             'file_name' => $this->file_name,
             'storage_path' => $this->storage_path,
             'absolute_file_path' => $this->absolute_file_path,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'major' => $this->user->majors->pluck('display_name')->filter()->values()->all(),
+            'graduation_semester' => $this->user->graduation_semester,
             'extracted_text' => $full_text,
         ];
     }

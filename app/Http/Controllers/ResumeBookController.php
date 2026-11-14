@@ -68,11 +68,11 @@ class ResumeBookController
         $graduation_semesters = $validated['graduation_semesters'] ?? [];
         $search_terms = $validated['search_terms'] ?? '';
 
-        $users = $this->filterUsers($majors, $graduation_semesters, $search_terms);
+        $resumes = $this->filterResumes($majors, $graduation_semesters, $search_terms);
 
         return response()->json([
             'status' => 'success',
-            'users' => $users,
+            'resumes' => $resumes,
         ]);
     }
 
@@ -134,56 +134,35 @@ class ResumeBookController
     }
 
     /**
-     * Filters users by major, graduation semester, and search terms.
+     * Filters resume search documents by major, graduation semester, and search terms.
      *
-     * @param  $majors  Array of all majors to include.
-     * @param  $graduation_semesters  array of graduation semesters to include.
-     * @param  $search_terms  String of search terms to match.
+     * @param  array<string>  $majors  Major display names to include.
+     * @param  array<string>  $graduation_semesters  Graduation semester codes to include.
+     * @param  string  $search_terms  Search terms to match against resume text.
      */
-    private function filterUsers(array $majors, array $graduation_semesters, string $search_terms): array
+    private function filterResumes(array $majors, array $graduation_semesters, string $search_terms): array
     {
         $usernames = collect(Storage::disk(Resume::storageDisk())->files(Resume::storageDirectory()))
             ->map(static fn (string $path): string => pathinfo($path, PATHINFO_FILENAME))
             ->toArray();
-        $users = User::active()->whereIn('uid', $usernames);
+        $candidate_ids = User::active()->whereIn('uid', $usernames)->pluck('id')->all();
 
-        if ($majors !== []) {
-            $users = $users->whereHas(
-                'majors',
-                static fn (Builder $query): Builder => $query->whereIn('majors.display_name', $majors)
-            );
+        if ($candidate_ids === []) {
+            return [];
         }
+
+        $resume_search = Resume::search($search_terms)
+            ->whereIn('user_id', $candidate_ids)
+            ->take(count($candidate_ids));
 
         if ($graduation_semesters !== []) {
-            $users = $users->whereIn('graduation_semester', $graduation_semesters);
+            $resume_search->whereIn('graduation_semester', $graduation_semesters);
         }
 
-        if ($search_terms !== '') {
-            $candidate_ids = $users->pluck('id')->all();
-
-            $matching_ids = Resume::search($search_terms)
-                ->whereIn('user_id', $candidate_ids)
-                ->take(count($candidate_ids))
-                ->get()
-                ->pluck('user_id')
-                ->unique()
-                ->all();
-
-            $users = $users->whereIn('id', $matching_ids);
+        if ($majors !== []) {
+            $resume_search->whereIn('major', $majors);
         }
 
-        $users = $users->with('majors')
-            ->get(['id', 'uid', 'first_name', 'last_name', 'graduation_semester', 'gt_email'])
-            ->map(static fn (User $user): array => array_merge($user->toArray(), [
-                'full_name' => $user->first_name.' '.$user->last_name,
-                'majors' => $user->majors->map(static fn (Major $major): array => [
-                    'id' => $major->id,
-                    'display_name' => $major->display_name ?? $major->gtad_majorgroup_name,
-                ])->toArray(),
-                'graduation_semester' => self::formatGradSemester($user->graduation_semester),
-            ]))
-            ->toArray();
-
-        return $users;
+        return $resume_search->raw()['hits'];
     }
 }

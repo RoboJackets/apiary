@@ -6,7 +6,7 @@
       <h1 class="h4 mb-0 fw-semibold">Resume Book</h1>
       <!-- TODO: Implement CSV Exports -->
       <!--<button class="btn btn-sm btn-outline-secondary">
-        Export CSV <span class="badge bg-secondary ms-1">{{ users.length }}</span> 
+        Export CSV <span class="badge bg-secondary ms-1">{{ resumes.length }}</span> 
       </button>-->
     </div>
 
@@ -82,36 +82,35 @@
 
       <!-- Student list -->
       <div class="overflow-auto h-100 border-end"
-           :class="selectedUser ? 'col-auto rj-list-narrow' : 'col'"
+           :class="selectedResume ? 'col-auto rj-list-narrow' : 'col'"
            style="min-height:0;">
         <div class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
-          <small class="text-muted">{{ users.length }} students</small>
-          <button v-if="selectedUser" class="btn btn-link btn-sm p-0 rj-link" @click="selectedUser = null">→ Collapse</button>
+          <small class="text-muted">{{ resumes.length }} students</small>
+          <button v-if="selectedResume" class="btn btn-link btn-sm p-0 rj-link" @click="selectedResume = null">→ Collapse</button>
         </div>
         <table class="table table-hover table-sm mb-0">
           <thead class="table-light sticky-top">
             <tr>
               <th>Name</th>
-              <th v-if="!selectedUser">Major</th>
-              <th v-if="!selectedUser">Graduation Term</th>
+              <th v-if="!selectedResume">Major</th>
+              <th v-if="!selectedResume">Graduation Term</th>
               <!-- TODO: Implement skills and keywords filter -->
-              <!--<th v-if="!selectedUser">Skills</th>
+              <!--<th v-if="!selectedResume">Skills</th>
               <th class="rj-action-th"></th>-->
             </tr>
           </thead>
           <tbody>
-            <tr v-for="user in users" :key="user.id"
-                :class="{ 'rj-row--active': selectedUser && selectedUser.id === user.id }"
+            <tr v-for="resume in resumes" :key="resume.id"
+                :class="{ 'rj-row--active': selectedResume && selectedResume.id === resume.id }"
                 style="cursor:pointer;"
-                @click="selectUser(user)">
+                @click="selectResume(resume)">
               <td class="align-middle">
-                <span class="fw-medium">{{ user.full_name }}</span>
-                <span v-if="user.saved" class="rj-saved-star ms-1">★</span>
+                <span class="fw-medium">{{ resume.full_name }}</span>
               </td>
-              <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.majors.map(m => m.display_name).join(', ') }}</td>
-              <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.graduation_semester.name }}</td>
+              <td v-if="!selectedResume" class="align-middle small text-muted">{{ resume.major.join(', ') }}</td>
+              <td v-if="!selectedResume" class="align-middle small text-muted">{{ graduationSemesterName(resume.graduation_semester) }}</td>
               <!-- TODO: Add tags -->
-              <!--<td v-if="!selectedUser" class="align-middle">
+              <!--<td v-if="!selectedResume" class="align-middle">
                  <div class="d-flex flex-wrap gap-1">
                   <span v-for="tag in user.tags.slice(0, 3)" :key="tag" class="badge rj-skill-badge">{{ tag }}</span>
                   <span v-if="user.tags.length > 3" class="text-muted small">+{{ user.tags.length - 3 }}</span>
@@ -133,16 +132,16 @@
       </div>
 
       <!-- Detail / PDF panel -->
-      <div v-if="selectedUser" class="col overflow-auto h-100 rj-detail-panel" style="min-height:0;">
+      <div v-if="selectedResume" class="col overflow-auto h-100 rj-detail-panel" style="min-height:0;">
         <div class="px-4 py-3 border-bottom">
           <div class="d-flex justify-content-between align-items-start">
             <div>
-              <h2 class="h5 mb-0 fw-semibold">{{ selectedUser.full_name }}</h2>
-              <div class="text-muted small">{{ selectedUser.majors.map(m => m.display_name).join(', ') }} · {{ selectedUser.graduation_semester.name }} · {{ selectedUser.gt_email }}</div>
+              <h2 class="h5 mb-0 fw-semibold">{{ selectedResume.full_name }}</h2>
+              <div class="text-muted small">{{ selectedResume.major.join(', ') }} · {{ graduationSemesterName(selectedResume.graduation_semester) }} · {{ selectedResume.gt_email }}</div>
             </div>
           </div>
           <!-- <div class="d-flex flex-wrap gap-1 mt-2">
-            <span v-for="tag in selectedUser.tags" :key="tag" class="badge rj-skill-badge">{{ tag }}</span>
+            <span v-for="tag in selectedResume.tags" :key="tag" class="badge rj-skill-badge">{{ tag }}</span>
           </div> --> <!-- TODO: Add user tags -->
         </div>
         <div class="rj-pdf-frame d-flex align-items-center justify-content-center text-muted">
@@ -164,14 +163,14 @@ export default {
   name: 'ResumeBookIndex',
   data() {
     return {
-      users: [],
+      resumes: [],
       filters: {
         majors: [],
         graduation_semesters: [],
         search_terms: "",
       },
       searchInput: "",
-      selectedUser: null,
+      selectedResume: null,
       openDd: null,
       expanded: { major: true, term: true },
       expandedCats: {},
@@ -216,21 +215,29 @@ export default {
     toggleCat(cat) {
       this.$set(this.expandedCats, cat, !this.expandedCats[cat]);
     },
-    async selectUser(user) {
+    async selectResume(resume) {
       if (this.resume_url) {
         URL.revokeObjectURL(this.resume_url);
       }
-      this.resume_url = `/sponsor/resumes/${user.uid}`
-      this.selectedUser = user;
+      this.resume_url = `/sponsor/resumes/${resume.user_uid}`
+      this.selectedResume = resume;
     },
 
     async search() {
       try {
         const response = await axios.post('/sponsor/search', this.filters);
-        this.users = response.data.users;
+        this.resumes = response.data.resumes;
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error('Error fetching resumes:', error);
       }
+    },
+
+    graduationSemesterName(code) {
+      if (!code) {
+        return 'Unspecified';
+      }
+
+      return this.terms.find(semester => semester.code === code)?.name ?? code;
     },
 
     submitSearch() {
