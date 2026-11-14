@@ -12,7 +12,7 @@ Apiary's trip management features ensure accurate and consistent booking process
 Create a trip
 -------------
 
-.. vale Google.WordList = NO
+.. vale Google.WordListCase = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Travel` header in the left sidebar, click :guilabel:`Trips`.
@@ -56,7 +56,12 @@ Approve a trip
    To approve trips, you must have the :ref:`officer` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
+.. vale ai-tells.Metacommentary = NO
+
 Once all assignments have been created, the trip must be approved by an officer. This ensures that all trip details are accurate before travelers are notified of their assignments.
+
+.. vale ai-tells.VerbTricolon = NO
+.. vale Google.Parens = NO
 
 #. On the :guilabel:`Trip Details` page, click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Trip Details` header.
 #. Select :guilabel:`Review Trip`.
@@ -66,6 +71,8 @@ Once all assignments have been created, the trip must be approved by an officer.
    #. If any changes need to be made to the trip, click :guilabel:`Cancel` at the bottom of the popup, and work with the primary contact to make the changes.
    #. If all criteria are met, click :guilabel:`Approve` at the bottom of the popup.
 #. Once the trip is approved, travelers will receive email notifications with instructions to pay and submit forms, if needed.
+
+.. vale ai-tells.DoubleHyphen = NO
 
 .. important::
    Approving a trip is final -- trips can't be moved back to :guilabel:`Draft` status after approval.
@@ -78,7 +85,7 @@ Travelers can pay the trip fee online the same way they pay dues. For more infor
 Collect forms
 -------------
 
-Travelers with complete profiles in Apiary may receive their forms via DocuSign as soon as the trip is approved.
+Travelers with complete profiles in Apiary may receive their forms via DocuSign when the trip is approved.
 Some travelers may need to visit Apiary first for more specific instructions.
 
 The primary contact's DocuSign account is used to send forms.

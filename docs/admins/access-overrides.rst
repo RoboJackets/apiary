@@ -1,8 +1,9 @@
-:og:description: An access override allows someone access to (mostly electronic) RoboJackets services before they pay dues for the current semester. Typically, access overrides are provided on a case-by-case basis upon request.
+:og:description: An access override allows someone access to (mostly electronic) RoboJackets services before they pay dues for the current semester. Access overrides are provided on a case-by-case basis upon request.
 
 Access overrides
 ================
 
+.. vale ai-tells.FalseBalance = NO
 .. vale Google.Parens = NO
 .. vale Google.Passive = NO
 .. vale Google.Will = NO
@@ -12,7 +13,7 @@ Access overrides
 .. vale write-good.Weasel = NO
 
 An access override allows someone access to (mostly electronic) RoboJackets services before they pay dues for the current semester.
-Typically, access overrides are provided on a case-by-case basis upon request.
+Access overrides are provided on a case-by-case basis upon request.
 
 Self-service
 ------------
@@ -22,6 +23,8 @@ Self-service
 
 To prevent misuse, a user must meet several criteria before they become eligible for a self-service override.
 A user's eligibility for a self-service override is visible on their details page in Nova, in the System Access panel.
+
+.. vale ai-tells.NounString = NO
 
 Self-service overrides can last between 7 and 60 days.
 The longest duration will occur if the earliest future :ref:`dues package <Dues package>` :guilabel:`Access End Date` is 60 or more days in the future.
@@ -42,6 +45,9 @@ Required conditions
 Required tasks
 ~~~~~~~~~~~~~~
 
+.. vale ai-tells.VerbTricolon = NO
+.. vale ai-tells.Metacommentary = NO
+
 - Sign the membership agreement
 - Attend a team meeting
    - Attendance must be recorded in Apiary for it to count, either via kiosk, Android app, or a remote attendance link
@@ -54,6 +60,8 @@ Manual grant
 Administrators can generally grant manual access overrides to users, even if they're not eligible for a self-service access override.
 
 Manual overrides have two requirements:
+
+.. vale Google.Timeless = NO
 
 - Administrators can't grant overrides to themselves
 - The user receiving the override must have signed the latest membership agreement
