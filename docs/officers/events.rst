@@ -23,6 +23,8 @@ Creating an event
    To create an event, you must have the :ref:`officer`, :ref:`project-manager`, or :ref:`team-lead` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
+.. vale Google.WordListCase = NO
+
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Meetings` header in the left sidebar, click :guilabel:`Events`.
 #. In the top-right corner, click :guilabel:`Create Event`.
@@ -39,6 +41,8 @@ Collecting RSVPs
 
 After creating the event, the details page shows an :guilabel:`RSVP URL`.
 You can send this link to anyone to allow them to RSVP to the event.
+
+.. vale ai-tells.FormalTransitions = NO
 
 You can also append a ``source`` query parameter to the URL to track clicks from different channels, such as newsletters or the website.
 For example, you can append ``?source=website`` to the end of the URL.

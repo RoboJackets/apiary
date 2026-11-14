@@ -3,6 +3,8 @@
 Access overrides
 ================
 
+.. vale ai-tells.VerbTricolon = NO
+
 As a new RoboJackets member, you can request temporary access to RoboJackets services, such as GitHub and Google Drive, before paying dues.
 
 .. vale write-good.E-Prime = NO

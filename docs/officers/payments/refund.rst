@@ -21,6 +21,9 @@ The treasurer must send a check or other payment to refund the member.
 
 In either case, the steps within Apiary are the same:
 
+.. vale Google.WordListCase = NO
+.. vale Google.Parens = NO
+
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.
 #. Search for the member using the search box under the :guilabel:`Users` header, then select the user from the results.

@@ -3,6 +3,7 @@
 Permissions and roles
 =====================
 
+.. vale ai-tells.OverusedVocabulary = NO
 .. vale Google.Passive = NO
 .. vale write-good.E-Prime = NO
 .. vale write-good.Passive = NO
@@ -11,6 +12,8 @@ Permissions and roles
 Apiary supports granular access control to limit access to the software.
 Most actions require a specific permission, and permissions are grouped into roles.
 Users can be assigned any combination of roles and permissions, and their effective access is cumulative across all assigned roles and permissions.
+
+.. vale ai-tells.NounString = NO
 
 To attach or detach a role or permission, open a user's detail page, then scroll to the :guilabel:`Roles` or :guilabel:`Permissions` section.
 
@@ -86,6 +89,8 @@ The following permissions aren't included with any roles, and must be manually a
 
 ``refund-payments``
 ~~~~~~~~~~~~~~~~~~~
+
+.. vale ai-tells.Metacommentary = NO
 
 Most payments are considered non-refundable. If an exception is made, this permission should be attached to the treasurer or other financial officer. This enables the :doc:`Refund Payments action </officers/payments/refund>`.
 

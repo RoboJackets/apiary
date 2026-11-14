@@ -15,8 +15,6 @@ Server setup
 
 Initialize a Red Hat Enterprise Linux server using the `web-app-platform <https://github.com/RoboJackets/web-app-platform>`_ Ansible playbook.
 
-In particular:
-
 .. vale Google.Acronyms = NO
 .. vale Google.Parens = NO
 
@@ -44,6 +42,8 @@ You should also tag the image so that it can be pushed to a registry.
 
 Push the image to a registry
 ----------------------------
+
+.. vale ai-tells.DefensiveHedges = NO
 
 .. important::
    While this repository itself is open source, this project uses **confidential and proprietary** components which are packed into Docker images produced by this process.
@@ -73,13 +73,15 @@ Add configuration to Consul
 .. vale Google.Headings = YES
 .. vale write-good.Weasel = NO
 
-All environment-specific configuration options are stored in the Consul Key/Value Store and retrieved by Nomad when starting containers.
+Environment-specific configuration options are stored in the Consul Key/Value Store and retrieved by Nomad when starting containers.
 Apiary requires several keys to be configured.
 
 Hostname
 ~~~~~~~~
 
 The ``nginx/hostnames`` key must be a JSON map with a key of the Nomad job name and a value of the fully qualified domain name of the Apiary instance.
+
+.. vale ai-tells.FormalTransitions = NO
 
 For example, if the Nomad job name is ``apiary-production`` and you're using ``apiary.robojackets.net`` as the domain name, the key should look like this.
 
@@ -97,10 +99,10 @@ App configuration
 
 App-level configuration can be split across two keys, as needed. ``apiary/shared`` is loaded for all environments, and ``apiary/<environment>`` can be used for environment-specific configuration.
 
-The format for both keys is the same: a JSON map of key-value pairs.
+The format for both keys is a JSON map of key-value pairs.
 The maps are transformed into environment variables, which are then read into the app configuration cache.
 
-For a comprehensive list of options, see the ``/config/`` directory in the root of the repository.
+For a full list of options, see the ``/config/`` directory in the root of the repository.
 
 Create a database and user
 --------------------------
@@ -119,10 +121,12 @@ You must log in to the database server as ``root`` or another administrative use
 
 The selected database name, user name, and password must be loaded in the environment-specific configuration key in Consul.
 
+.. vale ai-tells.DoubleHyphen = NO
+.. vale ai-tells.NegatedSubject = NO
 .. vale Google.WordList = NO
+.. vale Google.WordListCase = NO
 
-No other setup is required for the database.
-Tables and other necessary data are initialized when the app is deployed.
+No other setup is required for the database -- tables and other necessary data are initialized when the app is deployed.
 
 .. vale Google.WordList = YES
 

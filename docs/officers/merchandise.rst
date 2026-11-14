@@ -21,6 +21,8 @@ Confirming merchandise selections
 
 To confirm which merchandise a member selected when they paid dues, follow these steps.
 
+.. vale Google.WordListCase = NO
+
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.
 #. Search for the member using the search box under the :guilabel:`Users` header, then select the user from the results.
@@ -33,6 +35,9 @@ Recording merchandise distribution on web
 -----------------------------------------
 
 To record distribution of an item, follow these steps.
+
+.. vale ai-tells.ParallelStaccato = NO
+.. vale Google.Parens = NO
 
 #. Open the details page for the merchandise item you want to distribute.
    You can either use the steps in the preceding section, or look at the :guilabel:`Merchandise` list under the :guilabel:`Dues` heading in the left sidebar.
