@@ -123,7 +123,7 @@ class ResumeBookController
 
         $majors = $validated['majors'] ?? [];
         $graduation_semesters = $validated['graduation_semesters'] ?? [];
-        $search_terms = $validated['search_terms'] ?? [];
+        $search_terms = $validated['search_terms'] ?? '';
 
         $users = $this->filterUsers($majors, $graduation_semesters, $search_terms);
 
