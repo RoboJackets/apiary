@@ -35,6 +35,8 @@ The following attributes must be returned:
 
 The production CAS service requires the following configuration within Apiary:
 
+.. vale ai-tells.NounString = NO
+
 - ``CAS_HOSTNAME`` must be set to ``sso.gatech.edu``
 - ``CAS_REAL_HOSTS`` must be set to ``sso.gatech.edu``
 - ``CAS_PORT`` must be set to ``443``
@@ -115,10 +117,12 @@ DocuSign requires the following configuration within Apiary:
 Postmark
 --------
 
-Apiary sends transactional emails to remind members about mandatory tasks, as well as receipts and DocuSign acknowledgement emails.
+Apiary sends transactional emails to remind members about mandatory tasks, receipts, and DocuSign acknowledgement emails.
 While Laravel supports a wide variety of email service providers, RoboJackets uses `Postmark <https://postmarkapp.com/>`_.
 
 Postmark requires the following configuration within Apiary:
+
+.. vale ai-tells.Metacommentary = NO
 
 - ``MAIL_MAILER`` must be set to ``postmark``
 - ``MAIL_FROM_ADDRESS`` must be set to the ``From`` address used to send emails
@@ -191,7 +195,7 @@ Full OAuth authentication with merchant accounts isn't supported.
 JEDI
 ----
 
-Apiary can optionally integrate with `JEDI <https://github.com/RoboJackets/jedi>`_ to support propagating changes within Apiary to a variety of other services.
+Apiary can optionally integrate with `JEDI <https://github.com/RoboJackets/jedi>`_ to support propagating changes within Apiary to other services.
 
 JEDI requires the following configuration within Apiary:
 

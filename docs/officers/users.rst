@@ -30,6 +30,9 @@ Any filters applied to the user list outside of the popup are ignored.
 
 To export resumes:
 
+.. vale ai-tells.MicDrop = NO
+.. vale Google.WordListCase = NO
+
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.
 #. Click the Actions menu (three dots |actionsmenu|) in the top right corner, then select :guilabel:`Export Resumes`.
@@ -40,7 +43,9 @@ To export resumes:
 #. Click :guilabel:`Export Resumes`, then wait.
    This may take several seconds depending on how many resumes are included.
 
-All resumes that match the criteria are combined into a single :abbr:`PDF (Portable Document Format)` and downloaded.
+.. vale ai-tells.FillerIntensifier = NO
+
+Resumes that match the criteria are combined into a single :abbr:`PDF (Portable Document Format)` and downloaded.
 Review the PDF before distributing it to sponsors.
 
 .. vale Google.Headings = NO
@@ -58,7 +63,7 @@ The CSV file includes members meeting the following criteria. Any filters applie
 
 * Must be access active
 * Must be a current student, faculty, or staff, as determined by Georgia Tech
-* Must not have paid for any dues packages that are **not** :guilabel:`Restricted to Students`
+* Must not have paid for any dues packages that **aren't** :guilabel:`Restricted to Students`
 * Must not have the :guilabel:`BuzzCard Access Opt-Out` flag applied
 
 To generate the list:
@@ -71,6 +76,8 @@ To generate the list:
    The :guilabel:`Core` population only includes members within the Core team, and the :guilabel:`General` population only includes members that **aren't** within the Core team.
    You should generate lists for **both** populations and send **both** to Mechanical Engineering Facilities, but the export can only generate one at a time due to technical limitations.
 #. Click :guilabel:`Export List`.
+
+.. vale ai-tells.NounString = NO
 
 Export demographics survey recipients
 -------------------------------------

@@ -42,6 +42,8 @@ Other attributes are used to determine whether a package may be offered to a spe
 
 A dues package may also have links to one or more :ref:`merchandise <Merchandise>` objects, which may be selected by members when choosing that package.
 
+.. vale ai-tells.DoubleHyphen = NO
+
 .. attention::
    Officers generally shouldn't create packages manually -- there is an :ref:`action on Fiscal Years<Create Dues Packages>` that sets up default packages.
 

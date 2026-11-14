@@ -36,6 +36,7 @@ Recording an offline payment
 To record a cash payment, check, or waiver, follow the steps below.
 
 .. vale Google.Will = NO
+.. vale Google.WordListCase = NO
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.

@@ -3,6 +3,7 @@
 Data model
 ==========
 
+.. vale ai-tells.FillerIntensifier = NO
 .. vale write-good.Weasel = NO
 
 Apiary models a **trip** as a single event with many travelers. A **trip assignment** links each traveler to a trip.
@@ -42,6 +43,8 @@ A trip can be in one of three statuses:
 - :guilabel:`Complete` trips are locked and can no longer be modified.
 
 A trip always start in :guilabel:`Draft` status.
+
+.. vale ai-tells.DoubleHyphen = NO
 
 When an officer approves a trip, it moves to :guilabel:`Approved` status. **Approving a trip is final -- trips can't be moved back to** :guilabel:`Draft` **status after approval**.
 
