@@ -63,6 +63,7 @@ final class ResumeBookExportTest extends TestCase
         $response->assertDownload('robojackets-resume-book.csv');
 
         $csv = $response->streamedContent();
+
         $this->assertStringContainsString($header, $csv);
         $this->assertStringContainsString($userOneRow, $csv);
         $this->assertStringContainsString($userTwoRow, $csv);

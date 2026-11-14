@@ -4,9 +4,8 @@
     <!-- Page heading -->
     <div class="rj-page-header px-4 py-3 flex-shrink-0 d-flex align-items-center justify-content-between border-bottom">
       <h1 class="h4 mb-0 fw-semibold">Resume Book</h1>
-      <!-- TODO: Implement CSV Exports -->
       <button class="btn btn-sm btn-outline-secondary" @click="exportCsv">
-        Export CSV <span class="badge bg-secondary ms-1">{{ users.length }}</span> 
+        Export CSV <span class="badge bg-secondary ms-1">{{ users.length }}</span>
       </button>
     </div>
 
@@ -24,8 +23,17 @@
 
       <!-- Sidebar -->
       <div class="col-auto border-end overflow-auto h-100 rj-sidebar py-3 px-3" style="min-height:0;">
-        <!-- TODO: Implement search -->
-        <!--<input class="form-control form-control-sm mb-3" placeholder="Search by name…" type="search"/>-->
+        <form class="mb-3" @submit.prevent="submitSearch">
+          <label for="resume-search" class="form-label small mb-1">Keyword Search</label>
+          <input
+            id="resume-search"
+            v-model="searchInput"
+            class="form-control form-control-sm mb-2"
+            placeholder="Search resume text…"
+            type="search"
+          />
+          <button class="btn btn-primary btn-sm w-100" type="submit">Search</button>
+        </form>
 
         <!-- Major -->
         <div class="rj-collapsible-header" @click="expanded.major = !expanded.major">
@@ -97,9 +105,8 @@
                 @click="selectUser(user)">
               <td class="align-middle">
                 <span class="fw-medium">{{ user.full_name }}</span>
-                <span v-if="user.saved" class="rj-saved-star ms-1">★</span>
               </td>
-              <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.majors.map(m => m.display_name).join(', ') }}</td>
+              <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.majors.map(m => m.display_name ?? m.gtad_majorgroup_name).join(', ') }}</td>
               <td v-if="!selectedUser" class="align-middle small text-muted">{{ user.graduation_semester.name }}</td>
               <!-- TODO: Add tags -->
               <!--<td v-if="!selectedUser" class="align-middle">
@@ -129,7 +136,7 @@
           <div class="d-flex justify-content-between align-items-start">
             <div>
               <h2 class="h5 mb-0 fw-semibold">{{ selectedUser.full_name }}</h2>
-              <div class="text-muted small">{{ selectedUser.majors.map(m => m.display_name).join(', ') }} · {{ selectedUser.graduation_semester.name }} · {{ selectedUser.gt_email }}</div>
+              <div class="text-muted small">{{ selectedUser.majors.map(m => m.display_name ?? m.gtad_majorgroup_name).join(', ') }} · {{ selectedUser.graduation_semester.name }} · {{ selectedUser.gt_email }}</div>
             </div>
           </div>
           <!-- <div class="d-flex flex-wrap gap-1 mt-2">
@@ -159,8 +166,9 @@ export default {
       filters: {
         majors: [],
         graduation_semesters: [],
-        majors: [],
+        search_terms: "",
       },
+      searchInput: "",
       selectedUser: null,
       openDd: null,
       expanded: { major: true, term: true },
@@ -188,7 +196,13 @@ export default {
   },
 
   watch: {
-    filters: {
+    'filters.majors': {
+      handler() {
+        this.search();
+      },
+      deep: true,
+    },
+    'filters.graduation_semesters': {
       handler() {
         this.search();
       },
@@ -215,6 +229,11 @@ export default {
       } catch (error) {
         console.error('Error fetching users:', error);
       }
+    },
+
+    submitSearch() {
+      this.filters.search_terms = this.searchInput.trim();
+      this.search();
     },
 
     async getGraduationSemesters() {

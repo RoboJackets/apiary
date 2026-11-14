@@ -268,8 +268,13 @@ return [
                 'displayedAttributes' => [
                     'id',
                     'user_id',
+                    'user_uid',
+                    'full_name',
+                    'gt_email',
                     'file_name',
                     'file_path',
+                    'major',
+                    'graduation_semester',
                     'created_at',
                     'updated_at',
                     'extracted_text',
@@ -279,6 +284,9 @@ return [
                 ],
                 'filterableAttributes' => [
                     'id',
+                    'user_id',
+                    'major',
+                    'graduation_semester',
                 ],
                 'rankingRules' => [
                     'words',
