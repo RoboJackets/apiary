@@ -68,11 +68,13 @@ class ResumeBookController
         $graduation_semesters = $validated['graduation_semesters'] ?? [];
         $search_terms = $validated['search_terms'] ?? '';
 
-        $resumes = $this->filterResumes($majors, $graduation_semesters, $search_terms);
+        $users = $this->filterUsers($majors, $graduation_semesters, $search_terms);
 
         return response()->json([
             'status' => 'success',
-            'resumes' => $resumes,
+            'users' => $users->map(static fn (User $user): array => array_merge($user->toArray(), [
+                'graduation_semester' => self::formatGradSemester($user->graduation_semester),
+            ])),
         ]);
     }
 
@@ -125,19 +127,19 @@ class ResumeBookController
         $graduation_semesters = $validated['graduation_semesters'] ?? [];
         $search_terms = $validated['search_terms'] ?? '';
 
-        $resumes = $this->filterResumes($majors, $graduation_semesters, $search_terms);
+        $users = $this->filterUsers($majors, $graduation_semesters, $search_terms);
 
-        return response()->streamDownload(static function () use ($resumes): void {
+        return response()->streamDownload(static function () use ($users): void {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['Name', 'Email', 'Major', 'Graduation Term']);
-            foreach ($resumes as $resume) {
+            foreach ($users as $user) {
                 fputcsv($out, [
-                    $resume->user->full_name,
-                    $resume->user->gt_email,
-                    $resume->user->majors
+                    $user->full_name,
+                    $user->gt_email,
+                    $user->majors
                         ->map(static fn (Major $major): ?string => $major->display_name ?? $major->gtad_majorgroup_name)
                         ->implode(', '),
-                    self::formatGradSemester($resume->user->graduation_semester)['name'],
+                    self::formatGradSemester($user->graduation_semester)['name'],
                 ]);
             }
             fclose($out);
@@ -167,13 +169,13 @@ class ResumeBookController
     }
 
     /**
-     * Filters resume search documents by major, graduation semester, and search terms.
+     * Filters users by searching their indexed resume documents and returns users with their resumes.
      *
      * @param  array<string>  $majors  Major display names to include.
      * @param  array<string>  $graduation_semesters  Graduation semester codes to include.
      * @param  string  $search_terms  Search terms to match against resume text.
      */
-    private function filterResumes(
+    private function filterUsers(
         array $majors,
         array $graduation_semesters,
         string $search_terms
@@ -184,7 +186,7 @@ class ResumeBookController
         $candidate_ids = User::active()->whereIn('uid', $usernames)->pluck('id')->all();
 
         if ($candidate_ids === []) {
-            return (new Resume())->newCollection();
+            return (new User())->newCollection();
         }
 
         $resume_search = Resume::search($search_terms)
@@ -199,9 +201,16 @@ class ResumeBookController
             $resume_search->whereIn('major', $majors);
         }
 
-        return $resume_search->get()->load([
-            'user:id,uid,first_name,last_name,gt_email,graduation_semester',
-            'user.majors:id,display_name,gtad_majorgroup_name',
-        ]);
+        $matching_user_ids = $resume_search->get()->pluck('user_id')->unique()->all();
+
+        if ($matching_user_ids === []) {
+            return (new User())->newCollection();
+        }
+
+        return User::active()
+            ->whereIn('id', $matching_user_ids)
+            ->select(['id', 'uid', 'first_name', 'last_name', 'gt_email', 'graduation_semester'])
+            ->with(['resume', 'majors:id,display_name,gtad_majorgroup_name'])
+            ->get();
     }
 }
