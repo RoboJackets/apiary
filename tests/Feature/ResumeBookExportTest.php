@@ -15,6 +15,7 @@ final class ResumeBookExportTest extends TestCase
     public function test_guest_cannot_export(): void
     {
         $response = $this->post(route('sponsor.export'), [
+            'search_terms' => '',
             'majors' => [],
             'graduation_semesters' => [],
         ]);
@@ -55,6 +56,7 @@ final class ResumeBookExportTest extends TestCase
 
         $response = $this->actingAs($sponsorUser, 'sponsor')
             ->post(route('sponsor.export'), [
+                'search_terms' => '',
                 'majors' => [],
                 'graduation_semesters' => [],
             ]);
@@ -69,6 +71,7 @@ final class ResumeBookExportTest extends TestCase
 
         $response = $this->actingAs($sponsorUser, 'sponsor')
             ->post(route('sponsor.export'), [
+                'search_terms' => '',
                 'majors' => ['Computer Science'],
                 'graduation_semesters' => [],
             ]);
@@ -79,6 +82,7 @@ final class ResumeBookExportTest extends TestCase
 
         $response = $this->actingAs($sponsorUser, 'sponsor')
             ->post(route('sponsor.export'), [
+                'search_terms' => '',
                 'majors' => [],
                 'graduation_semesters' => [202608],
             ]);
@@ -89,6 +93,7 @@ final class ResumeBookExportTest extends TestCase
 
         $response = $this->actingAs($sponsorUser, 'sponsor')
             ->post(route('sponsor.export'), [
+                'search_terms' => '',
                 'majors' => ['Mechanical Engineering'],
                 'graduation_semesters' => [],
             ]);

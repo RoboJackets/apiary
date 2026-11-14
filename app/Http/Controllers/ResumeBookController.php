@@ -124,7 +124,7 @@ class ResumeBookController
         $majors = $validated['majors'] ?? [];
         $graduation_semesters = $validated['graduation_semesters'] ?? [];
 
-        $users = $this->filterUsers($majors, $graduation_semesters);
+        $users = $this->filterUsers($majors, $graduation_semesters, $search_terms);
 
         return response()->streamDownload(static function () use ($users): void {
             $out = fopen('php://output', 'w');
