@@ -112,8 +112,8 @@ class ResumeBookController
     }
 
     /**
-     * Exports resumes displayed with current search terms and filters.
-     * Currently exports name, email, major, graduation date.
+     * Exports resumes matching the current search terms and filters.
+     * Exports name, email, major, and graduation term.
      *
      * @param  $request  Request object containing arrays of parameters to search.
      */
@@ -123,18 +123,19 @@ class ResumeBookController
 
         $majors = $validated['majors'] ?? [];
         $graduation_semesters = $validated['graduation_semesters'] ?? [];
+        $search_terms = $validated['search_terms'] ?? '';
 
-        $users = $this->filterUsers($majors, $graduation_semesters);
+        $resumes = $this->filterResumes($majors, $graduation_semesters, $search_terms);
 
-        return response()->streamDownload(static function () use ($users): void {
+        return response()->streamDownload(static function () use ($resumes): void {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['Name', 'Email', 'Major', 'Graduation Term']);
-            foreach ($users as $user) {
+            foreach ($resumes as $resume) {
                 fputcsv($out, [
-                    $user['full_name'],
-                    $user['gt_email'],
-                    collect($user['majors'])->pluck('display_name')->implode(', '),
-                    $user['graduation_semester']['name'] ?? '',
+                    $resume['full_name'],
+                    $resume['gt_email'],
+                    implode(', ', $resume['major'] ?? []),
+                    self::formatGradSemester($resume['graduation_semester'] ?? null)['name'],
                 ]);
             }
             fclose($out);

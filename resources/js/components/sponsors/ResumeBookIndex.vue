@@ -4,9 +4,8 @@
     <!-- Page heading -->
     <div class="rj-page-header px-4 py-3 flex-shrink-0 d-flex align-items-center justify-content-between border-bottom">
       <h1 class="h4 mb-0 fw-semibold">Resume Book</h1>
-      <!-- TODO: Implement CSV Exports -->
       <button class="btn btn-sm btn-outline-secondary" @click="exportCsv">
-        Export CSV <span class="badge bg-secondary ms-1">{{ users.length }}</span> 
+        Export CSV <span class="badge bg-secondary ms-1">{{ resumes.length }}</span>
       </button>
     </div>
 
@@ -274,7 +273,7 @@ export default {
         a.click();
         URL.revokeObjectURL(url);
       } catch (error) {
-        console.error('Error exporting users:', error);
+        console.error('Error exporting user info:', error);
       }
     },
 
