@@ -32,8 +32,8 @@
             class="form-control form-control-sm mb-2"
             placeholder="Search resume text…"
             type="search"
+            @input="event => onSearchBarChange()"
           />
-          <button class="btn btn-primary btn-sm w-100" type="submit">Search</button>
         </form>
 
         <!-- Major -->
@@ -233,7 +233,7 @@ export default {
       }
     },
 
-    submitSearch() {
+    onSearchBarChange() {
       this.filters.search_terms = this.searchInput.trim();
       this.search();
     },
