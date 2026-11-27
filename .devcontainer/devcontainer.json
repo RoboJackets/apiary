@@ -29,10 +29,16 @@
         "COMPOSER_AUTH": "{\"github-oauth\":{\"github.com\":\"${localEnv:GITHUB_TOKEN}\"},\"\"http-basic\":{\"nova.laravel.com\":{\"username\":\"${localEnv:LARAVEL_NOVA_USERNAME}\",\"password\":\"${localEnv:LARAVEL_NOVA_PASSWORD}\"}}}"
 	},
 
-	"onCreateCommand": "composer install && php artisan migrate"
+	"onCreateCommand": "composer install && php artisan migrate",
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ikappas.composer"
+            ]
+        }
+    },
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [8080],
