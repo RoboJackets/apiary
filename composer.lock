@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "798c400c932131262d5e0ce664e9c90c",
+    "content-hash": "6c012d8d7ad3c4c0ca8e5de2c2bc0631",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -4260,30 +4260,30 @@
         },
         {
             "name": "laravel/slack-notification-channel",
-            "version": "v3.10.0",
+            "version": "v3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/slack-notification-channel.git",
-                "reference": "f5690359278aaebf5a0e5b07659caea95b6ded40"
+                "reference": "ad27561e4e80423d0b31b6e5570c288c3f48e79a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/slack-notification-channel/zipball/f5690359278aaebf5a0e5b07659caea95b6ded40",
-                "reference": "f5690359278aaebf5a0e5b07659caea95b6ded40",
+                "url": "https://api.github.com/repos/laravel/slack-notification-channel/zipball/ad27561e4e80423d0b31b6e5570c288c3f48e79a",
+                "reference": "ad27561e4e80423d0b31b6e5570c288c3f48e79a",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "^7.0|^8.0",
-                "illuminate/http": "^9.0|^10.0|^11.0|^12.0|^13.0",
-                "illuminate/notifications": "^9.0|^10.0|^11.0|^12.0|^13.0",
-                "illuminate/support": "^9.0|^10.0|^11.0|^12.0|^13.0",
-                "php": "^8.0"
+                "guzzlehttp/guzzle": "^7.15.2|^8.0.1",
+                "illuminate/http": "^12.0|^13.0",
+                "illuminate/notifications": "^12.0|^13.0",
+                "illuminate/support": "^12.0|^13.0",
+                "php": "^8.2"
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0|^11.0",
+                "orchestra/testbench": "^10.0|^11.0",
                 "phpstan/phpstan": "^1.10|^2.0",
-                "phpunit/phpunit": "^9.0|^10.4|^11.5|^12.0|^13.0"
+                "phpunit/phpunit": "^11.5|^12.0|^13.0"
             },
             "type": "library",
             "extra": {
@@ -4319,9 +4319,10 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/slack-notification-channel/issues",
-                "source": "https://github.com/laravel/slack-notification-channel/tree/v3.10.0"
+                "source": "https://github.com/laravel/slack-notification-channel/tree/v3.12.0"
             },
-            "time": "2026-07-24T20:53:54+00:00"
+            "time": "2026-11-11T14:11:39+00:00",
+            "published-time": "2026-11-17T15:21:36+00:00"
         },
         {
             "name": "laravel/socialite",
