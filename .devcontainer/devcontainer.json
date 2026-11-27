@@ -25,7 +25,8 @@
 		"LOG_CHANNEL": "stderr",
 		"DB_CONNECTION": "sqlite",
 		"DB_DATABASE": "/workspaces/apiary/storage/quickstart.sqlite",
-		"FEATURE_SANDBOX_MODE": "true"
+		"FEATURE_SANDBOX_MODE": "true",
+        "COMPOSER_AUTH": "{\"github-oauth\":{\"github.com\":\"${localEnv:GITHUB_TOKEN}\"},\"\"http-basic\":{\"nova.laravel.com\":{\"username\":\"${localEnv:LARAVEL_NOVA_USERNAME}\",\"password\":\"${localEnv:LARAVEL_NOVA_PASSWORD}\"}}}"
 	},
 
 	"onCreateCommand": "composer install && php artisan migrate"
