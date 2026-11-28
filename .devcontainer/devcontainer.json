@@ -12,7 +12,22 @@
 			"disableAllExtensions": true,
 			"extensionsExtra": "ldap,redis,curl,dom,mbstring,simplexml,zip,sqlite,intl,gd,uuid,mysqli,bcmath"
 		},
-    	"ghcr.io/devcontainers/features/github-cli:1": {}
+    	"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/node:2": {
+			"nodeGypDependencies": true,
+			"installYarnUsingApt": true,
+			"version": "lts",
+			"npmVersion": "latest",
+			"pnpmVersion": "latest",
+			"nvmVersion": "latest"
+		},
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "false",
+            "username": "vscode",
+            "userUid": "1000",
+            "userGid": "1000",
+            "upgradePackages": "true"
+        }
 	},
 
 	"containerEnv": {
@@ -26,16 +41,32 @@
 		"DB_CONNECTION": "sqlite",
 		"DB_DATABASE": "/workspaces/apiary/storage/quickstart.sqlite",
 		"FEATURE_SANDBOX_MODE": "true",
-        "COMPOSER_AUTH": "{\"github-oauth\":{\"github.com\":\"${localEnv:GITHUB_TOKEN}\"},\"\"http-basic\":{\"nova.laravel.com\":{\"username\":\"${localEnv:LARAVEL_NOVA_USERNAME}\",\"password\":\"${localEnv:LARAVEL_NOVA_PASSWORD}\"}}}"
+      	"SANDBOX_USERS": "atesting3",
+		"CACHE_STORE": "array",
+		"SESSION_DRIVER": "file",
+        "COMPOSER_AUTH": "{\"github-oauth\":{\"github.com\":\"${localEnv:GITHUB_TOKEN}\"},\"http-basic\":{\"nova.laravel.com\":{\"username\":\"${localEnv:LARAVEL_NOVA_USERNAME}\",\"password\":\"${localEnv:LARAVEL_NOVA_PASSWORD}\"}}}",
+		"CAS_MASQUERADE": "atesting3",
+        "CAS_MASQUERADE_gtGTID": "901234567",
+        "CAS_MASQUERADE_email_primary": "developers@robojackets.org",
+        "CAS_MASQUERADE_givenName": "Apiary",
+        "CAS_MASQUERADE_sn": "Testing",
+        "CAS_MASQUERADE_authnContextClass": "mfa-duo",
+        "CAS_MASQUERADE_eduPersonPrimaryAffiliation": "student",
+        "CAS_MASQUERADE_eduPersonScopedAffiliation": "student@gt",
+        "CAS_HOSTNAME": "sso-test.gatech.edu",
+        "CAS_REAL_HOSTS": "sso-test.gatech.edu",
+        "CAS_CLIENT_SERVICE": "http://127.0.0.1:8000",
+        "CAS_LOGOUT_URL": "http://127.0.0.1:8000"
 	},
 
-	"onCreateCommand": "composer install && php artisan migrate",
+	"onCreateCommand": "composer install --no-interaction --no-progress && echo APP_KEY= > .env && php artisan key:generate --verbose && php artisan passport:keys --no-interaction --force && php artisan nova:publish && php artisan migrate --no-interaction --verbose && npm ci --no-progress && npm run development",
 
 	// Configure tool-specific properties.
     "customizations": {
         "vscode": {
             "extensions": [
-                "ikappas.composer"
+                "ikappas.composer",
+				"ms-azuretools.vscode-containers"
             ]
         }
     },
@@ -47,5 +78,5 @@
 	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"remoteUser": "vscode"
 }
